@@ -15,7 +15,8 @@
     "mssql": "11.0.1"
   },
   "devDependencies": {
-    "standard": "17.1.0"
+    "standard": "17.1.0",
+    "vitest": "2.0.3"
   },
   "eslintConfig": {
     "extends": "standard"
