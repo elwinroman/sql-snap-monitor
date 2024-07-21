@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +17,7 @@
     "mssql": "11.0.1"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "2.0.3",
     "standard": "17.1.0",
     "vitest": "2.0.3"
   },
