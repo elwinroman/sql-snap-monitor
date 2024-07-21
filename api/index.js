@@ -1,16 +1,16 @@
 import express from 'express'
 import 'dotenv/config'
-import { ObjectModel } from './src/models/ObjectModel.js'
+import { DBObjectModel } from './src/models/DBObjectModel.js'
 
 const app = express()
 
 const PORT = process.env.PORT ?? 1234
 
-app.get('/object/:name', async (req, res) => {
+app.get('/dbobject/:name', async (req, res) => {
   const { name } = req.params
 
   try {
-    const result = await ObjectModel.getObject({ name })
+    const result = await DBObjectModel.getObject({ name })
     if (result.error) {
       res.status(404).json(result.error)
       return
