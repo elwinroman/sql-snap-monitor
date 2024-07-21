@@ -22,6 +22,9 @@
     "vitest": "2.0.3"
   },
   "eslintConfig": {
-    "extends": "standard"
+    "extends": "standard",
+    "rules": {
+      "camelcase": "off"
+    }
   }
 }
