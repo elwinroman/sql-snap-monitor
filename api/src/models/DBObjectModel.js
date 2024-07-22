@@ -33,6 +33,10 @@ const ERROR_CODES = {
   NOT_FOUND_SQUEMA: {
     code: 'NOT_FOUND_SQUEMA',
     message: 'No se ha encontrado el schema, vuelva a intentarlo'
+  },
+  NOT_FOUND_DESCRIPTION: {
+    code: 'NOT_FOUND_DESCRIPTION',
+    message: 'No se ha encontrado ninguna descripción para el objeto'
   }
 }
 
@@ -114,6 +118,35 @@ export class DBObjectModel {
       }
     } catch (err) {
       return { error: ERROR_CODES.EREQUEST }
+    }
+  }
+
+  static async getObjectDescription ({ name, schema = '' }) {
+    const request = connection.request()
+
+    try {
+      // buscar el objeto
+      const object = await this.getObject({ name, schema })
+      if (object.error) return object
+
+      const idTable = object.success.object_id
+      console.log(idTable)
+      const stmt = `
+                    SELECT A.name, A.column_id, C.minor_id, C.value, C.name AS property_name
+                    FROM sys.columns                  A
+                    INNER JOIN sys.objects            B ON B.object_id = A.object_id
+                    LEFT JOIN sys.extended_properties C ON C.major_id = B.object_id AND C.minor_id = A.column_id
+                    WHERE A.object_id = @idTable
+                  `
+      await request.input('idTable', sql.Int, idTable)
+      const res = await request.query(stmt)
+      console.log(res)
+
+      if (res.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND_DESCRIPTION }
+
+      return { success: res.recordset }
+    } catch (err) {
+      return { error: err }
     }
   }
 }
