@@ -90,8 +90,8 @@ export class DBObjectModel {
       const stmt = `
                     SELECT  A.object_id,  A.name,                 TRIM(A.type) AS type, A.type_desc,
                             B.schema_id,  B.name AS schema_name,  A.create_date,        A.modify_date
-                    FROM sys.objects A
-                    INNER JOIN sys.schemas B ON B.schema_id = A.schema_id
+                    FROM sys.objects        A
+                    INNER JOIN sys.schemas  B ON B.schema_id = A.schema_id
                     WHERE A.name = @name
                   `
       await request.input('name', sql.VarChar, name)
