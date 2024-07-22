@@ -10,9 +10,27 @@ const PORT = process.env.PORT ?? 1234
 
 app.get('/dbobject/:name', async (req, res) => {
   const { name } = req.params
+  const { schema } = req.query
 
   try {
-    const result = await DBObjectModel.getObject({ name })
+    const result = await DBObjectModel.getObject({ name, schema })
+    if (result.error) {
+      res.status(404).json(result)
+      return
+    }
+
+    res.json(result)
+  } catch (err) {
+    // console.log(err)
+    res.status(404).send(err)
+  }
+})
+
+app.get('/dbobject/definition/:name', async (req, res) => {
+  const { name } = req.params
+
+  try {
+    const result = await DBObjectModel.getObjectDefinition({ name })
     if (result.error) {
       res.status(404).json(result)
       return
@@ -28,15 +46,6 @@ app.get('/dbobject/:name', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`El servidor está ejecutandos en el puerto http://localhost:${PORT}`)
 })
-
-const SYS_OBJECTS_TYPES = {
-  VIEW: 'V',
-  USER_TABLE: 'U',
-  SQL_TRIGGER: 'TR',
-  SQL_TABLE_VALUED_FUNCTION: 'TF',
-  SQL_STORED_PROCEDURE: 'P',
-  SQL_SCALAR_FUNCTION: 'FN'
-}
 
 // const ERRORS_CODE = {
 //   EREQUEST: 'EREQUEST', //Message from SQL Server. Error object contains additional details.

@@ -29,46 +29,44 @@ const ERROR_CODES = {
   AMBIGUOUS_RESULTS: {
     code: 'AMBIGUOUS_RESULTS',
     message: 'Se ha encontrado multiples coincidencias del objeto, agrege el schema como prefijo para evitar la ambiguedad, ejemplo: dbo.objectName'
+  },
+  NOT_FOUND_SQUEMA: {
+    code: 'NOT_FOUND_SQUEMA',
+    message: 'No se ha encontrado el schema, vuelva a intentarlo'
   }
+}
+
+const SYS_OBJECTS_TYPES = {
+  VIEW: 'V',
+  USER_TABLE: 'U',
+  SQL_TRIGGER: 'TR',
+  SQL_TABLE_VALUED_FUNCTION: 'TF',
+  SQL_STORED_PROCEDURE: 'P',
+  SQL_SCALAR_FUNCTION: 'FN'
 }
 
 const connection = await sql.connect(config)
 
 export class DBObjectModel {
-  static async getObjectText ({ name }) {
+  static async getObjectDefinition ({ name }) {
     const request = connection.request()
 
     try {
-      // Buscar el objeto
-      const stmt = `SELECT name = CONCAT(B.name, '.', A.name), A.type, A.type_desc, B.name as schema_name
-                    FROM sys.objects A
-                    INNER JOIN sys.schemas B ON B.schema_id = A.schema_id
-                    WHERE A.name = @name`
-      await request.input('name', sql.VarChar, name)
-      const result = await request.query(stmt)
+      // buscar el objeto
+      const object = await this.getObject({ name })
 
-      if (result.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND }
+      if (object.error) return object
 
-      // Obtener el objeto
-      if (result.rowsAffected[0] === 1) {
-        const info = result.recordset[0]
-        const stmt2 = 'EXEC SP_HELPTEXT @schemaAndName'
-        await request.input('schemaAndName', sql.VarChar, info.name)
-        const result2 = await request.query(stmt2)
+      // si el objeto es del tipo USER_TABLE no se puede obtener la definición
+      if (object.success.type === SYS_OBJECTS_TYPES.USER_TABLE) return { error: ERROR_CODES.NOT_FOUND }
 
-        const { data, total_lines } = formatStoreProcedure(result2.recordset)
-        return {
-          result: {
-            data,
-            total_lines,
-            schema_name: info.schema_name,
-            type: info.type_desc,
-            type_desc: info.type
-          }
-        }
-      }
+      const { schema_name, name: object_name } = await object.success
+      const stmt = 'EXEC SP_HELPTEXT @schemaAndObjectName'
+      await request.input('schemaAndObjectName', sql.VarChar, schema_name + '.' + object_name)
+      const res = await request.query(stmt)
 
-      return { error: ERROR_CODES.AMBIGUOUS_RESULTS }
+      const { data, total_lines } = formatStoreProcedure(res.recordset)
+      return { success: { data, total_lines } }
     } catch (err) {
       return { error: ERROR_CODES.EREQUEST }
     }
@@ -83,7 +81,7 @@ export class DBObjectModel {
     return result
   }
 
-  static async getObject ({ name }) {
+  static async getObject ({ name, schema = '' }) {
     const request = connection.request()
 
     try {
@@ -98,9 +96,20 @@ export class DBObjectModel {
       const res = await request.query(stmt)
 
       if (res.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND }
-      if (res.rowsAffected[0] > 1) return { error: ERROR_CODES.AMBIGUOUS_RESULTS }
+
+      // si se encuentra más de un objeto con el mismo nombre
+      if (res.rowsAffected[0] > 1) {
+        // si no se ha especificado el schema, se retorna un error
+        if (schema === '') return { error: ERROR_CODES.AMBIGUOUS_RESULTS }
+
+        // si se ha especificado el schema, se busca el objeto con el schema
+        const object = res.recordset.find(obj => obj.schema_name === schema)
+        if (!object) return { error: ERROR_CODES.NOT_FOUND_SQUEMA }
+        return { success: object }
+      }
 
       if (res.rowsAffected[0] === 1) {
+        console.log(res.recordset[0])
         return { success: res.recordset[0] }
       }
     } catch (err) {
