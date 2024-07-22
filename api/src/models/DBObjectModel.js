@@ -130,7 +130,8 @@ export class DBObjectModel {
       if (object.error) return object
 
       const idTable = object.success.object_id
-      console.log(idTable)
+
+      // obtiene la descripción de las columnas
       const stmt = `
                     SELECT A.name, A.column_id, C.minor_id, C.value, C.name AS property_name
                     FROM sys.columns                  A
@@ -140,11 +141,26 @@ export class DBObjectModel {
                   `
       await request.input('idTable', sql.Int, idTable)
       const res = await request.query(stmt)
-      console.log(res)
+      const columnDescriptions = res.recordset
 
-      if (res.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND_DESCRIPTION }
+      // obtiene la descripción del objeto
+      const stmt2 = `
+                    SELECT B.minor_id, B.value, B.name AS property_name
+                    FROM sys.objects                    A
+                    INNER JOIN sys.extended_properties  B ON B.major_id = A.object_id
+                    WHERE A.object_id = @idTable2 AND B.minor_id = 0
+                  `
+      await request.input('idTable2', sql.Int, idTable)
+      const res2 = await request.query(stmt2)
+      const objectDescription = res2.recordset
 
-      return { success: res.recordset }
+      if (res.rowsAffected[0] === 0 && res2.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND_DESCRIPTION }
+
+      const data = {
+        column_description: columnDescriptions,
+        object_description: objectDescription
+      }
+      return { success: { data, ...object.success } }
     } catch (err) {
       return { error: err }
     }
