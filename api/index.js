@@ -28,9 +28,10 @@ app.get('/dbobject/:name', async (req, res) => {
 
 app.get('/dbobject/definition/:name', async (req, res) => {
   const { name } = req.params
+  const { schema } = req.query
 
   try {
-    const result = await DBObjectModel.getObjectDefinition({ name })
+    const result = await DBObjectModel.getObjectDefinition({ name, schema })
     if (result.error) {
       res.status(404).json(result)
       return

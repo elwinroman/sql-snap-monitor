@@ -48,12 +48,12 @@ const SYS_OBJECTS_TYPES = {
 const connection = await sql.connect(config)
 
 export class DBObjectModel {
-  static async getObjectDefinition ({ name }) {
+  static async getObjectDefinition ({ name, schema = '' }) {
     const request = connection.request()
 
     try {
       // buscar el objeto
-      const object = await this.getObject({ name })
+      const object = await this.getObject({ name, schema })
 
       if (object.error) return object
 
