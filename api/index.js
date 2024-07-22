@@ -14,7 +14,7 @@ app.get('/dbobject/:name', async (req, res) => {
   try {
     const result = await DBObjectModel.getObject({ name })
     if (result.error) {
-      res.status(404).json(result.error)
+      res.status(404).json(result)
       return
     }
 

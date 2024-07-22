@@ -1,4 +1,5 @@
 import sql from 'mssql'
+import { isBlankLine } from '../utils/dbobject-utils.js'
 
 const config = {
   user: process.env.DB_USER,
@@ -18,23 +19,23 @@ const config = {
 
 const ERROR_CODES = {
   EREQUEST: {
-    error: 'EREQUEST',
-    message: 'Error en la bd, consulte con su administrador'
+    code: 'EREQUEST',
+    message: 'Error en la consulta, consulte con su administrador'
   },
   NOT_FOUND: {
-    error: 'NOT_FOUND',
+    code: 'NOT_FOUND',
     message: 'No se ha encontrado el objeto, vuelva a intentarlo'
   },
-  DUPLICATE: {
-    error: 'DUPLICATE',
-    message: 'Se ha encontrado multiples objetos con el mismo nombre, agrege el schema como prefijo para mayor precisión, ejemplo: dbo.objectName'
+  AMBIGUOUS_RESULTS: {
+    code: 'AMBIGUOUS_RESULTS',
+    message: 'Se ha encontrado multiples coincidencias del objeto, agrege el schema como prefijo para evitar la ambiguedad, ejemplo: dbo.objectName'
   }
 }
 
 const connection = await sql.connect(config)
 
 export class DBObjectModel {
-  static async getObject ({ name }) {
+  static async getObjectText ({ name }) {
     const request = connection.request()
 
     try {
@@ -46,7 +47,7 @@ export class DBObjectModel {
       await request.input('name', sql.VarChar, name)
       const result = await request.query(stmt)
 
-      if (result.rowsAffected[0] === 0) return { result: ERROR_CODES.NOT_FOUND }
+      if (result.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND }
 
       // Obtener el objeto
       if (result.rowsAffected[0] === 1) {
@@ -67,9 +68,9 @@ export class DBObjectModel {
         }
       }
 
-      return { result: ERROR_CODES.DUPLICATE }
+      return { error: ERROR_CODES.AMBIGUOUS_RESULTS }
     } catch (err) {
-      return { result: ERROR_CODES.EREQUEST }
+      return { error: ERROR_CODES.EREQUEST }
     }
   }
 
@@ -81,6 +82,31 @@ export class DBObjectModel {
 
     return result
   }
+
+  static async getObject ({ name }) {
+    const request = connection.request()
+
+    try {
+      const stmt = `
+                    SELECT  A.object_id,  A.name,                 TRIM(A.type) AS type, A.type_desc,
+                            B.schema_id,  B.name AS schema_name,  A.create_date,        A.modify_date
+                    FROM sys.objects A
+                    INNER JOIN sys.schemas B ON B.schema_id = A.schema_id
+                    WHERE A.name = @name
+                  `
+      await request.input('name', sql.VarChar, name)
+      const res = await request.query(stmt)
+
+      if (res.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND }
+      if (res.rowsAffected[0] > 1) return { error: ERROR_CODES.AMBIGUOUS_RESULTS }
+
+      if (res.rowsAffected[0] === 1) {
+        return { success: res.recordset[0] }
+      }
+    } catch (err) {
+      return { error: ERROR_CODES.EREQUEST }
+    }
+  }
 }
 
 /**
@@ -91,14 +117,14 @@ export class DBObjectModel {
 const formatStoreProcedure = (recordset) => {
   const data = []
   const checkInit = {
-    flag: true,
+    flag: false,
     index: 0
   }
   for (let i = 0; i < recordset.length; i++) {
-    // if (checkEndLine && checkInit.flag !== null) {
-    //   checkInit.flag = true
-    //   checkInit.index = i
-    // }
+    if (!isBlankLine(recordset[i].Text) && !checkInit.flag) {
+      checkInit.flag = true
+      checkInit.index = i
+    }
     const item = {
       line_number: (i + 1) - checkInit.index,
       code_text: recordset[i].Text
