@@ -1,8 +1,10 @@
 import express from 'express'
 import 'dotenv/config'
 import { DBObjectModel } from './src/models/DBObjectModel.js'
+import cors from 'cors'
 
 const app = express()
+app.use(cors())
 
 const PORT = process.env.PORT ?? 1234
 
