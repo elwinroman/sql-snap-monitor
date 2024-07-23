@@ -1,5 +1,5 @@
 import sql from 'mssql'
-import { isBlankLine } from '../utils/dbobject-utils.js'
+import { formatStoreProcedure } from '../utils/object-utils.js'
 
 const config = {
   user: process.env.DB_USER,
@@ -51,40 +51,16 @@ const SYS_OBJECTS_TYPES = {
 
 const connection = await sql.connect(config)
 
-export class DBObjectModel {
-  static async getObjectDefinition ({ name, schema = '' }) {
-    const request = connection.request()
-
-    try {
-      // buscar el objeto
-      const object = await this.getObject({ name, schema })
-
-      if (object.error) return object
-
-      // si el objeto es del tipo USER_TABLE no se puede obtener la definición
-      if (object.success.type === SYS_OBJECTS_TYPES.USER_TABLE) return { error: ERROR_CODES.NOT_FOUND }
-
-      const { schema_name, name: object_name } = await object.success
-      const stmt = 'EXEC SP_HELPTEXT @schemaAndObjectName'
-      await request.input('schemaAndObjectName', sql.VarChar, schema_name + '.' + object_name)
-      const res = await request.query(stmt)
-
-      const { data, total_lines } = formatStoreProcedure(res.recordset)
-      return { success: { data, total_lines } }
-    } catch (err) {
-      return { error: ERROR_CODES.EREQUEST }
-    }
-  }
-
-  static async test () {
-    const request = connection.request()
-
-    const stmt = 'SELECT name FROM sys.schemas WHERE schema_id = 9'
-    const result = await request.query(stmt)
-
-    return result
-  }
-
+export class ObjectModel {
+  /**
+   * Obtiene la información de un objeto de la base de datos
+   *
+   * @param {Object} params - Objeto con el nombre y el schema del objeto
+   * @param {String} params.name - Nombre del objeto
+   * @param {String} [params.schema = ''] - Schema del objeto (opcional)
+   *
+   * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
+   */
   static async getObject ({ name, schema = '' }) {
     const request = connection.request()
 
@@ -112,15 +88,54 @@ export class DBObjectModel {
         return { success: object }
       }
 
-      if (res.rowsAffected[0] === 1) {
-        console.log(res.recordset[0])
-        return { success: res.recordset[0] }
-      }
+      if (res.rowsAffected[0] === 1) return { success: res.recordset[0] }
     } catch (err) {
       return { error: ERROR_CODES.EREQUEST }
     }
   }
 
+  /**
+   * Obtiene la definición de un objeto de la base de datos (que no sea una tabla)
+   *
+   * @param {Object} params - Objeto con el nombre y el schema del objeto
+   * @param {String} params.name - Nombre del objeto
+   * @param {String} [params.schema = ''] - Schema del objeto (opcional)
+   *
+   * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
+   */
+  static async getObjectDefinition ({ name, schema = '' }) {
+    const request = connection.request()
+
+    try {
+      // buscar el objeto
+      const object = await this.getObject({ name, schema })
+
+      if (object.error) return object
+
+      // si el objeto es del tipo USER_TABLE no se puede obtener la definición
+      if (object.success.type === SYS_OBJECTS_TYPES.USER_TABLE) return { error: ERROR_CODES.NOT_FOUND }
+
+      const { schema_name, name: object_name } = await object.success
+      const stmt = 'EXEC SP_HELPTEXT @schemaAndObjectName'
+      await request.input('schemaAndObjectName', sql.VarChar, schema_name + '.' + object_name)
+      const res = await request.query(stmt)
+
+      const { data, total_lines } = formatStoreProcedure(res.recordset)
+      return { success: { data, total_lines } }
+    } catch (err) {
+      return { error: ERROR_CODES.EREQUEST }
+    }
+  }
+
+  /**
+   * Obtiene la descripción de un objeto de la base de datos
+   *
+   * @param {Object} params - Objeto con el nombre y el schema del objeto
+   * @param {String} params.name - Nombre del objeto
+   * @param {String} [params.schema = ''] - Schema del objeto (opcional)
+   *
+   * @returns {Promise<Object>} - Objeto con la descripción del objeto o un error
+   */
   static async getObjectDescription ({ name, schema = '' }) {
     const request = connection.request()
 
@@ -165,34 +180,4 @@ export class DBObjectModel {
       return { error: err }
     }
   }
-}
-
-/**
- * Formatea la estructura un store procedure devuelto de la base de datos
- * @param {Array} recordset Data del store procedure
- * @returns {Object} Objeto con la estructura del store procedure
- */
-const formatStoreProcedure = (recordset) => {
-  const data = []
-  const checkInit = {
-    flag: false,
-    index: 0
-  }
-  for (let i = 0; i < recordset.length; i++) {
-    if (!isBlankLine(recordset[i].Text) && !checkInit.flag) {
-      checkInit.flag = true
-      checkInit.index = i
-    }
-    const item = {
-      line_number: (i + 1) - checkInit.index,
-      code_text: recordset[i].Text
-    }
-
-    // Comprueba si el codeText contiene la palabra 'CREATE PROCEDURE' para evitar lineas innecesarias anteriores
-    if (checkInit.flag) {
-      data.push(item)
-    }
-  }
-
-  return { data, total_lines: data.length }
 }
