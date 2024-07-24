@@ -1,22 +1,6 @@
-import sql from 'mssql'
+import { connection } from '../config/database.js'
+import { ERROR_CODES } from '../constants/error-codes.js'
 import { formatStoreProcedure } from '../utils/object-utils.js'
-import { ERROR_CODES } from '../utils/error-codes.js'
-
-const config = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PWD,
-  database: process.env.DB_NAME,
-  server: process.env.DB_SERVER,
-  pool: {
-    max: 10,
-    min: 0,
-    idleTimeoutMillis: 30000
-  },
-  options: {
-    encrypt: false, // para Azure
-    trustServerCertificate: true // cambiar true para el entorno local dev / certificados autofirmados
-  }
-}
 
 const SYS_OBJECTS_TYPES = {
   VIEW: 'V',
@@ -26,8 +10,6 @@ const SYS_OBJECTS_TYPES = {
   SQL_STORED_PROCEDURE: 'P',
   SQL_SCALAR_FUNCTION: 'FN'
 }
-
-const connection = await sql.connect(config)
 
 export class ObjectModel {
   /**
@@ -40,7 +22,7 @@ export class ObjectModel {
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
   static async getObject ({ name, schema = '' }) {
-    const request = connection.request()
+    const { request, sql } = await connection()
 
     try {
       const stmt = `
@@ -82,7 +64,7 @@ export class ObjectModel {
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
   static async getObjectDefinition ({ name, schema = '' }) {
-    const request = connection.request()
+    const { request, sql } = await connection()
 
     try {
       // buscar el objeto
@@ -115,7 +97,7 @@ export class ObjectModel {
    * @returns {Promise<Object>} - Objeto con la descripción del objeto o un error
    */
   static async getObjectDescription ({ name, schema = '' }) {
-    const request = connection.request()
+    const { request, sql } = await connection()
 
     try {
       // buscar el objeto
