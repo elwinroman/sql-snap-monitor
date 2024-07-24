@@ -68,7 +68,7 @@ export class ObjectModel {
 
     try {
       // buscar el objeto
-      const object = await this.getObject({ name, schema })
+      const object = await this.findOneObject({ name, schema })
 
       if (object.error) return object
 
@@ -101,7 +101,7 @@ export class ObjectModel {
 
     try {
       // buscar el objeto
-      const object = await this.getObject({ name, schema })
+      const object = await this.findOneObject({ name, schema })
       if (object.error) return object
 
       const idTable = object.success.object_id
