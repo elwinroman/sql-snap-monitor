@@ -37,12 +37,12 @@ export class ObjectController {
     }
   }
 
-  getObject = async (req, res) => {
+  getOneObject = async (req, res) => {
     const { name } = req.params
     const { schema } = req.query
     console.log('req.session.user: ', req.session.user)
     try {
-      const result = await this.objectModel.getObject({ name, schema })
+      const result = await this.objectModel.findOneObject({ name, schema })
       if (result.error) {
         res.status(404).json(result)
         return

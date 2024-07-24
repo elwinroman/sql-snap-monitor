@@ -21,7 +21,7 @@ export class ObjectModel {
    *
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
-  static async getObject ({ name, schema = '' }) {
+  static async findOneObject ({ name, schema = '' }) {
     const { request, sql } = await connection()
 
     try {
