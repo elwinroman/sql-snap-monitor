@@ -6,7 +6,6 @@ export async function connection ({
   database = process.env.DB_NAME,
   server = process.env.DB_SERVER
 } = {}) {
-  console.log(user, password, database, server)
   const config = {
     user,
     password,

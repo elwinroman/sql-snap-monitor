@@ -40,7 +40,7 @@ export class ObjectController {
   getObject = async (req, res) => {
     const { name } = req.params
     const { schema } = req.query
-
+    console.log('req.session.user: ', req.session.user)
     try {
       const result = await this.objectModel.getObject({ name, schema })
       if (result.error) {
