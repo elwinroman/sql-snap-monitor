@@ -21,7 +21,7 @@ export function Sidebar() {
   ]
 
   return (
-    <aside className="bg-ow h-screen w-[300px] shrink-0 overflow-y-auto">
+    <aside className="h-screen w-[300px] shrink-0 overflow-y-auto bg-ow">
       <div className="flex h-full flex-col">
         <div className="sticky top-0 flex h-[var(--navbar-height)] shrink-0 items-center justify-center gap-2 backdrop-blur-sm">
           <div>
@@ -29,7 +29,7 @@ export function Sidebar() {
           </div>
           <h2 className="text-xl font-bold text-slate-700">Quality Tools</h2>
         </div>
-        <nav className="bg-ow mx-auto grow py-4">
+        <nav className="mx-auto grow bg-ow py-4">
           <ul className="flex flex-col gap-3">
             {/* Menu item */}
             {navLinks.map(({ to, icon, text }) => (
