@@ -1,22 +1,30 @@
+import { Article as ArticleIcon } from '@/icons/article'
+import { CodeCircle2 as CodeCircleIcon } from '@/icons/code-circle-2'
+import { LayoutDashboard as LayoutDashboardIcon } from '@/icons/layout-dashboard'
 import { NavLink } from 'react-router-dom'
-import { User as UserIcon } from '@/icons/user'
+import { Squares as SquaresIcon } from '@/icons/squares'
 
 export function Sidebar() {
   const navLinks = [
     {
       to: '/',
-      icon: <UserIcon width={20} height={20} />,
+      icon: <LayoutDashboardIcon width={20} height={20} />,
       text: 'Home',
     },
     {
       to: '/definition',
-      icon: <UserIcon width={20} height={20} />,
+      icon: <CodeCircleIcon width={20} height={20} />,
       text: 'Obtener definición',
     },
     {
       to: '/description',
-      icon: <UserIcon width={20} height={20} />,
+      icon: <ArticleIcon width={20} height={20} />,
       text: 'Obtener descripción',
+    },
+    {
+      to: '/diff-editor',
+      icon: <SquaresIcon width={20} height={20} />,
+      text: 'Diff editor',
     },
   ]
 
@@ -40,7 +48,7 @@ export function Sidebar() {
                       className={`flex w-[250px] items-center gap-2 rounded-md px-4 py-3 ${isActive ? 'bg-white shadow-[0_20px_27px_0_rgba(0,0,0,.05)]' : undefined}`}
                     >
                       <i
-                        className={`rounded-md bg-white p-1.5 text-slate-600 shadow dark:border dark:border-slate-600 dark:bg-transparent dark:text-white dark:shadow-none ${isActive ? 'bg-rose-500 text-white shadow-none' : undefined}`}
+                        className={`rounded-md p-1.5 text-slate-600 shadow dark:border dark:border-slate-600 dark:bg-transparent dark:text-white dark:shadow-none ${isActive ? 'bg-rose-500 text-white shadow-none' : 'bg-white'}`}
                       >
                         {icon}
                       </i>
