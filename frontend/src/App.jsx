@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App flex w-full">
       <Sidebar />
-      <main className="bg-ow relative flex h-screen w-full flex-col overflow-y-auto">
+      <main className="relative flex h-screen w-full flex-col overflow-y-auto bg-ow px-8">
         <Header />
         <Main />
         <footer className="flex-[0_0_200px] bg-slate-900 text-slate-50">

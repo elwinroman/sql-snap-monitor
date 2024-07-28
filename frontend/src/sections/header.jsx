@@ -45,7 +45,7 @@ export function Header() {
   const logged = true
   return (
     <header className="w-full flex-[0_0_var(--navbar-height)]">
-      <ul className="flex h-full flex-row items-center gap-4 px-4">
+      <ul className="gap- flex h-full flex-row items-center">
         {/* Info del objeto */}
         <li className="grow">
           <article className="flex w-fit gap-8 rounded-md bg-indigo-100 px-3 py-2 dark:bg-indigo-900">
