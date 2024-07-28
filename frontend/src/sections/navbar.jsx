@@ -21,15 +21,15 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Database as DatabaseIcon } from '@/icons/database'
 import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { Search as SearchIcon } from '@/icons/search'
 import { Settings as SettingsIcon } from '@/icons/settings'
 import { User as UserIcon } from '@/icons/user'
-import { Badge } from '@/components/ui/badge'
-import { Database as DatabaseIcon } from '@/icons/database'
 
-export function Header() {
+export function Navbar() {
   const handleKeyup = (e) => {
     e.preventDefault()
     const value = e.target.value.trim()
