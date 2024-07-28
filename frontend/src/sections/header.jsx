@@ -6,10 +6,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { Search as SearchIcon } from '@/icons/search'
+import { Settings as SettingsIcon } from '@/icons/settings'
 import { User as UserIcon } from '@/icons/user'
 
 export function Header() {
@@ -79,8 +88,25 @@ export function Header() {
             </div>
           )}
         </li>
+
+        {/* Icono configuración */}
+        <li>
+          <Sheet>
+            <SheetTrigger className="grid h-9 place-content-center rounded-md px-2 hover:bg-accent hover:text-accent-foreground">
+              <i>
+                <SettingsIcon width={16} height={16} />
+              </i>
+              {/* </Button> */}
+            </SheetTrigger>
+            <SheetContent side="right" className="overflow-y-auto">
+              <SheetHeader>
+                <SheetTitle>Customización</SheetTitle>
+                <SheetDescription>Customización theme.</SheetDescription>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+        </li>
       </ul>
-      <div>icons</div>
     </header>
   )
 }
