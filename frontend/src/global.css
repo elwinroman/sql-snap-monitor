@@ -32,6 +32,9 @@
 
     /* Colores customizados */
     --ow-background: #f8f9fa;
+
+    /* Tamaños */
+    --navbar-height: 100px;
   }
 
   .dark {
