@@ -7,17 +7,6 @@ const InputWithIcon = React.forwardRef(
     const StartIcon = startIcon
     const EndIcon = endIcon
 
-    const handleKeyup = (e) => {
-      e.preventDefault()
-      const value = e.target.value.trim()
-
-      if (value === '') return
-
-      if (e.key === 'Enter') {
-        // Actualizar el estado del stringCode para renderizar el codigo
-      }
-    }
-
     return (
       <div className="relative w-full">
         {StartIcon && (
@@ -37,7 +26,6 @@ const InputWithIcon = React.forwardRef(
             className,
           )}
           ref={ref}
-          onKeyUp={handleKeyup}
           {...props}
         />
         {EndIcon && (
