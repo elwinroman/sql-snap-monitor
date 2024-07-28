@@ -14,12 +14,20 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { Search as SearchIcon } from '@/icons/search'
 import { Settings as SettingsIcon } from '@/icons/settings'
 import { User as UserIcon } from '@/icons/user'
+import { Badge } from '@/components/ui/badge'
+import { Database as DatabaseIcon } from '@/icons/database'
 
 export function Header() {
   const handleKeyup = (e) => {
@@ -38,8 +46,54 @@ export function Header() {
   return (
     <header className="w-full flex-[0_0_var(--navbar-height)]">
       <ul className="flex h-full flex-row items-center gap-4 px-4">
+        {/* Info del objeto */}
         <li className="grow">
-          <div>1</div>
+          <article className="flex w-fit gap-8 rounded-md bg-indigo-100 px-3 py-2 dark:bg-indigo-900">
+            <div className="flex gap-2">
+              <TooltipProvider delayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger className="flex items-center gap-1">
+                    <i>
+                      <DatabaseIcon width={18} height={18} />
+                    </i>
+                    <span className="font-semibold text-slate-800 dark:text-red-100">
+                      SI_BDFinanciero
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Nombre database</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <TooltipProvider delayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger className="grid place-content-center">
+                    <span className="rounded-md border border-slate-400 px-1 pb-0.5 text-xs outline-none dark:border-indigo-200">
+                      dbo
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Schema</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+
+              <TooltipProvider delayDuration={200}>
+                <Tooltip>
+                  <TooltipTrigger className="grid place-content-center">
+                    <span className="font-semibold text-rose-600 dark:text-rose-500">
+                      SI_FinCreditos
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Nombre del objeto</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+            <Badge className="rounded-md text-sm font-bold">P</Badge>
+          </article>
         </li>
 
         {/* Busqueda */}
