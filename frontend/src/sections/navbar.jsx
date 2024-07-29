@@ -29,15 +29,16 @@ import { Search as SearchIcon } from '@/icons/search'
 import { Settings as SettingsIcon } from '@/icons/settings'
 import { User as UserIcon } from '@/icons/user'
 
-export function Navbar() {
+export function Navbar({ object, updateNameObject }) {
   const handleKeyup = (e) => {
     e.preventDefault()
     const value = e.target.value.trim()
 
     if (value === '') return
+    if (value === object.name) return
 
     if (e.key === 'Enter') {
-      console.log(value)
+      updateNameObject({ name: value })
       // Actualizar el estado del stringCode para renderizar el codigo
     }
   }

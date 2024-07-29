@@ -9,12 +9,20 @@ function Home() {
   return <div>Home</div>
 }
 
-export function Main() {
+export function Main({ object, updateNameObject }) {
   return (
     <section className="flex-[1_0_auto]">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/definition" element={<DefinitionObject />} />
+        <Route
+          path="/definition"
+          element={
+            <DefinitionObject
+              object={object}
+              updateNameObject={updateNameObject}
+            />
+          }
+        />
         <Route path="/description" element={<DescriptionObject />} />
         <Route path="*" element={<Error />} />
       </Routes>
