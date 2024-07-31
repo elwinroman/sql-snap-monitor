@@ -1,11 +1,27 @@
 export const ERROR_CODES = {
   EREQUEST: {
-    code: 'EREQUEST',
-    message: 'Error en la consulta, consulte con su administrador'
+    status: 'error',
+    statusCode: 400,
+    error: {
+      code: 'EREQUEST',
+      message: 'Error en la consulta'
+    }
   },
   NOT_FOUND: {
-    code: 'NOT_FOUND',
-    message: 'No se ha encontrado el objeto, vuelva a intentarlo'
+    status: 'error',
+    statusCode: 404,
+    error: {
+      code: 'NOT_FOUND',
+      message: 'No se ha encontrado el objeto, vuelva a intentarlo'
+    }
+  },
+  INTERNAL_SERVER_ERROR: {
+    status: 'error',
+    statusCode: 500,
+    error: {
+      code: 'INTERNAL_SERVER_ERROR',
+      message: 'Error interno del servidor'
+    }
   },
   AMBIGUOUS_RESULTS: {
     code: 'AMBIGUOUS_RESULTS',

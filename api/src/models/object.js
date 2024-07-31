@@ -57,33 +57,28 @@ export class ObjectModel {
   /**
    * Obtiene la definición de un objeto de la base de datos (que no sea una tabla)
    *
-   * @param {Object} params - Objeto con el nombre y el schema del objeto
-   * @param {String} params.name - Nombre del objeto
-   * @param {String} [params.schema = ''] - Schema del objeto (opcional)
+   * @param {Object} params - Objecto que contiene los parámetros para la consulta
+   * @param {String} params.id - Identificador del objeto
    *
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
-  static async getObjectDefinition ({ name, schema = '' }) {
+  static async getObjectDefinition ({ id }) {
     const { request, sql } = await connection()
 
     try {
-      // buscar el objeto
-      const object = await this.findOneObject({ name, schema })
-
-      if (object.error) return object
-
-      // si el objeto es del tipo USER_TABLE no se puede obtener la definición
-      if (object.success.type === SYS_OBJECTS_TYPES.USER_TABLE) return { error: ERROR_CODES.NOT_FOUND }
-
-      const { schema_name, name: object_name } = await object.success
-      const stmt = 'EXEC SP_HELPTEXT @schemaAndObjectName'
-      await request.input('schemaAndObjectName', sql.VarChar, schema_name + '.' + object_name)
+      const stmt = `SELECT definition
+                    FROM sys.sql_modules
+                    WHERE object_id = @id
+                  `
+      await request.input('id', sql.VarChar, id)
       const res = await request.query(stmt)
 
-      const { data, total_lines } = formatStoreProcedure(res.recordset)
-      return { success: { data, total_lines } }
+      if (res.rowsAffected[0] === 0) return ERROR_CODES.NOT_FOUND
+
+      return { status: 'success', statusCode: 200, ...res.recordset[0] }
     } catch (err) {
-      return { error: ERROR_CODES.EREQUEST }
+      const { number, message } = err.originalError.info
+      return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
     }
   }
 

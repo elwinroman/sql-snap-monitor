@@ -1,22 +1,24 @@
+import { ERROR_CODES } from '../constants/error-codes.js'
+
 export class ObjectController {
   constructor ({ objectModel }) {
     this.objectModel = objectModel
   }
 
   getObjectDefinition = async (req, res) => {
-    const { name } = req.params
-    const { schema } = req.query
+    const { id } = req.params
 
     try {
-      const result = await this.objectModel.getObjectDefinition({ name, schema })
+      const result = await this.objectModel.getObjectDefinition({ id })
       if (result.error) {
-        res.status(404).json(result)
+        res.status(result.statusCode).json(result)
         return
       }
 
       res.json(result)
     } catch (err) {
-      res.status(404).send(err)
+      const { statusCode } = ERROR_CODES.INTERNAL_SERVER_ERROR
+      res.status(statusCode).json(ERROR_CODES.INTERNAL_SERVER_ERROR)
     }
   }
 
