@@ -8,9 +8,9 @@ export function createObjectRouter ({ objectModel }) {
 
   // los parámetros se pasan internamente de forma automática por express mediante middlewares
   router.get('/test', objectController.getAnyQuery)
-  router.get('/:name', objectController.getOneObject)
+  router.get('/:name', objectController.findObject)
   router.get('/definition/:id', objectController.getObjectDefinition)
-  router.get('/description/:name', objectController.getObjectDescription)
+  router.get('/description/:id', objectController.getObjectDescription)
 
   return router
 }

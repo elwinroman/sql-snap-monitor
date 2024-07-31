@@ -32,7 +32,11 @@ export const ERROR_CODES = {
     message: 'No se ha encontrado el schema, vuelva a intentarlo'
   },
   NOT_FOUND_DESCRIPTION: {
-    code: 'NOT_FOUND_DESCRIPTION',
-    message: 'No se ha encontrado ninguna descripción para el objeto'
+    status: 'error',
+    statusCode: 404,
+    error: {
+      code: 'NOT_FOUND_DESCRIPTION',
+      message: 'No se ha encontrado ninguna descripción para el objeto'
+    }
   }
 }

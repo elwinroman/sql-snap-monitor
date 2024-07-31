@@ -23,36 +23,51 @@ export class ObjectController {
   }
 
   getObjectDescription = async (req, res) => {
-    const { name } = req.params
-    const { schema } = req.query
+    const { id } = req.params
 
     try {
-      const result = await this.objectModel.getObjectDescription({ name, schema })
+      const result = await this.objectModel.getObjectDescription({ id })
       if (result.error) {
-        res.status(404).json(result)
+        res.status(result.statusCode).json(result)
         return
       }
 
       res.json(result)
     } catch (err) {
-      res.status(404).send(err)
+      const { statusCode } = ERROR_CODES.INTERNAL_SERVER_ERROR
+      res.status(statusCode).json(ERROR_CODES.INTERNAL_SERVER_ERROR)
     }
   }
 
-  getOneObject = async (req, res) => {
+  findObject = async (req, res) => {
     const { name } = req.params
-    const { schema } = req.query
 
     try {
-      const result = await this.objectModel.findOneObject({ name, schema })
+      const result = await this.objectModel.findObject({ name })
       if (result.error) {
-        res.status(404).json(result)
+        res.json(result)
         return
       }
 
       res.json(result)
     } catch (err) {
-      res.status(404).send(err)
+      const { statusCode } = ERROR_CODES.INTERNAL_SERVER_ERROR
+      res.status(statusCode).json(ERROR_CODES.INTERNAL_SERVER_ERROR)
+    }
+  }
+
+  getAnyQuery = async (req, res) => {
+    console.log('hola')
+    try {
+      const result = await this.objectModel.getAnyQuery()
+      if (result.error) {
+        res.json(result)
+        return
+      }
+
+      res.json(result)
+    } catch (err) {
+      res.send(err)
     }
   }
 }

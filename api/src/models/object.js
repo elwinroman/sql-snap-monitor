@@ -13,21 +13,20 @@ const SYS_OBJECTS_TYPES = {
 
 export class ObjectModel {
   /**
-   * Obtiene la información de un objeto de la base de datos
+   * Busca un objeto en la base de datos por su nombre (devuelve todas las coincidencias)
    *
-   * @param {Object} params - Objeto con el nombre y el schema del objeto
+   * @param {Object} params - Objeto que contiene los parametros para la consulta
    * @param {String} params.name - Nombre del objeto
-   * @param {String} [params.schema = ''] - Schema del objeto (opcional)
    *
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
-  static async findOneObject ({ name, schema = '' }) {
+  static async findObject ({ name }) {
     const { request, sql } = await connection()
 
     try {
       const stmt = `
-                    SELECT  A.object_id,  A.name,                 TRIM(A.type) AS type, A.type_desc,
-                            B.schema_id,  B.name AS schema_name,  A.create_date,        A.modify_date
+                    SELECT  A.object_id,  A.name,             TRIM(A.type) AS type, A.type_desc,
+                            B.schema_id,  B.name AS _schema,  A.create_date,        A.modify_date
                     FROM sys.objects        A
                     INNER JOIN sys.schemas  B ON B.schema_id = A.schema_id
                     WHERE A.name = @name
@@ -35,22 +34,24 @@ export class ObjectModel {
       await request.input('name', sql.VarChar, name)
       const res = await request.query(stmt)
 
-      if (res.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND }
+      if (res.rowsAffected[0] === 0) return ERROR_CODES.NOT_FOUND
 
-      // si se encuentra más de un objeto con el mismo nombre
-      if (res.rowsAffected[0] > 1) {
-        // si no se ha especificado el schema, se retorna un error
-        if (schema === '') return { error: ERROR_CODES.AMBIGUOUS_RESULTS }
+      const objects = res.recordset.map(obj => {
+        return {
+          id: obj.object_id,
+          name: obj.name,
+          type: obj.type,
+          typeDesc: obj.type_desc,
+          schema: obj._schema,
+          createDate: obj.create_date,
+          modifyDate: obj.modify_date
+        }
+      })
 
-        // si se ha especificado el schema, se busca el objeto con el schema
-        const object = res.recordset.find(obj => obj.schema_name === schema)
-        if (!object) return { error: ERROR_CODES.NOT_FOUND_SQUEMA }
-        return { success: object }
-      }
-
-      if (res.rowsAffected[0] === 1) return { success: res.recordset[0] }
+      return { status: 'success', statusCode: 200, objects, meta: { length: objects.length } }
     } catch (err) {
-      return { error: ERROR_CODES.EREQUEST }
+      const { number, message } = err.originalError.info
+      return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
     }
   }
 
@@ -84,53 +85,53 @@ export class ObjectModel {
 
   /**
    * Obtiene la descripción de un objeto de la base de datos
+   * ⚠️ Soportado solo para tablas y vistas, puede no funcionar para otros tipos de objetos
    *
    * @param {Object} params - Objeto con el nombre y el schema del objeto
-   * @param {String} params.name - Nombre del objeto
-   * @param {String} [params.schema = ''] - Schema del objeto (opcional)
+   * @param {String} params.id - Identificador del objeto
    *
    * @returns {Promise<Object>} - Objeto con la descripción del objeto o un error
    */
-  static async getObjectDescription ({ name, schema = '' }) {
+  static async getObjectDescription ({ id }) {
     const { request, sql } = await connection()
 
     try {
-      // buscar el objeto
-      const object = await this.findOneObject({ name, schema })
-      if (object.error) return object
-
-      const idTable = object.success.object_id
-
       // obtiene la descripción de las columnas
       const stmt = `
                     SELECT A.name, A.column_id, C.minor_id, C.value, C.name AS property_name
                     FROM sys.columns                  A
                     INNER JOIN sys.objects            B ON B.object_id = A.object_id
                     LEFT JOIN sys.extended_properties C ON C.major_id = B.object_id AND C.minor_id = A.column_id
-                    WHERE A.object_id = @idTable
+                    WHERE A.object_id = @id
                   `
-      await request.input('idTable', sql.Int, idTable)
+      await request.input('id', sql.Int, id)
       const res = await request.query(stmt)
-      const columnDescriptions = res.recordset
+      const columnDescription = res.recordset
 
       // obtiene la descripción del objeto
       const stmt2 = `
                     SELECT B.minor_id, B.value, B.name AS property_name
                     FROM sys.objects                    A
                     INNER JOIN sys.extended_properties  B ON B.major_id = A.object_id
-                    WHERE A.object_id = @idTable2 AND B.minor_id = 0
+                    WHERE A.object_id = @id2 AND B.minor_id = 0
                   `
-      await request.input('idTable2', sql.Int, idTable)
+      await request.input('id2', sql.Int, id)
       const res2 = await request.query(stmt2)
       const objectDescription = res2.recordset
 
-      if (res.rowsAffected[0] === 0 && res2.rowsAffected[0] === 0) return { error: ERROR_CODES.NOT_FOUND_DESCRIPTION }
+      if (res.rowsAffected[0] === 0 && res2.rowsAffected[0] === 0) return ERROR_CODES.NOT_FOUND_DESCRIPTION
 
-      const data = {
-        column_description: columnDescriptions,
-        object_description: objectDescription
+      return {
+        status: 'success',
+        statusCode: 200,
+        data: { objectDescription, columnDescription },
+        meta: { lengthObject: objectDescription.length, lengthColumn: columnDescription.length }
       }
-      return { success: { data, ...object.success } }
+    } catch (err) {
+      const { number, message } = err.originalError.info
+      return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
+    }
+  }
     } catch (err) {
       return { error: err }
     }
