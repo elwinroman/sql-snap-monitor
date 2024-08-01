@@ -55,19 +55,4 @@ export class ObjectController {
       res.status(statusCode).json(ERROR_CODES.INTERNAL_SERVER_ERROR)
     }
   }
-
-  getAnyQuery = async (req, res) => {
-    console.log('hola')
-    try {
-      const result = await this.objectModel.getAnyQuery()
-      if (result.error) {
-        res.json(result)
-        return
-      }
-
-      res.json(result)
-    } catch (err) {
-      res.send(err)
-    }
-  }
 }

@@ -132,8 +132,4 @@ export class ObjectModel {
       return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
     }
   }
-    } catch (err) {
-      return { error: err }
-    }
-  }
 }
