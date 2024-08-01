@@ -18,7 +18,7 @@ export default function App () {
   // verificar token
   root.use(verifyToken)
 
-  root.use('/object', createObjectRouter({ objectModel: ObjectModel }))
+  root.use('/api/object', createObjectRouter({ objectModel: ObjectModel }))
   root.use('/auth', createAuthRouter({ authModel: AuthModel }))
 
   const PORT = process.env.PORT ?? 1234
