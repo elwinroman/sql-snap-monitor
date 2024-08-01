@@ -22,11 +22,7 @@ export async function connection ({
     }
   }
 
-  try {
-    const conn = await sql.connect(config)
-    const request = conn.request()
-    return { request, sql }
-  } catch (err) {
-    throw new Error('Error de conexión a la base de datos')
-  }
+  const conn = await sql.connect(config)
+  const request = conn.request()
+  return { request, sql }
 }
