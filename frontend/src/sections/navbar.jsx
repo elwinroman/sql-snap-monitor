@@ -28,18 +28,22 @@ import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { Search as SearchIcon } from '@/icons/search'
 import { Settings as SettingsIcon } from '@/icons/settings'
 import { User as UserIcon } from '@/icons/user'
+import { useDefinition } from '@/hooks/useDefinition'
+import { useObjectStore } from '@/stores/object.store'
 
-export function Navbar({ object, updateNameObject }) {
-  const handleKeyup = (e) => {
+export function Navbar() {
+  const { getDefinitionObject } = useDefinition()
+  const object = useObjectStore((state) => state.object)
+
+  const handleKeyup = async (e) => {
     e.preventDefault()
     const value = e.target.value.trim()
-
+    console.log('value', value, 'object.name', object.name)
     if (value === '') return
-    if (value === object.name) return
+    if (object.name && value.toLowerCase() === object.name.toLowerCase()) return
 
     if (e.key === 'Enter') {
-      updateNameObject({ name: value })
-      // Actualizar el estado del stringCode para renderizar el codigo
+      await getDefinitionObject({ name: value })
     }
   }
 
