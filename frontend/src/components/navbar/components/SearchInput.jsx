@@ -48,6 +48,7 @@ export function SearchInput() {
           currentLocation.pathname !== '/definition' &&
           currentLocation.pathname !== '/description'
         }
+        endBadge={<span>ENTER</span>}
       />
     </li>
   )
