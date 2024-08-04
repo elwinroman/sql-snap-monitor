@@ -5,6 +5,7 @@ import { useObjectStore } from '@/stores/object.store'
 import json from 'react-syntax-highlighter/dist/esm/languages/hljs/json'
 import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql'
 import { InfoCards } from './components/InfoCards'
+import { CopyClipboard } from './components/CopyClipboard'
 
 export function Definition() {
   const errorObject = useObjectStore((state) => state.errorObject)
@@ -21,14 +22,21 @@ export function Definition() {
       <InfoCards />
 
       {/* Código */}
-      <div className="mb-10 overflow-hidden rounded-md shadow">
+      <div className="border-owborder relative mb-10 overflow-hidden rounded-md border bg-[#1d1f25] px-1 py-6">
+        {/* Copiar */}
+        {(definitionCode || errorObject) && <CopyClipboard />}
+
         {listObjects.length === 0 && (
           <SyntaxHighlighter
             language={errorObject ? 'json' : 'sql'}
             style={dracula}
             useInlineStyles={true} // usar por defecto los styles de react-syntax-highlighter
             showLineNumbers={true}
-            customStyle={{ padding: '1rem' }} // <pre> tag stlyes, acepta solo estilos
+            customStyle={{
+              padding: '1rem',
+              background: '#1d1f25',
+              border: 'none',
+            }} // <pre> tag stlyes, acepta solo estilos
             codeTagProps={{ className: 'text-xs' }} // <code> tag props
           >
             {errorObject === null && definitionCode === null
