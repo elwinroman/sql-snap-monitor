@@ -1,5 +1,5 @@
 import { Configuration } from './components/Configuration'
-import { InfoObject } from './components/InfoObject'
+import { InfoObject } from './components/InfoCard'
 import { LoginUsername } from './components/LoginUsername'
 import { SearchInput } from './components/SearchInput'
 
