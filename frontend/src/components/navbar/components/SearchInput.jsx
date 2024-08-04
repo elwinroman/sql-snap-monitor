@@ -32,6 +32,7 @@ export function SearchInput() {
   useEffect(() => {
     inputBtn.current.focus()
     inputBtn.current.value = ''
+    inputValue.current = ''
   }, [currentLocation])
 
   return (
