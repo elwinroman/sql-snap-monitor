@@ -1,18 +1,8 @@
 import { create } from 'zustand'
 import { getDefinition } from '@/services/definition.service'
 import { getObject } from '@/services/object.service'
+import { JSONtoTextCode, resetObjectPropertiesTuNull } from '@/utilities'
 
-function toObjectNull({ object }) {
-  return {
-    id: null,
-    name: null,
-    type: null,
-    typeDesc: null,
-    schema: null,
-    createDate: null,
-    modifyDate: null,
-  }
-}
 export const useObjectStore = create((set, get) => {
   return {
     object: {
@@ -41,8 +31,8 @@ export const useObjectStore = create((set, get) => {
       const object = get().object
 
       if (res.error) {
-        set({ errorObject: JSON.stringify(res.error) })
-        set({ object: toObjectNull({ object }) })
+        set({ errorObject: JSONtoTextCode(res) })
+        set({ object: resetObjectPropertiesTuNull({ object }) })
         return
       }
 
@@ -63,7 +53,7 @@ export const useObjectStore = create((set, get) => {
       const res = await getDefinition({ id: object.id })
 
       if (res.error) {
-        set({ errorObject: JSON.stringify(res.error) })
+        set({ errorObject: JSONtoTextCode(res) })
         set({ definitionCode: null })
         return
       }
