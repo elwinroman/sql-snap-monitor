@@ -26,6 +26,10 @@ export const useObjectStore = create((set, get) => {
       set({ errorObject: error })
     },
 
+    setObject: ({ object }) => {
+      set({ object })
+    },
+
     fetchObject: async ({ name }) => {
       const res = await getObject({ name })
       const object = get().object
@@ -60,10 +64,13 @@ export const useObjectStore = create((set, get) => {
       if (res.error) {
         set({ errorObject: JSONtoTextCode({ json: res }) })
         set({ definitionCode: null })
+        set({ listObjects: [] })
         return
       }
 
       set({ definitionCode: res.definition })
+      set({ errorObject: null })
+      set({ listObjects: [] })
     },
   }
 })
