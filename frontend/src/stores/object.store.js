@@ -34,11 +34,14 @@ export const useObjectStore = create((set, get) => {
         set({ errorObject: JSONtoTextCode({ json: res }) })
         set({ object: resetObjectPropertiesTuNull({ object }) })
         set({ listObjects: [] })
+        set({ definitionCode: null })
         return
       }
 
       if (res.meta.length > 1) {
         set({ listObjects: res.objects })
+        set({ definitionCode: null })
+        set({ errorObject: null })
         return
       }
 
