@@ -31,7 +31,8 @@ export const useObjectStore = create((set, get) => {
       const object = get().object
 
       if (res.error) {
-        set({ errorObject: JSONtoTextCode(res) })
+        console.log(res)
+        set({ errorObject: JSONtoTextCode({ json: res }) })
         set({ object: resetObjectPropertiesTuNull({ object }) })
         return
       }
@@ -53,7 +54,7 @@ export const useObjectStore = create((set, get) => {
       const res = await getDefinition({ id: object.id })
 
       if (res.error) {
-        set({ errorObject: JSONtoTextCode(res) })
+        set({ errorObject: JSONtoTextCode({ json: res }) })
         set({ definitionCode: null })
         return
       }
