@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App flex w-full">
       <Sidebar />
-      <main className="relative flex h-screen w-full flex-col overflow-y-auto bg-ow px-8">
+      <main className="bg-owmain relative flex h-screen w-full flex-col overflow-y-auto px-8">
         <Navbar />
         <Main />
         <Footer />

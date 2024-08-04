@@ -52,8 +52,14 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        ow: {
-          DEFAULT: 'var(--ow-background)',
+        owmain: {
+          DEFAULT: 'var(--ow-main)',
+        },
+        ownavbar: {
+          DEFAULT: 'var(--ow-navbar)',
+        },
+        owborder: {
+          DEFAULT: 'var(--ow-border)',
         },
       },
       borderRadius: {
