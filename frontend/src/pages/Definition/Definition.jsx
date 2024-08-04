@@ -3,7 +3,7 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql'
 import { useObjectStore } from '@/stores/object.store'
 
-export function DefinitionObject() {
+export function Definition() {
   const object = useObjectStore((state) => state.object)
   const errorObject = useObjectStore((state) => state.errorObject)
   const definitionCode = useObjectStore((state) => state.definitionCode)

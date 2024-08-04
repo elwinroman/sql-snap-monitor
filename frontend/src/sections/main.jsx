@@ -1,6 +1,6 @@
+import { Definition, Description } from '@/pages/index'
 import { Route, Routes } from 'react-router-dom'
-import { DefinitionObject } from '@/components/definition-object'
-import { DescriptionObject } from '@/components/description-object'
+
 function Error() {
   return <div>Error 404</div>
 }
@@ -14,8 +14,8 @@ export function Main() {
     <section className="flex-[1_0_auto]">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/definition" element={<DefinitionObject />} />
-        <Route path="/description" element={<DescriptionObject />} />
+        <Route path="/definition" element={<Definition />} />
+        <Route path="/description" element={<Description />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </section>
