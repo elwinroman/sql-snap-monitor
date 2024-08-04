@@ -1,7 +1,9 @@
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import { fallbackEndOfLines } from '@/utilities'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
-import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql'
 import { useObjectStore } from '@/stores/object.store'
+import json from 'react-syntax-highlighter/dist/esm/languages/hljs/json'
+import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql'
 
 export function Definition() {
   const object = useObjectStore((state) => state.object)
@@ -10,7 +12,8 @@ export function Definition() {
   const listObjects = useObjectStore((state) => state.listObjects)
 
   SyntaxHighlighter.registerLanguage('sql', sql)
-  const tabSizeWidth = 8
+  SyntaxHighlighter.registerLanguage('json', json)
+  // const tabSizeWidth = 8
 
   const info = [
     {
@@ -57,17 +60,16 @@ export function Definition() {
       <div className="mb-10 overflow-hidden rounded-md shadow">
         {listObjects.length === 0 && (
           <SyntaxHighlighter
-            language="sql"
+            language={errorObject ? 'json' : 'sql'}
             style={dracula}
             useInlineStyles={true} // usar por defecto los styles de react-syntax-highlighter
             showLineNumbers={true}
             customStyle={{ padding: '1rem' }} // <pre> tag stlyes, acepta solo estilos
-            codeTagProps={{
-              className: 'text-xs',
-              style: { tabSize: tabSizeWidth },
-            }} // <code> tag props
+            codeTagProps={{ className: 'text-xs' }} // <code> tag props
           >
-            {errorObject || definitionCode}
+            {errorObject === null && definitionCode === null
+              ? fallbackEndOfLines({ n: 20 })
+              : errorObject || definitionCode}
           </SyntaxHighlighter>
         )}
         {listObjects.length > 0 && (

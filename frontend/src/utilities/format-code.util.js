@@ -21,3 +21,13 @@ export function resetObjectPropertiesTuNull({ object }) {
 
   return newObject
 }
+
+/**
+ * Genera 'n' fin de lineas para el fallback de SyntaxHighlighter
+ *
+ * @param {Number} n - Cantidad de fin de lineas
+ * @returns {String} - Fin de lineas
+ */
+export function fallbackEndOfLines({ n }) {
+  return '\r\n'.repeat(n - 1)
+}
