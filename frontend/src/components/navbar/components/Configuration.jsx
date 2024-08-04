@@ -12,7 +12,7 @@ export function Configuration() {
   return (
     <li>
       <Sheet>
-        <SheetTrigger className="grid h-9 place-content-center rounded-md px-2 hover:bg-accent hover:text-accent-foreground">
+        <SheetTrigger className="grid h-9 place-content-center rounded-md px-3 hover:bg-zinc-200 hover:text-accent-foreground dark:hover:bg-zinc-700">
           <i>
             <SettingsIcon width={16} height={16} />
           </i>
