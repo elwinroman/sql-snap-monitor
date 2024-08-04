@@ -2,7 +2,7 @@ import './App.css'
 import { Footer } from '@/sections/footer'
 import { Main } from '@/components/main/Main'
 import { Navbar } from '@/components/navbar/Navbar'
-import { Sidebar } from '@/sections/sidebar.jsx'
+import { Sidebar } from '@/components/sidebar/Sidebar'
 
 function App() {
   return (
