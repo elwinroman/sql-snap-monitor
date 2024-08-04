@@ -11,7 +11,7 @@ function Home() {
 
 export function Main() {
   return (
-    <section className="flex-[1_0_auto]">
+    <section className="w-full flex-[1_0_auto] px-4">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/definition" element={<Definition />} />
