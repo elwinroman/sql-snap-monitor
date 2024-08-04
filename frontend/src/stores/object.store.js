@@ -31,9 +31,9 @@ export const useObjectStore = create((set, get) => {
       const object = get().object
 
       if (res.error) {
-        console.log(res)
         set({ errorObject: JSONtoTextCode({ json: res }) })
         set({ object: resetObjectPropertiesTuNull({ object }) })
+        set({ listObjects: [] })
         return
       }
 
@@ -44,6 +44,7 @@ export const useObjectStore = create((set, get) => {
 
       set({ object: res.objects[0] })
       set({ errorObject: null })
+      set({ listObjects: [] })
     },
 
     fetchDefinition: async () => {

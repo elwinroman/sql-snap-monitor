@@ -2,24 +2,27 @@ import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { Search as SearchIcon } from '@/icons/search'
 import { useDefinition } from '@/hooks/useDefinition'
 import { useLocation } from 'react-router-dom'
-import { useObjectStore } from '@/stores/object.store'
+// import { useObjectStore } from '@/stores/object.store'
 import { useEffect, useRef } from 'react'
 
 export function SearchInput() {
   const { getDefinitionObject } = useDefinition()
-  const object = useObjectStore((state) => state.object)
+  // const object = useObjectStore((state) => state.object)
   const currentLocation = useLocation()
   const inputBtn = useRef()
+  const inputValue = useRef('')
 
   const handleKeyup = async (e) => {
     e.preventDefault()
     const value = e.target.value.trim()
     if (value === '') return
-    if (object.name && value.toLowerCase() === object.name.toLowerCase()) return
+    if (value.toLowerCase() === inputValue.current.toLocaleLowerCase()) return
 
     if (e.key === 'Enter') {
-      if (currentLocation.pathname === '/definition')
+      inputValue.current = value
+      if (currentLocation.pathname === '/definition') {
         await getDefinitionObject({ name: value })
+      }
       // else if (currentLocation.pathname === '/description')
       //   await getDescriptionObject({ name: value })
     }
