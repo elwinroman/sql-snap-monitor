@@ -6,7 +6,7 @@ import { SearchInput } from './components/SearchInput'
 export function Navbar() {
   return (
     <header className="w-full flex-[0_0_var(--navbar-height)]">
-      <ul className="gap- flex h-full flex-row items-center">
+      <ul className="flex h-full flex-row items-center gap-4">
         {/* Hamburguer menu */}
         <HamburguerMenu />
 
