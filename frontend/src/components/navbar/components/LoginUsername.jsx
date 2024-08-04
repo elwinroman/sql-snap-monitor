@@ -19,7 +19,7 @@ export function LoginUsername() {
         <Button variant="ghost" size="sm">
           <div className="flex items-center gap-1">
             <i>
-              <UserIcon width={16} height={16} />
+              <UserIcon width={20} height={20} />
             </i>
             <span className="select-none text-sm font-semibold">
               Iniciar sesión
