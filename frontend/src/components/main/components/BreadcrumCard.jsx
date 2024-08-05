@@ -4,24 +4,23 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { Badge } from '@/components/ui/badge'
 import { Database as DatabaseIcon } from '@/icons/database'
 import { useObjectStore } from '@/stores/object.store'
 
-export function BreadcrumCard({ ...props }) {
+export function BreadcrumCard() {
   const object = useObjectStore((state) => state.object)
 
   return (
-    <li {...props}>
-      <article className="flex h-full justify-between gap-8 rounded-md px-3 py-2">
-        <div className="flex gap-3">
+    <div className="rounded-md bg-indigo-900 px-6 py-3">
+      <article className="flex h-full flex-wrap items-center justify-between gap-8 rounded-md px-3 py-2">
+        <div className="flex gap-4">
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1">
                 <i>
-                  <DatabaseIcon width={18} height={18} />
+                  <DatabaseIcon width={22} height={22} />
                 </i>
-                <span className="font-semibold text-slate-100">
+                <span className="text-lg font-bold text-slate-100">
                   SI_BDFinanciero
                 </span>
               </TooltipTrigger>
@@ -47,7 +46,7 @@ export function BreadcrumCard({ ...props }) {
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger className="grid place-content-center">
-                <span className="font-bold text-rose-600">
+                <span className="text-lg font-bold text-rose-600">
                   {' '}
                   {object.name ?? 'ObjectName'}
                 </span>
@@ -58,10 +57,10 @@ export function BreadcrumCard({ ...props }) {
             </Tooltip>
           </TooltipProvider>
         </div>
-        <Badge className="rounded-md bg-amber-400 text-sm font-bold text-slate-900 hover:bg-amber-400">
-          P
-        </Badge>
+        <span className="grid h-10 w-10 place-content-center rounded-md bg-amber-400/30 text-sm font-bold text-amber-400">
+          {object.type ?? '?'}
+        </span>
       </article>
-    </li>
+    </div>
   )
 }
