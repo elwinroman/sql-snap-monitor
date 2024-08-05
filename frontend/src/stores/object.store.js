@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { getDefinition } from '@/services/definition.service'
+import { getDescription } from '@/services/description.service'
 import { getObject } from '@/services/object.service'
 import { JSONtoTextCode, resetObjectPropertiesTuNull } from '@/utilities'
 
@@ -17,6 +18,8 @@ export const useObjectStore = create((set, get) => {
     definitionCode: null,
     errorObject: null,
     listObjects: [],
+    listDescriptionTable: [],
+    listDescriptionColumns: [],
 
     setDefinitionCode: (definitionCode) => {
       set({ definition: definitionCode })
@@ -69,6 +72,27 @@ export const useObjectStore = create((set, get) => {
       }
 
       set({ definitionCode: res.definition })
+      set({ errorObject: null })
+      set({ listObjects: [] })
+    },
+
+    fetchDescription: async () => {
+      const object = get().object
+
+      if (object.id === null) return
+
+      const res = await getDescription({ id: object.id })
+
+      if (res.error) {
+        set({ errorObject: JSONtoTextCode({ json: res }) })
+        set({ listDescriptionTable: [] })
+        set({ listDescriptionColumns: [] })
+        set({ listObjects: [] })
+        return
+      }
+      console.log(res)
+      set({ listDescriptionTable: res.data.objectDescription })
+      set({ listDescriptionColumns: res.data.columnDescription })
       set({ errorObject: null })
       set({ listObjects: [] })
     },

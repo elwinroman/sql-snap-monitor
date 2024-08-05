@@ -1,13 +1,15 @@
 import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { Search as SearchIcon } from '@/icons/search'
 import { useDefinition } from '@/hooks/useDefinition'
+import { useDescription } from '@/hooks/useDescription'
+import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 // import { useObjectStore } from '@/stores/object.store'
-import { useEffect, useRef } from 'react'
 
 export function SearchInput() {
   const { getDefinitionObject } = useDefinition()
-  // const object = useObjectStore((state) => state.object)
+  const { getDescriptionObject } = useDescription()
+  // const listObjects = useObjectStore((state) => state.listObjects)
   const currentLocation = useLocation()
   const inputBtn = useRef()
   const inputValue = useRef('')
@@ -20,11 +22,12 @@ export function SearchInput() {
 
     if (e.key === 'Enter') {
       inputValue.current = value
-      if (currentLocation.pathname === '/definition') {
+
+      // realiza acción según la ruta actual
+      if (currentLocation.pathname === '/definition')
         await getDefinitionObject({ name: value })
-      }
-      // else if (currentLocation.pathname === '/description')
-      //   await getDescriptionObject({ name: value })
+      else if (currentLocation.pathname === '/description')
+        await getDescriptionObject({ name: value })
     }
   }
 
