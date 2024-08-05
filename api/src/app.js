@@ -1,4 +1,3 @@
-// import os from 'os'
 import 'dotenv/config'
 import { AuthModel } from './models/auth.js'
 import { createAuthRouter } from './routes/auth,js'
@@ -8,6 +7,7 @@ import { verifyToken } from './middlewares/jwt.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json } from 'express'
+import os from 'os'
 
 export default function App () {
   const root = express()
@@ -22,11 +22,20 @@ export default function App () {
   root.use('/auth', createAuthRouter({ authModel: AuthModel }))
 
   const PORT = process.env.PORT ?? 1234
-  const HOST = process.env.NODE_ENV === 'production'
+  const HOST = process.argv.find((arg) => arg === '--host')
     ? '0.0.0.0'
     : '127.0.0.1'
 
+  // expose network soporte solo para windows
+  const NETWPORK_IP4 = os.networkInterfaces().Ethernet.find((element) => {
+    return element.family === 'IPv4'
+  }).address
+
   root.listen(PORT, HOST, () => {
-    console.log(`El servidor está ejecutandose en el puerto http://${HOST}:${PORT}`)
+    console.log(`➜ Local: http://${HOST}:${PORT}`)
+
+    HOST === '0.0.0.0'
+      ? console.log(`➜ Network: http://${NETWPORK_IP4}:${PORT}`)
+      : console.log('➜ Network: use --host to expose')
   })
 }
