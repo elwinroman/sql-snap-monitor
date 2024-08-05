@@ -18,7 +18,7 @@ export class ObjectController {
       res.json(result)
     } catch (err) {
       const { statusCode } = ERROR_CODES.INTERNAL_SERVER_ERROR
-      res.status(statusCode).json(ERROR_CODES.INTERNAL_SERVER_ERROR)
+      res.status(statusCode).json({ ...ERROR_CODES.INTERNAL_SERVER_ERROR, originalError: err.originalError })
     }
   }
 
@@ -35,7 +35,7 @@ export class ObjectController {
       res.json(result)
     } catch (err) {
       const { statusCode } = ERROR_CODES.INTERNAL_SERVER_ERROR
-      res.status(statusCode).json(ERROR_CODES.INTERNAL_SERVER_ERROR)
+      res.status(statusCode).json({ ...ERROR_CODES.INTERNAL_SERVER_ERROR, originalError: err.originalError })
     }
   }
 
@@ -52,7 +52,7 @@ export class ObjectController {
       res.json(result)
     } catch (err) {
       const { statusCode } = ERROR_CODES.INTERNAL_SERVER_ERROR
-      res.status(statusCode).json(ERROR_CODES.INTERNAL_SERVER_ERROR)
+      res.status(statusCode).json({ ...ERROR_CODES.INTERNAL_SERVER_ERROR, originalError: err.originalError })
     }
   }
 }
