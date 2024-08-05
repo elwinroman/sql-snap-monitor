@@ -1,8 +1,8 @@
-const BASE_URL = 'http://localhost:3000'
-
 export async function getObject({ name }) {
   try {
-    const response = await fetch(`${BASE_URL}/api/object/${name}`)
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/object/${name}`,
+    )
     const res = await response.json()
 
     return res
