@@ -27,7 +27,7 @@ export function TableDescription({ descriptionColumnList }) {
         {descriptionColumnList.length > 0 && (
           <TableBody>
             {descriptionColumnList.map((item, index) => (
-              <TableRow key={item.column_id}>
+              <TableRow key={crypto.randomUUID()}>
                 <TableCell className="w-[20px]">{index + 1}</TableCell>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.value}</TableCell>
