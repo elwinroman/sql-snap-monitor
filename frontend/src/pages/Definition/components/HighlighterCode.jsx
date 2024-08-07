@@ -16,14 +16,14 @@ export function HighlighterCode({ errorObject, definitionCode }) {
       useInlineStyles={true} // usar por defecto los styles de react-syntax-highlighter
       showLineNumbers={true}
       customStyle={{
-        padding: '1rem',
+        padding: '3rem 1rem',
         background: '#1d1f25',
         border: 'none',
       }} // <pre> tag stlyes, acepta solo estilos
       codeTagProps={{ className: 'text-xs' }} // <code> tag props
     >
       {errorObject === null && definitionCode === null
-        ? fallbackEndOfLines({ n: 20 })
+        ? fallbackEndOfLines({ n: 10 })
         : errorObject || definitionCode}
     </SyntaxHighlighter>
   )
