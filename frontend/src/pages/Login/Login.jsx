@@ -1,16 +1,18 @@
+import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores/auth.store'
 import { useRef } from 'react'
 
 export function LoginPage() {
   const loginUser = useAuthStore((state) => state.loginUser)
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-
   const element = useRef({
     server: 'server',
     database: 'database',
     username: 'username',
     password: 'password',
   })
+
+  if (isAuthenticated) return <Navigate to="/" />
 
   const onSubmitHandler = async (e) => {
     e.preventDefault()
@@ -25,9 +27,8 @@ export function LoginPage() {
 
     try {
       await loginUser({ credentials })
-      console.log(isAuthenticated)
     } catch (err) {
-      console.error(err)
+      throw new Error(err)
     }
   }
   return (
