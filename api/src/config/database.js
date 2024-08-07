@@ -1,11 +1,19 @@
 import sql from 'mssql'
 
-export async function connection ({
-  user = process.env.DB_USER,
-  password = process.env.DB_PWD,
-  database = process.env.DB_NAME,
-  server = process.env.DB_SERVER
-} = {}) {
+export async function connection ({ credentials } = { credentials: null }) {
+  let server = process.env.DB_SERVER
+  let database = process.env.DB_NAME
+  let user = process.env.DB_USER
+  let password = process.env.DB_PWD
+
+  if (credentials) {
+    server = credentials.server
+    database = credentials.dbname
+    user = credentials.username
+    password = credentials.password
+  }
+  console.log(server, database, user, password)
+
   const config = {
     user,
     password,
@@ -14,7 +22,7 @@ export async function connection ({
     pool: {
       max: 10,
       min: 0,
-      idleTimeoutMillis: 30000
+      idleTimeoutMillis: 10000
     },
     options: {
       encrypt: false, // para Azure
@@ -23,6 +31,8 @@ export async function connection ({
   }
 
   const conn = await sql.connect(config)
+
+  // si se falla la conexión se lanza un error y se captura en el controlador
   const request = conn.request()
   return { request, sql }
 }
