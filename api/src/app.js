@@ -11,7 +11,7 @@ import os from 'os'
 
 export default function App () {
   const root = express()
-  root.use(cors())
+  root.use(cors({ credentials: true, origin: process.env.ALLOWED_ORIGIN }))
   root.use(json())
   root.use(cookieParser())
 
