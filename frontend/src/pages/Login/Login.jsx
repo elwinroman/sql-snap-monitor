@@ -17,10 +17,10 @@ export function LoginPage() {
     const data = new FormData(e.target)
     const { server, database, username, password } = Object.fromEntries(data)
     const credentials = {
-      server,
-      dbname: database,
-      username,
-      password,
+      server: server.trim(),
+      dbname: database.trim(),
+      username: username.trim(),
+      password: password.trim(),
     }
 
     try {

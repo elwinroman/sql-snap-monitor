@@ -1,5 +1,5 @@
 import './App.css'
-import { Definition, Description, LoginPage } from '@/pages'
+import { DefinitionPage, DescriptionPage, LoginPage } from '@/pages'
 import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { Route, Routes } from 'react-router-dom'
@@ -37,7 +37,7 @@ function App() {
             <ProtectedLayout>
               <Layout>
                 <InfoCards />
-                <Definition />
+                <DefinitionPage />
               </Layout>
             </ProtectedLayout>
           }
@@ -48,7 +48,7 @@ function App() {
             <ProtectedLayout>
               <Layout>
                 <InfoCards />
-                <Description />
+                <DescriptionPage />
               </Layout>
             </ProtectedLayout>
           }

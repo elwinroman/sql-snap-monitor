@@ -1,7 +1,7 @@
 import { TableDescription } from './components/TableDescription'
 import { useObjectStore } from '@/stores/object.store'
 
-export function Description() {
+export function DescriptionPage() {
   const listDescriptionColumns = useObjectStore(
     (state) => state.listDescriptionColumns,
   )

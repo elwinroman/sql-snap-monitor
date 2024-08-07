@@ -3,7 +3,7 @@ import { HighlighterCode } from './components/HighlighterCode'
 import { LinkObjects } from './components/LinkObjects'
 import { useObjectStore } from '@/stores/object.store'
 
-export function Definition() {
+export function DefinitionPage() {
   const errorObject = useObjectStore((state) => state.errorObject)
   const definitionCode = useObjectStore((state) => state.definitionCode)
   const listObjects = useObjectStore((state) => state.listObjects)
