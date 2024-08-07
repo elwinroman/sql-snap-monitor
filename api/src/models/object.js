@@ -1,15 +1,5 @@
 import { connection } from '../config/database.js'
 import { ERROR_CODES } from '../constants/error-codes.js'
-import { formatStoreProcedure } from '../utils/object-utils.js'
-
-const SYS_OBJECTS_TYPES = {
-  VIEW: 'V',
-  USER_TABLE: 'U',
-  SQL_TRIGGER: 'TR',
-  SQL_TABLE_VALUED_FUNCTION: 'TF',
-  SQL_STORED_PROCEDURE: 'P',
-  SQL_SCALAR_FUNCTION: 'FN'
-}
 
 export class ObjectModel {
   /**
