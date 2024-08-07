@@ -1,6 +1,7 @@
 import './App.css'
 import { Definition, Description, LoginPage } from '@/pages'
 import { InfoCards } from '@/components/main/components/InfoCards'
+import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
 import Layout from '@/layouts/Layout'
@@ -23,27 +24,33 @@ function App() {
         <Route
           path="/"
           element={
-            <Layout>
-              <Home />
-            </Layout>
+            <ProtectedLayout>
+              <Layout>
+                <Home />
+              </Layout>
+            </ProtectedLayout>
           }
         />
         <Route
           path="/definition"
           element={
-            <Layout>
-              <InfoCards />
-              <Definition />
-            </Layout>
+            <ProtectedLayout>
+              <Layout>
+                <InfoCards />
+                <Definition />
+              </Layout>
+            </ProtectedLayout>
           }
         />
         <Route
           path="/description"
           element={
-            <Layout>
-              <InfoCards />
-              <Description />
-            </Layout>
+            <ProtectedLayout>
+              <Layout>
+                <InfoCards />
+                <Description />
+              </Layout>
+            </ProtectedLayout>
           }
         />
         <Route path="/login" element={<LoginPage />} />
