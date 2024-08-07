@@ -8,14 +8,21 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { useAuthStore } from '@/stores/auth.store'
 import { User as UserIcon } from '@/icons/user'
 
 export function LoginUsername() {
-  const logged = true
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const logoutUser = useAuthStore((state) => state.logoutUser)
+  const username = useAuthStore((state) => state.username)
+
+  const closeSession = async (e) => {
+    await logoutUser()
+  }
 
   return (
     <li>
-      {!logged ? (
+      {!isAuthenticated ? (
         <Button variant="ghost" size="sm">
           <div className="flex items-center gap-1">
             <i>
@@ -36,14 +43,16 @@ export function LoginUsername() {
                   <AvatarFallback>QA</AvatarFallback>
                 </Avatar>
                 <span className="select-none text-sm font-semibold">
-                  aroman
+                  {username}
                 </span>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" sideOffset={10}>
               <DropdownMenuLabel>Mi cuenta SQL</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Cerrar sesión</DropdownMenuItem>
+              <DropdownMenuItem>
+                <button onClick={closeSession}>Cerrar sesión</button>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
