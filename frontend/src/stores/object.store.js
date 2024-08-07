@@ -48,6 +48,7 @@ export const useObjectStore = create((set, get) => {
       if (res.meta.length > 1) {
         set({ listObjects: res.objects })
         set({ definitionCode: null })
+        set({ object: resetObjectPropertiesTuNull({ object }) })
         set({ errorObject: null })
         return
       }
