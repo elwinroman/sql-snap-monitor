@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { AuthModel } from './models/auth.js'
-import { createAuthRouter } from './routes/auth,js'
+import { createAuthRouter } from './routes/auth.js'
 import { createObjectRouter } from './routes/object.js'
 import { ObjectModel } from './models/object.js'
 import { verifyToken } from './middlewares/jwt.js'
