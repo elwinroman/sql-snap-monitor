@@ -29,7 +29,7 @@ export function Sidebar() {
   ]
 
   return (
-    <aside className="bg-ownavbar h-screen w-[280px] shrink-0 overflow-y-auto">
+    <aside className="h-screen w-[280px] shrink-0 overflow-y-auto bg-ownavbar">
       <div className="flex h-full flex-col">
         <div className="sticky top-0 flex h-[var(--navbar-height)] shrink-0 items-center justify-center gap-2 backdrop-blur-sm">
           <div>

@@ -40,7 +40,7 @@ export function InfoCards() {
         {info.map((item) => (
           <li
             key={item.id}
-            className="bg-ownavbar border-owborder flex items-center justify-between gap-6 rounded-md border px-6 py-4"
+            className="flex items-center justify-between gap-6 rounded-md border border-owborder bg-ownavbar px-6 py-4"
           >
             <div className="flex flex-col gap-1">
               <h6 className="text-sm font-semibold text-zinc-600 dark:text-zinc-400">

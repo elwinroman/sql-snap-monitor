@@ -9,7 +9,7 @@ export function Definition() {
   const listObjects = useObjectStore((state) => state.listObjects)
 
   return (
-    <div className="border-owborder relative mb-10 overflow-hidden rounded-md border bg-[#1d1f25]">
+    <div className="relative mb-10 overflow-hidden rounded-md border border-owborder bg-[#1d1f25]">
       {/* Copiar */}
       {(definitionCode || errorObject) && <CopyClipboard />}
 

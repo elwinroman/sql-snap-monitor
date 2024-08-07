@@ -8,7 +8,7 @@ export function Description() {
   const errorObject = useObjectStore((state) => state.errorObject)
 
   return (
-    <div className="bg-ownavbar border-ownavbar flex flex-col gap-2 rounded-md border px-6 py-4">
+    <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-ownavbar px-6 py-4">
       <h4 className="font-bold">Columnas</h4>
       {errorObject && <p className="text-red-500">{errorObject}</p>}
       {!errorObject && (

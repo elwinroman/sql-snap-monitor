@@ -23,7 +23,7 @@ const InputWithIcon = React.forwardRef(
         <input
           type={type}
           className={cn(
-            'bg-ownavbar border-owborder flex h-10 w-96 rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus:border-amber-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+            'flex h-10 w-96 rounded-md border border-owborder bg-ownavbar px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-base file:font-medium placeholder:text-muted-foreground focus:border-amber-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
             startIcon ? 'pl-10' : '',
             endBadge ? 'pr-8' : '',
             className,
