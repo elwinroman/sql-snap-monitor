@@ -17,11 +17,12 @@ export class ObjectModel {
    *
    * @param {Object} params - Objeto que contiene los parametros para la consulta
    * @param {String} params.name - Nombre del objeto
+   * @param {Object} params.credentials - Credenciales de conexión a la base de datos
    *
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
-  static async findObject ({ name }) {
-    const { request, sql } = await connection()
+  static async findObject ({ name, credentials }) {
+    const { request, sql } = await connection({ credentials })
 
     try {
       const stmt = `
@@ -60,11 +61,12 @@ export class ObjectModel {
    *
    * @param {Object} params - Objecto que contiene los parámetros para la consulta
    * @param {String} params.id - Identificador del objeto
+   * @param {Object} params.credentials - Credenciales de conexión a la base de datos
    *
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
-  static async getObjectDefinition ({ id }) {
-    const { request, sql } = await connection()
+  static async getObjectDefinition ({ id, credentials }) {
+    const { request, sql } = await connection({ credentials })
 
     try {
       const stmt = `SELECT definition
@@ -89,11 +91,12 @@ export class ObjectModel {
    *
    * @param {Object} params - Objeto con el nombre y el schema del objeto
    * @param {String} params.id - Identificador del objeto
+   * @param {Object} params.credentials - Credenciales de conexión a la base de datos
    *
    * @returns {Promise<Object>} - Objeto con la descripción del objeto o un error
    */
-  static async getObjectDescription ({ id }) {
-    const { request, sql } = await connection()
+  static async getObjectDescription ({ id, credentials }) {
+    const { request, sql } = await connection({ credentials })
 
     try {
       // obtiene la descripción de las columnas

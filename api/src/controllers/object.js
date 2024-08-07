@@ -1,15 +1,24 @@
-import { ERROR_CODES } from '../constants/error-codes.js'
+import { ERROR_CODES, AUTH_ERROR_CODES } from '../constants/error-codes.js'
+import { isLoggedIn } from '../utils/verify-session.util.js'
 
 export class ObjectController {
   constructor ({ objectModel }) {
     this.objectModel = objectModel
   }
 
+  // Ruta protegida
   getObjectDefinition = async (req, res) => {
+    const { credentials } = req.session
+
+    if (!isLoggedIn(credentials)) {
+      const { statusCode } = AUTH_ERROR_CODES.TOKEN_INVALID
+      return res.status(statusCode).json(AUTH_ERROR_CODES.TOKEN_INVALID)
+    }
+
     const { id } = req.params
 
     try {
-      const result = await this.objectModel.getObjectDefinition({ id })
+      const result = await this.objectModel.getObjectDefinition({ id, credentials })
       if (result.error) {
         res.status(result.statusCode).json(result)
         return
@@ -22,11 +31,19 @@ export class ObjectController {
     }
   }
 
+  // Ruta protegida
   getObjectDescription = async (req, res) => {
+    const { credentials } = req.session
+
+    if (!isLoggedIn(credentials)) {
+      const { statusCode } = AUTH_ERROR_CODES.TOKEN_INVALID
+      return res.status(statusCode).json(AUTH_ERROR_CODES.TOKEN_INVALID)
+    }
+
     const { id } = req.params
 
     try {
-      const result = await this.objectModel.getObjectDescription({ id })
+      const result = await this.objectModel.getObjectDescription({ id, credentials })
       if (result.error) {
         res.status(result.statusCode).json(result)
         return
@@ -39,11 +56,19 @@ export class ObjectController {
     }
   }
 
+  // Ruta protegida
   findObject = async (req, res) => {
+    const { credentials } = req.session
+
+    if (!isLoggedIn(credentials)) {
+      const { statusCode } = AUTH_ERROR_CODES.TOKEN_INVALID
+      return res.status(statusCode).json(AUTH_ERROR_CODES.TOKEN_INVALID)
+    }
+
     const { name } = req.params
 
     try {
-      const result = await this.objectModel.findObject({ name })
+      const result = await this.objectModel.findObject({ name, credentials })
       if (result.error) {
         res.json(result)
         return
