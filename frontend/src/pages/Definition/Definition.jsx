@@ -1,13 +1,17 @@
 import { CopyClipboard } from './components/CopyClipboard'
 import { HighlighterCode } from './components/HighlighterCode'
-import { LinkObjects } from './components/LinkObjects'
+import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { useObjectStore } from '@/stores/object.store'
 
 export function DefinitionPage() {
-  const definitionError = useObjectStore((state) => state.definitionError)
   const definitionCode = useObjectStore((state) => state.definitionCode)
+  const definitionError = useObjectStore((state) => state.definitionError)
   const definitionObjectList = useObjectStore(
     (state) => state.definitionObjectList,
+  )
+  const fetchDefinition = useObjectStore((state) => state.fetchDefinition)
+  const updateDefinitionObject = useObjectStore(
+    (state) => state.updateDefinitionObject,
   )
 
   return (
@@ -25,7 +29,11 @@ export function DefinitionPage() {
 
       {/* Multiples objetos */}
       {definitionObjectList.length > 0 && (
-        <LinkObjects definitionObjectList={definitionObjectList} />
+        <LinkObjectList
+          objectList={definitionObjectList}
+          updateObject={updateDefinitionObject}
+          fetchObjectAction={fetchDefinition}
+        />
       )}
     </div>
   )

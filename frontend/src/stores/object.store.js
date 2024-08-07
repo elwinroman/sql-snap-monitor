@@ -24,8 +24,8 @@ export const useObjectStore = create(
       definitionError: null,
       definitionObjectList: [],
 
-      updateDefinitionObject: ({ definitionObject }) => {
-        set({ definitionObject })
+      updateDefinitionObject: ({ object }) => {
+        set({ definitionObject: object })
       },
 
       fetchDefinitionObject: async ({ name }) => {
@@ -86,6 +86,10 @@ export const useObjectStore = create(
       descriptionTableList: [],
       descriptionColumnList: [],
       descriptionObjectList: [],
+
+      updateDescriptionObject: ({ object }) => {
+        set({ descriptionObject: object })
+      },
 
       fetchDescriptionObject: async ({ name }) => {
         const res = await getObject({ name })
