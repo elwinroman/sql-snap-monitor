@@ -5,11 +5,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Database as DatabaseIcon } from '@/icons/database'
-import { useObjectStore } from '@/stores/object.store'
 
-export function BreadcrumCard() {
-  const object = useObjectStore((state) => state.object)
-
+export function BreadcrumCard({ object }) {
   return (
     <div className="rounded-md bg-indigo-900 px-6 py-3">
       <article className="flex h-full flex-wrap items-center justify-between gap-8 rounded-md px-3 py-2">

@@ -1,10 +1,7 @@
 import { Article as ArticleIcon } from '@/icons/article'
 import { BreadcrumCard } from './BreadcrumCard'
-import { useObjectStore } from '@/stores/object.store'
 
-export function InfoCards() {
-  const object = useObjectStore((state) => state.object)
-
+export function InfoCards({ object }) {
   const info = [
     {
       id: 1,
@@ -34,7 +31,7 @@ export function InfoCards() {
   return (
     <div className="flex flex-col gap-3">
       {/* Información general del objecto */}
-      <BreadcrumCard />
+      <BreadcrumCard object={object} />
 
       <ul className="grid grid-cols-[repeat(auto-fit,_minmax(390px,_1fr))] gap-3">
         {info.map((item) => (

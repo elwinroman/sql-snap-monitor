@@ -4,14 +4,14 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import json from 'react-syntax-highlighter/dist/esm/languages/hljs/json'
 import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql'
 
-export function HighlighterCode({ errorObject, definitionCode }) {
+export function HighlighterCode({ definitionError, definitionCode }) {
   SyntaxHighlighter.registerLanguage('sql', sql)
   SyntaxHighlighter.registerLanguage('json', json)
   // const tabSizeWidth = 8
 
   return (
     <SyntaxHighlighter
-      language={errorObject ? 'json' : 'sql'}
+      language={definitionError ? 'json' : 'sql'}
       style={dracula}
       useInlineStyles={true} // usar por defecto los styles de react-syntax-highlighter
       showLineNumbers={true}
@@ -22,9 +22,9 @@ export function HighlighterCode({ errorObject, definitionCode }) {
       }} // <pre> tag stlyes, acepta solo estilos
       codeTagProps={{ className: 'text-xs' }} // <code> tag props
     >
-      {errorObject === null && definitionCode === null
+      {definitionError === null && definitionCode === null
         ? fallbackEndOfLines({ n: 10 })
-        : errorObject || definitionCode}
+        : definitionError || definitionCode}
     </SyntaxHighlighter>
   )
 }

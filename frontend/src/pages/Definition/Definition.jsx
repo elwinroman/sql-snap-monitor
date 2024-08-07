@@ -4,25 +4,29 @@ import { LinkObjects } from './components/LinkObjects'
 import { useObjectStore } from '@/stores/object.store'
 
 export function DefinitionPage() {
-  const errorObject = useObjectStore((state) => state.errorObject)
+  const definitionError = useObjectStore((state) => state.definitionError)
   const definitionCode = useObjectStore((state) => state.definitionCode)
-  const listObjects = useObjectStore((state) => state.listObjects)
+  const definitionObjectList = useObjectStore(
+    (state) => state.definitionObjectList,
+  )
 
   return (
     <div className="relative mb-10 overflow-hidden rounded-md border border-owborder bg-[#1d1f25]">
       {/* Copiar */}
-      {(definitionCode || errorObject) && <CopyClipboard />}
+      {(definitionCode || definitionError) && <CopyClipboard />}
 
       {/* Highlihter syntax */}
-      {listObjects.length === 0 && (
+      {definitionObjectList.length === 0 && (
         <HighlighterCode
-          errorObject={errorObject}
+          definitionError={definitionError}
           definitionCode={definitionCode}
         />
       )}
 
       {/* Multiples objetos */}
-      {listObjects.length > 0 && <LinkObjects listObjects={listObjects} />}
+      {definitionObjectList.length > 0 && (
+        <LinkObjects definitionObjectList={definitionObjectList} />
+      )}
     </div>
   )
 }

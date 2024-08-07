@@ -1,12 +1,14 @@
 import { useObjectStore } from '@/stores/object.store'
 
 export function useDescription() {
-  const fetchObject = useObjectStore((state) => state.fetchObject)
+  const fetchDescriptionObject = useObjectStore(
+    (state) => state.fetchDescriptionObject,
+  )
   const fetchDescription = useObjectStore((state) => state.fetchDescription)
 
   const getDescriptionObject = async ({ name }) => {
     try {
-      await fetchObject({ name })
+      await fetchDescriptionObject({ name })
 
       await fetchDescription()
     } catch (error) {

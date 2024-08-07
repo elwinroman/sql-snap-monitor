@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-export function TableDescription({ listDescriptionColumns }) {
+export function TableDescription({ descriptionColumnList }) {
   return (
     <div>
       <Table>
@@ -24,9 +24,9 @@ export function TableDescription({ listDescriptionColumns }) {
           </TableRow>
         </TableHeader>
 
-        {listDescriptionColumns.length > 0 && (
+        {descriptionColumnList.length > 0 && (
           <TableBody>
-            {listDescriptionColumns.map((item, index) => (
+            {descriptionColumnList.map((item, index) => (
               <TableRow key={item.column_id}>
                 <TableCell className="w-[20px]">{index + 1}</TableCell>
                 <TableCell>{item.name}</TableCell>

@@ -1,8 +1,10 @@
 import { useObjectStore } from '@/stores/object.store'
 import { ExternalLink as ExternalLinkIcon } from '@/icons/external-link'
 
-export function LinkObjects({ listObjects }) {
-  const setObject = useObjectStore((state) => state.setObject)
+export function LinkObjects({ definitionObjectList }) {
+  const updateDefinitionObject = useObjectStore(
+    (state) => state.updateDefinitionObject,
+  )
   const fetchDefinition = useObjectStore((state) => state.fetchDefinition)
 
   const handleLinkObject = async (e) => {
@@ -17,7 +19,7 @@ export function LinkObjects({ listObjects }) {
       modifyDate: e.currentTarget.dataset.modifyDate,
     }
     // solicita la definición del objeto
-    setObject({ object: myobject })
+    updateDefinitionObject({ definitionObject: myobject })
     fetchDefinition()
   }
   return (
@@ -29,7 +31,7 @@ export function LinkObjects({ listObjects }) {
         </span>
       </h6>
       <ul className="flex flex-col gap-2">
-        {listObjects.map((obj) => (
+        {definitionObjectList.map((obj) => (
           <li key={obj.id}>
             <button
               className="group flex items-center gap-2 rounded-md border border-zinc-700/50 bg-slate-900 px-2 py-2 text-sm"

@@ -4,13 +4,13 @@ import { useState } from 'react'
 
 export function CopyClipboard() {
   const definitionCode = useObjectStore((state) => state.definitionCode)
-  const errorObject = useObjectStore((state) => state.errorObject)
+  const definitionError = useObjectStore((state) => state.definitionError)
   const [copy, setCopy] = useState(false)
 
   const handleClick = (e) => {
     e.preventDefault()
 
-    navigator.clipboard.writeText(definitionCode || errorObject)
+    navigator.clipboard.writeText(definitionCode || definitionError)
     setCopy(true)
 
     setTimeout(() => {

@@ -4,6 +4,7 @@ import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
+import { useObjectStore } from '@/stores/object.store'
 import Layout from '@/layouts/Layout'
 
 function Error() {
@@ -15,6 +16,9 @@ function Home() {
 }
 
 function App() {
+  const definitionObject = useObjectStore((state) => state.definitionObject)
+  const descriptionObject = useObjectStore((state) => state.descriptionObject)
+
   useEffect(() => {
     document.documentElement.classList.add('dark')
   }, [])
@@ -36,7 +40,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards />
+                <InfoCards object={definitionObject} />
                 <DefinitionPage />
               </Layout>
             </ProtectedLayout>
@@ -47,7 +51,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards />
+                <InfoCards object={descriptionObject} />
                 <DescriptionPage />
               </Layout>
             </ProtectedLayout>

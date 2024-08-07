@@ -1,12 +1,14 @@
 import { useObjectStore } from '@/stores/object.store'
 
 export function useDefinition() {
-  const fetchObject = useObjectStore((state) => state.fetchObject)
+  const fetchDefinitionObject = useObjectStore(
+    (state) => state.fetchDefinitionObject,
+  )
   const fetchDefinition = useObjectStore((state) => state.fetchDefinition)
 
   const getDefinitionObject = async ({ name }) => {
     try {
-      await fetchObject({ name })
+      await fetchDefinitionObject({ name })
 
       await fetchDefinition()
     } catch (error) {
