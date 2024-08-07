@@ -1,7 +1,9 @@
 import { create } from 'zustand'
-import { getDefinition } from '@/services/definition.service'
-import { getDescription } from '@/services/description.service'
-import { getObject } from '@/services/object.service'
+import {
+  getDefinition,
+  getDescription,
+  getObject,
+} from '@/services/object.service'
 import { JSONtoTextCode, resetObjectPropertiesTuNull } from '@/utilities'
 
 export const useObjectStore = create((set, get) => {
@@ -46,6 +48,7 @@ export const useObjectStore = create((set, get) => {
       }
 
       if (res.meta.length > 1) {
+        console.log('he entrado a coincidencia')
         set({ listObjects: res.objects })
         set({ definitionCode: null })
         set({ object: resetObjectPropertiesTuNull({ object }) })
