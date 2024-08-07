@@ -10,11 +10,13 @@ import jwt from 'jsonwebtoken'
  */
 export function verifyToken (req, res, next) {
   const token = req.cookies.access_token
-  req.session = { user: null } // no existe usuario por defecto
+  req.session = { credentials: null } // no existe usuario por defecto
 
   try {
-    const { username } = jwt.verify(token, process.env.JWT_SECRET)
-    req.session.user = username // se guarda el usuario en la sesión
-  } catch {} // error al verificar el token, necesita pasar para consultar los objetos de producción
+    const { credentials } = jwt.verify(token, process.env.JWT_SECRET)
+    req.session.credentials = credentials // se guarda el usuario en la sesión
+  } catch {
+    // error al verificar el token, las rutas protegidas se gestionan en sus controladores
+  }
   next()
 }
