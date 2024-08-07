@@ -33,11 +33,12 @@ export async function logout() {
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/auth/logout`,
       {
+        method: 'POST',
         credentials: 'include',
       },
     )
-    const res = await response.json()
 
+    const res = await response.json()
     return res
   } catch (err) {
     throw new Error(err)
