@@ -7,6 +7,30 @@ export const ERROR_CODES = {
       message: 'Error en la consulta'
     }
   },
+  ESOCKET: {
+    status: 'error',
+    statusCode: 400,
+    error: {
+      code: 'ESOCKET',
+      message: 'Error de conexión con el servidor'
+    }
+  },
+  ELOGIN: {
+    status: 'error',
+    statusCode: 401,
+    error: {
+      code: 'ELOGIN',
+      message: 'Error de autenticación'
+    }
+  },
+  ETIMEOUT: {
+    status: 'error',
+    statusCode: 408,
+    error: {
+      code: 'ETIMEOUT',
+      message: 'Tiempo de espera agotado, probablemente el servidor no responde o no existe'
+    }
+  },
   NOT_FOUND: {
     status: 'error',
     statusCode: 404,
@@ -23,10 +47,6 @@ export const ERROR_CODES = {
       message: 'Error interno del servidor'
     }
   },
-  AMBIGUOUS_RESULTS: {
-    code: 'AMBIGUOUS_RESULTS',
-    message: 'Se ha encontrado multiples coincidencias del objeto, agrege el schema como prefijo para evitar la ambiguedad, ejemplo: dbo.objectName'
-  },
   NOT_FOUND_SQUEMA: {
     code: 'NOT_FOUND_SQUEMA',
     message: 'No se ha encontrado el schema, vuelva a intentarlo'
@@ -37,6 +57,17 @@ export const ERROR_CODES = {
     error: {
       code: 'NOT_FOUND_DESCRIPTION',
       message: 'No se ha encontrado ninguna descripción para el objeto'
+    }
+  }
+}
+
+export const AUTH_ERROR_CODES = {
+  TOKEN_INVALID: {
+    status: 'error',
+    statusCode: 401,
+    error: {
+      code: 'UNAUTHORIZED',
+      message: 'No estás autorizado para acceder a este recurso'
     }
   }
 }
