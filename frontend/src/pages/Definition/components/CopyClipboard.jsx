@@ -1,6 +1,7 @@
 import { Clipboard as ClipboardIcon } from '@/icons/clipboard'
 import { useObjectStore } from '@/stores/object.store'
 import { useState } from 'react'
+import { copyToClipboard } from '../utilities/copy-clipboard.util'
 
 export function CopyClipboard() {
   const definitionCode = useObjectStore((state) => state.definitionCode)
@@ -10,7 +11,7 @@ export function CopyClipboard() {
   const handleClick = (e) => {
     e.preventDefault()
 
-    navigator.clipboard.writeText(definitionCode || definitionError)
+    copyToClipboard({ text: definitionCode || definitionError })
     setCopy(true)
 
     setTimeout(() => {
