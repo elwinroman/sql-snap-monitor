@@ -1,12 +1,13 @@
+import { checkSession, login, logout } from '@/services/auth.service'
 import { create } from 'zustand'
 import { JSONtoTextCode } from '@/utilities'
-import { login, logout } from '@/services/auth.service'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
 export const useAuthStore = create(
   persist(
     (set) => ({
       isAuthenticated: false,
+      isSessionExpired: false,
       username: null,
       database: null,
       errorAuth: null,
@@ -39,6 +40,22 @@ export const useAuthStore = create(
         set({ username: null })
         set({ database: null })
         set({ errorAuth: null })
+      },
+
+      // Comprueba la conexión del usuario (cookie expired)
+      checkSession: async () => {
+        const res = await checkSession()
+        // Unauthorized
+        if (res.error) set({ isSessionExpired: true })
+      },
+
+      // Clear auth store
+      clearAuthStore: () => {
+        set({ isAuthenticated: false })
+        set({ username: null })
+        set({ database: null })
+        set({ errorAuth: null })
+        set({ isSessionExpired: false })
       },
     }),
     {

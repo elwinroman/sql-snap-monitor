@@ -138,14 +138,25 @@ export const useObjectStore = create(
         set({ descriptionObjectList: [] })
       },
 
-      // clearObjectStore: () => {
-      //   set({ object: resetObjectPropertiesTuNull({ object: get().object }) })
-      //   set({ definitionCode: null })
-      //   set({ errorObject: null })
-      //   set({ listObjects: [] })
-      //   set({ listDescriptionTable: [] })
-      //   set({ listDescriptionColumns: [] })
-      // },
+      clearObjectStore: () => {
+        set({
+          definitionObject: resetObjectPropertiesTuNull({
+            object: get().object,
+          }),
+        })
+        set({ definitionCode: null })
+        set({ definitionError: null })
+        set({ definitionObjectList: [] })
+        set({
+          descriptionObject: resetObjectPropertiesTuNull({
+            object: get().object,
+          }),
+        })
+        set({ descriptionError: null })
+        set({ descriptionObjectList: [] })
+        set({ descriptionColumnList: [] })
+        set({ listDescriptionColumns: [] })
+      },
     }),
     {
       name: 'objects', // name of the item in the storage (must be unique)

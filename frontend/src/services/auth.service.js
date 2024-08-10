@@ -44,3 +44,24 @@ export async function logout() {
     throw new Error(err)
   }
 }
+
+/**
+ * Función para verificar la sesión del usuario
+ *
+ * @returns {Promise} - Objeto con la información de la sesión del usuario
+ */
+export async function checkSession() {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/auth/check-session`,
+      {
+        credentials: 'include',
+      },
+    )
+
+    const res = await response.json()
+    return res
+  } catch (err) {
+    throw new Error(err)
+  }
+}
