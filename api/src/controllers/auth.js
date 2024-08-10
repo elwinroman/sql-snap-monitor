@@ -1,5 +1,7 @@
-import jwt from 'jsonwebtoken'
+import { AUTH_ERROR_CODES } from '../constants/error-codes.js'
 import { getError } from '../utils/get-error.util.js'
+import { isLoggedIn } from '../utils/verify-session.util.js'
+import jwt from 'jsonwebtoken'
 
 export class AuthController {
   constructor ({ authModel }) {
@@ -32,5 +34,16 @@ export class AuthController {
     return res.clearCookie('access_token').status(200).json(
       { status: 'success', statusCode: 200, message: 'Sesión cerrada correctamente' }
     )
+  }
+
+  checkSession = async (req, res) => {
+    const { credentials } = req.session
+
+    if (!isLoggedIn(credentials)) {
+      const { statusCode } = AUTH_ERROR_CODES.TOKEN_INVALID
+      return res.status(statusCode).json(AUTH_ERROR_CODES.TOKEN_INVALID)
+    }
+
+    return res.json({ status: 'success', statusCode: 200, message: 'Sesión activa' })
   }
 }

@@ -8,6 +8,7 @@ export function createAuthRouter ({ authModel }) {
 
   router.post('/login', authController.login)
   router.post('/logout', authController.logout)
+  router.get('/check-session', authController.checkSession)
 
   return router
 }
