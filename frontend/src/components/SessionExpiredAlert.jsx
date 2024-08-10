@@ -31,7 +31,9 @@ export function SessionExpiredAlert() {
             <i className="text-rose-500">
               <ClockHour5Icon width={28} height={28} />
             </i>
-            <p>Su sesión ha expirado. Por favor, inicia sesión de nuevo.</p>
+            <span>
+              Su sesión ha expirado. Por favor, inicia sesión de nuevo.
+            </span>
           </AlertDialogDescription>
           <AlertDialogFooter>
             <AlertDialogAction asChild>
