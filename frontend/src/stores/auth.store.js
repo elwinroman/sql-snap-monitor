@@ -9,7 +9,7 @@ export const useAuthStore = create(
       isAuthenticated: false,
       isSessionExpired: false,
       username: null,
-      database: null,
+      dbname: null,
       errorAuth: null,
 
       /**
@@ -23,13 +23,13 @@ export const useAuthStore = create(
           set({ errorAuth: JSONtoTextCode({ json: res }) })
           set({ isAuthenticated: false })
           set({ username: null })
-          set({ database: null })
+          set({ dbname: null })
           return
         }
 
         set({ isAuthenticated: true })
         set({ username: credentials.username })
-        set({ database: credentials.database })
+        set({ dbname: credentials.dbname })
         set({ errorAuth: null })
       },
 
@@ -38,7 +38,7 @@ export const useAuthStore = create(
         await logout()
         set({ isAuthenticated: false })
         set({ username: null })
-        set({ database: null })
+        set({ dbname: null })
         set({ errorAuth: null })
       },
 
@@ -53,7 +53,7 @@ export const useAuthStore = create(
       clearAuthStore: () => {
         set({ isAuthenticated: false })
         set({ username: null })
-        set({ database: null })
+        set({ dbname: null })
         set({ errorAuth: null })
         set({ isSessionExpired: false })
       },

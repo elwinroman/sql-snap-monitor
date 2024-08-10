@@ -5,8 +5,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Database as DatabaseIcon } from '@/icons/database'
+import { useAuthStore } from '@/stores/auth.store'
 
 export function BreadcrumCard({ object }) {
+  const dbname = useAuthStore((state) => state.dbname)
+
   return (
     <div className="rounded-md bg-indigo-900 px-6 py-3">
       <article className="flex h-full flex-wrap items-center justify-between gap-8 rounded-md px-3 py-2">
@@ -18,7 +21,7 @@ export function BreadcrumCard({ object }) {
                   <DatabaseIcon width={22} height={22} />
                 </i>
                 <span className="text-lg font-bold text-slate-100">
-                  SI_BDFinanciero
+                  {dbname}
                 </span>
               </TooltipTrigger>
               <TooltipContent>
