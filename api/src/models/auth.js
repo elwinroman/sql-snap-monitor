@@ -3,7 +3,8 @@ import { ERROR_CODES } from '../constants/error-codes.js'
 
 export class AuthModel {
   static async login ({ credentials }) {
-    const { request } = await connection({ credentials })
+    const { conn } = await connection({ credentials })
+    const request = conn.request()
 
     try {
       const stmt = 'SELECT 1 AS login'
@@ -13,6 +14,8 @@ export class AuthModel {
     } catch (err) {
       const { number, message } = err.originalError.info
       return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
+    } finally {
+      conn.close()
     }
   }
 }

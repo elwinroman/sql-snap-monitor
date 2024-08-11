@@ -12,8 +12,6 @@ export async function connection ({ credentials } = { credentials: null }) {
     user = credentials.username
     password = credentials.password
   }
-  console.log(server, database, user, password)
-
   const config = {
     user,
     password,
@@ -32,7 +30,6 @@ export async function connection ({ credentials } = { credentials: null }) {
 
   const conn = await sql.connect(config)
 
-  // si se falla la conexión se lanza un error y se captura en el controlador
-  const request = conn.request()
-  return { request, sql }
+  // si falla la conexión se lanza un error y se captura en el modelo y pasa al controlador
+  return { conn, sql }
 }

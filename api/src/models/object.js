@@ -12,7 +12,8 @@ export class ObjectModel {
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
   static async findObject ({ name, credentials }) {
-    const { request, sql } = await connection({ credentials })
+    const { conn, sql } = await connection({ credentials })
+    const request = conn.request()
 
     try {
       const stmt = `
@@ -43,6 +44,8 @@ export class ObjectModel {
     } catch (err) {
       const { number, message } = err.originalError.info
       return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
+    } finally {
+      conn.close()
     }
   }
 
@@ -56,7 +59,8 @@ export class ObjectModel {
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
   static async getObjectDefinition ({ id, credentials }) {
-    const { request, sql } = await connection({ credentials })
+    const { conn, sql } = await connection({ credentials })
+    const request = conn.request()
 
     try {
       const stmt = `SELECT definition
@@ -72,6 +76,8 @@ export class ObjectModel {
     } catch (err) {
       const { number, message } = err.originalError.info
       return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
+    } finally {
+      conn.close()
     }
   }
 
@@ -86,7 +92,8 @@ export class ObjectModel {
    * @returns {Promise<Object>} - Objeto con la descripción del objeto o un error
    */
   static async getObjectDescription ({ id, credentials }) {
-    const { request, sql } = await connection({ credentials })
+    const { conn, sql } = await connection({ credentials })
+    const request = conn.request()
 
     try {
       // obtiene la descripción de las columnas
@@ -123,6 +130,8 @@ export class ObjectModel {
     } catch (err) {
       const { number, message } = err.originalError.info
       return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
+    } finally {
+      conn.close()
     }
   }
 }

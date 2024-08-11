@@ -17,6 +17,7 @@ export function verifyToken (req, res, next) {
     req.session.credentials = credentials // se guarda el usuario en la sesión
   } catch {
     // error al verificar el token, las rutas protegidas se gestionan en sus controladores
+    req.session.credentials = null
   }
   next()
 }
