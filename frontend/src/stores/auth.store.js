@@ -1,6 +1,5 @@
 import { checkSession, login, logout } from '@/services/auth.service'
 import { create } from 'zustand'
-import { JSONtoTextCode } from '@/utilities'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
 export const useAuthStore = create(
@@ -20,7 +19,7 @@ export const useAuthStore = create(
         const res = await login({ credentials })
 
         if (res.error) {
-          set({ errorAuth: JSONtoTextCode({ json: res }) })
+          set({ errorAuth: res })
           set({ isAuthenticated: false })
           set({ username: null })
           set({ dbname: null })

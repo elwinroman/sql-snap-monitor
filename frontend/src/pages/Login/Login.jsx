@@ -1,26 +1,23 @@
+import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
+import { Input } from './components/Input'
+import { Label } from './components/Label'
 import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores/auth.store'
-import { useRef } from 'react'
 
 export function LoginPage() {
   const loginUser = useAuthStore((state) => state.loginUser)
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  const element = useRef({
-    server: 'server',
-    database: 'database',
-    username: 'username',
-    password: 'password',
-  })
+  const errorAuth = useAuthStore((state) => state.errorAuth)
 
   if (isAuthenticated) return <Navigate to="/" />
 
   const onSubmitHandler = async (e) => {
     e.preventDefault()
     const data = new FormData(e.target)
-    const { server, database, username, password } = Object.fromEntries(data)
+    const { server, dbname, username, password } = Object.fromEntries(data)
     const credentials = {
       server: server.trim(),
-      dbname: database.trim(),
+      dbname: dbname.trim(),
       username: username.trim(),
       password: password.trim(),
     }
@@ -40,64 +37,40 @@ export function LoginPage() {
             Hoy es un buen día para revisar tus SPs, Tablas, etc. Inicia sesión
             con tus credenciales SQL
           </p>
+          {errorAuth && (
+            <div className="flex gap-2 rounded-md border border-[#f53e7b59] bg-[#592e41] px-4 py-2">
+              <i className="pt-0.5">
+                <AlertCircleIcon width={22} height={22} />
+              </i>
+              <p className="text-sm text-white">
+                {errorAuth.error.code === 'ESOCKET'
+                  ? 'Error de conexión, el servidor no responde o no existe'
+                  : 'La base de datos, el usuario o la contraseña son incorrectos'}
+              </p>
+            </div>
+          )}
         </header>
 
         <form onSubmit={onSubmitHandler} className="flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="flex gap-1">
-                <span>Server</span>
-                <span className="text-rose-600">*</span>
-              </label>
-              <input
-                type="text"
-                name="server"
-                id={element.server}
-                className="rounded-md border border-transparent bg-[#3c3e42] px-3 py-2 text-sm outline-none transition-colors duration-300 hover:border-[#00e19b] focus:border-[#00e19b] focus:bg-[#00e19b1a]"
-                required
-              />
+              <Label text="Server" />
+              <Input name="server" />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="flex gap-1">
-                <span>Database</span>
-                <span className="text-rose-600">*</span>
-              </label>
-              <input
-                type="text"
-                name="database"
-                id={element.database}
-                className="rounded-md border border-transparent bg-[#3c3e42] px-3 py-2 text-sm outline-none transition-colors duration-300 hover:border-[#00e19b] focus:border-[#00e19b] focus:bg-[#00e19b1a]"
-                required
-              />
+              <Label text="Database" />
+              <Input name="dbname" />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="flex gap-1">
-                <span>Usuario</span>
-                <span className="text-rose-600">*</span>
-              </label>
-              <input
-                type="text"
-                name="username"
-                id={element.username}
-                className="rounded-md border border-transparent bg-[#3c3e42] px-3 py-2 text-sm outline-none transition-colors duration-300 hover:border-[#00e19b] focus:border-[#00e19b] focus:bg-[#00e19b1a]"
-                required
-              />
+              <Label text="Usuario SQL" />
+              <Input name="username" />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="flex gap-1">
-                <span>Contraseña</span>
-                <span className="text-rose-600">*</span>
-              </label>
-              <input
-                type="password"
-                name="password"
-                id={element.password}
-                className="rounded-md border border-transparent bg-[#3c3e42] px-3 py-2 text-sm outline-none transition-colors duration-300 hover:border-[#00e19b] focus:border-[#00e19b] focus:bg-[#00e19b1a]"
-                required
-              />
+              <Label text="Contraseña" />
+              <Input name="password" type="password" />
             </div>
           </div>
 
