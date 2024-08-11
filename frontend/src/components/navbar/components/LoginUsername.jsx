@@ -9,15 +9,18 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth.store'
+import { useObjectStore } from '@/stores/object.store'
 import { User as UserIcon } from '@/icons/user'
 
 export function LoginUsername() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const logoutUser = useAuthStore((state) => state.logoutUser)
   const username = useAuthStore((state) => state.username)
+  const clearObjectStore = useObjectStore((state) => state.clearObjectStore)
 
   const closeSession = async (e) => {
     await logoutUser()
+    await clearObjectStore()
   }
 
   return (
