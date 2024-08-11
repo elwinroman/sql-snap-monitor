@@ -60,6 +60,12 @@ export const useAuthStore = create(
     {
       name: 'is-authenticated', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+
+      // excluye de la persistencia, algunos estados del store
+      partialize: (state) =>
+        Object.fromEntries(
+          Object.entries(state).filter(([key]) => !['errorAuth'].includes(key)),
+        ),
     },
   ),
 )
