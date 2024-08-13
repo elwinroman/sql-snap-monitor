@@ -3,6 +3,7 @@ import { Input } from './components/Input'
 import { Label } from './components/Label'
 import { Loader } from '@/components/loader/Loader'
 import { Navigate } from 'react-router-dom'
+import { PasswordInput } from './components/PasswordInput'
 import { useAuthStore } from '@/stores/auth.store'
 import { useState } from 'react'
 
@@ -65,7 +66,7 @@ export function LoginPage() {
         </header>
 
         <form onSubmit={onSubmitHandler} className="flex flex-col gap-8">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-1">
               <Label text="Server" />
               <Input name="server" />
@@ -83,14 +84,14 @@ export function LoginPage() {
 
             <div className="flex flex-col gap-1">
               <Label text="Contraseña" />
-              <Input name="password" type="password" />
+              <PasswordInput name="password" type="password" />
             </div>
           </div>
 
           <div>
             <button
               type="submit"
-              className="w-full rounded-md border border-transparent bg-[#00e19b] px-3 py-2 font-medium text-zinc-700 hover:bg-[#06f4aa]"
+              className={`w-full select-none rounded-md border border-transparent px-3 py-2 font-medium text-zinc-700 hover:bg-[#06f4aa] ${loading ? 'bg-[#00e19b] opacity-60' : 'bg-[#00e19b]'}`}
             >
               Iniciar sesión
             </button>
