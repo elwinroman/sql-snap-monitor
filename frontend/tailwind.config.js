@@ -61,6 +61,9 @@ module.exports = {
         owborder: {
           DEFAULT: 'var(--ow-border)',
         },
+        owcard: {
+          DEFAULT: 'var(--ow-card)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
