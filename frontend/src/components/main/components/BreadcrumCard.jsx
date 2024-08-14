@@ -12,7 +12,7 @@ export function BreadcrumCard({ object }) {
 
   return (
     <div className="rounded-md bg-emerald-500 px-6 py-3">
-      <article className="flex items-center justify-between rounded-md px-3 py-1">
+      <article className="flex items-center justify-between rounded-md">
         <div className="flex flex-col">
           <TooltipProvider delayDuration={200}>
             <Tooltip>
