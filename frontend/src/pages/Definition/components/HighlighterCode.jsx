@@ -3,6 +3,7 @@ import { fallbackEndOfLines } from '@/utilities'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import json from 'react-syntax-highlighter/dist/esm/languages/hljs/json'
 import sql from 'react-syntax-highlighter/dist/esm/languages/hljs/sql'
+import './highlighter-code.css'
 
 export function HighlighterCode({ definitionError, definitionCode }) {
   SyntaxHighlighter.registerLanguage('sql', sql)
@@ -16,11 +17,11 @@ export function HighlighterCode({ definitionError, definitionCode }) {
       useInlineStyles={true} // usar por defecto los styles de react-syntax-highlighter
       showLineNumbers={true}
       customStyle={{
-        padding: '3rem 1rem',
+        padding: '3rem 0rem',
         background: 'var(--ow-card)',
         border: 'none',
       }} // <pre> tag stlyes, acepta solo estilos
-      codeTagProps={{ className: 'text-xs' }} // <code> tag props
+      codeTagProps={{ className: 'text-xs fix-tab-size' }} // <code> tag props
     >
       {definitionError === null && definitionCode === null
         ? fallbackEndOfLines({ n: 10 })
