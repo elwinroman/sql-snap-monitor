@@ -15,7 +15,7 @@ export function DefinitionPage() {
   )
 
   return (
-    <div className="relative mb-10 overflow-hidden rounded-md border border-owborder bg-[#1d1f25]">
+    <div className="bg-owcard relative mb-10 overflow-hidden rounded-md border border-owborder">
       {/* Copiar */}
       {(definitionCode || definitionError) && <CopyClipboard />}
 

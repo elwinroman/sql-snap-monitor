@@ -17,7 +17,7 @@ export function HighlighterCode({ definitionError, definitionCode }) {
       showLineNumbers={true}
       customStyle={{
         padding: '3rem 1rem',
-        background: '#1d1f25',
+        background: 'var(--ow-card)',
         border: 'none',
       }} // <pre> tag stlyes, acepta solo estilos
       codeTagProps={{ className: 'text-xs' }} // <code> tag props

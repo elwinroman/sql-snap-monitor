@@ -16,7 +16,7 @@ export function DescriptionPage() {
   )
 
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-ownavbar px-6 py-4">
+    <div className="bg-owcard flex flex-col gap-2 rounded-md border border-ownavbar px-6 py-4">
       <h4 className="font-bold">Columnas</h4>
       {descriptionError && <p className="text-red-500">{descriptionError}</p>}
       {!descriptionError && (

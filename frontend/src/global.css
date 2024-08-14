@@ -34,6 +34,7 @@
     --ow-main: #f6f7f9;
     --ow-navbar: white;
     --ow-border: #0000000d;
+    --ow-card: white;
 
     /* Tamaños */
     --navbar-height: 100px;
@@ -69,6 +70,7 @@
     --ow-main: #14161a;
     --ow-navbar: #1d1f25;
     --ow-border: #ffffff0d;
+    --ow-card: #26282d;
   }
 }
 

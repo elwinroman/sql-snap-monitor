@@ -40,8 +40,10 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards object={definitionObject} />
-                <DefinitionPage />
+                <div className="flex flex-col gap-5">
+                  <InfoCards object={definitionObject} />
+                  <DefinitionPage />
+                </div>
               </Layout>
             </ProtectedLayout>
           }
@@ -51,8 +53,10 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards object={descriptionObject} />
-                <DescriptionPage />
+                <div className="flex flex-col gap-5">
+                  <InfoCards object={descriptionObject} />
+                  <DescriptionPage />
+                </div>
               </Layout>
             </ProtectedLayout>
           }
