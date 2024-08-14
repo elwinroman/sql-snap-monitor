@@ -10,40 +10,42 @@ export function InfoCards({ object }) {
       has_tag: true,
       tag: object.type ?? 'No disponible',
       icon: <ArticleIcon width={22} height={22} />,
-      className: 'bg-red-400 text-white',
+      className: 'bg-emerald-500/20 text-emerald-500',
     },
     {
       id: 2,
       title: 'Fecha de creación',
       value: object.createDate ?? 'No disponible',
       icon: <ArticleIcon width={22} height={22} />,
-      className: 'bg-red-400 text-white',
+      className: 'bg-indigo-400/20 text-indigo-400',
     },
     {
       id: 3,
       title: 'Fecha de modificación',
       value: object.modifyDate ?? 'No disponible',
       icon: <ArticleIcon width={22} height={22} />,
-      className: 'bg-zinc-400 text-white',
+      className: 'bg-rose-500/20 text-rose-500',
     },
   ]
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-5">
       {/* Información general del objecto */}
-      <BreadcrumCard object={object} />
+      {/* <BreadcrumCard object={object} /> */}
 
-      <ul className="grid grid-cols-[repeat(auto-fit,_minmax(390px,_1fr))] gap-3">
+      <ul className="grid auto-rows-fr grid-cols-[repeat(auto-fit,_minmax(390px,_1fr))] gap-5">
+        {/* Información general del objecto */}
+        <BreadcrumCard object={object} />
         {info.map((item) => (
           <li
             key={item.id}
-            className="flex items-center justify-between gap-6 rounded-md border border-owborder bg-ownavbar px-6 py-4"
+            className="bg-owcard flex items-center justify-between gap-6 rounded-md border border-owborder px-6 py-2"
           >
             <div className="flex flex-col gap-1">
               <h6 className="text-sm font-semibold text-zinc-600 dark:text-zinc-400">
                 {item.title}
               </h6>
-              <p className="text-base font-bold text-slate-900 dark:text-white">
+              <p className="dark:text-zinc-40000 text-base font-bold text-slate-300">
                 <span>{item.value} </span>
                 {item.has_tag && (
                   <span className="text-base text-amber-500">({item.tag})</span>
