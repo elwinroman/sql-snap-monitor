@@ -40,7 +40,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5 px-8">
                   <InfoCards object={definitionObject} />
                   <DefinitionPage />
                 </div>
@@ -53,7 +53,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5 px-8">
                   <InfoCards object={descriptionObject} />
                   <DescriptionPage />
                 </div>

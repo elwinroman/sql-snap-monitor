@@ -7,7 +7,7 @@ export default function Layout({ children }) {
   return (
     <div className="App flex w-full">
       <Sidebar />
-      <main className="relative flex h-screen w-full flex-col overflow-y-auto bg-owmain px-4">
+      <main className="relative flex h-screen w-full flex-col gap-6 overflow-y-auto bg-owmain">
         <Navbar />
         <Main>{children}</Main>
         <Footer />
