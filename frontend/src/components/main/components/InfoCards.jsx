@@ -1,5 +1,6 @@
 import { Article as ArticleIcon } from '@/icons/article'
 import { BreadcrumCard } from './BreadcrumCard'
+import { formatLocalDate } from '@/utilities'
 
 export function InfoCards({ object }) {
   const info = [
@@ -15,14 +16,14 @@ export function InfoCards({ object }) {
     {
       id: 2,
       title: 'Fecha de creación',
-      value: object.createDate ?? '-',
+      value: object.createDate ? formatLocalDate(object.createDate) : '-',
       icon: <ArticleIcon width={22} height={22} />,
       className: 'bg-indigo-400/20 text-indigo-400',
     },
     {
       id: 3,
       title: 'Fecha de modificación',
-      value: object.modifyDate ?? '-',
+      value: object.modifyDate ? formatLocalDate(object.modifyDate) : '-',
       icon: <ArticleIcon width={22} height={22} />,
       className: 'bg-rose-500/20 text-rose-500',
     },
@@ -37,7 +38,7 @@ export function InfoCards({ object }) {
         {info.map((item) => (
           <li
             key={item.id}
-            className="flex items-center justify-between gap-6 rounded-md border border-owborder bg-owcard px-6 py-2"
+            className="flex items-center justify-between gap-6 rounded-md border border-owborder bg-owcard px-6 py-4"
           >
             <div className="flex flex-col gap-1">
               <h6 className="text-sm font-semibold text-zinc-600 dark:text-zinc-400">
