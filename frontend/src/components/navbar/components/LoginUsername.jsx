@@ -16,11 +16,11 @@ export function LoginUsername() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const logoutUser = useAuthStore((state) => state.logoutUser)
   const username = useAuthStore((state) => state.username)
-  const clearObjectStore = useObjectStore((state) => state.clearObjectStore)
+  const resetObjectStore = useObjectStore((state) => state.reset)
 
   const closeSession = async (e) => {
     await logoutUser()
-    await clearObjectStore()
+    await resetObjectStore()
     await useObjectStore.persist.clearStorage()
   }
 

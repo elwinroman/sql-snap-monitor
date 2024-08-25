@@ -13,11 +13,12 @@ import { useObjectStore } from '@/stores/object.store'
 
 export function SessionExpiredAlert() {
   const clearAuthStore = useAuthStore((state) => state.clearAuthStore)
-  const clearObjectStore = useObjectStore((state) => state.clearObjectStore)
+  const resetObjectStore = useObjectStore((state) => state.reset)
 
   const handleClick = () => {
     clearAuthStore()
-    clearObjectStore()
+    resetObjectStore()
+    useObjectStore.persist.clearStorage()
   }
 
   return (
