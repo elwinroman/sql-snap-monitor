@@ -1,6 +1,6 @@
 import { CopyClipboard } from './components/CopyClipboard'
-import { HighlighterCode } from './components/HighlighterCode'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
+import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCode'
 import { useObjectStore } from '@/stores/object.store'
 
 export function DefinitionPage() {
@@ -15,13 +15,13 @@ export function DefinitionPage() {
   )
 
   return (
-    <div className="bg-owcard relative mb-10 overflow-hidden rounded-md border border-owborder">
+    <div className="relative mb-10 overflow-hidden rounded-md border border-owborder bg-owcard py-10">
       {/* Copiar */}
       {(definitionCode || definitionError) && <CopyClipboard />}
 
-      {/* Highlihter syntax */}
+      {/* Monaco editor syntax */}
       {definitionObjectList.length === 0 && (
-        <HighlighterCode
+        <MonacoEditorCode
           definitionError={definitionError}
           definitionCode={definitionCode}
         />
