@@ -20,7 +20,7 @@ export function DefinitionPage() {
 
   return (
     <div
-      className={`} relative overflow-hidden rounded-md border border-owborder bg-owcard ${definitionCode ? 'pb-10' : ''}`}
+      className={`relative overflow-hidden rounded-md border border-owborder bg-owcard ${definitionCode ? 'pb-10' : ''}`}
     >
       {definitionCode && (
         <div className="flex items-center justify-between px-6 py-4">
@@ -36,7 +36,7 @@ export function DefinitionPage() {
 
       {!definitionCode && (
         <div className="flex flex-col gap-3 px-6 py-6">
-          <h4 className>Definición</h4>
+          <h4>Definición</h4>
 
           {/* Alerta de error */}
           {definitionError && (
