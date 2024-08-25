@@ -6,23 +6,23 @@ export function InfoCards({ object }) {
     {
       id: 1,
       title: 'Tipo',
-      value: object.typeDesc ?? 'No disponible',
+      value: object.typeDesc ?? '-',
       has_tag: true,
-      tag: object.type ?? 'No disponible',
+      tag: object.type ? `(${object.type})` : '',
       icon: <ArticleIcon width={22} height={22} />,
       className: 'bg-emerald-500/20 text-emerald-500',
     },
     {
       id: 2,
       title: 'Fecha de creación',
-      value: object.createDate ?? 'No disponible',
+      value: object.createDate ?? '-',
       icon: <ArticleIcon width={22} height={22} />,
       className: 'bg-indigo-400/20 text-indigo-400',
     },
     {
       id: 3,
       title: 'Fecha de modificación',
-      value: object.modifyDate ?? 'No disponible',
+      value: object.modifyDate ?? '-',
       icon: <ArticleIcon width={22} height={22} />,
       className: 'bg-rose-500/20 text-rose-500',
     },
@@ -46,7 +46,7 @@ export function InfoCards({ object }) {
               <p className="dark:text-zinc-40000 text-base font-bold text-slate-300">
                 <span>{item.value} </span>
                 {item.has_tag && (
-                  <span className="text-base text-amber-500">({item.tag})</span>
+                  <span className="text-base text-amber-500">{item.tag}</span>
                 )}
               </p>
             </div>
