@@ -21,9 +21,9 @@ export function LinkObjectList({
     fetchObjectAction()
   }
   return (
-    <div className="flex flex-col gap-4 p-6">
+    <div className="flex flex-col gap-4">
       <h6 className="flex flex-col font-semibold text-white">
-        <span>Se encontraron 2 o más coincidencias del objeto</span>
+        <span>Se encontraron {objectList.length} coincidencias del objeto</span>
         <span className="font-normal text-zinc-400">
           Selecciona uno de ellos
         </span>
