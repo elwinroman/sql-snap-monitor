@@ -5,9 +5,9 @@ import { Navbar } from '@/components/navbar/Navbar'
 
 export default function Layout({ children }) {
   return (
-    <div className="App flex w-full">
+    <div className="App flex w-full overflow-y-auto bg-owmain">
       {/* <Sidebar /> */}
-      <main className="relative mx-auto flex h-screen w-full max-w-[1980px] flex-col overflow-y-auto bg-owmain">
+      <main className="relative mx-auto flex h-screen w-full max-w-screen-2xl flex-col bg-owmain">
         <Navbar />
         <Main>{children}</Main>
         <Footer />
