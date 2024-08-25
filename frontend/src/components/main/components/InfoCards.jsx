@@ -1,5 +1,7 @@
 import { Article as ArticleIcon } from '@/icons/article'
 import { BreadcrumCard } from './BreadcrumCard'
+import { CalendarPlus as CalendarPlusIcon } from '@/icons/calendar-plus'
+import { CalendarStats as CalendarStatsIcon } from '@/icons/calendar-stats'
 import { formatLocalDate } from '@/utilities'
 
 export function InfoCards({ object }) {
@@ -11,21 +13,21 @@ export function InfoCards({ object }) {
       has_tag: true,
       tag: object.type ? `(${object.type})` : '',
       icon: <ArticleIcon width={22} height={22} />,
-      className: 'bg-emerald-500/20 text-emerald-500',
+      className: 'bg-cyan-400/20 text-cyan-400',
     },
     {
       id: 2,
       title: 'Fecha de creación',
       value: object.createDate ? formatLocalDate(object.createDate) : '-',
-      icon: <ArticleIcon width={22} height={22} />,
-      className: 'bg-indigo-400/20 text-indigo-400',
+      icon: <CalendarPlusIcon width={22} height={22} />,
+      className: 'bg-emerald-500/20 text-emerald-500',
     },
     {
       id: 3,
       title: 'Fecha de modificación',
       value: object.modifyDate ? formatLocalDate(object.modifyDate) : '-',
-      icon: <ArticleIcon width={22} height={22} />,
-      className: 'bg-rose-500/20 text-rose-500',
+      icon: <CalendarStatsIcon width={22} height={22} />,
+      className: 'bg-indigo-400/20 text-indigo-400',
     },
   ]
 
@@ -47,7 +49,7 @@ export function InfoCards({ object }) {
               <p className="dark:text-zinc-40000 text-base font-bold text-slate-300">
                 <span>{item.value} </span>
                 {item.has_tag && (
-                  <span className="text-base text-amber-500">{item.tag}</span>
+                  <span className="text-base text-amber-400">{item.tag}</span>
                 )}
               </p>
             </div>
