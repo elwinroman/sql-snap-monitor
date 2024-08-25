@@ -33,7 +33,7 @@ export function InfoCards({ object }) {
       {/* Información general del objecto */}
       <BreadcrumCard object={object} />
 
-      <ul className="grid auto-rows-fr grid-cols-[repeat(auto-fit,_minmax(390px,_1fr))] gap-5">
+      <ul className="grid auto-rows-fr grid-cols-[repeat(auto-fill,_minmax(310px,_1fr))] gap-5">
         {info.map((item) => (
           <li
             key={item.id}
