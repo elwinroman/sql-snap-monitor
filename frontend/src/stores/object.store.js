@@ -4,53 +4,53 @@ import {
   getDescription,
   getObject,
 } from '@/services/object.service'
-import { JSONtoTextCode, resetObjectPropertiesTuNull } from '@/utilities'
 import { persist, createJSONStorage } from 'zustand/middleware'
+import {
+  DefinitionInitialState,
+  DescriptionInitialState,
+  ObjectInitialState,
+} from '@/models/object.model'
 
 export const useObjectStore = create(
   persist(
     (set, get) => ({
-      // definición de objetos
-      definitionObject: {
-        id: null,
-        name: null,
-        type: null,
-        typeDesc: null,
-        schema: null,
-        createDate: null,
-        modifyDate: null,
-      },
-      definitionCode: null,
-      definitionError: null,
-      definitionObjectList: [],
+      loading: false,
 
+      // definición de objetos
+      definitionObject: { ...ObjectInitialState },
+      ...DefinitionInitialState,
+
+      // updatea el objecto de definición cuando existen coincidencias
       updateDefinitionObject: ({ object }) => {
         set({ definitionObject: object })
       },
 
       fetchDefinitionObject: async ({ name }) => {
+        set({ loading: true })
+
         const res = await getObject({ name })
-        const object = get().definitionObject
 
         if (res.error) {
-          set({ definitionError: JSONtoTextCode({ json: res }) })
-          set({ definitionObject: resetObjectPropertiesTuNull({ object }) })
-          set({ definitionObjectList: [] })
-          set({ definitionCode: null })
+          set({ ...DefinitionInitialState })
+          set({ definitionObject: { ...ObjectInitialState } })
+          set({ definitionError: res })
+
+          set({ loading: false })
           return
         }
 
         if (res.meta.length > 1) {
+          set({ ...DefinitionInitialState })
+          set({ definitionObject: { ...ObjectInitialState } })
           set({ definitionObjectList: res.objects })
-          set({ definitionCode: null })
-          set({ definitionObject: resetObjectPropertiesTuNull({ object }) })
-          set({ definitionError: null })
+
+          set({ loading: false })
           return
         }
 
+        set({ ...DefinitionInitialState })
         set({ definitionObject: res.objects[0] })
-        set({ definitionError: null })
-        set({ definitionObjectList: [] })
+        set({ loading: false })
       },
 
       fetchDefinition: async () => {
@@ -61,106 +61,79 @@ export const useObjectStore = create(
         const res = await getDefinition({ id: object.id })
 
         if (res.error) {
-          set({ definitionError: JSONtoTextCode({ json: res }) })
-          set({ definitionCode: null })
-          set({ definitionObjectList: [] })
+          set({ ...DefinitionInitialState })
+          set({ definitionError: res })
           return
         }
 
+        set({ ...DefinitionInitialState })
         set({ definitionCode: res.definition })
-        set({ definitionError: null })
-        set({ definitionObjectList: [] })
       },
 
       // descripción de objetos
-      descriptionObject: {
-        id: null,
-        name: null,
-        type: null,
-        typeDesc: null,
-        schema: null,
-        createDate: null,
-        modifyDate: null,
-      },
-      descriptionError: null,
-      descriptionTableList: [],
-      descriptionColumnList: [],
-      descriptionObjectList: [],
+      descriptionObject: { ...ObjectInitialState },
+      ...DescriptionInitialState,
 
+      // updatea el objecto de descripción cuando existen coincidencias
       updateDescriptionObject: ({ object }) => {
         set({ descriptionObject: object })
       },
 
       fetchDescriptionObject: async ({ name }) => {
+        set({ loading: true })
         const res = await getObject({ name })
-        const object = get().descriptionObject
 
         if (res.error) {
-          set({ descriptionError: JSONtoTextCode({ json: res }) })
-          set({ descriptionObject: resetObjectPropertiesTuNull({ object }) })
-          set({ descriptionObjectList: [] })
-          set({ descriptionColumnList: [] })
-          set({ descriptionTableList: [] })
+          set({ ...DescriptionInitialState })
+          set({ descriptionObject: { ...ObjectInitialState } })
+          set({ descriptionError: res })
+
+          set({ loading: false })
           return
         }
 
         if (res.meta.length > 1) {
+          set({ ...DescriptionInitialState })
+          set({ descriptionObject: { ...ObjectInitialState } })
           set({ descriptionObjectList: res.objects })
-          set({ descriptionObject: resetObjectPropertiesTuNull({ object }) })
-          set({ descriptionError: null })
-          set({ descriptionColumnList: [] })
-          set({ descriptionTableList: [] })
+          set({ loading: false })
           return
         }
 
+        set({ ...DescriptionInitialState })
         set({ descriptionObject: res.objects[0] })
-        set({ descriptionError: null })
-        set({ descriptionObjectList: [] })
+
+        set({ loading: false })
       },
 
       fetchDescription: async () => {
         const object = get().descriptionObject
-
         if (object.id === null) return
 
         const res = await getDescription({ id: object.id })
 
         if (res.error) {
-          set({ descriptionError: JSONtoTextCode({ json: res }) })
-          set({ descriptionTableList: [] })
-          set({ descriptionColumnList: [] })
-          set({ descriptionObjectList: [] })
+          set({ ...DescriptionInitialState })
+          set({ descriptionError: res })
           return
         }
+
+        set({ ...DescriptionInitialState })
         set({ descriptionTableList: res.data.objectDescription })
         set({ descriptionColumnList: res.data.columnDescription })
-        set({ descriptionError: null })
-        set({ descriptionObjectList: [] })
       },
 
-      clearObjectStore: () => {
-        set({
-          definitionObject: resetObjectPropertiesTuNull({
-            object: get().object,
-          }),
-        })
-        set({ definitionCode: null })
-        set({ definitionError: null })
-        set({ definitionObjectList: [] })
-        set({
-          descriptionObject: resetObjectPropertiesTuNull({
-            object: get().object,
-          }),
-        })
-        set({ descriptionError: null })
-        set({ descriptionObjectList: [] })
-        set({ descriptionColumnList: [] })
-        set({ listDescriptionColumns: [] })
+      reset: () => {
+        set({ definitionObject: { ...ObjectInitialState } })
+        set({ descriptionObject: { ...ObjectInitialState } })
+        set({ ...DefinitionInitialState })
+        set({ ...DescriptionInitialState })
       },
     }),
     {
       name: 'objects', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+      // skipHydration: true,
     },
   ),
 )
