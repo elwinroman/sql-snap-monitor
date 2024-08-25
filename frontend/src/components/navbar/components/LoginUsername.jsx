@@ -21,6 +21,7 @@ export function LoginUsername() {
   const closeSession = async (e) => {
     await logoutUser()
     await clearObjectStore()
+    await useObjectStore.persist.clearStorage()
   }
 
   return (
