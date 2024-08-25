@@ -2,6 +2,7 @@ import { Configuration } from './components/Configuration'
 import { HamburguerMenu } from './components/HamburguerMenu'
 import { LoginUsername } from './components/LoginUsername'
 import { SearchInput } from './components/SearchInput'
+import { NavMenu } from './components/NavMenu'
 
 export function Navbar() {
   return (
@@ -11,7 +12,7 @@ export function Navbar() {
         <HamburguerMenu />
 
         {/* White space (ocupa el maximo espacio) */}
-        <div className="grow"></div>
+        <NavMenu className="flex-grow" />
 
         {/* Input de búsqueda */}
         <SearchInput />
