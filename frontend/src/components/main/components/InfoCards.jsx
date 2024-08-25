@@ -31,15 +31,13 @@ export function InfoCards({ object }) {
   return (
     <div className="flex flex-col gap-5">
       {/* Información general del objecto */}
-      {/* <BreadcrumCard object={object} /> */}
+      <BreadcrumCard object={object} />
 
       <ul className="grid auto-rows-fr grid-cols-[repeat(auto-fit,_minmax(390px,_1fr))] gap-5">
-        {/* Información general del objecto */}
-        <BreadcrumCard object={object} />
         {info.map((item) => (
           <li
             key={item.id}
-            className="bg-owcard flex items-center justify-between gap-6 rounded-md border border-owborder px-6 py-2"
+            className="flex items-center justify-between gap-6 rounded-md border border-owborder bg-owcard px-6 py-2"
           >
             <div className="flex flex-col gap-1">
               <h6 className="text-sm font-semibold text-zinc-600 dark:text-zinc-400">
