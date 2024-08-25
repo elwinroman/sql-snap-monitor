@@ -21,7 +21,7 @@ export function CopyClipboard() {
 
   return (
     <button
-      className={`absolute right-5 top-1.5 z-50 w-24 rounded-md border border-zinc-400/30 px-2 py-1 backdrop-blur-sm transition duration-200 ${copy ? 'bg-emerald-400' : 'bg-amber-400 hover:bg-amber-300'}`}
+      className={`w-24 rounded-md border border-zinc-400/30 px-2 py-1 backdrop-blur-sm transition duration-200 ${copy ? 'bg-emerald-400' : 'bg-amber-400 hover:bg-amber-300'}`}
       onClick={handleClick}
     >
       <div className="flex items-center gap-1">
