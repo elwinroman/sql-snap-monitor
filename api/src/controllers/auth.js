@@ -16,13 +16,13 @@ export class AuthController {
       const result = await this.authModel.login({ credentials })
       if (result.error) return res.status(result.statusCode).json(result)
 
-      const token = await jwt.sign({ credentials }, process.env.JWT_SECRET, { expiresIn: '1h' })
+      const token = await jwt.sign({ credentials }, process.env.JWT_SECRET, { expiresIn: '48h' })
 
       return res.cookie('access_token', token, {
         httpOnly: true, // cookie solo accesible por el servidor
         secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
         sameSite: 'strict', // cookie no disponible para otros sitios
-        maxAge: 1000 * 60 * 60 // cookie expira en 1 hora
+        maxAge: 1000 * 60 * 60 * 48// cookie expira en 1 hora
       }).json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', token })
     } catch (err) {
       const error = getError({ err })
