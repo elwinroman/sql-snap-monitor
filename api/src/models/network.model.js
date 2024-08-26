@@ -1,4 +1,5 @@
 import os from 'os'
+import pc from 'picocolors'
 
 const LOCALHOST = '127.0.0.1'
 
@@ -26,16 +27,18 @@ export default class NetworkModel {
   }
 
   printNetworks () {
-    console.log(`➜ Local:   http://localhost:${this.port}/`)
+    console.clear()
+    console.log(`\n ${pc.green(pc.bold('ALADDIN API'))} ${pc.gray('server running on')}`)
+    console.log(`\n ${pc.green('➜')}  Local:   ${pc.yellow(`http://localhost:${this.port}/`)}`)
 
     if (this.isExpose) {
       for (const net of this.ipv4) {
-        if (net.address !== LOCALHOST) { console.log(`➜ Network: http://${net.address}:${this.port}/`) }
+        if (net.address !== LOCALHOST) { console.log(` ${pc.green('➜')}  Network: ${pc.yellow(`http://${net.address}:${this.port}/`)}`) }
       }
       return
     }
 
-    if (!this.isExpose) { console.log('➜ Network: use --host to expose') }
+    if (!this.isExpose) { console.log(` ${pc.green('➜')} ${pc.gray(' Network: use')} --host ${pc.gray('to expose')}`) }
   }
 
   // getters
