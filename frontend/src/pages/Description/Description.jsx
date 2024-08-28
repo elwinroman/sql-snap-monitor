@@ -20,7 +20,7 @@ export function DescriptionPage() {
   if (loading) return <div>Buscando...</div>
 
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-owcard px-6 py-4">
+    <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-owcard px-8 py-8">
       <h4 className="font-bold">Descripción</h4>
 
       {/* Descripción del objecto */}
