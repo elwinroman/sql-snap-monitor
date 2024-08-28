@@ -10,6 +10,9 @@ module.exports = {
   ],
   prefix: '',
   theme: {
+    fontFamily: {
+      sans: ['Open Sans Variable', 'sans-serif'],
+    },
     container: {
       center: true,
       padding: '2rem',
