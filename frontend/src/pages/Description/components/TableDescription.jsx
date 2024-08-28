@@ -25,7 +25,7 @@ export function TableDescription({ descriptionColumnList }) {
               className="flex gap-5 rounded-sm border border-dashed border-slate-500 p-2"
             >
               <p className="text-md text-slate-300">
-                <span className="font-semibold">{item.value} </span>
+                <span className="font-medium">{item.value} </span>
                 <span className="rounded-sm bg-zinc-700 px-2 py-1 text-xs font-bold">
                   {item.property_name}
                 </span>
@@ -37,12 +37,12 @@ export function TableDescription({ descriptionColumnList }) {
         <TableCaption>Lista de descripción de un objeto.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[20px]">Nro</TableHead>
-            <TableHead>Nombre columna</TableHead>
-            <TableHead>Descripción</TableHead>
-            <TableHead>Nombre de propiedad</TableHead>
-            <TableHead className="w-[20px]">col</TableHead>
-            <TableHead className="w-[20px]">minor</TableHead>
+            <TableHead className="w-[20px] font-semibold">Nro</TableHead>
+            <TableHead className="font-semibold">Nombre columna</TableHead>
+            <TableHead className="font-semibold">Descripción</TableHead>
+            <TableHead className="font-semibold">Nombre de propiedad</TableHead>
+            <TableHead className="w-[20px] font-semibold">col_id</TableHead>
+            <TableHead className="w-[20px] font-semibold">minor_id</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -53,7 +53,11 @@ export function TableDescription({ descriptionColumnList }) {
                 <TableCell className="w-[20px]">{index + 1}</TableCell>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.value}</TableCell>
-                <TableCell>{item.property_name}</TableCell>
+                <TableCell>
+                  <span className="inline-block rounded-sm bg-zinc-700 px-2 py-1 text-center text-xs font-bold">
+                    {item.property_name}
+                  </span>
+                </TableCell>
                 <TableCell className="w-[20px]">{item.column_id}</TableCell>
                 <TableCell className="w-[20px]">{item.minor_id}</TableCell>
               </TableRow>
