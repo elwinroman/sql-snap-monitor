@@ -1,7 +1,8 @@
 import Editor from '@monaco-editor/react'
 import Dracula from './themes/dracula.theme'
+import { options } from './constants/editor-options'
 
-export function MonacoEditorCode({ definitionError, definitionCode }) {
+export function MonacoEditorCode({ definitionCode }) {
   const handleEditorDidMount = (monaco) => {
     monaco.editor.defineTheme('dracula', {
       ...Dracula,
@@ -16,7 +17,9 @@ export function MonacoEditorCode({ definitionError, definitionCode }) {
         defaultValue="// some comment"
         height="90vh"
         theme="dracula"
-        value={definitionError || definitionCode}
+        value={definitionCode}
+        options={{ ...options }}
+        loading={<div>Cargando...</div>}
       />
     </div>
   )
