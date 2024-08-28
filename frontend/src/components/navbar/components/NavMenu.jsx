@@ -9,7 +9,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  // navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
 
 const components = [
@@ -48,11 +48,11 @@ export function NavMenu({ className }) {
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem asChild>
+          {/* <NavigationMenuItem asChild>
             <NavLink to="/definition" className={navigationMenuTriggerStyle()}>
               Diff editor
             </NavLink>
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
         </NavigationMenuList>
       </NavigationMenu>
     </div>
