@@ -1,7 +1,7 @@
 import { Clipboard as ClipboardIcon } from '@/icons/clipboard'
 import { useObjectStore } from '@/stores/object.store'
 import { useState } from 'react'
-import { copyToClipboard } from '../utilities/copy-clipboard.util'
+import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 
 export function CopyClipboard() {
   const definitionCode = useObjectStore((state) => state.definitionCode)
@@ -21,10 +21,10 @@ export function CopyClipboard() {
 
   return (
     <button
-      className={`w-24 rounded-md border border-zinc-400/30 px-2 py-1 backdrop-blur-sm transition duration-200 ${copy ? 'bg-emerald-400' : 'bg-amber-400 hover:bg-amber-300'}`}
+      className={`w-24 rounded-full border border-zinc-400/30 px-2 py-1 backdrop-blur-sm transition duration-200 ${copy ? 'bg-emerald-400' : 'bg-amber-400 hover:bg-amber-300'}`}
       onClick={handleClick}
     >
-      <div className="flex items-center gap-1">
+      <div className="flex items-center justify-center gap-1">
         <i className="text-black">
           <ClipboardIcon width={15} height={15} />
         </i>

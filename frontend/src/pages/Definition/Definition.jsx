@@ -1,8 +1,10 @@
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
-import { CopyClipboard } from './components/CopyClipboard'
+// import { CopyClipboard } from './components/CopyClipboard'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCode'
 import { useObjectStore } from '@/stores/object.store'
+import { Options } from './components/options/Options'
+import { useMaximize } from './hooks/useMaximize'
 
 export function DefinitionPage() {
   const definitionCode = useObjectStore((state) => state.definitionCode)
@@ -16,18 +18,22 @@ export function DefinitionPage() {
   )
   const loading = useObjectStore((state) => state.loading)
 
+  const { maximize, toggleMaximize } = useMaximize()
+
   if (loading) return <div>Buscando...</div>
 
   return (
     <div
-      className={`relative overflow-hidden rounded-md border border-owborder bg-owcard ${definitionCode ? 'pb-10' : ''}`}
+      className={`overflow-hidden rounded-md border border-owborder bg-owcard ${definitionCode ? 'pb-10' : ''} ${maximize ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
     >
       {definitionCode && (
         <div className="flex items-center justify-between px-6 py-4">
-          <h4 className="">Definición</h4>
+          <h4 className="font-bold">Definición</h4>
 
-          {/* Copiar */}
-          {definitionCode && <CopyClipboard />}
+          <div className="flex gap-2">
+            {/* Opciones */}
+            <Options maximize={maximize} toggleMaximize={toggleMaximize} />
+          </div>
         </div>
       )}
 
