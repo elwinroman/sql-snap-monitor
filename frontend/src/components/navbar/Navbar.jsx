@@ -6,7 +6,7 @@ import { NavMenu } from './components/NavMenu'
 
 export function Navbar() {
   return (
-    <header className="w-full flex-[0_0_var(--navbar-height)] border-b border-b-zinc-800">
+    <header className="w-full flex-[0_0_var(--navbar-height)]">
       <ul className="flex h-full flex-row items-center gap-4 px-4">
         {/* Hamburguer menu */}
         <HamburguerMenu />
