@@ -16,13 +16,14 @@ const components = [
   {
     title: 'Obtener definición',
     href: '/definition',
-    description: 'Recupera la definición de un objeto.',
+    description:
+      'Accede a los procedimientos almacenados y funciones donde reside la lógica de negocio.',
   },
   {
     title: 'Obtener descripción',
     href: '/description',
     description:
-      'For sighted users to preview content available behind a link.',
+      'Consulta los nombres y detalles de las tablas para obtener información sobre la estructura de los datos.',
   },
 ]
 
@@ -73,7 +74,7 @@ const ListItem = React.forwardRef(
             to={props.href}
           >
             <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            <p className="line-clamp-3 text-balance text-sm leading-snug text-muted-foreground">
               {children}
             </p>
           </NavLink>
