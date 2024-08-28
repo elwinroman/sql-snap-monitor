@@ -39,7 +39,7 @@ export function LoginPage() {
     }
   }
   return (
-    <section className="flex h-screen w-full items-center bg-[#14161a]">
+    <section className="flex h-screen w-full items-center overflow-auto bg-[#14161a]">
       <div className="m-auto flex w-[500px] flex-col gap-8 rounded-md bg-[#26282d] px-14 py-16">
         {/* Loader */}
         {loading && (
