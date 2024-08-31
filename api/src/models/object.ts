@@ -11,7 +11,7 @@ export class ObjectModel {
    *
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
-  static async findObject ({ name, credentials }) {
+  static async findObject({ name, credentials }) {
     const { conn, sql } = await connection({ credentials })
     const request = conn.request()
 
@@ -36,7 +36,7 @@ export class ObjectModel {
           typeDesc: obj.type_desc,
           schema: obj._schema,
           createDate: obj.create_date,
-          modifyDate: obj.modify_date
+          modifyDate: obj.modify_date,
         }
       })
 
@@ -58,7 +58,7 @@ export class ObjectModel {
    *
    * @returns {Promise<Object>} - Objeto con la definición del objeto o un error
    */
-  static async getObjectDefinition ({ id, credentials }) {
+  static async getObjectDefinition({ id, credentials }) {
     const { conn, sql } = await connection({ credentials })
     const request = conn.request()
 
@@ -91,7 +91,7 @@ export class ObjectModel {
    *
    * @returns {Promise<Object>} - Objeto con la descripción del objeto o un error
    */
-  static async getObjectDescription ({ id, credentials }) {
+  static async getObjectDescription({ id, credentials }) {
     const { conn, sql } = await connection({ credentials })
     const request = conn.request()
 
@@ -125,7 +125,7 @@ export class ObjectModel {
         status: 'success',
         statusCode: 200,
         data: { objectDescription, columnDescription },
-        meta: { lengthObject: objectDescription.length, lengthColumn: columnDescription.length }
+        meta: { lengthObject: objectDescription.length, lengthColumn: columnDescription.length },
       }
     } catch (err) {
       const { number, message } = err.originalError.info

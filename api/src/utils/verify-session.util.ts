@@ -5,7 +5,7 @@
  * @returns {Boolean} - Indica si el usuario está autenticado
  */
 
-export function isLoggedIn (credentials) {
+export function isLoggedIn(credentials) {
   // return credential ? true : false
   return !!credentials
 }

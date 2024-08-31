@@ -9,49 +9,53 @@ export default class NetworkModel {
   private host: string
   private ipv4: any
 
-  constructor (port) {
+  constructor(port) {
     this.port = port
-    this.isExpose = process.argv.find((arg) => arg === '--host')
-    this.host = this.isExpose
-      ? '0.0.0.0'
-      : '127.0.0.1'
+    this.isExpose = process.argv.find(arg => arg === '--host')
+    this.host = this.isExpose ? '0.0.0.0' : '127.0.0.1'
     this.ipv4 = this.networksIPv4()
   }
 
   // methods
-  networksIPv4 () {
+  networksIPv4() {
     const ipv4 = []
     const interfaces = os.networkInterfaces()
 
     for (const net in interfaces) {
-      ipv4.push(interfaces[net].find((element) => {
-        return element.family === 'IPv4'
-      }))
+      ipv4.push(
+        interfaces[net].find(element => {
+          return element.family === 'IPv4'
+        }),
+      )
     }
     return ipv4
   }
 
-  printNetworks () {
+  printNetworks() {
     console.clear()
     console.log(`\n ${pc.green(pc.bold('ALADDIN API'))} ${pc.gray('server running on')}`)
     console.log(`\n ${pc.green('➜')}  Local:   ${pc.yellow(`http://localhost:${this.port}/`)}`)
 
     if (this.isExpose) {
       for (const net of this.ipv4) {
-        if (net.address !== LOCALHOST) { console.log(` ${pc.green('➜')}  Network: ${pc.yellow(`http://${net.address}:${this.port}/`)}`) }
+        if (net.address !== LOCALHOST) {
+          console.log(` ${pc.green('➜')}  Network: ${pc.yellow(`http://${net.address}:${this.port}/`)}`)
+        }
       }
       return
     }
 
-    if (!this.isExpose) { console.log(` ${pc.green('➜')} ${pc.gray(' Network: use')} --host ${pc.gray('to expose')}`) }
+    if (!this.isExpose) {
+      console.log(` ${pc.green('➜')} ${pc.gray(' Network: use')} --host ${pc.gray('to expose')}`)
+    }
   }
 
   // getters
-  getIpv4 () {
+  getIpv4() {
     return this.ipv4
   }
 
-  getHost () {
+  getHost() {
     return this.host
   }
 }

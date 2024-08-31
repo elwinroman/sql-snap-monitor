@@ -1,7 +1,8 @@
-import { ObjectController } from '@/controllers/object'
 import { Router } from 'express'
 
-export function createObjectRouter ({ objectModel }) {
+import { ObjectController } from '@/controllers/object'
+
+export function createObjectRouter({ objectModel }) {
   const router = Router()
 
   const objectController = new ObjectController({ objectModel })

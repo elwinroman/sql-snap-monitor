@@ -2,7 +2,7 @@ import { connection } from '../config/database'
 import { ERROR_CODES } from '../constants/error-codes'
 
 export class AuthModel {
-  static async login ({ credentials }) {
+  static async login({ credentials }) {
     const { conn } = await connection({ credentials })
     const request = conn.request()
 

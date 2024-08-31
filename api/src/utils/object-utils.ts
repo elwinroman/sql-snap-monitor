@@ -9,7 +9,7 @@
  * @returns {Boolean} - Retorna true si es una linea en blanco, de lo contrario false
  * @example isBlankLine('Hola\r\nMundo') // false
  */
-export const isBlankLine = (textLine) => {
+export const isBlankLine = textLine => {
   const blankLineRegex = /^\s*\r?\n\s*$/
 
   return blankLineRegex.test(textLine)
@@ -21,11 +21,11 @@ export const isBlankLine = (textLine) => {
  * @param {Array} recordset - Data del objecto devuelto por la base de datos
  * @returns {Object} - Objeto con la estructura del store procedure
  */
-export const formatStoreProcedure = (recordset) => {
+export const formatStoreProcedure = recordset => {
   const data = []
   const checkInit = {
     flag: false,
-    index: 0
+    index: 0,
   }
   for (let i = 0; i < recordset.length; i++) {
     if (!isBlankLine(recordset[i].Text) && !checkInit.flag) {
@@ -33,8 +33,8 @@ export const formatStoreProcedure = (recordset) => {
       checkInit.index = i
     }
     const item = {
-      line_number: (i + 1) - checkInit.index,
-      code_text: recordset[i].Text
+      line_number: i + 1 - checkInit.index,
+      code_text: recordset[i].Text,
     }
 
     // Comprueba si el codeText contiene la palabra 'CREATE PROCEDURE' para evitar lineas innecesarias anteriores

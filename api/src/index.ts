@@ -1,17 +1,17 @@
-// @ts-nocheck
-
 import 'dotenv/config'
-import { AuthModel } from './models/auth'
-import { createAuthRouter } from './routes/auth'
-import { createObjectRouter } from './routes/object'
-import { ObjectModel } from './models/object'
-import { verifyToken } from './middlewares/jwt'
+
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json } from 'express'
-import NetworkModel from './models/network.model'
 
-export default function App () {
+import { verifyToken } from './middlewares/jwt'
+import { AuthModel } from './models/auth'
+import NetworkModel from './models/network.model'
+import { ObjectModel } from './models/object'
+import { createAuthRouter } from './routes/auth'
+import { createObjectRouter } from './routes/object'
+
+export default function App() {
   const root = express()
   root.use(cors({ credentials: true, origin: process.env.ALLOWED_ORIGIN }))
   root.use(json())

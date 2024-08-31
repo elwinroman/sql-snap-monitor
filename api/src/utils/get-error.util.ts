@@ -6,7 +6,7 @@ import { ERROR_CODES } from '../constants/error-codes'
  * @param {Object} err - error capturado
  * @returns {Object}
  */
-export function getError ({ err }) {
+export function getError({ err }) {
   if (!err.originalError) return ERROR_CODES.INTERNAL_SERVER_ERROR
 
   if (err.originalError.code === 'ELOGIN') return ERROR_CODES.ELOGIN

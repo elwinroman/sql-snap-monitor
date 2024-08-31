@@ -1,5 +1,6 @@
 // code
 import { describe, expect, it } from 'vitest'
+
 import { isBlankLine } from '../../src/utils/dbobject-utils'
 
 describe('Pruebas para "si es una linea en blanco (vacio)"', () => {

@@ -1,7 +1,8 @@
-import { AuthController } from '../controllers/auth'
 import { Router } from 'express'
 
-export function createAuthRouter ({ authModel }) {
+import { AuthController } from '../controllers/auth'
+
+export function createAuthRouter({ authModel }) {
   const router = Router()
 
   const authController = new AuthController({ authModel })

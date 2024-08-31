@@ -1,10 +1,10 @@
-import { ERROR_CODES, AUTH_ERROR_CODES } from '../constants/error-codes'
+import { AUTH_ERROR_CODES, ERROR_CODES } from '../constants/error-codes'
 import { isLoggedIn } from '../utils/verify-session.util'
 
 export class ObjectController {
   private objectModel: any
-  
-  constructor ({ objectModel }) {
+
+  constructor({ objectModel }) {
     this.objectModel = objectModel
   }
 

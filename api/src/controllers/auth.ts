@@ -1,12 +1,13 @@
+import jwt from 'jsonwebtoken'
+
 import { AUTH_ERROR_CODES } from '../constants/error-codes'
 import { getError } from '../utils/get-error.util'
 import { isLoggedIn } from '../utils/verify-session.util'
-import jwt from 'jsonwebtoken'
 
 export class AuthController {
   private authModel: any
-  
-  constructor ({ authModel }) {
+
+  constructor({ authModel }) {
     this.authModel = authModel
   }
 
@@ -20,12 +21,14 @@ export class AuthController {
 
       const token = await jwt.sign({ credentials }, process.env.JWT_SECRET, { expiresIn: '48h' })
 
-      return res.cookie('access_token', token, {
-        httpOnly: true, // cookie solo accesible por el servidor
-        secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
-        sameSite: 'strict', // cookie no disponible para otros sitios
-        maxAge: 1000 * 60 * 60 * 48// cookie expira en 1 hora
-      }).json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', token })
+      return res
+        .cookie('access_token', token, {
+          httpOnly: true, // cookie solo accesible por el servidor
+          secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
+          sameSite: 'strict', // cookie no disponible para otros sitios
+          maxAge: 1000 * 60 * 60 * 48, // cookie expira en 1 hora
+        })
+        .json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', token })
     } catch (err) {
       const error = getError({ err })
       return res.status(error.statusCode).json(error)
@@ -33,9 +36,7 @@ export class AuthController {
   }
 
   logout = async (req, res) => {
-    return res.clearCookie('access_token').status(200).json(
-      { status: 'success', statusCode: 200, message: 'Sesión cerrada correctamente' }
-    )
+    return res.clearCookie('access_token').status(200).json({ status: 'success', statusCode: 200, message: 'Sesión cerrada correctamente' })
   }
 
   checkSession = async (req, res) => {

@@ -1,6 +1,6 @@
 import sql from 'mssql'
 
-export async function connection ({ credentials } = { credentials: null }) {
+export async function connection({ credentials } = { credentials: null }) {
   let server = process.env.DB_SERVER
   let database = process.env.DB_NAME
   let user = process.env.DB_USER
@@ -20,12 +20,12 @@ export async function connection ({ credentials } = { credentials: null }) {
     pool: {
       max: 10,
       min: 0,
-      idleTimeoutMillis: 10000
+      idleTimeoutMillis: 10000,
     },
     options: {
       encrypt: false, // para Azure
-      trustServerCertificate: true // cambiar true para el entorno local dev / certificados autofirmados
-    }
+      trustServerCertificate: true, // cambiar true para el entorno local dev / certificados autofirmados
+    },
   }
 
   const conn = await sql.connect(config)
