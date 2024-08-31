@@ -1,7 +1,7 @@
-import globals from 'globals'
 import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 export default [
 	{ ignores: ['dist/'] },
@@ -23,6 +23,16 @@ export default [
 					trailingComma: 'all',
 					bracketSpacing: true,
 					arrowParens: 'avoid',
+				},
+			],
+			'sort-imports': [
+				'error',
+				{
+					ignoreCase: false,
+					ignoreDeclarationSort: true,
+					ignoreMemberSort: false,
+					memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+					allowSeparatedGroups: false,
 				},
 			],
 		},
