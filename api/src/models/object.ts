@@ -1,5 +1,5 @@
-import { connection } from '../config/database.js'
-import { ERROR_CODES } from '../constants/error-codes.js'
+import { connection } from '../config/database'
+import { ERROR_CODES } from '../constants/error-codes'
 
 export class ObjectModel {
   /**

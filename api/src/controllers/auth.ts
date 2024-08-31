@@ -1,9 +1,11 @@
-import { AUTH_ERROR_CODES } from '../constants/error-codes.js'
-import { getError } from '../utils/get-error.util.js'
-import { isLoggedIn } from '../utils/verify-session.util.js'
+import { AUTH_ERROR_CODES } from '../constants/error-codes'
+import { getError } from '../utils/get-error.util'
+import { isLoggedIn } from '../utils/verify-session.util'
 import jwt from 'jsonwebtoken'
 
 export class AuthController {
+  private authModel: any
+  
   constructor ({ authModel }) {
     this.authModel = authModel
   }

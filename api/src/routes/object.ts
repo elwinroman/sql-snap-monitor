@@ -1,4 +1,4 @@
-import { ObjectController } from '../controllers/object.js'
+import { ObjectController } from '@/controllers/object'
 import { Router } from 'express'
 
 export function createObjectRouter ({ objectModel }) {

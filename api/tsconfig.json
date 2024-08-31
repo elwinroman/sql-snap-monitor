@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "Bundler",
+    "esModuleInterop": true,
+    "strict": false,
+    "outDir": "dist",
+    "sourceMap": true,
+    "inlineSources": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"],
+
+  "noImplicitAny": false,
+  "strictNullChecks": false,
+  "strictFunctionTypes": false,
+  "strictBindCallApply": false,
+  "strictPropertyInitialization": false,
+  "noImplicitThis": false,
+  "alwaysStrict": false,
+}

@@ -1,4 +1,4 @@
-import { ERROR_CODES } from '../constants/error-codes.js'
+import { ERROR_CODES } from '../constants/error-codes'
 
 /**
  * Retorna el error correspondiente

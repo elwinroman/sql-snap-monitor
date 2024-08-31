@@ -1,7 +1,9 @@
-import { ERROR_CODES, AUTH_ERROR_CODES } from '../constants/error-codes.js'
-import { isLoggedIn } from '../utils/verify-session.util.js'
+import { ERROR_CODES, AUTH_ERROR_CODES } from '../constants/error-codes'
+import { isLoggedIn } from '../utils/verify-session.util'
 
 export class ObjectController {
+  private objectModel: any
+  
   constructor ({ objectModel }) {
     this.objectModel = objectModel
   }

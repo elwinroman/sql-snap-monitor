@@ -4,6 +4,11 @@ import pc from 'picocolors'
 const LOCALHOST = '127.0.0.1'
 
 export default class NetworkModel {
+  private port: any
+  private isExpose: any
+  private host: string
+  private ipv4: any
+
   constructor (port) {
     this.port = port
     this.isExpose = process.argv.find((arg) => arg === '--host')

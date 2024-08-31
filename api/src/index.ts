@@ -1,13 +1,15 @@
+// @ts-nocheck
+
 import 'dotenv/config'
-import { AuthModel } from './models/auth.js'
-import { createAuthRouter } from './routes/auth.js'
-import { createObjectRouter } from './routes/object.js'
-import { ObjectModel } from './models/object.js'
-import { verifyToken } from './middlewares/jwt.js'
+import { AuthModel } from './models/auth'
+import { createAuthRouter } from './routes/auth'
+import { createObjectRouter } from './routes/object'
+import { ObjectModel } from './models/object'
+import { verifyToken } from './middlewares/jwt'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json } from 'express'
-import NetworkModel from './models/network.model.js'
+import NetworkModel from './models/network.model'
 
 export default function App () {
   const root = express()
@@ -21,7 +23,7 @@ export default function App () {
   root.use('/api/object', createObjectRouter({ objectModel: ObjectModel }))
   root.use('/auth', createAuthRouter({ authModel: AuthModel }))
 
-  const PORT = process.env.PORT ?? 1234
+  const PORT = Number(process.env.PORT) ?? 1234
 
   const network = new NetworkModel(PORT)
 
@@ -29,3 +31,5 @@ export default function App () {
     network.printNetworks()
   })
 }
+
+App()

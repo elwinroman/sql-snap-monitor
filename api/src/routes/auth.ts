@@ -1,4 +1,4 @@
-import { AuthController } from '../controllers/auth.js'
+import { AuthController } from '../controllers/auth'
 import { Router } from 'express'
 
 export function createAuthRouter ({ authModel }) {
