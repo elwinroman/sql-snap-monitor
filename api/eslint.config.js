@@ -23,6 +23,7 @@ export default [
 					trailingComma: 'all',
 					bracketSpacing: true,
 					arrowParens: 'avoid',
+					endOfLine: 'auto',
 				},
 			],
 			'sort-imports': [
