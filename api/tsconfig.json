@@ -6,24 +6,26 @@
     "target": "ESNext",
     "moduleResolution": "Bundler",
     "esModuleInterop": true,
-    "strict": false,
+    "strict": true,
     "outDir": "dist",
     "sourceMap": true,
     "inlineSources": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "declaration": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "typeRoots": ["./src/types", "./node_modules/@types"]
   },
   "exclude": ["node_modules", "dist"],
 
-  "noImplicitAny": false,
-  "strictNullChecks": false,
-  "strictFunctionTypes": false,
-  "strictBindCallApply": false,
-  "strictPropertyInitialization": false,
-  "noImplicitThis": false,
-  "alwaysStrict": false,
+  // "noImplicitAny": false,
+  // "strictNullChecks": false,
+  // "strictFunctionTypes": false,
+  // "strictBindCallApply": false,
+  // "strictPropertyInitialization": false,
+  // "noImplicitThis": false,
+  // "alwaysStrict": false,
 }
