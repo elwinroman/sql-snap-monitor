@@ -10,5 +10,5 @@ export function handleError(err: unknown, req: Request, res: Response, _next: Ne
     return res.status(statusCode).json({ status, statusCode, message, originalError })
   }
   console.error(err)
-  return res.status(500).json({ statusCode: 500, message: 'Internal server error' })
+  return res.status(500).json({ status: 'error', statusCode: 500, message: 'Internal server error' })
 }
