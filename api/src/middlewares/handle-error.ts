@@ -7,7 +7,7 @@ export function handleError(err: unknown, req: Request, res: Response, _next: Ne
   if (err instanceof MyCustomError) {
     console.error(err.stack)
     const { status, statusCode, message, originalError } = err
-    return res.status(500).json({ status, statusCode, message, originalError })
+    return res.status(statusCode).json({ status, statusCode, message, originalError })
   }
   console.error(err)
   return res.status(500).json({ statusCode: 500, message: 'Internal server error' })
