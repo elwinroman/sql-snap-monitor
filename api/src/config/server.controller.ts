@@ -1,8 +1,10 @@
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json, Router } from 'express'
+import session from 'express-session'
 
 import { handleError } from '@/middlewares/handle-error'
+import { verifyToken } from '@/middlewares/jwt'
 
 import { NetworkController } from './network.controller'
 
@@ -30,6 +32,8 @@ export class Server {
     this.app.use(cors({ credentials: true, origin: process.env.ALLOWED_ORIGIN }))
     this.app.use(json())
     this.app.use(cookieParser())
+    this.app.use(session({ secret: process.env.SESSION_SECRET as string, resave: false, saveUninitialized: false }))
+    this.app.use(verifyToken)
 
     this.app.use(this.routes)
 

@@ -15,9 +15,9 @@ export const COMMON_ERROR_CODES: CustomErrorList = {
     statusCode: 404,
     message: 'No se ha encontrado ninguna descripción para el objeto',
   },
-  TOKENINVALID: {
+  SESSIONALREADYCLOSED: {
     status: 'error',
-    statusCode: 401,
-    message: 'Error de autenticación, no está autorizado para acceder a este recurso',
+    statusCode: 403,
+    message: 'La sesión ya no está activa',
   },
 }

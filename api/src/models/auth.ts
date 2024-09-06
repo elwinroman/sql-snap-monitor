@@ -1,21 +1,39 @@
-import { connection } from '../config/database'
-import { ERROR_CODES } from '../constants/error-codes'
+import sql from 'mssql'
 
-export class AuthModel {
-  static async login({ credentials }) {
-    const { conn } = await connection({ credentials })
-    const request = conn.request()
+import { Credentials, CustomError, DatabaseInfo, ForAuthenticating } from '@/models/schemas'
+import { handleRequestError } from '@/utils/handle-request-error'
+
+import { connection } from '../config/database'
+
+export class AuthModel implements ForAuthenticating {
+  private credentials: Credentials
+
+  constructor(credentials: Credentials) {
+    this.credentials = { ...credentials }
+  }
+
+  async login(): Promise<DatabaseInfo | CustomError | undefined> {
+    const conn = await connection(this.credentials)
+    const request = await conn?.request()
 
     try {
-      const stmt = 'SELECT 1 AS login'
-      const res = await request.query(stmt)
+      const stmt = `SELECT
+                      name,
+                      cmptlevel,
+                      value = (SELECT TOP 1 value FROM sys.extended_properties WHERE class = 0),
+                      @@SERVERNAME AS server_name
+                    FROM sys.sysdatabases
+                    WHERE dbid = DB_ID()
+                  `
+      const res = await request?.query(stmt)
 
-      return res
-    } catch (err) {
-      const { number, message } = err.originalError.info
-      return { ...ERROR_CODES.EREQUEST, originalError: { number, message } }
+      return res?.recordset[0]
+    } catch (error) {
+      if (!(error instanceof sql.RequestError)) throw error
+
+      handleRequestError(error)
     } finally {
-      conn.close()
+      conn?.close()
     }
   }
 }

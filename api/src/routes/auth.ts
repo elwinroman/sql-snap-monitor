@@ -2,14 +2,14 @@ import { Router } from 'express'
 
 import { AuthController } from '../controllers/auth'
 
-export function createAuthRouter({ authModel }) {
+export function createAuthRouter() {
   const router = Router()
 
-  const authController = new AuthController({ authModel })
+  const authController = new AuthController()
 
   router.post('/login', authController.login)
   router.post('/logout', authController.logout)
-  router.get('/check-session', authController.checkSession)
+  router.get('/health', authController.checkSession)
 
   return router
 }
