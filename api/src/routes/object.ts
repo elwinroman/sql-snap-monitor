@@ -8,6 +8,7 @@ export function createObjectRouter() {
   const objectController = new ObjectController()
 
   router.get('/sqldefinition/:name', objectController.getSQLDefinition)
+  router.get('/usertable/:name', objectController.getUserTable)
 
   return router
 }
