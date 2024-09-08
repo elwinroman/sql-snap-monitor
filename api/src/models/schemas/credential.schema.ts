@@ -4,3 +4,10 @@ export interface Credentials {
   password: string
   dbname: string
 }
+
+export const CredentialsInitialState: Credentials = {
+  server: '',
+  username: '',
+  password: '',
+  dbname: '',
+}

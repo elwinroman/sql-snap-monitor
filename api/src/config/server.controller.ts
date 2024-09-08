@@ -3,8 +3,7 @@ import cors from 'cors'
 import express, { json, Router } from 'express'
 import session from 'express-session'
 
-import { handleError } from '@/middlewares/handle-error'
-import { verifyToken } from '@/middlewares/jwt'
+import { handleError, routeNotFound, verifyToken } from '@/middlewares'
 
 import { NetworkController } from './network.controller'
 
@@ -36,6 +35,7 @@ export class Server {
     this.app.use(verifyToken)
 
     this.app.use(this.routes)
+    this.app.use(routeNotFound)
 
     this.app.use(handleError)
 
