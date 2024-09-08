@@ -20,4 +20,9 @@ export const COMMON_ERROR_CODES: CustomErrorList = {
     statusCode: 403,
     message: 'La sesión ya no está activa',
   },
+  NOTAUTHORIZED: {
+    status: 'error',
+    statusCode: 401,
+    message: 'No está autorizado para acceder a este recurso',
+  },
 }
