@@ -1,22 +1,14 @@
 import sql from 'mssql'
 
-export async function connection({ credentials } = { credentials: null }) {
-  let server = process.env.DB_SERVER
-  let database = process.env.DB_NAME
-  let user = process.env.DB_USER
-  let password = process.env.DB_PWD
+import { CONN_ERROR, CONN_ERROR_CODES } from '@/constants'
+import { Credentials, MyCustomError } from '@/models/schemas'
 
-  if (credentials) {
-    server = credentials.server
-    database = credentials.dbname
-    user = credentials.username
-    password = credentials.password
-  }
+export async function connection(credentials: Credentials) {
   const config = {
-    user,
-    password,
-    database,
-    server,
+    user: credentials.username,
+    password: credentials.password,
+    database: credentials.dbname,
+    server: credentials.server,
     pool: {
       max: 10,
       min: 0,
@@ -28,8 +20,23 @@ export async function connection({ credentials } = { credentials: null }) {
     },
   }
 
-  const conn = await sql.connect(config)
-
-  // si falla la conexión se lanza un error y se captura en el modelo y pasa al controlador
-  return { conn, sql }
+  try {
+    const conn = await sql.connect(config)
+    console.log('Conexión establecida con la base de datos')
+    return conn
+  } catch (error) {
+    if (!(error instanceof sql.ConnectionError)) throw error
+    if (error.code === CONN_ERROR.ELOGIN) {
+      throw new MyCustomError(CONN_ERROR_CODES.ELOGIN)
+    }
+    if (error.code === CONN_ERROR.ETIMEOUT) {
+      throw new MyCustomError(CONN_ERROR_CODES.ETIMEOUT)
+    }
+    if (error.code === CONN_ERROR.ESOCKET) {
+      throw new MyCustomError(CONN_ERROR_CODES.ESOCKET)
+    }
+    if (error.code === CONN_ERROR.EDRIVER) {
+      throw new MyCustomError(CONN_ERROR_CODES.EDRIVER)
+    }
+  }
 }

@@ -2,15 +2,12 @@ import { Router } from 'express'
 
 import { ObjectController } from '@/controllers/object'
 
-export function createObjectRouter({ objectModel }) {
+export function createObjectRouter() {
   const router = Router()
 
-  const objectController = new ObjectController({ objectModel })
+  const objectController = new ObjectController()
 
-  // los parámetros se pasan internamente de forma automática por express mediante middlewares
-  router.get('/:name', objectController.findObject)
-  router.get('/definition/:id', objectController.getObjectDefinition)
-  router.get('/description/:id', objectController.getObjectDescription)
+  router.get('/sqldefinition/:name', objectController.getSQLDefinition)
 
   return router
 }
