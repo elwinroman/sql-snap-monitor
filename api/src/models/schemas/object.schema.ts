@@ -21,8 +21,8 @@ export interface RecordObject {
   typeDesc: string
   schema: string
   schemaId: number
-  createDate: Date
-  modifyDate: Date
+  createDate: Date | string
+  modifyDate: Date | string
   definition: string
 }
 // todo: change name to ResponseSQLDefinitionObject

@@ -1,3 +1,4 @@
+import { format } from '@formkit/tempo'
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
@@ -64,8 +65,8 @@ export class ObjectModel implements ForRetrievingObject {
             typeDesc: obj.type_desc,
             schemaId: obj.schema_id,
             schema: obj.schema_name,
-            createDate: obj.create_date,
-            modifyDate: obj.modify_date,
+            createDate: format(obj.create_date, 'DD-MM-YYYY'),
+            modifyDate: format(obj.modify_date, 'DD-MM-YYYY'),
             definition: obj.definition,
           }
         }) ?? []
@@ -187,8 +188,8 @@ export class ObjectModel implements ForRetrievingObject {
             typeDesc: res.recordset[index].type_desc,
             schemaId: res.recordset[index].schema_id,
             schema: res.recordset[index].schema_name,
-            createDate: res.recordset[index].create_date,
-            modifyDate: res.recordset[index].modify_date,
+            createDate: format(res.recordset[index].create_date, 'DD-MM-YYYY'),
+            modifyDate: format(res.recordset[index].modify_date, 'DD-MM-YYYY'),
           }
 
           const tableExtendedProperties =
