@@ -11,7 +11,9 @@ import {
   Credentials,
   CustomError,
   ExtendedProperty,
+  ForeignKey,
   ForRetrievingObject,
+  Index,
   MyCustomError,
   RecordObject,
   ResponseSQLDefinitionObject,
@@ -161,8 +163,8 @@ export class ObjectModel implements ForRetrievingObject {
           const stmtForeignKeys = `
             SELECT 
               A.column_id,
-              B.referenced_object_id,
               SCHEMA_NAME(C.schema_id) AS referenced_schema,
+              B.referenced_object_id,
               C.name AS referenced_object,
               B.referenced_column_id,
               D.name AS referenced_column
@@ -217,7 +219,30 @@ export class ObjectModel implements ForRetrievingObject {
               }
             }) ?? []
 
-          data.push({ ...recordObject, extendedProperties: tableExtendedProperties, columns })
+          const indexes =
+            resIndexes?.recordset.map((obj): Index => {
+              return {
+                columnId: obj.column_id,
+                name: obj.name,
+                typeDesc: obj.type_desc,
+                isPrimaryKey: obj.is_primary_key,
+                isUnique: obj.is_unique,
+              }
+            }) ?? []
+
+          const foreignKeys =
+            resForeignKeys?.recordset.map(
+              (obj): ForeignKey => ({
+                columnId: obj.column_id,
+                referencedObjectId: obj.referenced_object_id,
+                referencedObject: obj.referenced_object,
+                referencedSchema: obj.referenced_schema,
+                referencedColumnId: obj.referenced_column_id,
+                referencedColumn: obj.referenced_column,
+              }),
+            ) ?? []
+
+          data.push({ ...recordObject, extendedProperties: tableExtendedProperties, columns, indexes, foreignKeys })
           index++
         }
 

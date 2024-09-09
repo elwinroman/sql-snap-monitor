@@ -92,7 +92,7 @@ export interface ForeignKey {
   columnId: number
   referencedSchema: string
   referencedObjectId: number
-  referencedObjectName: string
+  referencedObject: string
   referencedColumnId: number
   referencedColumn: string
 }
@@ -107,8 +107,8 @@ export interface ForeignKey {
 export interface UserTableObject extends RecordUserTableObject {
   extendedProperties: ExtendedProperty[]
   columns: Column[]
-  // indexes: Index[]
-  // foreignKeys: ForeignKey[]
+  indexes: Index[]
+  foreignKeys: ForeignKey[]
 }
 
 export interface ResponseUserTableObject {
