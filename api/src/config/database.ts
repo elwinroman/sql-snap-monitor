@@ -2,11 +2,12 @@ import sql from 'mssql'
 
 import { CONN_ERROR, CONN_ERROR_CODES } from '@/constants'
 import { Credentials, MyCustomError } from '@/models/schemas'
+import { decrypt } from '@/utils'
 
 export async function connection(credentials: Credentials) {
   const config = {
     user: credentials.username,
-    password: credentials.password,
+    password: decrypt(credentials.password),
     database: credentials.dbname,
     server: credentials.server,
     pool: {
@@ -22,7 +23,6 @@ export async function connection(credentials: Credentials) {
 
   try {
     const conn = await sql.connect(config)
-    console.log('Conexión establecida con la base de datos')
     return conn
   } catch (error) {
     if (!(error instanceof sql.ConnectionError)) throw error

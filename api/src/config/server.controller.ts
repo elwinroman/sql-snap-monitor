@@ -25,6 +25,9 @@ export class Server {
     this.port = port
     this.routes = routes
     this.allowedOrigin = allowedOrigin
+
+    if (!process.env.SESSION_SECRET) throw new Error('SESSION_SECRET debe ser definido en las variables de entorno')
+    if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET debe ser definido en las variables de entorno')
   }
 
   public start() {
