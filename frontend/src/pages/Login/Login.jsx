@@ -59,9 +59,7 @@ export function LoginPage() {
                 <AlertCircleIcon width={22} height={22} />
               </i>
               <p className="text-sm text-white">
-                {errorAuth.error.code === 'ESOCKET'
-                  ? 'Error de conexión, el servidor no responde o no existe'
-                  : 'La base de datos, el usuario o la contraseña son incorrectos'}
+                { errorAuth.message }
               </p>
             </div>
           )}

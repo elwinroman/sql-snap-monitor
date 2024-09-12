@@ -53,7 +53,7 @@ export async function logout() {
 export async function checkSession() {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/auth/check-session`,
+      `${import.meta.env.VITE_API_URL}/auth/health`,
       {
         credentials: 'include',
       },

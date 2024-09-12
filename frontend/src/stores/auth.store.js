@@ -17,8 +17,8 @@ export const useAuthStore = create(
        */
       loginUser: async ({ credentials }) => {
         const res = await login({ credentials })
-
-        if (res.error) {
+        
+        if (res.status === 'error') {
           set({ errorAuth: res })
           set({ isAuthenticated: false })
           set({ username: null })
@@ -45,7 +45,7 @@ export const useAuthStore = create(
       checkSession: async () => {
         const res = await checkSession()
         // Unauthorized
-        if (res.error) set({ isSessionExpired: true })
+        if (res.status === 'error') set({ isSessionExpired: true })
       },
 
       // Clear auth store
