@@ -7,7 +7,7 @@ export function createAllRouter() {
   const router = Router()
 
   router.use('/auth', createAuthRouter())
-  router.use('/api', createObjectRouter())
+  router.use('/objects/', createObjectRouter())
 
   return router
 }

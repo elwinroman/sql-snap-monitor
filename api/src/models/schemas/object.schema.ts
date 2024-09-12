@@ -3,7 +3,26 @@ import { CustomError } from './custom-error.schema'
 // Para objetos que requiren obtener su definición SQL
 
 /**
- * @typedef {Object} RecordObject
+ * @typedef {Object} SQLDefinitionObjects - Objetos encontrados que requieren obtener su definición SQL.
+ * @property {number} id - ID del objeto.
+ * @property {string} name - Nombre del objeto.
+ * @property {string} schema - Nombre del esquema. Es único en la base de datos.
+ */
+export interface SQLDefinitionObjects {
+  id: number
+  name: string
+  schema: string
+}
+
+export interface ResponseSQLDefinitionObjects {
+  data: SQLDefinitionObjects[]
+  meta: {
+    length: number
+  }
+}
+
+/**
+ * @typedef {Object} SQLDefinitionRecordObject
  * @property {number} id - ID del objeto.
  * @property {string} name - Nombre del objeto.
  * @property {string} type - Tipo del objeto.
@@ -14,7 +33,7 @@ import { CustomError } from './custom-error.schema'
  * @property {Date} modifyDate - Fecha en que el objeto se modificó por última vez mediante una ALTER instrucción.
  * @property {string} definition - Texto SQL que define este módulo. NULL = Cifrado.
  */
-export interface RecordObject {
+export interface SQLDefinitionRecordObject {
   id: number
   name: string
   type: string
@@ -25,15 +44,21 @@ export interface RecordObject {
   modifyDate: Date | string
   definition: string
 }
-// todo: change name to ResponseSQLDefinitionObject
-export interface ResponseSQLDefinitionObject {
-  data: RecordObject[]
+
+export interface ResponseSQLDefinitionRecordObject {
+  data: SQLDefinitionRecordObject
+}
+
+// Para objetos que son tablas de usuario
+
+export type UserTableObjects = SQLDefinitionObjects
+
+export interface ResponseUserTableObjects {
+  data: UserTableObjects[]
   meta: {
     length: number
   }
 }
-
-// Para objetos que son tablas de usuario
 
 /**
  * @typedef {Object} ExtendedProperty - Propiedades extendidas de las columnas.
@@ -61,10 +86,10 @@ export interface Column {
   extendedProperties: ExtendedProperty[]
 }
 
-export type RecordUserTableObject = Omit<RecordObject, 'definition'>
+export type UserTableRecordObject = Omit<SQLDefinitionRecordObject, 'definition'>
 
 /**
- * @typedef {Object} Index - Indices de la tabla.
+ * @typedef {Object} Index - Indice de la tabla.
  * @property {string} columnId - Id de la columna a la que pertenece.
  * @property {string} name - Nombre del índice. 'name' es único solo dentro del objeto.
  * @property {string} typeDesc - Descripción del tipo de índice.
@@ -80,7 +105,7 @@ export interface Index {
 }
 
 /**
- * @typedef {Object} ForeignKey - Claves foráneas de la tabla.
+ * @typedef {Object} ForeignKey - Claves foránea de la tabla.
  * @property {string} columnId - Id de la columna a la que pertenece.
  * @property {string} referencedSchema - Esquema del objecto al que se hace referencia.
  * @property {boolean} referencedObjectId - Id. del objeto al que se hace referencia, que tiene la clave candidata.
@@ -98,27 +123,26 @@ export interface ForeignKey {
 }
 
 /**
- * @typedef {Object} UserTableObject - Tablas de usuario.
+ * @typedef {Object} FullUserTableObject - Tablas de usuario con toda la información.
  * @property {string[]} propertyValue - Valor de la propiedad extendida de la tabla.
  * @property {Column[]} columns - Columnas de la tabla.
  * @property {Index[]} indexes - Índices de la tabla.
  * @property {ForeignKey[]} foreignKeys - Claves foráneas de la tabla.
  */
-export interface UserTableObject extends RecordUserTableObject {
+export interface FullUserTableObject extends UserTableRecordObject {
   extendedProperties: ExtendedProperty[]
   columns: Column[]
   indexes: Index[]
   foreignKeys: ForeignKey[]
 }
 
-export interface ResponseUserTableObject {
-  data: UserTableObject[]
-  meta: {
-    length: number
-  }
+export interface ResponseUserTableRecordObject {
+  data: FullUserTableObject
 }
 
 export interface ForRetrievingObject {
-  getSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObject | CustomError | undefined>
-  getUserTableByName(name: string): Promise<ResponseUserTableObject | CustomError | undefined>
+  findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | CustomError | undefined>
+  getSQLDefinitionById(id: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined>
+  findUserTableByName(name: string): Promise<ResponseUserTableObjects | CustomError | undefined>
+  getUserTableById(id: number): Promise<ResponseUserTableRecordObject | CustomError | undefined>
 }
