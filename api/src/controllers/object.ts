@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { z } from 'zod'
 
 import { COMMON_ERROR_CODES } from '@/constants/'
 import { ObjectModel } from '@/models/object'
@@ -31,13 +32,15 @@ export class ObjectController {
   getSQLDefinition = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params
     const { credentials, isSessionActive } = req.session
-
+    console.log(id)
     try {
       if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
-      //todo: validate param id (required)
+
+      const idNumber = z.coerce.number().safeParse(id)
+      if (!idNumber.success) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro Id debe ser un número' })
 
       const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data } = (await objectModel.getSQLDefinitionById(id)) as ResponseSQLDefinitionRecordObject
+      const { data } = (await objectModel.getSQLDefinitionById(idNumber.data)) as ResponseSQLDefinitionRecordObject
       res.status(200).json({ status: 'success', statusCode: 200, data })
     } catch (err) {
       next(err)
@@ -66,10 +69,12 @@ export class ObjectController {
 
     try {
       if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
-      //todo: validate param id (required)
+
+      const idNumber = z.coerce.number().safeParse(id)
+      if (!idNumber.success) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro Id debe ser un número' })
 
       const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data } = (await objectModel.getUserTableById(id)) as ResponseUserTableRecordObject
+      const { data } = (await objectModel.getUserTableById(idNumber.data)) as ResponseUserTableRecordObject
       res.status(200).json({ status: 'success', statusCode: 200, data })
     } catch (err) {
       next(err)
