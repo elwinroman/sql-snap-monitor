@@ -40,11 +40,11 @@ export function InfoCards({ object }) {
       {/* Información general del objecto */}
       <BreadcrumCard object={object} />
 
-      <ul className="flex gap-5">
+      <ul className="flex flex-col flex-wrap gap-2 sm:flex-row">
         {info.map((item) => (
           <li
             key={item.id}
-            className="flex items-center justify-between gap-6 rounded-md border border-owborder bg-owcard px-3 py-2"
+            className="flex max-w-64 items-center justify-between gap-6 rounded-md border border-owborder bg-owcard px-3 py-2"
           >
             <div className="flex items-baseline gap-2">
               <h6 className="text-xs font-normal text-zinc-600 dark:text-zinc-400">

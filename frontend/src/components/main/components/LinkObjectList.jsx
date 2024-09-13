@@ -21,14 +21,12 @@ export function LinkObjectList({
     fetchObjectAction()
   }
   return (
-    <div className="flex flex-col gap-4">
-      <h6 className="flex flex-col font-semibold text-white">
+    <div className="flex w-fit flex-col gap-2 rounded-sm border border-zinc-800 bg-owmain px-8 py-7">
+      <h6 className="flex flex-col text-sm text-white">
         <span>Se encontraron {objectList.length} coincidencias del objeto</span>
-        <span className="font-normal text-zinc-400">
-          Selecciona uno de ellos
-        </span>
+        <span className="pt-2 text-zinc-400">Selecciona uno de ellos</span>
       </h6>
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col gap-1">
         {objectList.map((obj) => (
           <li key={obj.id}>
             <button
@@ -42,7 +40,7 @@ export function LinkObjectList({
               data-create-date={obj.createDate}
               data-modify-date={obj.modifyDate}
             >
-              <div className="flex items-center gap-0.5">
+              <div className="flex items-center gap-0.5 text-sm">
                 <span className="font-semibold text-amber-400 group-hover:underline">
                   {obj.schema}
                 </span>

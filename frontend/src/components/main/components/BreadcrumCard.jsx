@@ -5,7 +5,7 @@ export function BreadcrumCard({ object }) {
   const dbname = useAuthStore((state) => state.dbname)
 
   return (
-    <div className="flex items-baseline gap-6 border-b border-b-zinc-800 py-1">
+    <div className="flex flex-col items-baseline gap-2 border-b border-b-zinc-800 py-1 sm:flex-row sm:gap-6">
       <span className="text-2xl text-zinc-400">EXPLORANDO</span>
       <div className="flex items-baseline gap-2">
         <h1 className="text-base font-medium text-slate-200">{dbname}</h1>
