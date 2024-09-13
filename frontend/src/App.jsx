@@ -1,5 +1,4 @@
 import './App.css'
-import '@fontsource-variable/open-sans' // Supports weights 300-800
 import { DefinitionPage, DescriptionPage, LoginPage } from '@/pages'
 import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
@@ -17,7 +16,9 @@ function Home() {
 }
 
 function App() {
-  const SQLDefinitionObject = useObjectStore((state) => state.SQLDefinitionObject)
+  const SQLDefinitionObject = useObjectStore(
+    (state) => state.SQLDefinitionObject,
+  )
   const userTableObject = useObjectStore((state) => state.userTableObject)
 
   useEffect(() => {

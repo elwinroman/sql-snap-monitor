@@ -11,7 +11,7 @@ module.exports = {
   prefix: '',
   theme: {
     fontFamily: {
-      sans: ['Open Sans Variable', 'sans-serif'],
+      sans: ['Open Sans Variable', 'Geist Sans', 'sans-serif'],
     },
     container: {
       center: true,
