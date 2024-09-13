@@ -1,16 +1,16 @@
 import { useObjectStore } from '@/stores/object.store'
 
 export function useDescription() {
-  const fetchDescriptionObject = useObjectStore(
-    (state) => state.fetchDescriptionObject,
+  const searchUserTable = useObjectStore(
+    (state) => state.searchUserTable,
   )
-  const fetchDescription = useObjectStore((state) => state.fetchDescription)
+  const fetchUserTable = useObjectStore((state) => state.fetchUserTable)
 
   const getDescriptionObject = async ({ name }) => {
     try {
-      await fetchDescriptionObject({ name })
+      await searchUserTable({ name })
 
-      await fetchDescription()
+      await fetchUserTable()
     } catch (error) {
       throw new Error(error)
     }

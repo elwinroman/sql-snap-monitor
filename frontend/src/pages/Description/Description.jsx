@@ -4,16 +4,16 @@ import { TableDescription } from './components/TableDescription'
 import { useObjectStore } from '@/stores/object.store'
 
 export function DescriptionPage() {
-  const descriptionColumnList = useObjectStore(
-    (state) => state.descriptionColumnList,
+  const userTableColumnList = useObjectStore(
+    (state) => state.userTableColumnList,
   )
-  const descriptionError = useObjectStore((state) => state.descriptionError)
-  const descriptionObjectList = useObjectStore(
-    (state) => state.descriptionObjectList,
+  const userTableError = useObjectStore((state) => state.userTableError)
+  const userTableObjectList = useObjectStore(
+    (state) => state.userTableObjectList,
   )
-  const fetchDescription = useObjectStore((state) => state.fetchDescription)
-  const updateDescriptionObject = useObjectStore(
-    (state) => state.updateDescriptionObject,
+  const fetchUserTable = useObjectStore((state) => state.fetchUserTable)
+  const updateObjectUserTable = useObjectStore(
+    (state) => state.updateObjectUserTable,
   )
   const loading = useObjectStore((state) => state.loading)
 
@@ -24,21 +24,21 @@ export function DescriptionPage() {
       <h4 className="font-bold">Descripción</h4>
 
       {/* Descripción del objecto */}
-      {descriptionColumnList && (
-        <TableDescription descriptionColumnList={descriptionColumnList} />
+      {userTableColumnList && (
+        <TableDescription userTableColumnList={userTableColumnList} />
       )}
 
       {/* Alerta de error */}
-      {descriptionError && (
-        <AlertMessages message={descriptionError} type="error" />
+      {userTableError && (
+        <AlertMessages message={userTableError} type="error" />
       )}
 
       {/* Multiples objetos */}
-      {descriptionObjectList.length > 0 && (
+      {userTableObjectList.length > 0 && (
         <LinkObjectList
-          objectList={descriptionObjectList}
-          updateObject={updateDescriptionObject}
-          fetchObjectAction={fetchDescription}
+          objectList={userTableObjectList}
+          updateObject={updateObjectUserTable}
+          fetchObjectAction={fetchUserTable}
         />
       )}
     </div>

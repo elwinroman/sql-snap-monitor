@@ -15,9 +15,9 @@ export const SQLDefinitionInitialState = {
   SQLDefinitionObjectList: [],
 }
 
-export const DescriptionInitialState = {
-  descriptionColumnList: [],
-  descriptionError: null,
-  descriptionObjectList: [],
-  descriptionTableList: [],
+export const UserTableInitialState = {
+  userTableColumnList: [],
+  userTableError: null,
+  userTableObjectList: [],
+  userTableExtendedPropertieList: [],
 }

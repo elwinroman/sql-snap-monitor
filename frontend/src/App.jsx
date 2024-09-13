@@ -18,7 +18,7 @@ function Home() {
 
 function App() {
   const SQLDefinitionObject = useObjectStore((state) => state.SQLDefinitionObject)
-  const descriptionObject = useObjectStore((state) => state.descriptionObject)
+  const userTableObject = useObjectStore((state) => state.userTableObject)
 
   useEffect(() => {
     document.documentElement.classList.add('dark')
@@ -52,7 +52,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards object={descriptionObject} />
+                <InfoCards object={userTableObject} />
                 <DescriptionPage />
               </Layout>
             </ProtectedLayout>

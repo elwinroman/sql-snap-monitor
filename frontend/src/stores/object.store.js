@@ -7,9 +7,9 @@ import {
 } from '@/services/object.service'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import {
-  SQLDefinitionInitialState,
-  DescriptionInitialState,
   ObjectInitialState,
+  SQLDefinitionInitialState,
+  UserTableInitialState,
 } from '@/models/object.model'
 
 export const useObjectStore = create(
@@ -72,63 +72,63 @@ export const useObjectStore = create(
       },
 
       // descripción de objetos
-      descriptionObject: { ...ObjectInitialState },
-      ...DescriptionInitialState,
+      userTableObject: { ...ObjectInitialState },
+      ...UserTableInitialState,
 
       // updatea el objecto de descripción cuando existen coincidencias
-      updateDescriptionObject: ({ object }) => {
-        set({ descriptionObject: object })
+      updateObjectUserTable: ({ object }) => {
+        set({ userTableObject: object })
       },
 
-      fetchDescriptionObject: async ({ name }) => {
+      searchUserTable: async ({ name }) => {
         set({ loading: true })
         const res = await findUserTable({ name })
 
         if (res.status === 'error') {
-          set({ ...DescriptionInitialState })
-          set({ descriptionObject: { ...ObjectInitialState } })
-          set({ descriptionError: res })
+          set({ ...UserTableInitialState })
+          set({ userTableObject: { ...ObjectInitialState } })
+          set({ userTableError: res })
 
           set({ loading: false })
           return
         }
 
         if (res.meta.length > 1) {
-          set({ ...DescriptionInitialState })
-          set({ descriptionObject: { ...ObjectInitialState } })
-          set({ descriptionObjectList: res.objects })
+          set({ ...UserTableInitialState })
+          set({ userTableObject: { ...ObjectInitialState } })
+          set({ userTableObjectList: res.data })
           set({ loading: false })
           return
         }
 
-        set({ ...DescriptionInitialState })
-        set({ descriptionObject: res.objects[0] })
+        set({ ...UserTableInitialState })
+        set({ userTableObject: res.data[0] })
 
         set({ loading: false })
       },
 
-      fetchDescription: async () => {
-        const object = get().descriptionObject
+      fetchUserTable: async () => {
+        const object = get().userTableObject
         if (object.id === null) return
 
         const res = await getUserTable({ id: object.id })
 
         if (res.status === 'error') {
-          set({ ...DescriptionInitialState })
-          set({ descriptionError: res })
+          set({ ...UserTableInitialState })
+          set({ userTableError: { message: res.message, originalError: res.originalError } })
           return
         }
 
-        set({ ...DescriptionInitialState })
-        set({ descriptionTableList: res.data.objectDescription })
-        set({ descriptionColumnList: res.data.columnDescription })
+        set({ ...UserTableInitialState })
+        set({ userTableExtendedPropertieList: res.data.extendedProperties })
+        set({ userTableColumnList: res.data.columns })
       },
 
       reset: () => {
         set({ SQLDefinitionObject: { ...ObjectInitialState } })
-        set({ descriptionObject: { ...ObjectInitialState } })
+        set({ userTableObject: { ...ObjectInitialState } })
         set({ ...SQLDefinitionInitialState })
-        set({ ...DescriptionInitialState })
+        set({ ...UserTableInitialState })
       },
     }),
     {
