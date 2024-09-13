@@ -3,7 +3,7 @@ import {
   findSQLDefinitionObject,
   findUserTable,
   getSQLDefinitionObject,
-  getUserTable
+  getUserTable,
 } from '@/services/object.service'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import {
@@ -34,7 +34,12 @@ export const useObjectStore = create(
         if (res.status === 'error') {
           set({ ...SQLDefinitionInitialState })
           set({ SQLDefinitionObject: { ...ObjectInitialState } })
-          set({ SQLDefinitionError: { message: res.message, originalError: res.originalError } })
+          set({
+            SQLDefinitionError: {
+              message: res.message,
+              originalError: res.originalError,
+            },
+          })
 
           set({ loading: false })
           return
@@ -63,11 +68,27 @@ export const useObjectStore = create(
 
         if (res.status === 'error') {
           set({ ...SQLDefinitionInitialState })
-          set({ SQLDefinitionError: { message: res.message, originalError: res.originalError } })
+          set({
+            SQLDefinitionError: {
+              message: res.message,
+              originalError: res.originalError,
+            },
+          })
           return
         }
 
         set({ ...SQLDefinitionInitialState })
+        set({
+          SQLDefinitionObject: {
+            id: res.data.id,
+            name: res.data.name,
+            type: res.data.type,
+            typeDesc: res.data.typeDesc,
+            schema: res.data.schema,
+            createDate: res.data.createDate,
+            modifyDate: res.data.modifyDate,
+          },
+        })
         set({ SQLDefinitionCode: res.data.definition })
       },
 
@@ -115,7 +136,12 @@ export const useObjectStore = create(
 
         if (res.status === 'error') {
           set({ ...UserTableInitialState })
-          set({ userTableError: { message: res.message, originalError: res.originalError } })
+          set({
+            userTableError: {
+              message: res.message,
+              originalError: res.originalError,
+            },
+          })
           return
         }
 
@@ -135,6 +161,14 @@ export const useObjectStore = create(
       name: 'objects', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
       // skipHydration: true,
+
+      // excluye de la persistencia, algunos estados del store
+      partialize: (state) =>
+        Object.fromEntries(
+          Object.entries(state).filter(
+            ([key]) => !['SQLDefinitionError', 'userTableError'].includes(key),
+          ),
+        ),
     },
   ),
 )
