@@ -5,6 +5,7 @@ import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCo
 import { useObjectStore } from '@/stores/object.store'
 import { Options } from './components/options/Options'
 import { useMaximize } from './hooks/useMaximize'
+import { Info } from './components/Info'
 
 export function DefinitionPage() {
   const SQLDefinitionCode = useObjectStore((state) => state.SQLDefinitionCode)
@@ -28,7 +29,7 @@ export function DefinitionPage() {
     >
       {SQLDefinitionCode && (
         <div className="flex items-center justify-between px-6 py-4">
-          <h4 className="font-bold">Definición</h4>
+          <h4 className="text-lg font-bold">Definición SQL de objetos</h4>
 
           <div className="flex gap-2">
             {/* Opciones */}
@@ -38,11 +39,15 @@ export function DefinitionPage() {
       )}
 
       {/* Monaco editor syntax */}
-      {SQLDefinitionCode && <MonacoEditorCode SQLDefinitionCode={SQLDefinitionCode} />}
+      {SQLDefinitionCode && (
+        <MonacoEditorCode SQLDefinitionCode={SQLDefinitionCode} />
+      )}
 
       {!SQLDefinitionCode && (
-        <div className="flex flex-col gap-3 px-6 py-6">
-          <h4>Definición</h4>
+        <div className="flex flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 lg:px-10 lg:py-10">
+          <h4 className="sm:4 pb-2 text-lg font-bold">
+            Definición SQL de objetos
+          </h4>
 
           {/* Alerta de error */}
           {SQLDefinitionError && (
@@ -57,6 +62,9 @@ export function DefinitionPage() {
               fetchObjectAction={fetchSQLDefinition}
             />
           )}
+
+          {/* Información sobre la página actual */}
+          <Info />
         </div>
       )}
     </div>
