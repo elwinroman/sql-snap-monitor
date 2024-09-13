@@ -3,15 +3,16 @@ export const ObjectInitialState = {
   name: null,
   type: null,
   typeDesc: null,
+  schemaId: null,
   schema: null,
   createDate: null,
   modifyDate: null,
 }
 
-export const DefinitionInitialState = {
-  definitionCode: null,
-  definitionError: null,
-  definitionObjectList: [],
+export const SQLDefinitionInitialState = {
+  SQLDefinitionCode: null,
+  SQLDefinitionError: null,
+  SQLDefinitionObjectList: [],
 }
 
 export const DescriptionInitialState = {

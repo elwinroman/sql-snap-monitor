@@ -15,9 +15,9 @@ export function AlertMessages({ message, type }) {
     >
       <i className="pt-0.5">{alert.icon}</i>
       <div className="flex flex-col gap-1">
-        <p className="font-medium text-white">{log.error.message}</p>
+        <p className="font-medium text-white">{log.message}</p>
         {log.originalError && (
-          <p className="text-sm text-white">{log.originalError.message}</p>
+          <p className="text-sm text-white">{log.originalError}</p>
         )}
       </div>
     </div>

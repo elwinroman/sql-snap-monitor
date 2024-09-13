@@ -17,7 +17,7 @@ function Home() {
 }
 
 function App() {
-  const definitionObject = useObjectStore((state) => state.definitionObject)
+  const SQLDefinitionObject = useObjectStore((state) => state.SQLDefinitionObject)
   const descriptionObject = useObjectStore((state) => state.descriptionObject)
 
   useEffect(() => {
@@ -41,7 +41,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards object={definitionObject} />
+                <InfoCards object={SQLDefinitionObject} />
                 <DefinitionPage />
               </Layout>
             </ProtectedLayout>

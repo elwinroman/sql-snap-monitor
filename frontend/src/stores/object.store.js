@@ -1,12 +1,13 @@
 import { create } from 'zustand'
 import {
-  getDefinition,
-  getDescription,
-  getObject,
+  findSQLDefinitionObject,
+  findUserTable,
+  getSQLDefinitionObject,
+  getUserTable
 } from '@/services/object.service'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import {
-  DefinitionInitialState,
+  SQLDefinitionInitialState,
   DescriptionInitialState,
   ObjectInitialState,
 } from '@/models/object.model'
@@ -17,57 +18,57 @@ export const useObjectStore = create(
       loading: false,
 
       // definición de objetos
-      definitionObject: { ...ObjectInitialState },
-      ...DefinitionInitialState,
+      SQLDefinitionObject: { ...ObjectInitialState },
+      ...SQLDefinitionInitialState,
 
       // updatea el objecto de definición cuando existen coincidencias
-      updateDefinitionObject: ({ object }) => {
-        set({ definitionObject: object })
+      updateSQLDefinitionObject: ({ object }) => {
+        set({ SQLDefinitionObject: object })
       },
 
-      fetchDefinitionObject: async ({ name }) => {
+      searchSQLDefinitionObject: async ({ name }) => {
         set({ loading: true })
 
-        const res = await getObject({ name })
+        const res = await findSQLDefinitionObject({ name })
 
-        if (res.error) {
-          set({ ...DefinitionInitialState })
-          set({ definitionObject: { ...ObjectInitialState } })
-          set({ definitionError: res })
+        if (res.status === 'error') {
+          set({ ...SQLDefinitionInitialState })
+          set({ SQLDefinitionObject: { ...ObjectInitialState } })
+          set({ SQLDefinitionError: { message: res.message, originalError: res.originalError } })
 
           set({ loading: false })
           return
         }
 
         if (res.meta.length > 1) {
-          set({ ...DefinitionInitialState })
-          set({ definitionObject: { ...ObjectInitialState } })
-          set({ definitionObjectList: res.objects })
+          set({ ...SQLDefinitionInitialState })
+          set({ SQLDefinitionObject: { ...ObjectInitialState } })
+          set({ SQLDefinitionObjectList: res.data })
 
           set({ loading: false })
           return
         }
 
-        set({ ...DefinitionInitialState })
-        set({ definitionObject: res.objects[0] })
+        set({ ...SQLDefinitionInitialState })
+        set({ SQLDefinitionObject: res.data[0] })
         set({ loading: false })
       },
 
-      fetchDefinition: async () => {
-        const object = get().definitionObject
+      fetchSQLDefinition: async () => {
+        const object = get().SQLDefinitionObject
 
         if (object.id === null) return
 
-        const res = await getDefinition({ id: object.id })
+        const res = await getSQLDefinitionObject({ id: object.id })
 
-        if (res.error) {
-          set({ ...DefinitionInitialState })
-          set({ definitionError: res })
+        if (res.status === 'error') {
+          set({ ...SQLDefinitionInitialState })
+          set({ SQLDefinitionError: { message: res.message, originalError: res.originalError } })
           return
         }
 
-        set({ ...DefinitionInitialState })
-        set({ definitionCode: res.definition })
+        set({ ...SQLDefinitionInitialState })
+        set({ SQLDefinitionCode: res.data.definition })
       },
 
       // descripción de objetos
@@ -81,9 +82,9 @@ export const useObjectStore = create(
 
       fetchDescriptionObject: async ({ name }) => {
         set({ loading: true })
-        const res = await getObject({ name })
+        const res = await findUserTable({ name })
 
-        if (res.error) {
+        if (res.status === 'error') {
           set({ ...DescriptionInitialState })
           set({ descriptionObject: { ...ObjectInitialState } })
           set({ descriptionError: res })
@@ -110,9 +111,9 @@ export const useObjectStore = create(
         const object = get().descriptionObject
         if (object.id === null) return
 
-        const res = await getDescription({ id: object.id })
+        const res = await getUserTable({ id: object.id })
 
-        if (res.error) {
+        if (res.status === 'error') {
           set({ ...DescriptionInitialState })
           set({ descriptionError: res })
           return
@@ -124,9 +125,9 @@ export const useObjectStore = create(
       },
 
       reset: () => {
-        set({ definitionObject: { ...ObjectInitialState } })
+        set({ SQLDefinitionObject: { ...ObjectInitialState } })
         set({ descriptionObject: { ...ObjectInitialState } })
-        set({ ...DefinitionInitialState })
+        set({ ...SQLDefinitionInitialState })
         set({ ...DescriptionInitialState })
       },
     }),

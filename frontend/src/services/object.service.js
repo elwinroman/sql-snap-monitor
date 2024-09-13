@@ -1,15 +1,15 @@
 /**
- * Obtiene uno o varios objeto(s) por su nombre
+ * Busca un objeto que tenga una definición SQL por su nombre
  *
  * @param {Object} param
  * @param {string} param.name - Nombre del objeto
  *
  * @returns {Promise}
  */
-export async function getObject({ name }) {
+export async function findSQLDefinitionObject({ name }) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/object/${name}`,
+      `${import.meta.env.VITE_API_URL}/objects/sqldefinition?search=${name}`,
       {
         credentials: 'include',
       },
@@ -30,10 +30,10 @@ export async function getObject({ name }) {
  *
  * @returns {Promise}
  */
-export async function getDefinition({ id }) {
+export async function getSQLDefinitionObject({ id }) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/object/definition/${id}`,
+      `${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}`,
       {
         credentials: 'include',
       },
@@ -46,17 +46,42 @@ export async function getDefinition({ id }) {
 }
 
 /**
- * Obtiene la descripción de un objeto por su object_id (por ahora soporta solo USER_TABLE)
+ * Busca un usertable por su nombre
+ *
+ * @param {Object} param
+ * @param {string} param.name - Nombre del objeto
+ *
+ * @returns {Promise}
+ */
+export async function findUserTable({ name }) {
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/objects/usertable?search=${name}`,
+      {
+        credentials: 'include',
+      },
+    )
+    const res = await response.json()
+
+    return res
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+
+/**
+ * Obtiene la información de un usertable por su ID
  *
  * @param {Object} param
  * @param {string} param.id - Nombre del objeto
  *
  * @returns {Promise}
  */
-export async function getDescription({ id }) {
+export async function getUserTable({ id }) {
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/api/object/description/${id}`,
+      `${import.meta.env.VITE_API_URL}/objects/usertable/${id}`,
       {
         credentials: 'include',
       },

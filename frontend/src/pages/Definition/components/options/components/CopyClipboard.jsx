@@ -4,14 +4,14 @@ import { useState } from 'react'
 import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 
 export function CopyClipboard() {
-  const definitionCode = useObjectStore((state) => state.definitionCode)
-  const definitionError = useObjectStore((state) => state.definitionError)
+  const SQLDefinitionCode = useObjectStore((state) => state.SQLDefinitionCode)
+  const SQLDefinitionError = useObjectStore((state) => state.SQLDefinitionError)
   const [copy, setCopy] = useState(false)
 
   const handleClick = (e) => {
     e.preventDefault()
 
-    copyToClipboard({ text: definitionCode || definitionError })
+    copyToClipboard({ text: SQLDefinitionCode || SQLDefinitionError })
     setCopy(true)
 
     setTimeout(() => {

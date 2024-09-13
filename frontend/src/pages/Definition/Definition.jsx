@@ -7,14 +7,14 @@ import { Options } from './components/options/Options'
 import { useMaximize } from './hooks/useMaximize'
 
 export function DefinitionPage() {
-  const definitionCode = useObjectStore((state) => state.definitionCode)
-  const definitionError = useObjectStore((state) => state.definitionError)
-  const definitionObjectList = useObjectStore(
-    (state) => state.definitionObjectList,
+  const SQLDefinitionCode = useObjectStore((state) => state.SQLDefinitionCode)
+  const SQLDefinitionError = useObjectStore((state) => state.SQLDefinitionError)
+  const SQLDefinitionObjectList = useObjectStore(
+    (state) => state.SQLDefinitionObjectList,
   )
-  const fetchDefinition = useObjectStore((state) => state.fetchDefinition)
-  const updateDefinitionObject = useObjectStore(
-    (state) => state.updateDefinitionObject,
+  const fetchSQLDefinition = useObjectStore((state) => state.fetchSQLDefinition)
+  const updateSQLDefinitionObject = useObjectStore(
+    (state) => state.updateSQLDefinitionObject,
   )
   const loading = useObjectStore((state) => state.loading)
 
@@ -24,9 +24,9 @@ export function DefinitionPage() {
 
   return (
     <div
-      className={`overflow-hidden rounded-md border border-owborder bg-owcard ${definitionCode ? 'pb-10' : ''} ${maximize ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
+      className={`overflow-hidden rounded-md border border-owborder bg-owcard ${SQLDefinitionCode ? 'pb-10' : ''} ${maximize ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
     >
-      {definitionCode && (
+      {SQLDefinitionCode && (
         <div className="flex items-center justify-between px-6 py-4">
           <h4 className="font-bold">Definición</h4>
 
@@ -38,23 +38,23 @@ export function DefinitionPage() {
       )}
 
       {/* Monaco editor syntax */}
-      {definitionCode && <MonacoEditorCode definitionCode={definitionCode} />}
+      {SQLDefinitionCode && <MonacoEditorCode SQLDefinitionCode={SQLDefinitionCode} />}
 
-      {!definitionCode && (
+      {!SQLDefinitionCode && (
         <div className="flex flex-col gap-3 px-6 py-6">
           <h4>Definición</h4>
 
           {/* Alerta de error */}
-          {definitionError && (
-            <AlertMessages message={definitionError} type="error" />
+          {SQLDefinitionError && (
+            <AlertMessages message={SQLDefinitionError} type="error" />
           )}
 
           {/* Multiples objetos */}
-          {definitionObjectList.length > 0 && (
+          {SQLDefinitionObjectList.length > 0 && (
             <LinkObjectList
-              objectList={definitionObjectList}
-              updateObject={updateDefinitionObject}
-              fetchObjectAction={fetchDefinition}
+              objectList={SQLDefinitionObjectList}
+              updateObject={updateSQLDefinitionObject}
+              fetchObjectAction={fetchSQLDefinition}
             />
           )}
         </div>
