@@ -11,10 +11,6 @@ export function LinkObjectList({
       id: e.currentTarget.dataset.id,
       schema: e.currentTarget.dataset.schema,
       name: e.currentTarget.dataset.name,
-      type: e.currentTarget.dataset.type,
-      typeDesc: e.currentTarget.dataset.typeDesc,
-      createDate: e.currentTarget.dataset.createDate,
-      modifyDate: e.currentTarget.dataset.modifyDate,
     }
     // solicita la definición del objeto
     updateObject({ object: myobject })
@@ -35,10 +31,6 @@ export function LinkObjectList({
               data-id={obj.id}
               data-schema={obj.schema}
               data-name={obj.name}
-              data-type={obj.type}
-              data-type-desc={obj.typeDesc}
-              data-create-date={obj.createDate}
-              data-modify-date={obj.modifyDate}
             >
               <div className="flex items-center gap-0.5 text-sm">
                 <span className="font-semibold text-amber-400 group-hover:underline">

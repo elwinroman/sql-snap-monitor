@@ -146,6 +146,17 @@ export const useObjectStore = create(
         }
 
         set({ ...UserTableInitialState })
+        set({
+          userTableObject: {
+            id: res.data.id,
+            name: res.data.name,
+            type: res.data.type,
+            typeDesc: res.data.typeDesc,
+            schema: res.data.schema,
+            createDate: res.data.createDate,
+            modifyDate: res.data.modifyDate,
+          },
+        })
         set({ userTableExtendedPropertieList: res.data.extendedProperties })
         set({ userTableColumnList: res.data.columns })
       },
