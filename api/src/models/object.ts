@@ -211,7 +211,7 @@ export class ObjectModel implements ForRetrievingObject {
       const stmtExtendedProperties = `
         SELECT 
           A.column_id,
-          B.value,
+          CAST(B.value AS NVARCHAR(200)) COLLATE Latin1_General_CI_AS_KS_WS AS value,
           B.name
         FROM sys.columns A
         INNER JOIN sys.extended_properties B ON B.major_id = A.object_id AND B.minor_id = A.column_id
@@ -251,7 +251,10 @@ export class ObjectModel implements ForRetrievingObject {
       const resForeignKeys = await request?.query(stmtForeignKeys)
 
       const stmtTableExtendedProperties = `
-        SELECT value, name FROM sys.extended_properties
+        SELECT 
+          CAST(value AS NVARCHAR(200)) COLLATE Latin1_General_CI_AS_KS_WS AS value, 
+          name 
+        FROM sys.extended_properties
         WHERE major_id = ${id} AND minor_id = 0
       `
       const resTableExtendedProperties = await request?.query(stmtTableExtendedProperties)
