@@ -20,13 +20,13 @@ const enum SQLDataTypes {
  */
 export const formatSQLDataType = (type: string, maxLenght: number, precision: number, scale: number) => {
   if (type === SQLDataTypes.VARCHAR || type === SQLDataTypes.CHAR || type === SQLDataTypes.NVARCHAR || type === SQLDataTypes.NCHAR) {
-    return `${type.toUpperCase()}(${maxLenght})`
+    return `${type.toLowerCase()}(${maxLenght})`
   }
   if (type === SQLDataTypes.NUMERIC || type === SQLDataTypes.DECIMAL || type === SQLDataTypes.FLOAT) {
-    return `${type.toUpperCase()}(${precision}, ${scale})`
+    return `${type.toLowerCase()}(${precision}, ${scale})`
   }
   if (type === SQLDataTypes.BINARY || type === SQLDataTypes.VARBINARY) {
-    return maxLenght === -1 ? `${type.toUpperCase()}(MAX)` : `${type.toUpperCase()}(${maxLenght})`
+    return maxLenght === -1 ? `${type.toLowerCase()}(max)` : `${type.toLowerCase()}(${maxLenght})`
   }
-  return type.toUpperCase()
+  return type.toLowerCase()
 }
