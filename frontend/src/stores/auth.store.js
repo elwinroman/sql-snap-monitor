@@ -17,7 +17,7 @@ export const useAuthStore = create(
        */
       loginUser: async ({ credentials }) => {
         const res = await login({ credentials })
-        
+
         if (res.status === 'error') {
           set({ errorAuth: res })
           set({ isAuthenticated: false })

@@ -69,7 +69,6 @@ export async function findUserTable({ name }) {
   }
 }
 
-
 /**
  * Obtiene la información de un usertable por su ID
  *

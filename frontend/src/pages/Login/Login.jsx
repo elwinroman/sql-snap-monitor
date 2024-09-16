@@ -58,9 +58,7 @@ export function LoginPage() {
               <i className="pt-0.5">
                 <AlertCircleIcon width={22} height={22} />
               </i>
-              <p className="text-sm text-white">
-                { errorAuth.message }
-              </p>
+              <p className="text-sm text-white">{errorAuth.message}</p>
             </div>
           )}
         </header>

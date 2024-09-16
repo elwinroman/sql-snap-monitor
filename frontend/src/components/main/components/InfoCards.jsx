@@ -33,8 +33,6 @@ export function InfoCards({ object }) {
     },
   ]
 
-  console.log(object)
-
   return (
     <div className="flex flex-col gap-5">
       {/* Información general del objecto */}
