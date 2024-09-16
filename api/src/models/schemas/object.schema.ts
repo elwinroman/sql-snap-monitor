@@ -76,6 +76,7 @@ export interface ExtendedProperty {
  * @property {string} name - Nombre de la columna. Es único en el objeto.
  * @property {string} type - Tipo de dato de la columna (incluye max_length, precision y scale).
  * @property {boolean} isNullable - (1: Columna admite valores NULL, 0: Columna no admite valores NULL).
+ * @property {boolean} isIdentity - (1: La columna tiene valores de identidad).
  * @property {ExtendedProperty[]} extendedProperties - Propiedades extendidas de la columna.
  */
 export interface Column {
@@ -83,6 +84,7 @@ export interface Column {
   name: string
   type: string
   isNullable: boolean
+  isIdentity: boolean
   extendedProperties: ExtendedProperty[]
 }
 

@@ -200,7 +200,8 @@ export class ObjectModel implements ForRetrievingObject {
           A.max_length,
           A.precision,
           A.scale,
-          A.is_nullable
+          A.is_nullable,
+          A.is_identity
         FROM sys.columns      A
         INNER JOIN sys.types  B ON B.user_type_id = A.user_type_id
         WHERE A.object_id = ${id}
@@ -286,6 +287,7 @@ export class ObjectModel implements ForRetrievingObject {
             name: obj.name,
             type: formatSQLDataType(obj.type_name, obj.max_length, obj.precision, obj.scale),
             isNullable: obj.is_nullable,
+            isIdentity: obj.is_identity,
             extendedProperties:
               resExtendedProperties?.recordset
                 .filter(element => element.column_id === obj.column_id)
