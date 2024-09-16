@@ -7,12 +7,41 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 import { useObjectStore } from '@/stores/object.store'
 import { v4 as uuidv4 } from 'uuid'
+import { Key as KeyIcon, KeyRound as KeyRoundIcon } from '@/icons'
 
-export function TableDescription({ userTableColumnList }) {
+export function TableDescription() {
   const userTableExtendedPropertieList = useObjectStore(
     (state) => state.userTableExtendedPropertieList,
+  )
+  const userTableColumnList = useObjectStore(
+    (state) => state.userTableColumnList,
+  )
+  const userTableIndexList = useObjectStore((state) => state.userTableIndexList)
+  const userTableForeignKeyList = useObjectStore(
+    (state) => state.userTableForeignKeyList,
+  )
+
+  // Busca la columna que es clave primaria (solo puede haber una por ahora)
+  const primaryKeyObject = userTableIndexList.find(
+    (element) => element.isPrimaryKey === true,
+  )
+
+  // Formatear las claves foráneas agregando el nombre de la columna como clave
+  const foreignKeysFormattedList = userTableForeignKeyList.reduce(
+    (acc, item) => {
+      const column = userTableColumnList.find((col) => col.id === item.columnId)
+      if (column) acc[column.name] = item
+      return acc
+    },
+    {},
   )
 
   return (
@@ -59,8 +88,9 @@ export function TableDescription({ userTableColumnList }) {
             <TableHead className="font-semibold">Nombre columna</TableHead>
             <TableHead className="font-semibold">Tipo</TableHead>
             <TableHead className="font-semibold">Descripción</TableHead>
-            <TableHead className="font-semibold">Nombre de propiedad</TableHead>
-            <TableHead className="w-[20px] font-semibold">col_id</TableHead>
+            <TableHead className="text-nowrap font-semibold">
+              Nombre de propiedad
+            </TableHead>
           </TableRow>
         </TableHeader>
 
@@ -71,19 +101,79 @@ export function TableDescription({ userTableColumnList }) {
                 <TableCell className="w-[20px] text-zinc-200">
                   {index + 1}
                 </TableCell>
+
+                {/* Nombre de la tabla */}
                 <TableCell>
-                  <span className="text-zinc-200">{item.name}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-zinc-200">{item.name}</span>
+
+                    {/* Clave primaria */}
+                    {primaryKeyObject &&
+                      primaryKeyObject.columnId === item.id && (
+                        <TooltipProvider>
+                          <Tooltip delayDuration={150}>
+                            <TooltipTrigger>
+                              <KeyIcon width={14} height={14} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <span className="text-amber-400">
+                                {primaryKeyObject.isPrimaryKey
+                                  ? 'clave primaria'
+                                  : ''}
+                              </span>
+                              <span>
+                                {`${primaryKeyObject.isUnique ? ', unique, ' : ''}${primaryKeyObject.typeDesc.toLowerCase()}`}
+                              </span>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      )}
+
+                    {/* Clave foránea */}
+                    {foreignKeysFormattedList[item.name] && (
+                      <TooltipProvider>
+                        <Tooltip delayDuration={150}>
+                          <TooltipTrigger>
+                            <KeyRoundIcon width={14} height={14} />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="flex flex-col">
+                              <span>Clave foránea</span>
+                              <span className="text-amber-400">
+                                {`${foreignKeysFormattedList[item.name].referencedSchema}.${foreignKeysFormattedList[item.name].referencedObject} (${foreignKeysFormattedList[item.name].referencedColumn})`}
+                              </span>
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    )}
+                  </div>
                 </TableCell>
+
+                {/* Tipo de dato IDENTITY y NULLABLE */}
                 <TableCell>
-                  <span className="w-fit rounded-sm border border-zinc-600 bg-zinc-700 px-1 text-center text-xs text-zinc-200">
-                    {item.type}
-                  </span>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="w-fit rounded-sm border border-zinc-600 bg-zinc-700 px-1 text-center text-xs text-zinc-200">
+                      {item.type}
+                    </span>
+
+                    {primaryKeyObject.columnId === item.id &&
+                    item.isIdentity ? (
+                      <span className="text-xs text-stone-400">IDENTITY</span>
+                    ) : !item.isNullable ? (
+                      <span className="text-nowrap text-xs text-stone-400">
+                        NOT NULL
+                      </span>
+                    ) : null}
+                  </div>
                 </TableCell>
+
+                {/* Valor de la propiedad extendida (descripción) */}
                 <TableCell>
                   <div className="flex flex-col gap-2 text-zinc-200">
                     {item.extendedProperties.length > 0 &&
                       item.extendedProperties.map((subitem) => (
-                        <span key={uuidv4()} className="">
+                        <span key={uuidv4()} className="text-pretty">
                           {subitem.propertyValue}
                         </span>
                       ))}
@@ -95,6 +185,8 @@ export function TableDescription({ userTableColumnList }) {
                     )}
                   </div>
                 </TableCell>
+
+                {/* Nombre de la propiedad extendida (descripción) */}
                 <TableCell>
                   <div className="flex flex-col gap-2">
                     {item.extendedProperties.length > 0 &&
@@ -114,7 +206,6 @@ export function TableDescription({ userTableColumnList }) {
                     )}
                   </div>
                 </TableCell>
-                <TableCell className="w-[20px]">{item.id}</TableCell>
               </TableRow>
             ))}
           </TableBody>

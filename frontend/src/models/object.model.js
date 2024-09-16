@@ -20,4 +20,6 @@ export const UserTableInitialState = {
   userTableError: null,
   userTableObjectList: [],
   userTableExtendedPropertieList: [],
+  userTableIndexList: [],
+  userTableForeignKeyList: [],
 }

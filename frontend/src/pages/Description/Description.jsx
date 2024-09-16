@@ -24,9 +24,7 @@ export function DescriptionPage() {
       <h4 className="font-bold">Descripción</h4>
 
       {/* Descripción del objecto */}
-      {userTableColumnList && (
-        <TableDescription userTableColumnList={userTableColumnList} />
-      )}
+      {userTableColumnList && <TableDescription />}
 
       {/* Alerta de error */}
       {userTableError && (

@@ -159,6 +159,8 @@ export const useObjectStore = create(
         })
         set({ userTableExtendedPropertieList: res.data.extendedProperties })
         set({ userTableColumnList: res.data.columns })
+        set({ userTableIndexList: res.data.indexes })
+        set({ userTableForeignKeyList: res.data.foreignKeys })
       },
 
       reset: () => {
