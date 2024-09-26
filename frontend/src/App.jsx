@@ -1,5 +1,6 @@
 import './App.css'
 import { DefinitionPage, DescriptionPage, LoginPage } from '@/pages'
+import { HomePage } from '@/pages/Home/HomePage'
 import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { Route, Routes } from 'react-router-dom'
@@ -10,10 +11,6 @@ import Layout from '@/layouts/Layout'
 
 function Error() {
   return <div>Error 404</div>
-}
-
-function Home() {
-  return <div>Home</div>
 }
 
 function App() {
@@ -33,7 +30,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <Home />
+                <HomePage />
               </Layout>
             </ProtectedLayout>
           }
