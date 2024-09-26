@@ -2,56 +2,67 @@ import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { Search as SearchIcon } from '@/icons/search'
 import { useDefinition } from '@/hooks/useDefinition'
 import { useDescription } from '@/hooks/useDescription'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-// import { useObjectStore } from '@/stores/object.store'
 
-export function SearchInput() {
+function useSearch({ inputBtn }) {
   const { getDefinitionObject } = useDefinition()
   const { getDescriptionObject } = useDescription()
-  // const listObjects = useObjectStore((state) => state.listObjects)
+
+  const [search, updateSearch] = useState('')
+  const [previousSearch, updatePreviousSearch] = useState('')
   const currentLocation = useLocation()
-  const inputBtn = useRef()
-  const inputValue = useRef('')
 
-  const handleKeyup = async (e) => {
-    e.preventDefault()
-    const value = e.target.value.trim()
-    if (value === '') return
-    if (value.toLowerCase() === inputValue.current.toLocaleLowerCase()) return
+  const find = async () => {
+    if (search === '') return
+    if (search === previousSearch) return
 
-    if (e.key === 'Enter') {
-      inputValue.current = value
+    if (currentLocation.pathname === '/definition')
+      await getDefinitionObject({ name: search })
+    else if (currentLocation.pathname === '/description')
+      await getDescriptionObject({ name: search })
 
-      // realiza acción según la ruta actual
-      if (currentLocation.pathname === '/definition')
-        await getDefinitionObject({ name: value })
-      else if (currentLocation.pathname === '/description')
-        await getDescriptionObject({ name: value })
-    }
+    updatePreviousSearch(search)
   }
 
   // limpia el input y focus al cambiar de ruta
   useEffect(() => {
+    updateSearch('')
     inputBtn.current.focus()
     inputBtn.current.value = ''
-    inputValue.current = ''
   }, [currentLocation])
+
+  return { search, updateSearch, find }
+}
+
+export function SearchInput() {
+  const inputBtn = useRef()
+  const { updateSearch, find } = useSearch({ inputBtn })
+
+  const handleKeyup = async (e) => {
+    e.preventDefault()
+    if (e.key === 'Enter') find()
+  }
+
+  const handleClick = async (e) => {
+    e.preventDefault()
+    find()
+  }
+
+  const handleChange = (e) => {
+    updateSearch(e.target.value.trim())
+  }
 
   return (
     <li>
       <InputWithIcon
         ref={inputBtn}
         size="default"
-        startIcon={<SearchIcon width={20} height={20} />}
+        endIcon={<SearchIcon width={22} height={22} />}
         placeholder="Search"
         onKeyUp={handleKeyup}
-        disabled={
-          // disponible solo para obtener definiciones y descripciones
-          currentLocation.pathname !== '/definition' &&
-          currentLocation.pathname !== '/description'
-        }
-        endBadge={<span>ENTER</span>}
+        onChange={handleChange}
+        handleClick={handleClick}
       />
     </li>
   )
