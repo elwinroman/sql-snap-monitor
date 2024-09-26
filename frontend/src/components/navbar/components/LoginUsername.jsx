@@ -9,19 +9,23 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { useAuthStore } from '@/stores/auth.store'
-import { useObjectStore } from '@/stores/object.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useUserTableStore } from '@/stores/usertable.store'
 import { User as UserIcon } from '@/icons/user'
 
 export function LoginUsername() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const logoutUser = useAuthStore((state) => state.logoutUser)
   const username = useAuthStore((state) => state.username)
-  const resetObjectStore = useObjectStore((state) => state.reset)
+  const resetSQLDefinitionStore = useSQLDefinitionStore((state) => state.reset)
+  const resetUserTableStore = useUserTableStore((state) => state.reset)
 
   const closeSession = async (e) => {
     await logoutUser()
-    await resetObjectStore()
-    await useObjectStore.persist.clearStorage()
+    await resetSQLDefinitionStore()
+    await resetUserTableStore()
+    await useSQLDefinitionStore.persist.clearStorage()
+    await useUserTableStore.persist.clearStorage()
   }
 
   return (

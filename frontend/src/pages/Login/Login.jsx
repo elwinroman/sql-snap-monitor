@@ -6,7 +6,8 @@ import { Navigate } from 'react-router-dom'
 import { PasswordInput } from './components/PasswordInput'
 import { useAuthStore } from '@/stores/auth.store'
 import { useState } from 'react'
-import { useObjectStore } from '@/stores/object.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useUserTableStore } from '@/stores/usertable.store'
 
 export function LoginPage() {
   const loginUser = useAuthStore((state) => state.loginUser)
@@ -34,7 +35,8 @@ export function LoginPage() {
     } catch (err) {
       throw new Error(err)
     } finally {
-      await useObjectStore.persist.rehydrate()
+      await useSQLDefinitionStore.persist.rehydrate()
+      await useUserTableStore.persist.rehydrate()
       setLoading(false)
     }
   }

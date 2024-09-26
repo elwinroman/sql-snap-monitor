@@ -1,11 +1,15 @@
 import { Clipboard as ClipboardIcon } from '@/icons/clipboard'
-import { useObjectStore } from '@/stores/object.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { useState } from 'react'
 import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 
 export function CopyClipboard() {
-  const SQLDefinitionCode = useObjectStore((state) => state.SQLDefinitionCode)
-  const SQLDefinitionError = useObjectStore((state) => state.SQLDefinitionError)
+  const SQLDefinitionCode = useSQLDefinitionStore(
+    (state) => state.SQLDefinitionCode,
+  )
+  const SQLDefinitionError = useSQLDefinitionStore(
+    (state) => state.SQLDefinitionError,
+  )
   const [copy, setCopy] = useState(false)
 
   const handleClick = (e) => {

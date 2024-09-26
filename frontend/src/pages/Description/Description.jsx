@@ -1,30 +1,28 @@
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
-import { TableDescription } from './components/TableDescription'
-import { useObjectStore } from '@/stores/object.store'
+import { TableDescription, RelationshipDiagramFlow } from './components'
+import { useUserTableStore } from '@/stores/usertable.store'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export function DescriptionPage() {
-  const userTableColumnList = useObjectStore(
+  const userTableColumnList = useUserTableStore(
     (state) => state.userTableColumnList,
   )
-  const userTableError = useObjectStore((state) => state.userTableError)
-  const userTableObjectList = useObjectStore(
+  const userTableError = useUserTableStore((state) => state.userTableError)
+  const userTableObjectList = useUserTableStore(
     (state) => state.userTableObjectList,
   )
-  const fetchUserTable = useObjectStore((state) => state.fetchUserTable)
-  const updateObjectUserTable = useObjectStore(
+  const fetchUserTable = useUserTableStore((state) => state.fetchUserTable)
+  const updateObjectUserTable = useUserTableStore(
     (state) => state.updateObjectUserTable,
   )
-  const loading = useObjectStore((state) => state.loading)
+  const loading = useUserTableStore((state) => state.loading)
 
   if (loading) return <div>Buscando...</div>
 
   return (
     <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-owcard px-8 py-8">
-      <h4 className="font-bold">Descripción</h4>
-
-      {/* Descripción del objecto */}
-      {userTableColumnList && <TableDescription />}
+      <h4 className="pb-2 font-bold">Descripción de las tablas de usuario</h4>
 
       {/* Alerta de error */}
       {userTableError && (
@@ -39,6 +37,25 @@ export function DescriptionPage() {
           fetchObjectAction={fetchUserTable}
         />
       )}
+
+      <Tabs defaultValue="description">
+        <TabsList>
+          <TabsTrigger value="description">Descripción</TabsTrigger>
+          <TabsTrigger value="relationship-diagram-flow">
+            Diagrama de relaciones de la tabla
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Descripción del usertable */}
+        <TabsContent value="description">
+          {userTableColumnList && <TableDescription />}
+        </TabsContent>
+
+        {/* Diagrama de las relaciones del usertable */}
+        {/* <TabsContent value="relationship-diagram-flow">
+          <RelationshipDiagramFlow />
+        </TabsContent> */}
+      </Tabs>
     </div>
   )
 }

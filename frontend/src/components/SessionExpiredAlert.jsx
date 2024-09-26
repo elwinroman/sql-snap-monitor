@@ -9,16 +9,20 @@ import {
 } from '@/components/ui/alert-dialog'
 import { ClockHour5 as ClockHour5Icon } from '@/icons/clock-hour-5'
 import { useAuthStore } from '@/stores/auth.store'
-import { useObjectStore } from '@/stores/object.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useUserTableStore } from '@/stores/usertable.store'
 
 export function SessionExpiredAlert() {
   const clearAuthStore = useAuthStore((state) => state.clearAuthStore)
-  const resetObjectStore = useObjectStore((state) => state.reset)
+  const resetSQLDefinitionStore = useSQLDefinitionStore((state) => state.reset)
+  const resetUsertTableStore = useUserTableStore((state) => state.reset)
 
   const handleClick = () => {
     clearAuthStore()
-    resetObjectStore()
-    useObjectStore.persist.clearStorage()
+    resetSQLDefinitionStore()
+    resetUsertTableStore()
+    useSQLDefinitionStore.persist.clearStorage()
+    useUserTableStore.persist.clearStorage()
   }
 
   return (

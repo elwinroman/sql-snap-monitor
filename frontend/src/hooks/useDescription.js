@@ -1,8 +1,8 @@
-import { useObjectStore } from '@/stores/object.store'
+import { useUserTableStore } from '@/stores/usertable.store'
 
 export function useDescription() {
-  const searchUserTable = useObjectStore((state) => state.searchUserTable)
-  const fetchUserTable = useObjectStore((state) => state.fetchUserTable)
+  const searchUserTable = useUserTableStore((state) => state.searchUserTable)
+  const fetchUserTable = useUserTableStore((state) => state.fetchUserTable)
 
   const getDescriptionObject = async ({ name }) => {
     try {

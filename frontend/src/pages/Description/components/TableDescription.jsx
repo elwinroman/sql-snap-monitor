@@ -13,19 +13,21 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useObjectStore } from '@/stores/object.store'
+import { useUserTableStore } from '@/stores/usertable.store'
 import { v4 as uuidv4 } from 'uuid'
 import { Key as KeyIcon, KeyRound as KeyRoundIcon } from '@/icons'
 
 export function TableDescription() {
-  const userTableExtendedPropertieList = useObjectStore(
+  const userTableExtendedPropertieList = useUserTableStore(
     (state) => state.userTableExtendedPropertieList,
   )
-  const userTableColumnList = useObjectStore(
+  const userTableColumnList = useUserTableStore(
     (state) => state.userTableColumnList,
   )
-  const userTableIndexList = useObjectStore((state) => state.userTableIndexList)
-  const userTableForeignKeyList = useObjectStore(
+  const userTableIndexList = useUserTableStore(
+    (state) => state.userTableIndexList,
+  )
+  const userTableForeignKeyList = useUserTableStore(
     (state) => state.userTableForeignKeyList,
   )
 

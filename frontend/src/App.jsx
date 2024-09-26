@@ -4,7 +4,8 @@ import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { Route, Routes } from 'react-router-dom'
 import { useEffect } from 'react'
-import { useObjectStore } from '@/stores/object.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useUserTableStore } from '@/stores/usertable.store'
 import Layout from '@/layouts/Layout'
 
 function Error() {
@@ -16,10 +17,10 @@ function Home() {
 }
 
 function App() {
-  const SQLDefinitionObject = useObjectStore(
+  const SQLDefinitionObject = useSQLDefinitionStore(
     (state) => state.SQLDefinitionObject,
   )
-  const userTableObject = useObjectStore((state) => state.userTableObject)
+  const userTableObject = useUserTableStore((state) => state.userTableObject)
 
   useEffect(() => {
     document.documentElement.classList.add('dark')

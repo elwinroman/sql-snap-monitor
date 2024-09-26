@@ -1,10 +1,12 @@
-import { useObjectStore } from '@/stores/object.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 
 export function useDefinition() {
-  const searchSQLDefinitionObject = useObjectStore(
+  const searchSQLDefinitionObject = useSQLDefinitionStore(
     (state) => state.searchSQLDefinitionObject,
   )
-  const fetchSQLDefinition = useObjectStore((state) => state.fetchSQLDefinition)
+  const fetchSQLDefinition = useSQLDefinitionStore(
+    (state) => state.fetchSQLDefinition,
+  )
 
   const getDefinitionObject = async ({ name }) => {
     try {

@@ -2,22 +2,28 @@ import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 // import { CopyClipboard } from './components/CopyClipboard'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCode'
-import { useObjectStore } from '@/stores/object.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { Options } from './components/options/Options'
 import { useMaximize } from './hooks/useMaximize'
 import { Info } from './components/Info'
 
 export function DefinitionPage() {
-  const SQLDefinitionCode = useObjectStore((state) => state.SQLDefinitionCode)
-  const SQLDefinitionError = useObjectStore((state) => state.SQLDefinitionError)
-  const SQLDefinitionObjectList = useObjectStore(
+  const SQLDefinitionCode = useSQLDefinitionStore(
+    (state) => state.SQLDefinitionCode,
+  )
+  const SQLDefinitionError = useSQLDefinitionStore(
+    (state) => state.SQLDefinitionError,
+  )
+  const SQLDefinitionObjectList = useSQLDefinitionStore(
     (state) => state.SQLDefinitionObjectList,
   )
-  const fetchSQLDefinition = useObjectStore((state) => state.fetchSQLDefinition)
-  const updateSQLDefinitionObject = useObjectStore(
+  const fetchSQLDefinition = useSQLDefinitionStore(
+    (state) => state.fetchSQLDefinition,
+  )
+  const updateSQLDefinitionObject = useSQLDefinitionStore(
     (state) => state.updateSQLDefinitionObject,
   )
-  const loading = useObjectStore((state) => state.loading)
+  const loading = useSQLDefinitionStore((state) => state.loading)
 
   const { maximize, toggleMaximize } = useMaximize()
 
