@@ -1,4 +1,4 @@
-import { NextFunction, Request } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import type { JwtPayload } from 'jsonwebtoken'
 import jwt from 'jsonwebtoken'
 
@@ -9,7 +9,7 @@ interface TokenPayload extends JwtPayload {
 }
 
 // Verifica el token de acceso, y almacena el usuario en la sesión
-export function verifyToken(req: Request, _res: Response, next: NextFunction) {
+export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const token = req.cookies.access_token
 
   req.session.isSessionActive = false // no existe usuario por defecto
