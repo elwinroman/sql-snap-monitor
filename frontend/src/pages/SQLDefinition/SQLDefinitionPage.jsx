@@ -5,11 +5,11 @@ import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { useConfigStore, useSQLDefinitionStore } from '@/stores'
 
 import { Info } from './components/Info'
-import { DiffEditorCode } from './components/monaco-editor-code/DiffEditorCode'
-import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCode'
+import { DiffEditorCode } from './components/editor-code/DiffEditorCode'
+import { EditorCode } from './components/editor-code/EditorCode'
 import { Options } from './components/options/Options'
 
-export function DefinitionPage() {
+export function SQLDefinitionPage() {
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const SQLDefinitionError = useSQLDefinitionStore((state) => state.SQLDefinitionError)
   const SQLDefinitionObjectList = useSQLDefinitionStore((state) => state.SQLDefinitionObjectList)
@@ -51,7 +51,7 @@ export function DefinitionPage() {
       )}
 
       {/* Monaco editor syntax */}
-      {SQLDefinitionCode && (onDiffEditor ? <DiffEditorCode /> : <MonacoEditorCode />)}
+      {SQLDefinitionCode && (onDiffEditor ? <DiffEditorCode /> : <EditorCode />)}
 
       {!SQLDefinitionCode && (
         <div className="flex flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 lg:px-10 lg:py-10">

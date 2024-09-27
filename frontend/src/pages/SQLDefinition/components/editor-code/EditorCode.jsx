@@ -5,7 +5,7 @@ import { useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { options } from './constants/editor-options'
 import Dracula from './themes/dracula.theme'
 
-export function MonacoEditorCode() {
+export function EditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
 

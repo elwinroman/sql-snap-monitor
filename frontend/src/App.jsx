@@ -6,8 +6,7 @@ import { Route, Routes } from 'react-router-dom'
 import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import Layout from '@/layouts/Layout'
-import { DefinitionPage, DescriptionPage, LoginPage } from '@/pages'
-import { HomePage } from '@/pages/Home/HomePage'
+import { HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 import { useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 function Error() {
@@ -40,7 +39,7 @@ function App() {
             <ProtectedLayout>
               <Layout>
                 <InfoCards object={SQLDefinitionObject} />
-                <DefinitionPage />
+                <SQLDefinitionPage />
               </Layout>
             </ProtectedLayout>
           }
@@ -51,7 +50,7 @@ function App() {
             <ProtectedLayout>
               <Layout>
                 <InfoCards object={userTableObject} />
-                <DescriptionPage />
+                <UsertablePage />
               </Layout>
             </ProtectedLayout>
           }

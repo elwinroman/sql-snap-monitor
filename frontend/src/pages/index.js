@@ -1,3 +1,4 @@
-export * from './Definition/Definition'
-export * from './Description/Description'
-export * from './Login/Login'
+export * from './Definition/DefinitionPage'
+export * from './Description/DescriptionPage'
+export * from './Login/LoginPage'
+export * from './Home/HomePage'

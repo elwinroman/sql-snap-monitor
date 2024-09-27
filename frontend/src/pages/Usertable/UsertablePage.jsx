@@ -7,7 +7,7 @@ import { useUserTableStore } from '@/stores'
 
 import { TableDescription } from './components'
 
-export function DescriptionPage() {
+export function UsertablePage() {
   const userTableObject = useUserTableStore((state) => state.userTableObject)
   const userTableColumnList = useUserTableStore((state) => state.userTableColumnList)
   const userTableError = useUserTableStore((state) => state.userTableError)
