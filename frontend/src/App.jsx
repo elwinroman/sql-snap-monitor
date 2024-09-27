@@ -9,6 +9,8 @@ import Layout from '@/layouts/Layout'
 import { HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 import { useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
+import { ROUTES } from './constants/routes'
+
 function Error() {
   return <div>Error 404</div>
 }
@@ -24,7 +26,7 @@ function App() {
     <>
       <Routes>
         <Route
-          path="/"
+          path={ROUTES.HOME}
           element={
             <ProtectedLayout>
               <Layout>
@@ -34,7 +36,7 @@ function App() {
           }
         />
         <Route
-          path="/definition"
+          path={ROUTES.SQL_DEFINITION}
           element={
             <ProtectedLayout>
               <Layout>
@@ -45,7 +47,7 @@ function App() {
           }
         />
         <Route
-          path="/description"
+          path={ROUTES.USERTABLE}
           element={
             <ProtectedLayout>
               <Layout>
@@ -55,7 +57,7 @@ function App() {
             </ProtectedLayout>
           }
         />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </>

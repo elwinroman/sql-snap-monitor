@@ -3,12 +3,9 @@ import './styles/navbar.css'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import AplicationLogo from './components/AplicationLogo'
-import { Configuration } from './components/Configuration'
-import { HamburguerMenu } from './components/HamburguerMenu'
-import { LoginUsername } from './components/LoginUsername'
-import { NavMenu } from './components/NavMenu'
-import { SearchInput } from './components/SearchInput'
+import { ROUTES } from '@/constants/routes'
+
+import { AplicationLogo, Configuration, HamburguerMenu, LoginUsername, NavMenu, SearchInput } from './components'
 
 export function Navbar() {
   const currentLocation = useLocation()
@@ -45,7 +42,7 @@ export function Navbar() {
         <NavMenu className="flex-grow" />
 
         {/* Input de búsqueda */}
-        {(currentLocation.pathname === '/definition' || currentLocation.pathname === '/description') && <SearchInput />}
+        {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && <SearchInput />}
 
         {/* Usuario logueado o inicio de sesión */}
         <LoginUsername />

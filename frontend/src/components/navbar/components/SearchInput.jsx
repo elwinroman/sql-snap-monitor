@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { InputWithIcon } from '@/components/ui/input-with-icon'
+import { ROUTES } from '@/constants/routes'
 import { useSQLDefinition, useUsertable } from '@/hooks'
 import { Search as SearchIcon } from '@/icons/search'
 
@@ -17,8 +18,8 @@ function useSearch({ inputBtn }) {
     if (search === '') return
     if (search === previousSearch) return
 
-    if (currentLocation.pathname === '/definition') await getSQLDefinitionObject({ name: search })
-    else if (currentLocation.pathname === '/description') await getUsertableObject({ name: search })
+    if (currentLocation.pathname === ROUTES.SQL_DEFINITION) await getSQLDefinitionObject({ name: search })
+    else if (currentLocation.pathname === ROUTES.USERTABLE) await getUsertableObject({ name: search })
 
     updatePreviousSearch(search)
   }
