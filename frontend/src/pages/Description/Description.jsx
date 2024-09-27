@@ -1,10 +1,12 @@
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
-import { TableDescription, RelationshipDiagramFlow } from './components'
+import { TableDescription } from './components'
 import { useUserTableStore } from '@/stores/usertable.store'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Table } from 'lucide-react'
 
 export function DescriptionPage() {
+  const userTableObject = useUserTableStore((state) => state.userTableObject)
   const userTableColumnList = useUserTableStore(
     (state) => state.userTableColumnList,
   )
@@ -22,7 +24,12 @@ export function DescriptionPage() {
 
   return (
     <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-owcard px-8 py-8">
-      <h4 className="pb-2 font-bold">Descripción de las tablas de usuario</h4>
+      <h4 className="flex items-center gap-2 pb-2 text-base font-bold text-zinc-300">
+        <i>
+          <Table size={20} />
+        </i>
+        <span>{userTableObject.name}</span>
+      </h4>
 
       {/* Alerta de error */}
       {userTableError && (

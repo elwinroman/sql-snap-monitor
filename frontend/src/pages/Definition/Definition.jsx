@@ -6,6 +6,7 @@ import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { Options } from './components/options/Options'
 import { useMaximize } from './hooks/useMaximize'
 import { Info } from './components/Info'
+import { Code } from 'lucide-react'
 
 export function DefinitionPage() {
   const SQLDefinitionCode = useSQLDefinitionStore(
@@ -23,6 +24,9 @@ export function DefinitionPage() {
   const updateSQLDefinitionObject = useSQLDefinitionStore(
     (state) => state.updateSQLDefinitionObject,
   )
+  const SQLDefinitionObject = useSQLDefinitionStore(
+    (state) => state.SQLDefinitionObject,
+  )
   const loading = useSQLDefinitionStore((state) => state.loading)
 
   const { maximize, toggleMaximize } = useMaximize()
@@ -34,8 +38,21 @@ export function DefinitionPage() {
       className={`overflow-hidden rounded-md border border-owborder bg-owcard ${SQLDefinitionCode ? 'pb-10' : ''} ${maximize ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
     >
       {SQLDefinitionCode && (
-        <div className="flex items-center justify-between px-6 py-4">
-          <h4 className="text-lg font-bold">Definición SQL de objetos</h4>
+        <div className="flex items-center justify-between gap-1 px-6 py-4">
+          {!onDiffEditor ? (
+            <h4 className="flex items-center gap-2 text-base font-bold text-zinc-300">
+              <i>
+                <Code size={20} />
+              </i>
+              {SQLDefinitionObject.name}
+            </h4>
+          ) : (
+            <h3 className="max-w-sm text-sm text-zinc-200 sm:max-w-full">
+              <span>Estas comparando con </span>
+              <span className="font-bold text-emerald-500">PRODUCCIÓN</span>
+              <span> (Actualizado al día de ayer)</span>
+            </h3>
+          )}
 
           <div className="flex gap-2">
             {/* Opciones */}
