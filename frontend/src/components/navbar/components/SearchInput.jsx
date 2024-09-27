@@ -28,6 +28,7 @@ function useSearch({ inputBtn }) {
   // limpia el input y focus al cambiar de ruta
   useEffect(() => {
     updateSearch('')
+    updatePreviousSearch('')
     inputBtn.current.focus()
     inputBtn.current.value = ''
   }, [currentLocation])
