@@ -1,10 +1,11 @@
+import { Maximize, Minimize } from 'lucide-react'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { Maximize, Minimize } from 'lucide-react'
 import { useConfigStore } from '@/stores/config.store'
 
 export function MaxMin() {

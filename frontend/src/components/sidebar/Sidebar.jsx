@@ -1,7 +1,8 @@
+import { NavLink } from 'react-router-dom'
+
 import { Article as ArticleIcon } from '@/icons/article'
 import { CodeCircle2 as CodeCircleIcon } from '@/icons/code-circle-2'
 import { LayoutDashboard as LayoutDashboardIcon } from '@/icons/layout-dashboard'
-import { NavLink } from 'react-router-dom'
 import { Squares as SquaresIcon } from '@/icons/squares'
 
 export function Sidebar() {

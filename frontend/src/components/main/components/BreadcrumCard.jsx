@@ -1,5 +1,6 @@
-import { useAuthStore } from '@/stores/auth.store'
 import { DatabaseZap } from 'lucide-react'
+
+import { useAuthStore } from '@/stores/auth.store'
 
 export function BreadcrumCard() {
   const dbname = useAuthStore((state) => state.dbname)

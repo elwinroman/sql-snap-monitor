@@ -1,8 +1,8 @@
 import { CopyClipboard } from './components/CopyClipboard'
-import { MaxMin } from './components/MaxMin'
 import { DiffCompare } from './components/DiffCompare'
-import { SideBySide } from './components/SideBySide'
 import { IndentationWhitespace } from './components/IndentationWhitespace'
+import { MaxMin } from './components/MaxMin'
+import { SideBySide } from './components/SideBySide'
 
 export function Options() {
   return (

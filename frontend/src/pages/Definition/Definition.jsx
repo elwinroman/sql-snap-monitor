@@ -1,12 +1,14 @@
+import { Code } from 'lucide-react'
+
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
+import { useConfigStore } from '@/stores/config.store'
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+
+import { Info } from './components/Info'
 import { DiffEditorCode } from './components/monaco-editor-code/DiffEditorCode'
 import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCode'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { Options } from './components/options/Options'
-import { useConfigStore } from '@/stores/config.store'
-import { Info } from './components/Info'
-import { Code } from 'lucide-react'
 
 export function DefinitionPage() {
   const SQLDefinitionCode = useSQLDefinitionStore(

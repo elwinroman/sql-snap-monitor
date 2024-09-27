@@ -1,9 +1,11 @@
+import { Table } from 'lucide-react'
+
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
-import { TableDescription } from './components'
-import { useUserTableStore } from '@/stores/usertable.store'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Table } from 'lucide-react'
+import { useUserTableStore } from '@/stores/usertable.store'
+
+import { TableDescription } from './components'
 
 export function DescriptionPage() {
   const userTableObject = useUserTableStore((state) => state.userTableObject)

@@ -1,3 +1,5 @@
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,12 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
+import { User as UserIcon } from '@/icons/user'
 import { useAuthStore } from '@/stores/auth.store'
 import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { useUserTableStore } from '@/stores/usertable.store'
-import { User as UserIcon } from '@/icons/user'
 
 export function LoginUsername() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)

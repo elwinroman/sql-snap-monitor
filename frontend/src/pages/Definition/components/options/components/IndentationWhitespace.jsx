@@ -1,10 +1,11 @@
+import { IndentIncrease } from 'lucide-react'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { IndentIncrease } from 'lucide-react'
 import { useEditorStore } from '@/stores/editor-option.store'
 
 const RENDER_WHITESPACE_OPTION = {

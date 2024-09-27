@@ -1,9 +1,10 @@
-import { InputWithIcon } from '@/components/ui/input-with-icon'
-import { Search as SearchIcon } from '@/icons/search'
-import { useDefinition } from '@/hooks/useDefinition'
-import { useDescription } from '@/hooks/useDescription'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+
+import { InputWithIcon } from '@/components/ui/input-with-icon'
+import { useDefinition } from '@/hooks/useDefinition'
+import { useDescription } from '@/hooks/useDescription'
+import { Search as SearchIcon } from '@/icons/search'
 
 function useSearch({ inputBtn }) {
   const { getDefinitionObject } = useDefinition()

@@ -1,13 +1,15 @@
-import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
-import { Input } from './components/Input'
-import { Label } from './components/Label'
-import { Loader } from '@/components/loader/Loader'
-import { Navigate } from 'react-router-dom'
-import { PasswordInput } from './components/PasswordInput'
-import { useAuthStore } from '@/stores/auth.store'
 import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
+
+import { Loader } from '@/components/loader/Loader'
+import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
+import { useAuthStore } from '@/stores/auth.store'
 import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { useUserTableStore } from '@/stores/usertable.store'
+
+import { Input } from './components/Input'
+import { Label } from './components/Label'
+import { PasswordInput } from './components/PasswordInput'
 
 export function LoginPage() {
   const loginUser = useAuthStore((state) => state.loginUser)

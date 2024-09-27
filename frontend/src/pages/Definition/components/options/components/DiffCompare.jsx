@@ -1,10 +1,11 @@
+import { GitCompare } from 'lucide-react'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { GitCompare } from 'lucide-react'
 import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 
 export function DiffCompare() {

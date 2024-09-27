@@ -1,13 +1,15 @@
 import './App.css'
-import { DefinitionPage, DescriptionPage, LoginPage } from '@/pages'
-import { HomePage } from '@/pages/Home/HomePage'
+
+import { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom'
+
 import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
-import { Route, Routes } from 'react-router-dom'
-import { useEffect } from 'react'
+import Layout from '@/layouts/Layout'
+import { DefinitionPage, DescriptionPage, LoginPage } from '@/pages'
+import { HomePage } from '@/pages/Home/HomePage'
 import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { useUserTableStore } from '@/stores/usertable.store'
-import Layout from '@/layouts/Layout'
 
 function Error() {
   return <div>Error 404</div>

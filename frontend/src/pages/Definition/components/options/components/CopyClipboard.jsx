@@ -1,8 +1,10 @@
 // import { Clipboard as ClipboardIcon } from '@/icons/clipboard'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
-import { useState } from 'react'
-import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 import { Clipboard } from 'lucide-react'
+import { useState } from 'react'
+
+import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+
+import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 
 export function CopyClipboard() {
   const SQLDefinitionCode = useSQLDefinitionStore(

@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 import {
   Table,
   TableBody,
@@ -13,9 +15,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useUserTableStore } from '@/stores/usertable.store'
-import { v4 as uuidv4 } from 'uuid'
 import { Key as KeyIcon, KeyRound as KeyRoundIcon } from '@/icons'
+import { useUserTableStore } from '@/stores/usertable.store'
 
 export function TableDescription() {
   const userTableExtendedPropertieList = useUserTableStore(

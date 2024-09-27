@@ -1,6 +1,6 @@
-import { Footer } from '@/sections/footer'
 import { Main } from '@/components/main/Main'
 import { Navbar } from '@/components/navbar/Navbar'
+import { Footer } from '@/sections/footer'
 // import { Sidebar } from '@/components/sidebar/Sidebar'
 
 export default function Layout({ children }) {

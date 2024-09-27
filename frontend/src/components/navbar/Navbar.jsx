@@ -1,11 +1,14 @@
+import './styles/navbar.css'
+
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
+
+import AplicationLogo from './components/AplicationLogo'
 import { Configuration } from './components/Configuration'
 import { HamburguerMenu } from './components/HamburguerMenu'
 import { LoginUsername } from './components/LoginUsername'
-import { SearchInput } from './components/SearchInput'
 import { NavMenu } from './components/NavMenu'
-import { useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import './styles/navbar.css'
+import { SearchInput } from './components/SearchInput'
 
 export function Navbar() {
   const currentLocation = useLocation()
@@ -32,6 +35,9 @@ export function Navbar() {
       className={`w-full flex-[0_0_var(--navbar-height)] transition-all ${isFixed ? 'fixed top-0 z-50 max-w-screen-2xl py-4 backdrop-blur-[4px]' : 'static'}`}
     >
       <ul className="flex h-full flex-row items-center gap-4 px-4">
+        {/* Aplication logo */}
+        <AplicationLogo />
+
         {/* Hamburguer menu */}
         <HamburguerMenu />
 

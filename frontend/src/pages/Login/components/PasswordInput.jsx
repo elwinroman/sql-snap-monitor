@@ -1,6 +1,7 @@
+import { useRef, useState } from 'react'
+
 import { Eye as EyeIcon } from '@/icons/eye'
 import { EyeOff as EyeOffIcon } from '@/icons/eye-off'
-import { useState, useRef } from 'react'
 
 export function PasswordInput({ name }) {
   const [visible, setVisible] = useState(false)
