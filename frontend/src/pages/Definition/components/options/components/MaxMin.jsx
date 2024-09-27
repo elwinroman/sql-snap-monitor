@@ -1,18 +1,41 @@
-import { Maximize as MaximizeIcon } from '@/icons/maximize'
-import { Minimize as MinimizeIcon } from '@/icons/minimize'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { Maximize, Minimize } from 'lucide-react'
+import { useConfigStore } from '@/stores/config.store'
 
-export function MaxMin({ maximize, toggleMaximize }) {
+export function MaxMin() {
+  const isMaximized = useConfigStore((state) => state.isMaximized)
+  const updateMaximized = useConfigStore((state) => state.updateMaximized)
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    updateMaximized(!isMaximized)
+  }
+
   return (
-    <button className="" onClick={toggleMaximize}>
-      {maximize ? (
-        <i className="text-white">
-          <MinimizeIcon width={24} height={24} />
-        </i>
-      ) : (
-        <i className="text-white">
-          <MaximizeIcon width={24} height={24} />
-        </i>
-      )}
-    </button>
+    <TooltipProvider>
+      <Tooltip delayDuration={150}>
+        <TooltipTrigger asChild>
+          <button className="" onClick={handleClick}>
+            {isMaximized ? (
+              <i className="text-white">
+                <Minimize size={16} />
+              </i>
+            ) : (
+              <i className="text-white">
+                <Maximize size={16} />
+              </i>
+            )}
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <p>{isMaximized ? 'Minimizar' : 'Maximizar'}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }

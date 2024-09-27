@@ -1,10 +1,9 @@
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
-// import { CopyClipboard } from './components/CopyClipboard'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCode'
 import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { Options } from './components/options/Options'
-import { useMaximize } from './hooks/useMaximize'
+import { useConfigStore } from '@/stores/config.store'
 import { Info } from './components/Info'
 import { Code } from 'lucide-react'
 
@@ -28,14 +27,14 @@ export function DefinitionPage() {
     (state) => state.SQLDefinitionObject,
   )
   const loading = useSQLDefinitionStore((state) => state.loading)
-
-  const { maximize, toggleMaximize } = useMaximize()
+  const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
+  const isMaximized = useConfigStore((state) => state.isMaximized)
 
   if (loading) return <div>Buscando...</div>
 
   return (
     <div
-      className={`overflow-hidden rounded-md border border-owborder bg-owcard ${SQLDefinitionCode ? 'pb-10' : ''} ${maximize ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
+      className={`overflow-hidden rounded-md border border-owborder bg-owcard ${SQLDefinitionCode ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
     >
       {SQLDefinitionCode && (
         <div className="flex items-center justify-between gap-1 px-6 py-4">
@@ -56,7 +55,7 @@ export function DefinitionPage() {
 
           <div className="flex gap-2">
             {/* Opciones */}
-            <Options maximize={maximize} toggleMaximize={toggleMaximize} />
+            <Options />
           </div>
         </div>
       )}
