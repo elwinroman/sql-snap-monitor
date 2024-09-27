@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { ObjectInitialState, UserTableInitialState } from '@/models/object.model'
-import { findUserTable, getUserTable } from '@/services/object.service'
+import { findUserTable, getUserTable } from '@/services'
 
 export const useUserTableStore = create(
   persist(

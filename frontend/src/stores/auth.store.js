@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { checkSession, login, logout } from '@/services/auth.service'
+import { checkSession, login, logout } from '@/services'
 
 export const useAuthStore = create(
   persist(

@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { ObjectInitialState, SQLDefinitionInitialState } from '@/models/object.model'
-import { findSQLDefinitionObject, getSQLDefinitionObject } from '@/services/object.service'
+import { findSQLDefinitionObject, getSQLDefinitionObject } from '@/services'
 
 export const useSQLDefinitionStore = create(
   persist(

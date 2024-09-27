@@ -30,13 +30,10 @@ export async function login({ credentials }) {
  */
 export async function logout() {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/auth/logout`,
-      {
-        method: 'POST',
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    })
 
     const res = await response.json()
     return res
@@ -52,12 +49,9 @@ export async function logout() {
  */
 export async function checkSession() {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/auth/health`,
-      {
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/health`, {
+      credentials: 'include',
+    })
 
     const res = await response.json()
     return res
