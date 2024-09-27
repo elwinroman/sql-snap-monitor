@@ -59,14 +59,14 @@ export const useSQLDefinitionStore = create(
 
         set({ ...SQLDefinitionInitialState })
         set({ SQLDefinitionObject: res.data[0] })
-        set({ loading: false })
         set({ onDiffEditor: false })
       },
 
       fetchSQLDefinition: async () => {
         const object = get().SQLDefinitionObject
-
         if (object.id === null) return
+
+        set({ loading: true })
 
         const res = await getSQLDefinitionObject({ id: object.id })
 
@@ -78,6 +78,7 @@ export const useSQLDefinitionStore = create(
               originalError: res.originalError,
             },
           })
+          set({ loading: false })
           return
         }
 
@@ -94,6 +95,7 @@ export const useSQLDefinitionStore = create(
           },
         })
         set({ SQLDefinitionCode: res.data.definition })
+        set({ loading: false })
       },
 
       reset: () => {

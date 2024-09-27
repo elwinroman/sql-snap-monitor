@@ -41,13 +41,13 @@ export const useUserTableStore = create(
 
         set({ ...UserTableInitialState })
         set({ userTableObject: res.data[0] })
-
-        set({ loading: false })
       },
 
       fetchUserTable: async () => {
         const object = get().userTableObject
         if (object.id === null) return
+
+        set({ loading: true })
 
         const res = await getUserTable({ id: object.id })
 
@@ -59,6 +59,7 @@ export const useUserTableStore = create(
               originalError: res.originalError,
             },
           })
+          set({ loading: false })
           return
         }
 
@@ -78,6 +79,7 @@ export const useUserTableStore = create(
         set({ userTableColumnList: res.data.columns })
         set({ userTableIndexList: res.data.indexes })
         set({ userTableForeignKeyList: res.data.foreignKeys })
+        set({ loading: false })
       },
 
       reset: () => {
