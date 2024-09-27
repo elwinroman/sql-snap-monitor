@@ -17,10 +17,8 @@ function useSearch({ inputBtn }) {
     if (search === '') return
     if (search === previousSearch) return
 
-    if (currentLocation.pathname === '/definition')
-      await getSQLDefinitionObject({ name: search })
-    else if (currentLocation.pathname === '/description')
-      await getUsertableObject({ name: search })
+    if (currentLocation.pathname === '/definition') await getSQLDefinitionObject({ name: search })
+    else if (currentLocation.pathname === '/description') await getUsertableObject({ name: search })
 
     updatePreviousSearch(search)
   }

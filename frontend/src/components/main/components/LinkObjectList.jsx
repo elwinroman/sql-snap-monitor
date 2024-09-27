@@ -1,10 +1,6 @@
 import { ExternalLink as ExternalLinkIcon } from '@/icons/external-link'
 
-export function LinkObjectList({
-  objectList,
-  updateObject,
-  fetchObjectAction,
-}) {
+export function LinkObjectList({ objectList, updateObject, fetchObjectAction }) {
   const handleLinkObject = async (e) => {
     e.preventDefault()
     const myobject = {
@@ -33,13 +29,9 @@ export function LinkObjectList({
               data-name={obj.name}
             >
               <div className="flex items-center gap-0.5 text-sm">
-                <span className="font-semibold text-amber-400 group-hover:underline">
-                  {obj.schema}
-                </span>
+                <span className="font-semibold text-amber-400 group-hover:underline">{obj.schema}</span>
                 <span className="font-bold text-white">.</span>
-                <span className="font-semibold text-rose-500 group-hover:underline">
-                  {obj.name}
-                </span>
+                <span className="font-semibold text-rose-500 group-hover:underline">{obj.name}</span>
               </div>
               <i className="grid place-items-center text-white transition-transform duration-200 group-hover:-translate-y-0.5">
                 <ExternalLinkIcon width={16} height={16} />

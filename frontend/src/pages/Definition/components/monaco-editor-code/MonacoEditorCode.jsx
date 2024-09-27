@@ -7,9 +7,7 @@ import Dracula from './themes/dracula.theme'
 
 export function MonacoEditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
-  const SQLDefinitionCode = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionCode,
-  )
+  const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
 
   // cargar themes de monaco
   const handleEditorDidMount = (monaco) => {

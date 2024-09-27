@@ -45,8 +45,7 @@ export function Navbar() {
         <NavMenu className="flex-grow" />
 
         {/* Input de búsqueda */}
-        {(currentLocation.pathname === '/definition' ||
-          currentLocation.pathname === '/description') && <SearchInput />}
+        {(currentLocation.pathname === '/definition' || currentLocation.pathname === '/description') && <SearchInput />}
 
         {/* Usuario logueado o inicio de sesión */}
         <LoginUsername />

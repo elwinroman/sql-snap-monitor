@@ -9,11 +9,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { User as UserIcon } from '@/icons/user'
-import {
-  useAuthStore,
-  useSQLDefinitionStore,
-  useUserTableStore,
-} from '@/stores'
+import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 export function LoginUsername() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
@@ -38,9 +34,7 @@ export function LoginUsername() {
             <i>
               <UserIcon width={20} height={20} />
             </i>
-            <span className="select-none text-sm font-semibold">
-              Iniciar sesión
-            </span>
+            <span className="select-none text-sm font-semibold">Iniciar sesión</span>
           </div>
         </Button>
       ) : (
@@ -52,9 +46,7 @@ export function LoginUsername() {
                   <AvatarImage src="https://github.com/shadcn.png" />
                   <AvatarFallback>QA</AvatarFallback>
                 </Avatar>
-                <span className="select-none text-sm font-semibold">
-                  {username}
-                </span>
+                <span className="select-none text-sm font-semibold">{username}</span>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" sideOffset={10}>

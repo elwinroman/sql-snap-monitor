@@ -14,12 +14,7 @@ export const useConfigStore = create(
       storage: createJSONStorage(() => localStorage),
 
       // excluye de la persistencia, algunos estados del store
-      partialize: (state) =>
-        Object.fromEntries(
-          Object.entries(state).filter(
-            ([key]) => !['isMaximized'].includes(key),
-          ),
-        ),
+      partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['isMaximized'].includes(key))),
     },
   ),
 )

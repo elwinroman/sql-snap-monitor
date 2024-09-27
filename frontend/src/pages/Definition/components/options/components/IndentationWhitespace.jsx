@@ -1,11 +1,6 @@
 import { IndentIncrease } from 'lucide-react'
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useEditorStore } from '@/stores'
 
 const RENDER_WHITESPACE_OPTION = {
@@ -18,22 +13,16 @@ const RENDER_WHITESPACE_OPTION = {
 
 export function IndentationWhitespace() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
-  const updateRenderWhitespace = useEditorStore(
-    (state) => state.updateRenderWhitespace,
-  )
+  const updateRenderWhitespace = useEditorStore((state) => state.updateRenderWhitespace)
 
   const handleClick = (e) => {
     e.preventDefault()
 
-    if (renderWhitespace === RENDER_WHITESPACE_OPTION.none)
-      updateRenderWhitespace(RENDER_WHITESPACE_OPTION.all)
+    if (renderWhitespace === RENDER_WHITESPACE_OPTION.none) updateRenderWhitespace(RENDER_WHITESPACE_OPTION.all)
     else updateRenderWhitespace(RENDER_WHITESPACE_OPTION.none)
   }
 
-  const text =
-    renderWhitespace === RENDER_WHITESPACE_OPTION.none
-      ? 'Mostrar indentación'
-      : 'Ocultar indentación'
+  const text = renderWhitespace === RENDER_WHITESPACE_OPTION.none ? 'Mostrar indentación' : 'Ocultar indentación'
 
   return (
     <TooltipProvider>

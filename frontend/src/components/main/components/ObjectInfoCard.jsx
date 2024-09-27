@@ -41,14 +41,10 @@ export function ObjectInfoCard({ object }) {
           className="flex max-w-64 items-center justify-between gap-6 rounded-md border border-owborder bg-owcard px-3 py-2"
         >
           <div className="flex items-baseline gap-2">
-            <h6 className="text-xs font-normal text-zinc-600 dark:text-zinc-400">
-              {item.title}
-            </h6>
+            <h6 className="text-xs font-normal text-zinc-600 dark:text-zinc-400">{item.title}</h6>
             <p className="text-xs font-medium text-slate-300 dark:text-zinc-100">
               <span>{item.value} </span>
-              {item.has_tag && (
-                <span className="text-xs text-amber-400">{item.tag}</span>
-              )}
+              {item.has_tag && <span className="text-xs text-amber-400">{item.tag}</span>}
             </p>
           </div>
         </li>

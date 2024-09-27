@@ -15,9 +15,7 @@ function Error() {
 }
 
 function App() {
-  const SQLDefinitionObject = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionObject,
-  )
+  const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const userTableObject = useUserTableStore((state) => state.userTableObject)
 
   useEffect(() => {

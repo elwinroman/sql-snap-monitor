@@ -8,12 +8,8 @@ import Dracula from './themes/dracula.theme'
 export function DiffEditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
   const renderSideBySide = useEditorStore((state) => state.renderSideBySide)
-  const SQLDefinitionCode = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionCode,
-  )
-  const originalSQLDefinition = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionProductionObject,
-  )
+  const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
+  const originalSQLDefinition = useSQLDefinitionStore((state) => state.SQLDefinitionProductionObject)
 
   // cargar themes de monaco
   const handleEditorDidMount = (monaco) => {

@@ -18,7 +18,7 @@ module.exports = {
     'react/jsx-no-target-blank': 'off',
     'react-refresh/only-export-components': 'off',
     'prettier/prettier': ['error', {
-      'printWidth': 80,
+      'printWidth': 140,
       'tabWidth': 2,
       'singleQuote': true,
       'trailingComma': 'all',

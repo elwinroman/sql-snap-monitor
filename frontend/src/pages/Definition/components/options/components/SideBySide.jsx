@@ -1,19 +1,12 @@
 import { Rows2 } from 'lucide-react'
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useEditorStore, useSQLDefinitionStore } from '@/stores'
 
 export function SideBySide() {
   const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
   const renderSideBySide = useEditorStore((state) => state.renderSideBySide)
-  const updateRenderSideBySide = useEditorStore(
-    (state) => state.updateRenderSideBySide,
-  )
+  const updateRenderSideBySide = useEditorStore((state) => state.updateRenderSideBySide)
 
   if (!onDiffEditor) return null
 
@@ -22,9 +15,7 @@ export function SideBySide() {
     updateRenderSideBySide(!renderSideBySide)
   }
 
-  const text = renderSideBySide
-    ? 'Mostrar diferencia en filas'
-    : 'Mostrar diferencia en columnas'
+  const text = renderSideBySide ? 'Mostrar diferencia en filas' : 'Mostrar diferencia en columnas'
 
   return (
     <TooltipProvider>

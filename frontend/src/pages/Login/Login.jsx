@@ -3,11 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 import { Loader } from '@/components/loader/Loader'
 import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
-import {
-  useAuthStore,
-  useSQLDefinitionStore,
-  useUserTableStore,
-} from '@/stores'
+import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 import { Input } from './components/Input'
 import { Label } from './components/Label'
@@ -48,15 +44,12 @@ export function LoginPage() {
     <section className="flex h-screen w-full items-center overflow-auto bg-[#14161a]">
       <div className="m-auto flex w-[500px] flex-col gap-8 rounded-md bg-[#26282d] px-14 py-16">
         {/* Loader */}
-        {loading && (
-          <Loader className="loader absolute left-1/2 top-1/2 opacity-80" />
-        )}
+        {loading && <Loader className="loader absolute left-1/2 top-1/2 opacity-80" />}
 
         <header className="flex flex-col gap-3">
           <h1 className="text-4xl font-semibold text-white">Iniciar sesión</h1>
           <p className="font-medium text-zinc-400">
-            Hoy es un buen día para revisar tus SPs, Tablas, etc. Inicia sesión
-            con tus credenciales SQL
+            Hoy es un buen día para revisar tus SPs, Tablas, etc. Inicia sesión con tus credenciales SQL
           </p>
 
           {errorAuth && (

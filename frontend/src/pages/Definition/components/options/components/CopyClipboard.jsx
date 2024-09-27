@@ -7,12 +7,8 @@ import { useSQLDefinitionStore } from '@/stores'
 import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 
 export function CopyClipboard() {
-  const SQLDefinitionCode = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionCode,
-  )
-  const SQLDefinitionError = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionError,
-  )
+  const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
+  const SQLDefinitionError = useSQLDefinitionStore((state) => state.SQLDefinitionError)
   const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
   const [copy, setCopy] = useState(false)
 
@@ -39,11 +35,7 @@ export function CopyClipboard() {
         <i className="text-black">
           <Clipboard size={14} />
         </i>
-        <span
-          className={`pt-[2px] text-xs font-semibold text-black transition duration-700`}
-        >
-          {copy ? 'Copiado' : 'Copiar'}
-        </span>
+        <span className={`pt-[2px] text-xs font-semibold text-black transition duration-700`}>{copy ? 'Copiado' : 'Copiar'}</span>
       </div>
     </button>
   )

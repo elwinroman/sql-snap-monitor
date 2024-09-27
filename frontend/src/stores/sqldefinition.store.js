@@ -1,14 +1,8 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import {
-  ObjectInitialState,
-  SQLDefinitionInitialState,
-} from '@/models/object.model'
-import {
-  findSQLDefinitionObject,
-  getSQLDefinitionObject,
-} from '@/services/object.service'
+import { ObjectInitialState, SQLDefinitionInitialState } from '@/models/object.model'
+import { findSQLDefinitionObject, getSQLDefinitionObject } from '@/services/object.service'
 
 export const useSQLDefinitionStore = create(
   persist(
@@ -114,12 +108,7 @@ export const useSQLDefinitionStore = create(
       // skipHydration: true,
 
       // excluye de la persistencia, algunos estados del store
-      partialize: (state) =>
-        Object.fromEntries(
-          Object.entries(state).filter(
-            ([key]) => !['SQLDefinitionError'].includes(key),
-          ),
-        ),
+      partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['SQLDefinitionError'].includes(key))),
     },
   ),
 )

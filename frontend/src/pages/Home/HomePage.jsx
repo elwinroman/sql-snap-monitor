@@ -8,10 +8,8 @@ export function HomePage() {
               Optimiza tu gestión SQL, Aladdin está para ayudarte.
             </h1>
             <p className="mx-auto max-w-[700px] text-gray-500 dark:text-gray-400 md:text-lg">
-              Aladdin es una herramienta de gestión de bases de datos SQL que te
-              ayuda a optimizar tu trabajo como QA Engineer, recuperando
-              definiciones SQL, información de tablas de usuario, comparación de
-              SPs, rastreo de claves foraneas y más.
+              Aladdin es una herramienta de gestión de bases de datos SQL que te ayuda a optimizar tu trabajo como QA Engineer, recuperando
+              definiciones SQL, información de tablas de usuario, comparación de SPs, rastreo de claves foraneas y más.
             </p>
           </div>
           <div className="space-x-4"></div>

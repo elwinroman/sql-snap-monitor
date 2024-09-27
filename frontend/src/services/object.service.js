@@ -8,12 +8,9 @@
  */
 export async function findSQLDefinitionObject({ name }) {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/objects/sqldefinition?search=${name}`,
-      {
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition?search=${name}`, {
+      credentials: 'include',
+    })
     const res = await response.json()
 
     return res
@@ -32,12 +29,9 @@ export async function findSQLDefinitionObject({ name }) {
  */
 export async function getSQLDefinitionObject({ id }) {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}`,
-      {
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}`, {
+      credentials: 'include',
+    })
     const res = await response.json()
     return res
   } catch (error) {
@@ -55,12 +49,9 @@ export async function getSQLDefinitionObject({ id }) {
  */
 export async function findUserTable({ name }) {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/objects/usertable?search=${name}`,
-      {
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/usertable?search=${name}`, {
+      credentials: 'include',
+    })
     const res = await response.json()
 
     return res
@@ -79,12 +70,9 @@ export async function findUserTable({ name }) {
  */
 export async function getUserTable({ id }) {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/objects/usertable/${id}`,
-      {
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/usertable/${id}`, {
+      credentials: 'include',
+    })
     const res = await response.json()
     return res
   } catch (error) {

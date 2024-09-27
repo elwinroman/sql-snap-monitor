@@ -41,9 +41,7 @@ export function Sidebar() {
 
         {/* Menu */}
         <nav className="grow px-4 py-4">
-          <h3 className="px-6 py-2 text-sm font-medium text-zinc-500 dark:text-zinc-400">
-            APPS
-          </h3>
+          <h3 className="px-6 py-2 text-sm font-medium text-zinc-500 dark:text-zinc-400">APPS</h3>
           <ul className="flex flex-col gap-2">
             {/* Menu item */}
             {navLinks.map(({ to, icon, text }) => (

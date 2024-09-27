@@ -10,24 +10,12 @@ import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCo
 import { Options } from './components/options/Options'
 
 export function DefinitionPage() {
-  const SQLDefinitionCode = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionCode,
-  )
-  const SQLDefinitionError = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionError,
-  )
-  const SQLDefinitionObjectList = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionObjectList,
-  )
-  const fetchSQLDefinition = useSQLDefinitionStore(
-    (state) => state.fetchSQLDefinition,
-  )
-  const updateSQLDefinitionObject = useSQLDefinitionStore(
-    (state) => state.updateSQLDefinitionObject,
-  )
-  const SQLDefinitionObject = useSQLDefinitionStore(
-    (state) => state.SQLDefinitionObject,
-  )
+  const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
+  const SQLDefinitionError = useSQLDefinitionStore((state) => state.SQLDefinitionError)
+  const SQLDefinitionObjectList = useSQLDefinitionStore((state) => state.SQLDefinitionObjectList)
+  const fetchSQLDefinition = useSQLDefinitionStore((state) => state.fetchSQLDefinition)
+  const updateSQLDefinitionObject = useSQLDefinitionStore((state) => state.updateSQLDefinitionObject)
+  const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const loading = useSQLDefinitionStore((state) => state.loading)
   const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
   const isMaximized = useConfigStore((state) => state.isMaximized)
@@ -63,19 +51,14 @@ export function DefinitionPage() {
       )}
 
       {/* Monaco editor syntax */}
-      {SQLDefinitionCode &&
-        (onDiffEditor ? <DiffEditorCode /> : <MonacoEditorCode />)}
+      {SQLDefinitionCode && (onDiffEditor ? <DiffEditorCode /> : <MonacoEditorCode />)}
 
       {!SQLDefinitionCode && (
         <div className="flex flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 lg:px-10 lg:py-10">
-          <h4 className="sm:4 pb-2 text-lg font-bold">
-            Definición SQL de objetos
-          </h4>
+          <h4 className="sm:4 pb-2 text-lg font-bold">Definición SQL de objetos</h4>
 
           {/* Alerta de error */}
-          {SQLDefinitionError && (
-            <AlertMessages message={SQLDefinitionError} type="error" />
-          )}
+          {SQLDefinitionError && <AlertMessages message={SQLDefinitionError} type="error" />}
 
           {/* Multiples objetos */}
           {SQLDefinitionObjectList.length > 0 && (

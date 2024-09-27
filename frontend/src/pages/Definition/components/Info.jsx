@@ -25,14 +25,12 @@ export function Info() {
     {
       id: 5,
       codigo: 'R',
-      description:
-        'Regla (Rule) - Es un tipo de objeto que ya no se recomienda usar (obsoleto)',
+      description: 'Regla (Rule) - Es un tipo de objeto que ya no se recomienda usar (obsoleto)',
     },
     {
       id: 6,
       codigo: 'IF',
-      description:
-        'Función con valor de tabla en línea (Inline Table-Valued Function)',
+      description: 'Función con valor de tabla en línea (Inline Table-Valued Function)',
     },
     {
       id: 7,
@@ -45,8 +43,7 @@ export function Info() {
     <div className="flex flex-col justify-items-start gap-6 sm:gap-8 md:gap-10 lg:flex-row">
       <div className="flex flex-col gap-6">
         <p className="text-prety text-sm dark:text-gray-300">
-          Las definiciones de objetos se refieren a las descripciones y el
-          código fuente de los objetos del sistema, como:
+          Las definiciones de objetos se refieren a las descripciones y el código fuente de los objetos del sistema, como:
         </p>
         <ul className="flex flex-col gap-2 text-sm dark:text-gray-300 lg:gap-3">
           {tipos.map((item) => (
@@ -64,15 +61,12 @@ export function Info() {
             <i className="text-emerald-500">
               <SparklesIcon width={16} height={16} />
             </i>
-            <span className="text-sm font-bold text-gray-800 dark:font-semibold dark:text-gray-300">
-              Busca tu objeto
-            </span>
+            <span className="text-sm font-bold text-gray-800 dark:font-semibold dark:text-gray-300">Busca tu objeto</span>
           </div>
 
           <p className="text-prety text-sm dark:text-gray-300">
             Si necesitas más detalles sobre tus objetos SQL, solo usa
-            <strong> el buscador de arriba</strong>. ¡Te ayudará a encontrar lo
-            que buscas en segundos!
+            <strong> el buscador de arriba</strong>. ¡Te ayudará a encontrar lo que buscas en segundos!
           </p>
         </div>
       </div>

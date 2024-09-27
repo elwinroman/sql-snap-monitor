@@ -8,11 +8,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { ClockHour5 as ClockHour5Icon } from '@/icons/clock-hour-5'
-import {
-  useAuthStore,
-  useSQLDefinitionStore,
-  useUserTableStore,
-} from '@/stores'
+import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 export function SessionExpiredAlert() {
   const clearAuthStore = useAuthStore((state) => state.clearAuthStore)
@@ -38,9 +34,7 @@ export function SessionExpiredAlert() {
             <i className="text-rose-500">
               <ClockHour5Icon width={28} height={28} />
             </i>
-            <span>
-              Su sesión ha expirado. Por favor, inicia sesión de nuevo.
-            </span>
+            <span>Su sesión ha expirado. Por favor, inicia sesión de nuevo.</span>
           </AlertDialogDescription>
           <AlertDialogFooter>
             <AlertDialogAction asChild>

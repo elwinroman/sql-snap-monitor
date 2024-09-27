@@ -63,10 +63,7 @@ export const useAuthStore = create(
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
 
       // excluye de la persistencia, algunos estados del store
-      partialize: (state) =>
-        Object.fromEntries(
-          Object.entries(state).filter(([key]) => !['errorAuth'].includes(key)),
-        ),
+      partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['errorAuth'].includes(key))),
     },
   ),
 )

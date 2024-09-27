@@ -1,10 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import {
-  ObjectInitialState,
-  UserTableInitialState,
-} from '@/models/object.model'
+import { ObjectInitialState, UserTableInitialState } from '@/models/object.model'
 import { findUserTable, getUserTable } from '@/services/object.service'
 
 export const useUserTableStore = create(
@@ -94,12 +91,7 @@ export const useUserTableStore = create(
       // skipHydration: true,
 
       // excluye de la persistencia, algunos estados del store
-      partialize: (state) =>
-        Object.fromEntries(
-          Object.entries(state).filter(
-            ([key]) => !['userTableError'].includes(key),
-          ),
-        ),
+      partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['userTableError'].includes(key))),
     },
   ),
 )

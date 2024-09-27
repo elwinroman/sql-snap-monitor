@@ -9,17 +9,11 @@ import { TableDescription } from './components'
 
 export function DescriptionPage() {
   const userTableObject = useUserTableStore((state) => state.userTableObject)
-  const userTableColumnList = useUserTableStore(
-    (state) => state.userTableColumnList,
-  )
+  const userTableColumnList = useUserTableStore((state) => state.userTableColumnList)
   const userTableError = useUserTableStore((state) => state.userTableError)
-  const userTableObjectList = useUserTableStore(
-    (state) => state.userTableObjectList,
-  )
+  const userTableObjectList = useUserTableStore((state) => state.userTableObjectList)
   const fetchUserTable = useUserTableStore((state) => state.fetchUserTable)
-  const updateObjectUserTable = useUserTableStore(
-    (state) => state.updateObjectUserTable,
-  )
+  const updateObjectUserTable = useUserTableStore((state) => state.updateObjectUserTable)
   const loading = useUserTableStore((state) => state.loading)
 
   if (loading) return <div>Buscando...</div>
@@ -34,31 +28,21 @@ export function DescriptionPage() {
       </h4>
 
       {/* Alerta de error */}
-      {userTableError && (
-        <AlertMessages message={userTableError} type="error" />
-      )}
+      {userTableError && <AlertMessages message={userTableError} type="error" />}
 
       {/* Multiples objetos */}
       {userTableObjectList.length > 0 && (
-        <LinkObjectList
-          objectList={userTableObjectList}
-          updateObject={updateObjectUserTable}
-          fetchObjectAction={fetchUserTable}
-        />
+        <LinkObjectList objectList={userTableObjectList} updateObject={updateObjectUserTable} fetchObjectAction={fetchUserTable} />
       )}
 
       <Tabs defaultValue="description">
         <TabsList>
           <TabsTrigger value="description">Descripción</TabsTrigger>
-          <TabsTrigger value="relationship-diagram-flow">
-            Diagrama de relaciones de la tabla
-          </TabsTrigger>
+          <TabsTrigger value="relationship-diagram-flow">Diagrama de relaciones de la tabla</TabsTrigger>
         </TabsList>
 
         {/* Descripción del usertable */}
-        <TabsContent value="description">
-          {userTableColumnList && <TableDescription />}
-        </TabsContent>
+        <TabsContent value="description">{userTableColumnList && <TableDescription />}</TabsContent>
 
         {/* Diagrama de las relaciones del usertable */}
         {/* <TabsContent value="relationship-diagram-flow">
