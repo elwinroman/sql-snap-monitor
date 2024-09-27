@@ -8,8 +8,7 @@ import { ProtectedLayout } from '@/components/ProtectedLayout'
 import Layout from '@/layouts/Layout'
 import { DefinitionPage, DescriptionPage, LoginPage } from '@/pages'
 import { HomePage } from '@/pages/Home/HomePage'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
-import { useUserTableStore } from '@/stores/usertable.store'
+import { useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 function Error() {
   return <div>Error 404</div>

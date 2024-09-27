@@ -1,10 +1,10 @@
-import { useUserTableStore } from '@/stores/usertable.store'
+import { useUserTableStore } from '@/stores'
 
-export function useDescription() {
+export function useUsertable() {
   const searchUserTable = useUserTableStore((state) => state.searchUserTable)
   const fetchUserTable = useUserTableStore((state) => state.fetchUserTable)
 
-  const getDescriptionObject = async ({ name }) => {
+  const getUsertableObject = async ({ name }) => {
     try {
       await searchUserTable({ name })
 
@@ -14,5 +14,5 @@ export function useDescription() {
     }
   }
 
-  return { getDescriptionObject }
+  return { getUsertableObject }
 }

@@ -2,7 +2,7 @@
 import { Clipboard } from 'lucide-react'
 import { useState } from 'react'
 
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useSQLDefinitionStore } from '@/stores'
 
 import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 

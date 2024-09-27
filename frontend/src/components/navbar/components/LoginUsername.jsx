@@ -9,9 +9,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { User as UserIcon } from '@/icons/user'
-import { useAuthStore } from '@/stores/auth.store'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
-import { useUserTableStore } from '@/stores/usertable.store'
+import {
+  useAuthStore,
+  useSQLDefinitionStore,
+  useUserTableStore,
+} from '@/stores'
 
 export function LoginUsername() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)

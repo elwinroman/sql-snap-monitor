@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { useAuthStore } from '@/stores/auth.store'
+import { useAuthStore } from '@/stores'
 
 import { SessionExpiredAlert } from './SessionExpiredAlert'
 

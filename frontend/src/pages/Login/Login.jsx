@@ -3,9 +3,11 @@ import { Navigate } from 'react-router-dom'
 
 import { Loader } from '@/components/loader/Loader'
 import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
-import { useAuthStore } from '@/stores/auth.store'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
-import { useUserTableStore } from '@/stores/usertable.store'
+import {
+  useAuthStore,
+  useSQLDefinitionStore,
+  useUserTableStore,
+} from '@/stores'
 
 import { Input } from './components/Input'
 import { Label } from './components/Label'

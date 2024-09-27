@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useEditorStore } from '@/stores/editor-option.store'
+import { useEditorStore } from '@/stores'
 
 const RENDER_WHITESPACE_OPTION = {
   all: 'all',

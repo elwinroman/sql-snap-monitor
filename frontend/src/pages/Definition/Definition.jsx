@@ -2,8 +2,7 @@ import { Code } from 'lucide-react'
 
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
-import { useConfigStore } from '@/stores/config.store'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useConfigStore, useSQLDefinitionStore } from '@/stores'
 
 import { Info } from './components/Info'
 import { DiffEditorCode } from './components/monaco-editor-code/DiffEditorCode'

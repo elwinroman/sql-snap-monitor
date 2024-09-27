@@ -3,7 +3,7 @@ import { Table } from 'lucide-react'
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useUserTableStore } from '@/stores/usertable.store'
+import { useUserTableStore } from '@/stores'
 
 import { TableDescription } from './components'
 

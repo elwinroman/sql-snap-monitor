@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useConfigStore } from '@/stores/config.store'
+import { useConfigStore } from '@/stores'
 
 export function MaxMin() {
   const isMaximized = useConfigStore((state) => state.isMaximized)

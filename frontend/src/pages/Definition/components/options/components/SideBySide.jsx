@@ -6,8 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useEditorStore } from '@/stores/editor-option.store'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useEditorStore, useSQLDefinitionStore } from '@/stores'
 
 export function SideBySide() {
   const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)

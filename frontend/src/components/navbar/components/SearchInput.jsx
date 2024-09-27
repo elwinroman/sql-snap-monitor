@@ -2,13 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { InputWithIcon } from '@/components/ui/input-with-icon'
-import { useDefinition } from '@/hooks/useDefinition'
-import { useDescription } from '@/hooks/useDescription'
+import { useSQLDefinition, useUsertable } from '@/hooks'
 import { Search as SearchIcon } from '@/icons/search'
 
 function useSearch({ inputBtn }) {
-  const { getDefinitionObject } = useDefinition()
-  const { getDescriptionObject } = useDescription()
+  const { getSQLDefinitionObject } = useSQLDefinition()
+  const { getUsertableObject } = useUsertable()
 
   const [search, updateSearch] = useState('')
   const [previousSearch, updatePreviousSearch] = useState('')
@@ -19,9 +18,9 @@ function useSearch({ inputBtn }) {
     if (search === previousSearch) return
 
     if (currentLocation.pathname === '/definition')
-      await getDefinitionObject({ name: search })
+      await getSQLDefinitionObject({ name: search })
     else if (currentLocation.pathname === '/description')
-      await getDescriptionObject({ name: search })
+      await getUsertableObject({ name: search })
 
     updatePreviousSearch(search)
   }

@@ -8,9 +8,11 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { ClockHour5 as ClockHour5Icon } from '@/icons/clock-hour-5'
-import { useAuthStore } from '@/stores/auth.store'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
-import { useUserTableStore } from '@/stores/usertable.store'
+import {
+  useAuthStore,
+  useSQLDefinitionStore,
+  useUserTableStore,
+} from '@/stores'
 
 export function SessionExpiredAlert() {
   const clearAuthStore = useAuthStore((state) => state.clearAuthStore)

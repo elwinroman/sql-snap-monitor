@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useSQLDefinitionStore } from '@/stores'
 
 export function DiffCompare() {
   const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)

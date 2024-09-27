@@ -1,7 +1,6 @@
 import { DiffEditor } from '@monaco-editor/react'
 
-import { useEditorStore } from '@/stores/editor-option.store'
-import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
+import { useEditorStore, useSQLDefinitionStore } from '@/stores'
 
 import { options } from './constants/editor-options'
 import Dracula from './themes/dracula.theme'

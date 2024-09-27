@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { Key as KeyIcon, KeyRound as KeyRoundIcon } from '@/icons'
-import { useUserTableStore } from '@/stores/usertable.store'
+import { useUserTableStore } from '@/stores'
 
 export function TableDescription() {
   const userTableExtendedPropertieList = useUserTableStore(
