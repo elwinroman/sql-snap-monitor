@@ -1,12 +1,13 @@
 import { Code } from 'lucide-react'
 
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
+import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { useConfigStore, useSQLDefinitionStore } from '@/stores'
 
-import { Info } from './components/Info'
 import { DiffEditorCode } from './components/editor-code/DiffEditorCode'
 import { EditorCode } from './components/editor-code/EditorCode'
+import { Info } from './components/Info'
 import { Options } from './components/options/Options'
 
 export function SQLDefinitionPage() {
@@ -20,7 +21,7 @@ export function SQLDefinitionPage() {
   const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
   const isMaximized = useConfigStore((state) => state.isMaximized)
 
-  if (loading) return <div>Buscando...</div>
+  if (loading) return <LoaderSlack />
 
   return (
     <div

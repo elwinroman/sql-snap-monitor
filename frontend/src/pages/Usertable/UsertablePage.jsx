@@ -1,6 +1,7 @@
 import { Table } from 'lucide-react'
 
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
+import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useUserTableStore } from '@/stores'
@@ -16,7 +17,7 @@ export function UsertablePage() {
   const updateObjectUserTable = useUserTableStore((state) => state.updateObjectUserTable)
   const loading = useUserTableStore((state) => state.loading)
 
-  if (loading) return <div>Buscando...</div>
+  if (loading) return <LoaderSlack />
 
   return (
     <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-owcard px-8 py-8">
