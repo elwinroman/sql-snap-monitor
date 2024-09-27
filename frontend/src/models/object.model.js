@@ -13,6 +13,7 @@ export const SQLDefinitionInitialState = {
   SQLDefinitionCode: null,
   SQLDefinitionError: null,
   SQLDefinitionObjectList: [],
+  SQLDefinitionProductionObject: null,
 }
 
 export const UserTableInitialState = {

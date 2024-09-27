@@ -1,5 +1,6 @@
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
+import { DiffEditorCode } from './components/monaco-editor-code/DiffEditorCode'
 import { MonacoEditorCode } from './components/monaco-editor-code/MonacoEditorCode'
 import { useSQLDefinitionStore } from '@/stores/sqldefinition.store'
 import { Options } from './components/options/Options'
@@ -61,9 +62,8 @@ export function DefinitionPage() {
       )}
 
       {/* Monaco editor syntax */}
-      {SQLDefinitionCode && (
-        <MonacoEditorCode SQLDefinitionCode={SQLDefinitionCode} />
-      )}
+      {SQLDefinitionCode &&
+        (onDiffEditor ? <DiffEditorCode /> : <MonacoEditorCode />)}
 
       {!SQLDefinitionCode && (
         <div className="flex flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 lg:px-10 lg:py-10">

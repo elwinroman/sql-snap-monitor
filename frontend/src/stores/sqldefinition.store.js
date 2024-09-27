@@ -13,10 +13,19 @@ export const useSQLDefinitionStore = create(
   persist(
     (set, get) => ({
       loading: false,
-
+      onDiffEditor: false,
       // definición de objetos
       SQLDefinitionObject: { ...ObjectInitialState },
       ...SQLDefinitionInitialState,
+
+      // actualiza el estado de diffing (se está comparando)
+      updateOnDiffEditor: (state) => set({ onDiffEditor: state }),
+
+      // obtiene el objeto de definición de producción
+      getSQLDefinitionProductionObject: async () => {
+        const object = await 'MOCKING DATA FROM API'
+        set({ SQLDefinitionProductionObject: object })
+      },
 
       // updatea el objecto de definición cuando existen coincidencias
       updateSQLDefinitionObject: ({ object }) => {
@@ -39,6 +48,7 @@ export const useSQLDefinitionStore = create(
           })
 
           set({ loading: false })
+          set({ onDiffEditor: false })
           return
         }
 
@@ -48,12 +58,14 @@ export const useSQLDefinitionStore = create(
           set({ SQLDefinitionObjectList: res.data })
 
           set({ loading: false })
+          set({ onDiffEditor: false })
           return
         }
 
         set({ ...SQLDefinitionInitialState })
         set({ SQLDefinitionObject: res.data[0] })
         set({ loading: false })
+        set({ onDiffEditor: false })
       },
 
       fetchSQLDefinition: async () => {
@@ -92,6 +104,7 @@ export const useSQLDefinitionStore = create(
       reset: () => {
         set({ SQLDefinitionObject: { ...ObjectInitialState } })
         set({ ...SQLDefinitionInitialState })
+        set({ onDiffEditor: false })
       },
     }),
     {
