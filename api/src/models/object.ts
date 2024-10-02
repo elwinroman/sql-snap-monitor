@@ -16,6 +16,7 @@ import {
   FullUserTableObject,
   Index,
   MyCustomError,
+  PermissionRol,
   ResponseSQLDefinitionObjects,
   ResponseSQLDefinitionRecordObject,
   ResponseUserTableObjects,
@@ -103,6 +104,29 @@ export class ObjectModel implements ForRetrievingObject {
 
       if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
 
+      // obtener permisos (roles)
+      const stmtRoles = `
+        SELECT 
+          A.state_desc,
+          A.permission_name, 
+          C.name AS rol
+        FROM sys.database_permissions		A
+        INNER JOIN sys.objects				B ON B.object_id = A.major_id
+        INNER JOIN sys.database_principals	C ON C.principal_id = A.grantee_principal_id
+        WHERE B.object_id = @id2
+      `
+      await request?.input('id2', sql.Int, id)
+      const resRoles = await request?.query(stmtRoles)
+
+      const roles: PermissionRol[] =
+        resRoles?.recordset.map((obj): PermissionRol => {
+          return {
+            stateDesc: obj.state_desc,
+            permissionName: obj.permission_name,
+            name: obj.rol,
+          }
+        }) ?? []
+
       // adapter
       const data: SQLDefinitionRecordObject = {
         id: res?.recordset[0].object_id,
@@ -114,6 +138,7 @@ export class ObjectModel implements ForRetrievingObject {
         createDate: format(res?.recordset[0].create_date, 'DD-MM-YYYY'),
         modifyDate: format(res?.recordset[0].modify_date, 'DD-MM-YYYY'),
         definition: res?.recordset[0].definition,
+        permission: roles,
       }
 
       return { data }

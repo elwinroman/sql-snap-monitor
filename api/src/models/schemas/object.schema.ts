@@ -22,6 +22,18 @@ export interface ResponseSQLDefinitionObjects {
 }
 
 /**
+ * @typedef {Object} PermissionRol - Roles y permisos de un objeto.
+ * @property {string} stateDesc - Descripción del estado del permiso (DENY, GRANT, REVOKE, GRANT_WITH_GRANT_OPTION) de un rol.
+ * @property {string} permissionName - Nombre del permiso.
+ * @property {string} name - Nombre de la entidad de seguridad, único en la base de datos.
+ */
+export interface PermissionRol {
+  stateDesc: string
+  permissionName: string
+  name: string
+}
+
+/**
  * @typedef {Object} SQLDefinitionRecordObject
  * @property {number} id - ID del objeto.
  * @property {string} name - Nombre del objeto.
@@ -43,6 +55,7 @@ export interface SQLDefinitionRecordObject {
   createDate: Date | string
   modifyDate: Date | string
   definition: string
+  permission: PermissionRol[]
 }
 
 export interface ResponseSQLDefinitionRecordObject {
@@ -88,7 +101,7 @@ export interface Column {
   extendedProperties: ExtendedProperty[]
 }
 
-export type UserTableRecordObject = Omit<SQLDefinitionRecordObject, 'definition'>
+export type UserTableRecordObject = Omit<SQLDefinitionRecordObject, 'definition' | 'permission'>
 
 /**
  * @typedef {Object} Index - Indice de la tabla.
