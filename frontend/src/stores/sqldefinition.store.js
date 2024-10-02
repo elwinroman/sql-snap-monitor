@@ -92,6 +92,7 @@ export const useSQLDefinitionStore = create(
             schema: res.data.schema,
             createDate: res.data.createDate,
             modifyDate: res.data.modifyDate,
+            permission: res.data.permission,
           },
         })
         set({ SQLDefinitionCode: res.data.definition })

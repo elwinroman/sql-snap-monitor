@@ -1,24 +1,27 @@
-// import { Clipboard as ClipboardIcon } from '@/icons/clipboard'
 import { Clipboard } from 'lucide-react'
 import { useState } from 'react'
 
-import { useSQLDefinitionStore } from '@/stores'
+import { useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { formatPermissionRoles } from '@/utilities'
 
 import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 
 export function CopyClipboard() {
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
-  const SQLDefinitionError = useSQLDefinitionStore((state) => state.SQLDefinitionError)
+  const { permission, schema, name } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
+  const hasRoles = useEditorStore((state) => state.hasRoles)
   const [copy, setCopy] = useState(false)
 
   if (onDiffEditor) return null
+
+  const code = hasRoles ? SQLDefinitionCode + formatPermissionRoles(permission, schema, name) : SQLDefinitionCode
 
   // copy to clipboard
   const handleClick = (e) => {
     e.preventDefault()
 
-    copyToClipboard({ text: SQLDefinitionCode || SQLDefinitionError })
+    copyToClipboard({ text: code })
     setCopy(true)
 
     setTimeout(() => {

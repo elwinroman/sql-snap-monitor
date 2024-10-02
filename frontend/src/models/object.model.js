@@ -7,6 +7,7 @@ export const ObjectInitialState = {
   schema: null,
   createDate: null,
   modifyDate: null,
+  permission: [],
 }
 
 export const SQLDefinitionInitialState = {
