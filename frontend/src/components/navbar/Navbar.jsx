@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants/routes'
 
-import { AplicationLogo, Configuration, HamburguerMenu, LoginUsername, NavMenu, SearchInput } from './components'
+import { AplicationLogo, Configuration, GithubRepo, HamburguerMenu, LoginUsername, NavMenu, SearchInput } from './components'
 
 export function Navbar() {
   const currentLocation = useLocation()
@@ -49,6 +49,9 @@ export function Navbar() {
 
         {/* Icono configuración */}
         <Configuration />
+
+        {/* Repo link */}
+        <GithubRepo />
       </ul>
     </header>
   )
