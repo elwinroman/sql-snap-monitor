@@ -13,12 +13,15 @@ export function formatPermissionRoles(permission, schema, objectName) {
   if (!permission.length) return ''
 
   let cad = ''
-  const openGo = '\nGO\n'
+  const openGo = 'GO\n'
+  const middleGo = '\nGO\n'
   const closeGo = '\nGO'
 
-  for (const role of permission) {
-    cad += `${openGo}${role.stateDesc} ${role.permissionName} ON [${schema}].[${objectName}] TO [${role.name}]`
+  for (const [index, role] of permission.entries()) {
+    const roleText = `${role.stateDesc} ${role.permissionName} ON [${schema}].[${objectName}] TO [${role.name}]`
+
+    index < permission.length - 1 ? (cad += `${roleText}${middleGo}`) : (cad += roleText)
   }
 
-  return `${cad}${closeGo}`
+  return `${openGo}${cad}${closeGo}`
 }

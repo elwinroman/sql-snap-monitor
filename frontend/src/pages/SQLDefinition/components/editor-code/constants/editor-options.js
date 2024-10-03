@@ -1,5 +1,7 @@
 /**
  * @param {Boolean} readOnly - Define si el editor es de solo lectura.
+ * @param {Boolean} originalEditable - Define si el editor es editable en DIFF EDITOR.
+ * @param {Boolean} ignoreTrimWhitespace - Calcula la diferencia ignorando los espacios en blanco iniciales y finales. Nos sirve para comparar incluso espacios en DIFF EDITOR.
  * @param {Boolean} minimap - Define si se muestra el minimapa.
  * @param {String} fontFamily - Define la fuente del editor.
  * @param {String} wordWrap - Define si se activa el salto de línea.
@@ -13,10 +15,11 @@
  */
 
 export const options = {
-  readOnly: true,
+  readOnly: false,
   originalEditable: false,
+  ignoreTrimWhitespace: false,
   minimap: { enabled: true },
-  fontFamily: 'Fira Code',
+  fontFamily: 'Fira Code Variable',
   wordWrap: 'off',
   automaticLayout: true,
   lineNumbers: 'on',
@@ -24,7 +27,8 @@ export const options = {
     vertical: 'hidden',
     horizontal: 'auto',
   },
-  fontSize: 14,
+  fontSize: 13,
+  fontLigatures: true, // para 'Fira Code' fuente con ligadur (bug en el editor cuando no se activa)
   roundedSelection: true,
   selectOnLineNumbers: true,
   stopRenderingLineAfter: 1000,
