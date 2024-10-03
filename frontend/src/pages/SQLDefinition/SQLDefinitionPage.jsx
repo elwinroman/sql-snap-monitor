@@ -1,9 +1,10 @@
 import { Code } from 'lucide-react'
+import { useEffect } from 'react'
+import { toast, Toaster } from 'sonner'
 
-import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
-import { useConfigStore, useSQLDefinitionStore } from '@/stores'
+import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 
 import { DiffEditorCode } from './components/editor-code/DiffEditorCode'
 import { EditorCode } from './components/editor-code/EditorCode'
@@ -18,8 +19,17 @@ export function SQLDefinitionPage() {
   const updateSQLDefinitionObject = useSQLDefinitionStore((state) => state.updateSQLDefinitionObject)
   const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const loading = useSQLDefinitionStore((state) => state.loading)
-  const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
+  const errorAligment = useSQLDefinitionStore((state) => state.errorAligment)
+  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
   const isMaximized = useConfigStore((state) => state.isMaximized)
+
+  useEffect(() => {
+    if (SQLDefinitionError) toast.error('No se ha encontrado la definición del objeto')
+  }, [SQLDefinitionError])
+
+  useEffect(() => {
+    if (errorAligment) toast.error('No se ha encontrado la definición de alineación, al parecer tu objeto es nuevo')
+  }, [errorAligment])
 
   if (loading) return <LoaderSlack />
 
@@ -58,9 +68,6 @@ export function SQLDefinitionPage() {
         <div className="flex flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 lg:px-10 lg:py-10">
           <h4 className="sm:4 pb-2 text-lg font-bold">Definición SQL de objetos</h4>
 
-          {/* Alerta de error */}
-          {SQLDefinitionError && <AlertMessages message={SQLDefinitionError} type="error" />}
-
           {/* Multiples objetos */}
           {SQLDefinitionObjectList.length > 0 && (
             <LinkObjectList
@@ -74,6 +81,8 @@ export function SQLDefinitionPage() {
           <Info />
         </div>
       )}
+
+      <Toaster position="bottom-right" richColors />
     </div>
   )
 }
