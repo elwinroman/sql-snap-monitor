@@ -139,6 +139,7 @@ export class ObjectModel implements ForRetrievingObject {
         modifyDate: format(res?.recordset[0].modify_date, 'DD-MM-YYYY'),
         definition: res?.recordset[0].definition,
         permission: roles,
+        isAligmentObject: false,
       }
 
       return { data }
@@ -295,6 +296,7 @@ export class ObjectModel implements ForRetrievingObject {
         schema: res?.recordset[0].schema_name,
         createDate: format(res?.recordset[0].create_date, 'DD-MM-YYYY'),
         modifyDate: format(res?.recordset[0].modify_date, 'DD-MM-YYYY'),
+        isAligmentObject: false,
       }
 
       const tableExtendedProperties =
@@ -347,6 +349,51 @@ export class ObjectModel implements ForRetrievingObject {
         ) ?? []
 
       const data: FullUserTableObject = { ...recordObject, extendedProperties: tableExtendedProperties, columns, indexes, foreignKeys }
+      return { data }
+    } catch (error) {
+      if (!(error instanceof sql.RequestError)) throw error
+      handleRequestError(error)
+    } finally {
+      conn?.close()
+    }
+  }
+
+  public async getSQLDefinitionAligmentById(id: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined> {
+    const conn = await connection(this.credentials)
+    const request = await conn?.request()
+
+    try {
+      await request?.input('id', sql.Int, id)
+      const res = await request?.execute('QA_ObtenerDefinicionSQL_SP')
+
+      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
+
+      const resRoles = await request?.execute('QA_ObtenerRoles_SP')
+
+      const roles: PermissionRol[] =
+        resRoles?.recordset.map((obj): PermissionRol => {
+          return {
+            stateDesc: obj.state_desc,
+            permissionName: obj.permission_name,
+            name: obj.rol,
+          }
+        }) ?? []
+
+      // adapter
+      const data: SQLDefinitionRecordObject = {
+        id: res?.recordset[0].object_id,
+        name: res?.recordset[0].name,
+        type: res?.recordset[0].type.trim(),
+        typeDesc: res?.recordset[0].type_desc,
+        schemaId: res?.recordset[0].schema_id,
+        schema: res?.recordset[0].schema_name,
+        createDate: format(res?.recordset[0].create_date, 'DD-MM-YYYY'),
+        modifyDate: format(res?.recordset[0].modify_date, 'DD-MM-YYYY'),
+        definition: res?.recordset[0].definition,
+        permission: roles,
+        isAligmentObject: true,
+      }
+
       return { data }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
