@@ -20,19 +20,23 @@ export async function findSQLDefinitionObject({ name }) {
 }
 
 /**
- * Obtiene la definición de un objeto por su object_id
+ * Obtiene la definición de un objeto por su object_id (de la base de datos de conexión o de alineación)
  *
  * @param {Object} param
- * @param {string} param.id - Nombre del objeto
+ * @param {string} param.id - Id del objeto
+ * @param {string} param.fromAligment - Si es objeto de alineación o no (opcional - default false)
  *
  * @returns {Promise}
  */
-export async function getSQLDefinitionObject({ id }) {
+export async function getSQLDefinitionObject({ id, fromAligment = false }) {
+  const fromAligmentParam = fromAligment ? '?fromAligment=true' : ''
+
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}${fromAligmentParam}`, {
       credentials: 'include',
     })
     const res = await response.json()
+
     return res
   } catch (error) {
     throw new Error(error)
@@ -64,7 +68,7 @@ export async function findUserTable({ name }) {
  * Obtiene la información de un usertable por su ID
  *
  * @param {Object} param
- * @param {string} param.id - Nombre del objeto
+ * @param {string} param.id - Id del objeto
  *
  * @returns {Promise}
  */
@@ -74,6 +78,7 @@ export async function getUserTable({ id }) {
       credentials: 'include',
     })
     const res = await response.json()
+
     return res
   } catch (error) {
     throw new Error(error)

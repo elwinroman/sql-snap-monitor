@@ -1,6 +1,7 @@
 import { DiffEditor } from '@monaco-editor/react'
 
 import { useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
 import Dracula from './themes/dracula.theme'
@@ -9,7 +10,13 @@ export function DiffEditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
   const renderSideBySide = useEditorStore((state) => state.renderSideBySide)
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
-  const originalSQLDefinition = useSQLDefinitionStore((state) => state.SQLDefinitionProductionObject)
+  const { schema, name, permission, definition } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
+
+  const hasRoles = useEditorStore((state) => state.hasRoles)
+  const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
+
+  const code = hasRoles ? SQLDefinitionCode + formatPermissionRoles(permission, schema, name) : SQLDefinitionCode
+  const aligmentCode = hasRoles ? definition + formatPermissionRoles(permission, schema, name) : definition
 
   // cargar themes de monaco
   const handleEditorDidMount = (monaco) => {
@@ -28,8 +35,8 @@ export function DiffEditorCode() {
         defaultValue="// some comment"
         height="90vh"
         theme="dracula"
-        original={originalSQLDefinition}
-        modified={SQLDefinitionCode}
+        original={loadingAligment ? 'Buscando información, esto puede tardar unos segundos...' : aligmentCode}
+        modified={code}
         options={{ ...fullOptions }}
         loading={<div>Cargando...</div>}
       />

@@ -1,7 +1,7 @@
-import { useSQLDefinitionStore } from '@/stores'
+import { useEditorStore } from '@/stores'
 
 export function ObjectInfoCard({ object }) {
-  const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
+  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
   if (onDiffEditor) return null
 
   const info = [

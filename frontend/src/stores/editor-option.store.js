@@ -8,17 +8,13 @@ export const useEditorStore = create(
       renderWhitespace: 'none',
       renderSideBySide: true,
 
-      // ver roles y permisos al final del código
-      hasRoles: true,
+      hasRoles: true, // ver roles y permisos al final del código
+      onDiffEditor: false, // activar o desactivar comparación de código
 
-      // actualiza la visualización de las tabulaciones y espacios en blanco
       updateRenderWhitespace: (value) => set({ renderWhitespace: value }),
-
-      // actualiza la visualización en diff editor, en paralelo o en línea
       updateRenderSideBySide: (state) => set({ renderSideBySide: state }),
-
-      // actualiza la visualización de roles y permisos en el código
       updateRoles: (state) => set({ hasRoles: state }),
+      updateDiffEditor: (state) => set({ onDiffEditor: state }),
     }),
     {
       name: 'options',

@@ -9,7 +9,7 @@ import { copyToClipboard } from '../../../utilities/copy-clipboard.util'
 export function CopyClipboard() {
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const { permission, schema, name } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
-  const onDiffEditor = useSQLDefinitionStore((state) => state.onDiffEditor)
+  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const [copy, setCopy] = useState(false)
 

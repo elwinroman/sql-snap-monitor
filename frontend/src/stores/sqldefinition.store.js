@@ -1,25 +1,43 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { ObjectInitialState, SQLDefinitionInitialState } from '@/models/object.model'
+import { AligmentObjectInitialState, ObjectInitialState, SQLDefinitionInitialState } from '@/models/object.model'
 import { findSQLDefinitionObject, getSQLDefinitionObject } from '@/services'
+import { useEditorStore } from '@/stores'
 
 export const useSQLDefinitionStore = create(
   persist(
     (set, get) => ({
-      loading: false,
-      onDiffEditor: false,
+      loading: false, // indica si se está cargando la definición
+      loadingAligment: false, // indica si se está cargando la definición de alineación
+      errorAligment: false, // indica si hubo un error al obtener la definición de alineación
+      SQLDefinitionError: null, // error al obtener la definición
+      hasAligmentObject: true, // indica si existe un objeto de alineación
+
       // definición de objetos
       SQLDefinitionObject: { ...ObjectInitialState },
+      SQLDefinitionAligmentObject: { ...AligmentObjectInitialState },
       ...SQLDefinitionInitialState,
 
-      // actualiza el estado de diffing (se está comparando)
-      updateOnDiffEditor: (state) => set({ onDiffEditor: state }),
+      // obtiene el objeto de definición de pre-producción
+      getSQLDefinitionAligmentObject: async () => {
+        const updateDiffEditor = useEditorStore.getState().updateDiffEditor
+        const { id } = get().SQLDefinitionObject
+        set({ loadingAligment: true })
 
-      // obtiene el objeto de definición de producción
-      getSQLDefinitionProductionObject: async () => {
-        const object = await 'MOCKING DATA FROM API'
-        set({ SQLDefinitionProductionObject: object })
+        // await new Promise((resolve) => setTimeout(resolve, 5000))
+        const res = await getSQLDefinitionObject({ id, fromAligment: true })
+
+        if (res.status === 'error') {
+          set({ loadingAligment: false })
+          set({ errorAligment: true })
+          set({ hasAligmentObject: false })
+          updateDiffEditor(false)
+          return
+        }
+
+        set({ SQLDefinitionAligmentObject: { ...res.data } })
+        set({ loadingAligment: false })
       },
 
       // updatea el objecto de definición cuando existen coincidencias
@@ -28,13 +46,18 @@ export const useSQLDefinitionStore = create(
       },
 
       searchSQLDefinitionObject: async ({ name }) => {
+        const updateDiffEditor = useEditorStore.getState().updateDiffEditor
         set({ loading: true })
+        set({ hasAligmentObject: true })
+        set({ errorAligment: false })
+        updateDiffEditor(false)
 
         const res = await findSQLDefinitionObject({ name })
 
         if (res.status === 'error') {
           set({ ...SQLDefinitionInitialState })
           set({ SQLDefinitionObject: { ...ObjectInitialState } })
+          set({ SQLDefinitionAligmentObject: { ...AligmentObjectInitialState } })
           set({
             SQLDefinitionError: {
               message: res.message,
@@ -43,23 +66,22 @@ export const useSQLDefinitionStore = create(
           })
 
           set({ loading: false })
-          set({ onDiffEditor: false })
           return
         }
 
         if (res.meta.length > 1) {
           set({ ...SQLDefinitionInitialState })
           set({ SQLDefinitionObject: { ...ObjectInitialState } })
+          set({ SQLDefinitionAligmentObject: { ...AligmentObjectInitialState } })
           set({ SQLDefinitionObjectList: res.data })
 
           set({ loading: false })
-          set({ onDiffEditor: false })
           return
         }
 
         set({ ...SQLDefinitionInitialState })
         set({ SQLDefinitionObject: res.data[0] })
-        set({ onDiffEditor: false })
+        set({ SQLDefinitionAligmentObject: { ...AligmentObjectInitialState } })
       },
 
       fetchSQLDefinition: async () => {
@@ -101,8 +123,8 @@ export const useSQLDefinitionStore = create(
 
       reset: () => {
         set({ SQLDefinitionObject: { ...ObjectInitialState } })
+        set({ SQLDefinitionAligmentObject: { ...AligmentObjectInitialState } })
         set({ ...SQLDefinitionInitialState })
-        set({ onDiffEditor: false })
       },
     }),
     {
@@ -111,7 +133,10 @@ export const useSQLDefinitionStore = create(
       // skipHydration: true,
 
       // excluye de la persistencia, algunos estados del store
-      partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['SQLDefinitionError'].includes(key))),
+      partialize: (state) =>
+        Object.fromEntries(
+          Object.entries(state).filter(([key]) => !['SQLDefinitionError', 'errorAligment', 'loading', 'loadingAligment'].includes(key)),
+        ),
     },
   ),
 )
