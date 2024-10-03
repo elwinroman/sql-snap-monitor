@@ -3,7 +3,6 @@ import { Table } from 'lucide-react'
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useUserTableStore } from '@/stores'
 
 import { TableDescription } from './components'
@@ -36,20 +35,8 @@ export function UsertablePage() {
         <LinkObjectList objectList={userTableObjectList} updateObject={updateObjectUserTable} fetchObjectAction={fetchUserTable} />
       )}
 
-      <Tabs defaultValue="description">
-        <TabsList>
-          <TabsTrigger value="description">Descripción</TabsTrigger>
-          <TabsTrigger value="relationship-diagram-flow">Diagrama de relaciones de la tabla</TabsTrigger>
-        </TabsList>
-
-        {/* Descripción del usertable */}
-        <TabsContent value="description">{userTableColumnList && <TableDescription />}</TabsContent>
-
-        {/* Diagrama de las relaciones del usertable */}
-        {/* <TabsContent value="relationship-diagram-flow">
-          <RelationshipDiagramFlow />
-        </TabsContent> */}
-      </Tabs>
+      {/* Descripción del usertable */}
+      {userTableColumnList && <TableDescription />}
     </div>
   )
 }

@@ -21,7 +21,7 @@ export function PermissionRol() {
   let text = ''
 
   permission.length === 0
-    ? (text = '⚠️ El objeto no tiene permisos explícitos asignados a roles específicos')
+    ? (text = 'El objeto no tiene permisos explícitos asignados a roles específicos ⚠️')
     : (text = hasRoles ? 'Ocultar permisos y roles' : 'Ver permisos y roles')
 
   return (
@@ -43,7 +43,7 @@ export function PermissionRol() {
           )}
         </TooltipTrigger>
         <TooltipContent side="bottom">
-          <p className="max-w-48">{text}</p>
+          <p className="max-w-56">{text}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
