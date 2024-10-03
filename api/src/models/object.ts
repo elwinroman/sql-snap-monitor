@@ -366,7 +366,7 @@ export class ObjectModel implements ForRetrievingObject {
       await request?.input('id', sql.Int, id)
       const res = await request?.execute('QA_ObtenerDefinicionSQL_SP')
 
-      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
+      if (res && res.recordset.length === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
 
       const resRoles = await request?.execute('QA_ObtenerRoles_SP')
 
