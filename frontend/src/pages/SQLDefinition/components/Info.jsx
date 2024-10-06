@@ -71,12 +71,12 @@ export function Info() {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-sm">
+      {/* <div className="overflow-hidden rounded-sm">
         <img
           src="https://img.freepik.com/vector-gratis/mejora-etapa-o-plan-tarifas-alojamiento-web-sala-servidores-pasos-progreso-tecnologia_39422-796.jpg?t=st=1726210397~exp=1726213997~hmac=8a057da9007415e09c1c2c8961951bdfd8eeb0dbce1a775efb8c8625ec55ab33&w=1380"
           alt=""
         />
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -49,8 +49,8 @@ export function SQLDefinitionPage() {
           ) : (
             <h3 className="max-w-sm text-sm text-zinc-200 sm:max-w-full">
               <span>Estas comparando con </span>
-              <span className="font-bold text-emerald-500">PRODUCCIÓN</span>
-              <span> (Actualizado al día de ayer)</span>
+              <span className="font-bold text-emerald-500">PRE-PRODUCCIÓN</span>
+              <span className="text-zinc-400"> (Actualizado al día de ayer)</span>
             </h3>
           )}
 

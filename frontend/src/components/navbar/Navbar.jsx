@@ -10,12 +10,13 @@ import { AplicationLogo, Configuration, GithubRepo, HamburguerMenu, LoginUsernam
 export function Navbar() {
   const currentLocation = useLocation()
   const [isFixed, setIsFixed] = useState(false)
+  const heightStickyActive = 130
 
   useEffect(() => {
     const App = document.querySelector('.App')
 
     const handleScroll = () => {
-      App.scrollTop > 80 ? setIsFixed(true) : setIsFixed(false)
+      App.scrollTop > heightStickyActive ? setIsFixed(true) : setIsFixed(false)
     }
 
     window.addEventListener('scroll', handleScroll, true)

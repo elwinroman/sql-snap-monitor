@@ -15,7 +15,7 @@
  */
 
 export const options = {
-  readOnly: false,
+  readOnly: true,
   originalEditable: false,
   ignoreTrimWhitespace: false,
   minimap: { enabled: true },

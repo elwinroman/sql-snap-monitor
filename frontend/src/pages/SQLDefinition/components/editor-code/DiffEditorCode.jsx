@@ -36,7 +36,7 @@ export function DiffEditorCode() {
         beforeMount={handleEditorDidMount}
         language="sql"
         defaultValue="// some comment"
-        height="90vh"
+        height="88vh"
         theme="dracula"
         original={loadingAligment ? 'Buscando información, esto puede tardar unos segundos...' : aligmentCode}
         modified={code}
