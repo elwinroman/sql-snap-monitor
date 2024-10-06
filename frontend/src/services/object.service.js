@@ -29,10 +29,8 @@ export async function findSQLDefinitionObject({ name }) {
  * @returns {Promise}
  */
 export async function getSQLDefinitionObject({ id, fromAligment = false }) {
-  const fromAligmentParam = fromAligment ? '?fromAligment=true' : ''
-
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}${fromAligmentParam}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}`, {
       credentials: 'include',
     })
     const res = await response.json()
@@ -77,6 +75,28 @@ export async function getUserTable({ id }) {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/usertable/${id}`, {
       credentials: 'include',
     })
+    const res = await response.json()
+
+    return res
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+/**
+ * Obtiene la definición de un objeto por su nombre e idSchema (de la base de datos de alineación)
+ *
+ * @param {Object} param
+ * @param {string} param.name - Nombre del objeto
+ * @param {number} param.schemaId - Id del schema
+ *
+ * @returns {Promise}
+ */
+export async function getSQLDefinitionAligmentObject({ name, schemaId }) {
+  const queryParams = `?name=${name}&idSchema=${schemaId}`
+
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition-aligment${queryParams}`)
     const res = await response.json()
 
     return res
