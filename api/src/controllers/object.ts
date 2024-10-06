@@ -32,31 +32,43 @@ export class ObjectController {
 
   getSQLDefinition = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params // id del objeto
-    const { fromAligment } = req.query // si es true, obtiene el objeto de la bd definida en los env variables
-    let { credentials, isSessionActive } = req.session
+    const { credentials, isSessionActive } = req.session
 
     try {
-      if (fromAligment) {
-        const fromAligmentBool = (fromAligment as string).toLowerCase()
-        if (fromAligmentBool !== 'true' && fromAligmentBool !== 'false')
-          throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro fromAligment debe ser un booleano' })
-
-        if (fromAligmentBool === 'false') throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
-
-        // si se requiere un objeto de alineación, el usuario no necesita estar autenticado
-        credentials = { ...CredentialsFromEnv }
-        isSessionActive = true
-      }
-
       if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
 
       const idNumber = z.coerce.number().safeParse(id)
       if (!idNumber.success) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro Id debe ser un número' })
 
       const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data } = !fromAligment
-        ? ((await objectModel.getSQLDefinitionById(idNumber.data)) as ResponseSQLDefinitionRecordObject)
-        : ((await objectModel.getSQLDefinitionAligmentById(idNumber.data)) as ResponseSQLDefinitionRecordObject)
+      const { data } = (await objectModel.getSQLDefinitionById(idNumber.data)) as ResponseSQLDefinitionRecordObject
+      res.status(200).json({ status: 'success', statusCode: 200, data })
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  // Obtiene un objeto de alineación
+  getSQLDefinitionAligmentObject = async (req: Request, res: Response, next: NextFunction) => {
+    const { name, idSchema } = req.query //
+
+    try {
+      if (name == null) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro name es requerido' })
+      if (idSchema == null) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro idSchema es requerido' })
+
+      const nameObject = z.string().safeParse(name)
+      const idSchemaNumber = z.coerce.number().safeParse(idSchema)
+
+      if (!nameObject.success)
+        throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro name debe ser un string' })
+      if (!idSchemaNumber.success)
+        throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro idSchema debe ser un número' })
+
+      const { data } = (await new ObjectModel(CredentialsFromEnv).getSQLDefinitionAligmentById(
+        nameObject.data,
+        idSchemaNumber.data,
+      )) as ResponseSQLDefinitionRecordObject
+
       res.status(200).json({ status: 'success', statusCode: 200, data })
     } catch (err) {
       next(err)

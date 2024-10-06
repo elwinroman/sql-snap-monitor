@@ -11,6 +11,7 @@ export function createObjectRouter() {
   router.get('/sqldefinition/:id', objectController.getSQLDefinition)
   router.get('/usertable', objectController.findUserTable)
   router.get('/usertable/:id', objectController.getUserTable)
+  router.get('/sqldefinition-aligment', objectController.getSQLDefinitionAligmentObject)
 
   return router
 }

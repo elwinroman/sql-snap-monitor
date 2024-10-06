@@ -358,17 +358,24 @@ export class ObjectModel implements ForRetrievingObject {
     }
   }
 
-  public async getSQLDefinitionAligmentById(id: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined> {
+  public async getSQLDefinitionAligmentById(
+    name: string,
+    idSchema: number,
+  ): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined> {
     const conn = await connection(this.credentials)
     const request = await conn?.request()
+    const request2 = await conn?.request()
 
     try {
-      await request?.input('id', sql.Int, id)
+      await request?.input('cNombreObjeto', sql.VarChar, name).input('idSchema', sql.Int, idSchema)
       const res = await request?.execute('QA_ObtenerDefinicionSQL_SP')
 
       if (res && res.recordset.length === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
 
-      const resRoles = await request?.execute('QA_ObtenerRoles_SP')
+      const objectId = res?.recordset[0].object_id
+
+      await request2?.input('id', sql.Int, objectId)
+      const resRoles = await request2?.execute('QA_ObtenerRoles_SP')
 
       const roles: PermissionRol[] =
         resRoles?.recordset.map((obj): PermissionRol => {
