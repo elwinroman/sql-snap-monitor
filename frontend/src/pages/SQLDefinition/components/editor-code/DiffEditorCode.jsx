@@ -10,12 +10,15 @@ export function DiffEditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
   const renderSideBySide = useEditorStore((state) => state.renderSideBySide)
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
+  const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const { schema, name, permission, definition } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
 
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
-  const code = hasRoles ? SQLDefinitionCode + formatPermissionRoles(permission, schema, name) : SQLDefinitionCode
+  const code = hasRoles
+    ? SQLDefinitionCode + formatPermissionRoles(SQLDefinitionObject.permission, SQLDefinitionObject.schema, SQLDefinitionObject.name)
+    : SQLDefinitionCode
   const aligmentCode = hasRoles ? definition + formatPermissionRoles(permission, schema, name) : definition
 
   // cargar themes de monaco
