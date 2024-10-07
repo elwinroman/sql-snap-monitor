@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  omnissiah-api:
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    environment:
+      - DB_SERVER=host.docker.internal
