@@ -12,6 +12,7 @@ export function DiffEditorCode() {
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const { schema, name, permission, definition } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
+  const fontSize = useEditorStore((state) => state.fontSize)
 
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
@@ -28,7 +29,7 @@ export function DiffEditorCode() {
     })
   }
 
-  const fullOptions = { ...options, renderWhitespace, renderSideBySide }
+  const fullOptions = { ...options, renderWhitespace, renderSideBySide, fontSize }
 
   return (
     <div>

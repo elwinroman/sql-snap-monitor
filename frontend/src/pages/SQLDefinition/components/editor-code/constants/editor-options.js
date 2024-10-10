@@ -27,7 +27,6 @@ export const options = {
     vertical: 'hidden',
     horizontal: 'auto',
   },
-  fontSize: 13,
   fontLigatures: true, // para 'Fira Code' fuente con ligadur (bug en el editor cuando no se activa)
   roundedSelection: true,
   selectOnLineNumbers: true,

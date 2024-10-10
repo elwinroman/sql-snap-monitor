@@ -11,6 +11,7 @@ export function EditorCode() {
   const { schema, name, permission } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const hasRoles = useEditorStore((state) => state.hasRoles)
+  const fontSize = useEditorStore((state) => state.fontSize)
 
   const code = hasRoles ? SQLDefinitionCode + formatPermissionRoles(permission, schema, name) : SQLDefinitionCode
 
@@ -21,7 +22,7 @@ export function EditorCode() {
     })
   }
 
-  const fullOptions = { ...options, renderWhitespace }
+  const fullOptions = { ...options, renderWhitespace, fontSize }
 
   return (
     <div>
