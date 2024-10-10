@@ -50,7 +50,7 @@ export class ObjectController {
 
   // Obtiene un objeto de alineación
   getSQLDefinitionAligmentObject = async (req: Request, res: Response, next: NextFunction) => {
-    const { name, idSchema } = req.query //
+    const { name, idSchema } = req.query
 
     try {
       if (name == null) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro name es requerido' })

@@ -26,17 +26,11 @@ export async function connection(credentials: Credentials) {
     return conn
   } catch (error) {
     if (!(error instanceof sql.ConnectionError)) throw error
-    if (error.code === CONN_ERROR.ELOGIN) {
-      throw new MyCustomError(CONN_ERROR_CODES.ELOGIN)
-    }
-    if (error.code === CONN_ERROR.ETIMEOUT) {
-      throw new MyCustomError(CONN_ERROR_CODES.ETIMEOUT)
-    }
-    if (error.code === CONN_ERROR.ESOCKET) {
-      throw new MyCustomError(CONN_ERROR_CODES.ESOCKET)
-    }
-    if (error.code === CONN_ERROR.EDRIVER) {
-      throw new MyCustomError(CONN_ERROR_CODES.EDRIVER)
-    }
+    if (error.code === CONN_ERROR.ELOGIN) throw new MyCustomError(CONN_ERROR_CODES.ELOGIN)
+    if (error.code === CONN_ERROR.ETIMEOUT) throw new MyCustomError(CONN_ERROR_CODES.ETIMEOUT)
+    if (error.code === CONN_ERROR.ESOCKET) throw new MyCustomError(CONN_ERROR_CODES.ESOCKET)
+    if (error.code === CONN_ERROR.EDRIVER) throw new MyCustomError(CONN_ERROR_CODES.EDRIVER)
+
+    throw error
   }
 }
