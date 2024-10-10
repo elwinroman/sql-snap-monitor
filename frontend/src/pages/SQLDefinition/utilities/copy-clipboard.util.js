@@ -7,8 +7,7 @@
  * @returns {void}
  */
 export async function copyToClipboard({ text }) {
-  if (navigator.clipboard && window.isSecureContext)
-    await navigator.clipboard.writeText(text)
+  if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text)
   else {
     // Polyfill
     const textArea = document.createElement('textarea')

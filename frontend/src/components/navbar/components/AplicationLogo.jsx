@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import { ROUTES } from '@/constants/routes'
+import { ROUTES } from '@/constants'
 
 export function AplicationLogo() {
   return (

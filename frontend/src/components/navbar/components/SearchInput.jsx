@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { InputWithIcon } from '@/components/ui/input-with-icon'
-import { ROUTES } from '@/constants/routes'
+import { ROUTES } from '@/constants'
 import { useSQLDefinition, useUsertable } from '@/hooks'
 import { Search as SearchIcon } from '@/icons/search'
 

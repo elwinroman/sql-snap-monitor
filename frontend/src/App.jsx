@@ -5,11 +5,10 @@ import { Route, Routes } from 'react-router-dom'
 
 import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
+import { ROUTES } from '@/constants'
 import Layout from '@/layouts/Layout'
 import { HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 import { useSQLDefinitionStore, useUserTableStore } from '@/stores'
-
-import { ROUTES } from './constants/routes'
 
 function Error() {
   return <div>Error 404</div>

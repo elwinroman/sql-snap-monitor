@@ -10,7 +10,7 @@ import {
   NavigationMenuTrigger,
   // navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu'
-import { ROUTES } from '@/constants/routes'
+import { ROUTES } from '@/constants'
 import { cn } from '@/lib/utils'
 
 const components = [

@@ -3,7 +3,7 @@ import './styles/navbar.css'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { ROUTES } from '@/constants/routes'
+import { ROUTES } from '@/constants'
 
 import { AplicationLogo, Configuration, GithubRepo, HamburguerMenu, LoginUsername, NavMenu, SearchInput } from './components'
 
