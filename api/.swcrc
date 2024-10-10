@@ -1,6 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/swcrc",
   "sourceMaps": true,
+  "minify": true,
   "jsc": {
     "parser": {
       "syntax": "typescript",
@@ -11,11 +12,17 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "target": "esnext"
+    "target": "esnext",
+    "minify": {
+      "compress": {
+        "drop_console": false,
+        "unused": true
+      },
+      "mangle": true
+    }
   },
   "module": {
     "type": "es6",
     "resolveFully": true
-  },
-  "minify": false
+  }
 }

@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  backend:
+    image: api:v1.0
+    build:
+      context: ./api
+    ports:
+      - 3000:3000
+    environment:
+      - DB_SERVER=host.docker.internal
+      - ALLOWED_ORIGIN=http://client:8080
+    env_file: ./api/.env
+
+  client:
+    image: web:v1.0
+    build:
+      context: ./frontend
+    ports:
+      - 8080:4173
+    environment:
+      - VITE_API_URL=http://backend:3000
+    env_file: ./frontend/.env
