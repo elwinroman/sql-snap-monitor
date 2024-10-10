@@ -21,7 +21,7 @@ export function PermissionRol() {
   let text = ''
 
   permission.length === 0
-    ? (text = 'El objeto no tiene permisos explícitos asignados a roles específicos ⚠️')
+    ? (text = 'El objeto no tiene permisos explícitos asignados a roles específicos')
     : (text = hasRoles ? 'Ocultar permisos y roles' : 'Ver permisos y roles')
 
   return (
@@ -29,15 +29,18 @@ export function PermissionRol() {
       <Tooltip delayDuration={150}>
         <TooltipTrigger asChild>
           {permission.length === 0 ? (
-            <button className={`rounded-sm p-1.5`}>
+            <button className="rounded-sm py-1.5">
               <i className="text-red-400">
-                <ShieldAlert size={16} />
+                <ShieldAlert size={14} />
               </i>
             </button>
           ) : (
-            <button className={`rounded-sm p-1.5 hover:bg-black ${hasRoles ? 'bg-black' : 'bg-transparent'}`} onClick={handleClick}>
-              <i className="text-white">
-                <ShieldEllipsis size={16} />
+            <button
+              className={`group rounded-sm px-1.5 py-1.5 hover:bg-black ${hasRoles ? 'bg-black' : 'bg-transparent'}`}
+              onClick={handleClick}
+            >
+              <i className="text-white group-hover:text-zinc-400">
+                <ShieldEllipsis size={14} />
               </i>
             </button>
           )}

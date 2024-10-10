@@ -29,11 +29,11 @@ export function IndentationWhitespace() {
       <Tooltip delayDuration={150}>
         <TooltipTrigger asChild>
           <button
-            className={`rounded-sm p-1.5 hover:bg-black ${renderWhitespace === RENDER_WHITESPACE_OPTION.all ? 'bg-black' : 'bg-transparent'}`}
+            className={`group rounded-sm px-1.5 py-1.5 hover:bg-black ${renderWhitespace === RENDER_WHITESPACE_OPTION.all ? 'bg-black' : 'bg-transparent'}`}
             onClick={handleClick}
           >
-            <i className="text-white">
-              <IndentIncrease size={16} />
+            <i className="text-white group-hover:text-zinc-400">
+              <IndentIncrease size={14} />
             </i>
           </button>
         </TooltipTrigger>
