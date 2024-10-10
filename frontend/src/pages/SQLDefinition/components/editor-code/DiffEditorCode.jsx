@@ -4,7 +4,7 @@ import { useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
-import Dracula from './themes/dracula.theme'
+import { THEMES } from './constants/themes'
 
 export function DiffEditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
@@ -13,6 +13,7 @@ export function DiffEditorCode() {
   const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const { schema, name, permission, definition } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
   const fontSize = useEditorStore((state) => state.fontSize)
+  const theme = useEditorStore((state) => state.theme)
 
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
@@ -24,9 +25,11 @@ export function DiffEditorCode() {
 
   // cargar themes de monaco
   const handleEditorDidMount = (monaco) => {
-    monaco.editor.defineTheme('dracula', {
-      ...Dracula,
-    })
+    for (const themeItem of THEMES) {
+      monaco.editor.defineTheme(themeItem.tag, {
+        ...themeItem.json,
+      })
+    }
   }
 
   const fullOptions = { ...options, renderWhitespace, renderSideBySide, fontSize }
@@ -38,7 +41,7 @@ export function DiffEditorCode() {
         language="sql"
         defaultValue="// some comment"
         height="88vh"
-        theme="dracula"
+        theme={theme}
         original={loadingAligment ? 'Buscando información, esto puede tardar unos segundos...' : aligmentCode}
         modified={code}
         options={{ ...fullOptions }}

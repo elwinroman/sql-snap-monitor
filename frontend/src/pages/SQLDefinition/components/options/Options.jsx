@@ -5,6 +5,7 @@ import { IndentationWhitespace } from './components/IndentationWhitespace'
 import { MaxMin } from './components/MaxMin'
 import { PermissionRol } from './components/PermissionRol'
 import { SideBySide } from './components/SideBySide'
+import { ThemeEditor } from './components/ThemeEditor'
 
 export function Options() {
   return (
@@ -15,6 +16,7 @@ export function Options() {
         </div>
 
         <div className="flex items-center gap-1">
+          <ThemeEditor />
           <FontSize />
           <PermissionRol />
           <IndentationWhitespace />

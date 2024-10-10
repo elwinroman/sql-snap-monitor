@@ -9,6 +9,7 @@ export const useEditorStore = create(
       fontSize: 13,
       renderWhitespace: 'none',
       renderSideBySide: true,
+      theme: 'dracula',
 
       hasRoles: true, // ver roles y permisos al final del código
       onDiffEditor: false, // activar o desactivar comparación de código
@@ -20,6 +21,7 @@ export const useEditorStore = create(
       updateRenderSideBySide: (state) => set({ renderSideBySide: state }),
       updateRoles: (state) => set({ hasRoles: state }),
       updateDiffEditor: (state) => set({ onDiffEditor: state }),
+      updateTheme: (themeName) => set({ theme: themeName }),
     }),
     {
       name: 'options',
