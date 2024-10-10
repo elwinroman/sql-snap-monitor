@@ -1,3 +1,4 @@
+import { useConfetti } from '@stevent-team/react-party'
 import { Clipboard } from 'lucide-react'
 import { useState } from 'react'
 
@@ -13,6 +14,23 @@ export function CopyClipboard() {
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const [copy, setCopy] = useState(false)
 
+  // efecto conffeti
+  const { createConfetti, canvasProps } = useConfetti({
+    spawnGap: -44,
+    diameter: [10, 10],
+    count: 30,
+    shapeWeights: {
+      // distribución de formas
+      triangle: 1,
+      circle: 1,
+      square: 1,
+      star: 1,
+    },
+    speed: 1.2, // velocidad de movimiento
+    gravity: 6, // gravedad
+    colors: ['deeppink', 'orange', 'mediumseagreen', 'dodgerblue', 'gold'],
+  })
+
   if (onDiffEditor) return null
 
   const code = hasRoles ? SQLDefinitionCode + formatPermissionRoles(permission, schema, name) : SQLDefinitionCode
@@ -21,6 +39,7 @@ export function CopyClipboard() {
   const handleClick = (e) => {
     e.preventDefault()
 
+    createConfetti()
     copyToClipboard({ text: code })
     setCopy(true)
 
@@ -28,18 +47,20 @@ export function CopyClipboard() {
       setCopy(false)
     }, '1500')
   }
-
   return (
-    <button
-      className={`w-20 rounded-sm border border-zinc-400/30 py-0.5 transition duration-200 ${copy ? 'bg-emerald-400' : 'bg-amber-400 hover:bg-amber-300'}`}
-      onClick={handleClick}
-    >
-      <div className="flex items-center justify-center gap-1">
-        <i className="text-black">
-          <Clipboard size={14} />
-        </i>
-        <span className={`pt-[2px] text-xs font-semibold text-black transition duration-700`}>{copy ? 'Copiado' : 'Copiar'}</span>
-      </div>
-    </button>
+    <>
+      <canvas {...canvasProps} />
+      <button
+        className={`w-auto rounded-sm border border-zinc-400/30 px-2 py-0.5 transition duration-200 ${copy ? 'bg-emerald-700' : 'bg-blue-700 hover:bg-blue-600'}`}
+        onClick={handleClick}
+      >
+        <div className="flex items-center justify-center gap-1">
+          <i className="text-zinc-100">
+            <Clipboard size={14} />
+          </i>
+          <span className={`pt-[2px] text-xs font-semibold text-zinc-100 transition duration-700`}>{copy ? 'Copiado' : 'Copiar'}</span>
+        </div>
+      </button>
+    </>
   )
 }
