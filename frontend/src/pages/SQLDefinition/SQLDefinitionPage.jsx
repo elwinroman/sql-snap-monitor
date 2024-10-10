@@ -38,13 +38,13 @@ export function SQLDefinitionPage() {
       className={`overflow-hidden rounded-md border border-owborder bg-owcard ${SQLDefinitionCode ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
     >
       {SQLDefinitionCode && (
-        <div className="flex items-center justify-between gap-1 px-6 py-4">
+        <div className="flex flex-col items-center justify-between gap-2 px-6 py-4 md:flex-row">
           {!onDiffEditor ? (
             <h4 className="flex items-center gap-2 text-base font-bold text-zinc-300">
               <i>
                 <Code size={20} />
               </i>
-              {SQLDefinitionObject.name}
+              <span className="text-amber-400">{SQLDefinitionObject.name}</span>
             </h4>
           ) : (
             <h3 className="max-w-sm text-sm text-zinc-200 sm:max-w-full">

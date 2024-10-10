@@ -24,7 +24,7 @@ export function UsertablePage() {
         <i>
           <Table size={20} />
         </i>
-        <span>{userTableObject.name}</span>
+        <span className="text-amber-400">{userTableObject.name}</span>
       </h4>
 
       {/* Alerta de error */}

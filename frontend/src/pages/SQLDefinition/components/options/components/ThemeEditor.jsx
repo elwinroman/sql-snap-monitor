@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { THEMES } from '@/pages/SQLDefinition/components/editor-code/constants/themes'
 import { useEditorStore } from '@/stores'
 
@@ -21,11 +21,14 @@ export function ThemeEditor() {
           <SelectValue placeholder="Elije tu tema" />
         </SelectTrigger>
         <SelectContent>
-          {myThemes.map((themeItem) => (
-            <SelectItem key={themeItem.tag} value={themeItem.tag}>
-              {themeItem.name}
-            </SelectItem>
-          ))}
+          <SelectGroup>
+            <SelectLabel className="text-zinc-400">Elije tu theme</SelectLabel>
+            {myThemes.map((themeItem) => (
+              <SelectItem key={themeItem.tag} value={themeItem.tag}>
+                {themeItem.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
         </SelectContent>
       </Select>
     </>
