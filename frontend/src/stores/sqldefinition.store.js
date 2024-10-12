@@ -10,7 +10,7 @@ export const useSQLDefinitionStore = create(
     (set, get) => ({
       loading: false, // indica si se está cargando la definición
       loadingAligment: false, // indica si se está cargando la definición de alineación
-      errorAligment: false, // indica si hubo un error al obtener la definición de alineación
+      errorAligment: null, // indica si hubo un error al obtener la definición de alineación
       SQLDefinitionError: null, // error al obtener la definición
       hasAligmentObject: true, // indica si existe un objeto de alineación
 
@@ -29,14 +29,23 @@ export const useSQLDefinitionStore = create(
 
         if (res.status === 'error') {
           set({ loadingAligment: false })
-          set({ errorAligment: true })
-          set({ hasAligmentObject: false })
+          set({
+            errorAligment: {
+              statusCode: res.statusCode,
+              message: res.message,
+              originalError: res.originalError,
+            },
+          })
+          if (res.statusCode === 404) set({ hasAligmentObject: false })
+
           updateDiffEditor(false)
           return
         }
 
         set({ SQLDefinitionAligmentObject: { ...res.data } })
         set({ loadingAligment: false })
+        set({ errorAligment: null })
+        set({ SQLDefinitionError: null })
       },
 
       // updatea el objecto de definición cuando existen coincidencias
@@ -48,7 +57,7 @@ export const useSQLDefinitionStore = create(
         const updateDiffEditor = useEditorStore.getState().updateDiffEditor
         set({ loading: true })
         set({ hasAligmentObject: true })
-        set({ errorAligment: false })
+        set({ errorAligment: null })
         updateDiffEditor(false)
 
         const res = await findSQLDefinitionObject({ name })

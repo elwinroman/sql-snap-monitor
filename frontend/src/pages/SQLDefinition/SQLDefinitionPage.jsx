@@ -1,4 +1,4 @@
-import { Code } from 'lucide-react'
+import { CircleX, Code } from 'lucide-react'
 import { useEffect } from 'react'
 import { toast, Toaster } from 'sonner'
 
@@ -24,11 +24,11 @@ export function SQLDefinitionPage() {
   const isMaximized = useConfigStore((state) => state.isMaximized)
 
   useEffect(() => {
-    if (SQLDefinitionError) toast.error('No se ha encontrado la definición del objeto')
+    if (SQLDefinitionError) toast.error(SQLDefinitionError.message)
   }, [SQLDefinitionError])
 
   useEffect(() => {
-    if (errorAligment) toast.error('No se ha encontrado la definición de alineación, al parecer tu objeto es nuevo')
+    if (errorAligment && errorAligment.statusCode === 404) toast.error(errorAligment.message)
   }, [errorAligment])
 
   if (loading) return <LoaderSlack />
@@ -37,6 +37,16 @@ export function SQLDefinitionPage() {
     <div
       className={`overflow-hidden rounded-md border border-owborder bg-owcard ${SQLDefinitionCode ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
     >
+      {/* Si no existe conexión con el servidor de alineación (mensaje de error) */}
+      {errorAligment && errorAligment.statusCode !== 404 && (
+        <div className="flex w-full items-center gap-2 bg-[#ea4d5e] px-4 py-1 text-sm text-zinc-50">
+          <i>
+            <CircleX size={16} />
+          </i>
+          <span>Opps. Parece que existe un error de conexión con el servidor de alineación, por favor, contacte con su administrador</span>
+        </div>
+      )}
+
       {SQLDefinitionCode && (
         <div className="flex flex-col items-center justify-between gap-2 px-6 py-4 md:flex-row">
           {!onDiffEditor ? (
