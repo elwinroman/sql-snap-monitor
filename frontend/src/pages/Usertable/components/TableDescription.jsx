@@ -1,5 +1,7 @@
+import { MessageCircleWarning } from 'lucide-react'
 import { v4 as uuidv4 } from 'uuid'
 
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Key as KeyIcon, KeyRound as KeyRoundIcon } from '@/icons'
@@ -133,16 +135,36 @@ export function TableDescription() {
 
                 {/* Nombre de la propiedad extendida (descripción) */}
                 <TableCell>
-                  <div className="flex flex-col gap-2">
-                    {item.extendedProperties.length > 0 &&
-                      item.extendedProperties.map((subitem) => (
-                        <span key={uuidv4()} className="w-fit rounded-sm bg-slate-700 px-2 py-1 text-center text-xs text-white">
-                          {subitem.propertyName}
-                        </span>
-                      ))}
+                  {/* Cuando no existe propiedad en el diccionario */}
+                  {item.extendedProperties.length === 0 && <span className="text-zinc-500">No existe nombre de propiedad</span>}
 
-                    {item.extendedProperties.length === 0 && <span className="text-zinc-500">No existe nombre de propiedad</span>}
-                  </div>
+                  {/* Cuando existe una propiedad en el diccionario (correcto) */}
+                  {item.extendedProperties.length === 1 && (
+                    <span key={uuidv4()} className="w-fit rounded-sm bg-slate-700 px-2 py-1 text-center text-xs text-white">
+                      {item.extendedProperties[0].propertyName}
+                    </span>
+                  )}
+
+                  {/* Cuando existen mas de una propiedad en el diccionario (no debería) */}
+                  {item.extendedProperties.length > 1 && (
+                    <div className="flex items-baseline justify-between gap-2">
+                      <div className="flex flex-col gap-2">
+                        {item.extendedProperties.map((subitem) => (
+                          <span key={uuidv4()} className="w-fit rounded-sm bg-slate-700 px-2 py-1 text-center text-xs text-white">
+                            {subitem.propertyName}
+                          </span>
+                        ))}
+                      </div>
+                      <Popover>
+                        <PopoverTrigger>
+                          <i className="grid place-items-center rounded-sm p-1 transition-colors hover:bg-zinc-600">
+                            <MessageCircleWarning size={14} />
+                          </i>
+                        </PopoverTrigger>
+                        <PopoverContent>¡Existe más de una descripción para esta columna!</PopoverContent>
+                      </Popover>
+                    </div>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
