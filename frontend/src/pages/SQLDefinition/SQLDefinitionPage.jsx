@@ -14,22 +14,35 @@ import { Options } from './components/options/Options'
 export function SQLDefinitionPage() {
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const SQLDefinitionError = useSQLDefinitionStore((state) => state.SQLDefinitionError)
+  const updateSQLDefinitionError = useSQLDefinitionStore((state) => state.updateSQLDefinitionError)
+
   const SQLDefinitionObjectList = useSQLDefinitionStore((state) => state.SQLDefinitionObjectList)
   const fetchSQLDefinition = useSQLDefinitionStore((state) => state.fetchSQLDefinition)
   const updateSQLDefinitionObject = useSQLDefinitionStore((state) => state.updateSQLDefinitionObject)
   const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const loading = useSQLDefinitionStore((state) => state.loading)
+
   const errorAligment = useSQLDefinitionStore((state) => state.errorAligment)
+  const updateErrorAligment = useSQLDefinitionStore((state) => state.updateErrorAligment)
+
   const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
   const isMaximized = useConfigStore((state) => state.isMaximized)
 
+  // Maneja los errores, muestra y limpia la notificación al buscar un objeto QSL
   useEffect(() => {
-    if (SQLDefinitionError) toast.error(SQLDefinitionError.message)
-  }, [SQLDefinitionError])
+    if (SQLDefinitionError) {
+      toast.error(SQLDefinitionError.message)
+      updateSQLDefinitionError({ state: null })
+    }
+  }, [SQLDefinitionError, updateSQLDefinitionError])
 
+  // Maneja los errores, muestra y limpia la notificación al no encontrar el objeto de alineación
   useEffect(() => {
-    if (errorAligment && errorAligment.statusCode === 404) toast.error(errorAligment.message)
-  }, [errorAligment])
+    if (errorAligment && errorAligment.statusCode === 404) {
+      toast.error('No se pudo encontrar el objeto de alineación, parece que tu objeto es nuevo')
+      updateErrorAligment({ state: null })
+    }
+  }, [errorAligment, updateErrorAligment])
 
   if (loading) return <LoaderSlack />
 

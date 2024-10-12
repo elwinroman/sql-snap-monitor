@@ -11,7 +11,14 @@ export const useSQLDefinitionStore = create(
       loading: false, // indica si se está cargando la definición
       loadingAligment: false, // indica si se está cargando la definición de alineación
       errorAligment: null, // indica si hubo un error al obtener la definición de alineación
+      updateErrorAligment: ({ state }) => {
+        set({ errorAligment: state })
+      },
       SQLDefinitionError: null, // error al obtener la definición
+      updateSQLDefinitionError: ({ state }) => {
+        set({ SQLDefinitionError: state })
+      },
+
       hasAligmentObject: true, // indica si existe un objeto de alineación
 
       // definición de objetos
