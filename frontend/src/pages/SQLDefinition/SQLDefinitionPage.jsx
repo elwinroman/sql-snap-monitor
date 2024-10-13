@@ -9,7 +9,7 @@ import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { DiffEditorCode } from './components/editor-code/DiffEditorCode'
 import { EditorCode } from './components/editor-code/EditorCode'
 import { Info } from './components/Info'
-import { Options } from './components/options/Options'
+import { Options as EditorOptions } from './components/options/Options'
 
 export function SQLDefinitionPage() {
   const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
@@ -78,8 +78,8 @@ export function SQLDefinitionPage() {
           )}
 
           <div className="flex gap-2">
-            {/* Opciones */}
-            <Options />
+            {/* Opciones del editor */}
+            <EditorOptions />
           </div>
         </div>
       )}

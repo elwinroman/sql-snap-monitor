@@ -10,7 +10,7 @@ import { AplicationLogo, Configuration, GithubRepo, HamburguerMenu, LoginUsernam
 export function Navbar() {
   const currentLocation = useLocation()
   const [isFixed, setIsFixed] = useState(false)
-  const heightStickyActive = 130
+  const heightStickyActive = 210 // distancia cuando el navbar es sticky
 
   useEffect(() => {
     const App = document.querySelector('.App')

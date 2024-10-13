@@ -30,7 +30,7 @@ function useSearch({ inputBtn }) {
     updatePreviousSearch('')
     inputBtn.current.focus()
     inputBtn.current.value = ''
-  }, [currentLocation])
+  }, [currentLocation, inputBtn])
 
   return { search, updateSearch, find }
 }

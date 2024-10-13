@@ -33,7 +33,7 @@ export function EditorCode() {
         beforeMount={handleEditorDidMount}
         language="sql"
         defaultValue="// some comment"
-        height="90vh"
+        height="88vh"
         theme={theme}
         value={code}
         options={{ ...fullOptions }}

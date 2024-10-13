@@ -28,7 +28,7 @@ export async function findSQLDefinitionObject({ name }) {
  *
  * @returns {Promise}
  */
-export async function getSQLDefinitionObject({ id, fromAligment = false }) {
+export async function getSQLDefinitionObject({ id }) {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}`, {
       credentials: 'include',
