@@ -158,10 +158,18 @@ export interface ResponseUserTableRecordObject {
   data: FullUserTableObject
 }
 
+export interface SearchResponse {
+  data: string[]
+  meta: {
+    length: number
+  }
+}
+
 export interface ForRetrievingObject {
   findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | CustomError | undefined>
   getSQLDefinitionById(id: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined>
   findUserTableByName(name: string): Promise<ResponseUserTableObjects | CustomError | undefined>
   getUserTableById(id: number): Promise<ResponseUserTableRecordObject | CustomError | undefined>
   getSQLDefinitionAligmentById(name: string, idSchema: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined>
+  searchByName(name: string, type?: string): Promise<SearchResponse | CustomError | undefined>
 }

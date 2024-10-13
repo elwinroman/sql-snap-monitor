@@ -2,9 +2,8 @@ import { format } from '@formkit/tempo'
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
-import { COMMON_ERROR_CODES } from '@/constants'
-import { formatSQLDataType } from '@/utils'
-import { handleRequestError } from '@/utils'
+import { COMMON_ERROR_CODES, TypeSearch } from '@/constants'
+import { formatSQLDataType, handleRequestError } from '@/utils'
 
 import {
   Column,
@@ -21,6 +20,7 @@ import {
   ResponseSQLDefinitionRecordObject,
   ResponseUserTableObjects,
   ResponseUserTableRecordObject,
+  SearchResponse,
   SQLDefinitionObjects,
   SQLDefinitionRecordObject,
   UserTableObjects,
@@ -402,6 +402,42 @@ export class ObjectModel implements ForRetrievingObject {
       }
 
       return { data }
+    } catch (error) {
+      if (!(error instanceof sql.RequestError)) throw error
+      handleRequestError(error)
+    } finally {
+      conn?.close()
+    }
+  }
+
+  // Retorna sugerencias de búsqueda de objetos según su tipo, si no existe tipo busca cualquier objeto
+  public async searchByName(name: string, type?: string): Promise<SearchResponse | CustomError | undefined> {
+    const conn = await connection(this.credentials)
+    const request = await conn?.request()
+
+    let andType = ''
+    if (type === TypeSearch.SQLDEFINITION) andType = `AND type IN('P','FN','R','RF','TR','IF','TF','V')`
+    else if (type === TypeSearch.USERTABLE) andType = `AND type IN('U')`
+
+    try {
+      const stmt = `
+        SELECT 
+          name,
+          CASE 
+            WHEN name LIKE CONCAT(@name, '%') THEN 1
+            WHEN name LIKE CONCAT('%', @name, '%') THEN 2
+            ELSE 3
+          END AS peso
+        FROM sys.objects
+        WHERE name LIKE CONCAT('%', @name, '%') ${andType}
+        GROUP BY name
+        ORDER BY peso,name
+      `
+
+      await request?.input('name', sql.VarChar, name)
+      const res = await request?.query(stmt)
+
+      return { data: res.recordset, meta: { length: res.recordset.length } }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       handleRequestError(error)

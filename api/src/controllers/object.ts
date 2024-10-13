@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
-import { COMMON_ERROR_CODES } from '@/constants/'
+import { COMMON_ERROR_CODES, TypeSearch } from '@/constants/'
 import { ObjectModel } from '@/models/object'
 import {
   Credentials,
@@ -11,6 +11,7 @@ import {
   ResponseSQLDefinitionRecordObject,
   ResponseUserTableObjects,
   ResponseUserTableRecordObject,
+  SearchResponse,
 } from '@/models/schemas'
 
 export class ObjectController {
@@ -104,6 +105,34 @@ export class ObjectController {
       const objectModel = await new ObjectModel(credentials as Credentials)
       const { data } = (await objectModel.getUserTableById(idNumber.data)) as ResponseUserTableRecordObject
       res.status(200).json({ status: 'success', statusCode: 200, data })
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  getSearchSuggestion = async (req: Request, res: Response, next: NextFunction) => {
+    const { search, type } = req.query
+    const { credentials, isSessionActive } = req.session
+
+    try {
+      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
+
+      if (search == null) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro search es requerido' })
+      if (
+        type &&
+        (type as string).toLowerCase().trim() !== TypeSearch.SQLDEFINITION &&
+        (type as string).toLowerCase().trim() !== TypeSearch.USERTABLE
+      )
+        throw new MyCustomError({
+          status: 'error',
+          statusCode: 400,
+          message: `El parámetro type debe ser de dos tipos <${TypeSearch.SQLDEFINITION}> o <${TypeSearch.USERTABLE}>`,
+        })
+
+      const objectModel = await new ObjectModel(credentials as Credentials)
+      const { data, meta } = (await objectModel.searchByName(search as string, type as string)) as SearchResponse
+
+      res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
       next(err)
     }
