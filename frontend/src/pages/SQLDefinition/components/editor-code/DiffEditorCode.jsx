@@ -1,3 +1,5 @@
+import './styles/editor.style.css'
+
 import { DiffEditor } from '@monaco-editor/react'
 
 import { useEditorStore, useSQLDefinitionStore } from '@/stores'

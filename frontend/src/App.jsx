@@ -8,16 +8,12 @@ import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { ROUTES } from '@/constants'
 import Layout from '@/layouts/Layout'
 import { HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
-import { useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 function Error() {
   return <div>Error 404</div>
 }
 
 function App() {
-  const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
-  const userTableObject = useUserTableStore((state) => state.userTableObject)
-
   useEffect(() => {
     document.documentElement.classList.add('dark')
   }, [])
@@ -39,7 +35,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards object={SQLDefinitionObject} />
+                <InfoCards />
                 <SQLDefinitionPage />
               </Layout>
             </ProtectedLayout>
@@ -50,7 +46,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards object={userTableObject} />
+                <InfoCards />
                 <UsertablePage />
               </Layout>
             </ProtectedLayout>

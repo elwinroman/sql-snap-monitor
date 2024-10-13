@@ -1,0 +1,14 @@
+.side-by-side .editor.original::before { content: 'ALIGMENT'; }
+.side-by-side .editor.modified::before { content: 'MODIFICADO'; }
+
+.side-by-side .editor.original::before,
+.side-by-side .editor.modified::before {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  opacity: 10%;
+  letter-spacing: 0.2rem;
+  font-size: 2rem;
+}
