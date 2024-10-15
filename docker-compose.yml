@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   backend:
-    image: api:v1.0
+    image: api:latest
     build:
       context: ./api
     ports:
@@ -11,10 +11,11 @@ services:
       #- DB_SERVER=host.docker.internal #solo para pruebas db local
       - NODE_ENV=production
       - ALLOWED_ORIGIN=http://${DOMAIN}:${CLIENT_PORT}
+      - PORT=3000
     env_file: ./api/.env
 
   client:
-    image: web:v1.0
+    image: web:latest
     build:
       context: ./frontend
     ports:
