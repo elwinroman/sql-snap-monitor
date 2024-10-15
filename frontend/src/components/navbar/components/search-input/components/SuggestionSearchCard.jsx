@@ -38,7 +38,7 @@ export const SuggestionSearchCard = forwardRef(({ suggestions, isFocus, updateFo
 
   return (
     <article
-      className="absolute z-50 h-auto max-h-80 w-full translate-y-1 overflow-y-auto rounded-sm border bg-background shadow-md shadow-stone-900 outline-none"
+      className="absolute z-50 h-auto max-h-80 w-full translate-y-1 overflow-y-auto overflow-x-hidden rounded-sm border bg-background shadow-md outline-none"
       ref={ref}
     >
       <ul className="flex flex-col py-1">
@@ -53,7 +53,7 @@ export const SuggestionSearchCard = forwardRef(({ suggestions, isFocus, updateFo
               <i className="pb-0.5">
                 <PackageSearch size={13} />
               </i>
-              <span>{data.name}</span>
+              <span className="overflow-hidden">{data.name}</span>
             </button>
           </li>
         ))}

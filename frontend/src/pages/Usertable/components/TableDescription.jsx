@@ -31,7 +31,9 @@ export function TableDescription() {
             <div key={uuidv4()} className="flex gap-5 rounded-sm border border-dashed border-zinc-500 px-4 py-2">
               <p className="flex items-center gap-4 text-sm">
                 <span className="font-medium text-zinc-200">{item.propertyValue}</span>
-                <span className="w-fit rounded-sm bg-slate-700 px-2 py-1 text-center text-xs text-white">{item.propertyName}</span>
+                <span className="w-fit rounded-sm border border-zinc-600 px-2 py-1 text-center text-xs text-white">
+                  {item.propertyName}
+                </span>
               </p>
             </div>
           ))}
@@ -140,7 +142,7 @@ export function TableDescription() {
 
                   {/* Cuando existe una propiedad en el diccionario (correcto) */}
                   {item.extendedProperties.length === 1 && (
-                    <span key={uuidv4()} className="w-fit rounded-sm bg-slate-700 px-2 py-1 text-center text-xs text-white">
+                    <span key={uuidv4()} className="w-fit rounded-sm border border-zinc-600 px-2 py-1 text-center text-xs text-white">
                       {item.extendedProperties[0].propertyName}
                     </span>
                   )}
@@ -150,7 +152,7 @@ export function TableDescription() {
                     <div className="flex items-baseline justify-between gap-2">
                       <div className="flex flex-col gap-2">
                         {item.extendedProperties.map((subitem) => (
-                          <span key={uuidv4()} className="w-fit rounded-sm bg-slate-700 px-2 py-1 text-center text-xs text-white">
+                          <span key={uuidv4()} className="w-fit rounded-sm border border-zinc-600 px-2 py-1 text-center text-xs text-white">
                             {subitem.propertyName}
                           </span>
                         ))}

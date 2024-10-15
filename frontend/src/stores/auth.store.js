@@ -29,7 +29,7 @@ export const useAuthStore = create(
 
         set({ isAuthenticated: true })
         set({ username: credentials.username })
-        set({ dbname: credentials.dbname })
+        set({ dbname: res.data.name })
         set({ errorAuth: null })
       },
 
