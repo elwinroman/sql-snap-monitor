@@ -45,7 +45,7 @@ export class Server {
     const network = new NetworkController(this.port)
 
     this.app.listen(this.port, network.gethost, () => {
-      network.printNetworks()
+      if (process.env.NODE_ENV !== 'production') network.printNetworks()
     })
   }
 }

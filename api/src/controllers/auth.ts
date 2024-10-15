@@ -22,7 +22,8 @@ export class AuthController {
         .status(200)
         .cookie('access_token', token, {
           httpOnly: true, // cookie solo accesible por el servidor
-          secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
+          // secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
+          secure: false,
           sameSite: 'strict', // cookie no disponible para otros sitios
           maxAge: 1000 * 60 * 60 * 48, // cookie expira en 1 hora
         })
