@@ -6,10 +6,11 @@ services:
     build:
       context: ./api
     ports:
-      - 3000:3000
+      - "${BACKEND_PORT}:3000"
     environment:
-      - DB_SERVER=host.docker.internal
-      - ALLOWED_ORIGIN=http://client:8080
+      #- DB_SERVER=host.docker.internal #solo para pruebas db local
+      - NODE_ENV=production
+      - ALLOWED_ORIGIN=http://${DOMAIN}:${CLIENT_PORT}
     env_file: ./api/.env
 
   client:
@@ -17,7 +18,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - 8080:4173
+      - "${CLIENT_PORT}:80"
     environment:
-      - VITE_API_URL=http://backend:3000
-    env_file: ./frontend/.env
+      - VITE_API_URL=http://${DOMAIN}:${BACKEND_PORT}
+    # env_file: ./frontend/.env
