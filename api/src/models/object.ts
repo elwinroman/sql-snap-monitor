@@ -422,6 +422,7 @@ export class ObjectModel implements ForRetrievingObject {
     try {
       const stmt = `
         SELECT 
+          TOP 100
           name,
           CASE 
             WHEN name LIKE CONCAT(@name, '%') THEN 1
