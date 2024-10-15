@@ -5,7 +5,7 @@ import { MyCustomError } from '@/models/schemas'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function handleError(err: unknown, req: Request, res: Response, _next: NextFunction) {
   if (err instanceof MyCustomError) {
-    console.error(err.stack)
+    console.error(err)
     const { status, statusCode, message, originalError } = err
     return res.status(statusCode).json({ status, statusCode, message, originalError })
   }
