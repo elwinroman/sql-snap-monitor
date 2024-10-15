@@ -40,3 +40,17 @@ Ejecuta el siguiente comando para listar los contenedores en ejecución
 ```
 docker-compose ps
 ```
+
+## Errores al ejecutar
+Cuando un archivo **env.sh** es creado o editado en un sistema Windows, el editor de texto puede agregar automáticamente terminaciones de línea CRLF. Sin embargo, los scripts de shell en entornos Unix/Linux esperan terminaciones de línea LF, lo que puede causar errores de ejecución o interpretaciones incorrectas del script. Para verificar si un archivo env.sh tiene terminaciones CRLF, puedes usar el siguiente comando en la terminal:
+```
+file env.sh
+```
+Si el resultado indica "CRLF line terminators", significa que el archivo tiene terminaciones de línea de Windows.
+
+Para solucionar este problema y convertir el archivo **env.sh** a terminaciones de línea LF, puedes realizar lo siguiente:
+```
+cd frontend
+dos2unix env.sh
+```
+Este comando convierte el archivo a terminaciones de línea LF.
