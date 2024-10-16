@@ -2,7 +2,8 @@ import { useCallback, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { ROUTES, TYPE_SEARCH } from '@/constants'
-import { getSearchSuggestions } from '@/services'
+
+import { getSearchSuggestions } from '../services/search.service.js'
 
 export function useSearchSuggestions() {
   const [suggestions, setSuggestions] = useState([])
@@ -18,6 +19,7 @@ export function useSearchSuggestions() {
       let type = null
 
       if (sanitizeSearch === '' || sanitizeSearch.length < 3) {
+        await getSearchSuggestions({ search: 'ƒ', type: null })
         setSuggestions([])
         return
       }

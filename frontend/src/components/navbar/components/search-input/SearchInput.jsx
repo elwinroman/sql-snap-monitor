@@ -4,11 +4,15 @@ import { useCallback, useRef, useState } from 'react'
 
 import { InputWithIcon } from '@/components/ui/input-with-icon'
 import { DEBOUNCE_DELAY } from '@/constants'
+import { useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 import { SuggestionSearchCard } from './components/SuggestionSearchCard'
 import { useSearch, useSearchSuggestions } from './hooks'
 
 export function SearchInput() {
+  const loadingSqlDefinition = useSQLDefinitionStore((state) => state.loading)
+  const loadingUsertable = useUserTableStore((state) => state.loading)
+
   const inputBtn = useRef()
   const suggestionRef = useRef(null)
   const [isFocus, setFocus] = useState(false)
@@ -26,11 +30,13 @@ export function SearchInput() {
 
   const handleKeyup = async (e) => {
     e.preventDefault()
+    if (loadingSqlDefinition || loadingUsertable) return // si se está buscando un objeto, de deshabilita nueva búsqueda
     if (e.key === 'Enter') find()
   }
 
   const handleClick = async (e) => {
     e.preventDefault()
+    if (loadingSqlDefinition || loadingUsertable) return // si se está buscando un objeto, de deshabilita nueva búsqueda
     find()
   }
 
@@ -66,6 +72,7 @@ export function SearchInput() {
           handleClick={handleClick}
           isFocus={isFocus}
           spellCheck="false"
+          disabled={loadingSqlDefinition || loadingUsertable}
         />
       </li>
       {isFocus && suggestions.length > 0 && (
