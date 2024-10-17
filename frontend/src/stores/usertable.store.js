@@ -8,6 +8,10 @@ export const useUserTableStore = create(
   persist(
     (set, get) => ({
       loading: false,
+      userTableError: null,
+      updateUsertableError: ({ state }) => {
+        set({ userTableError: state })
+      },
 
       // descripción de objetos
       userTableObject: { ...ObjectInitialState },
