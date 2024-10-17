@@ -2,7 +2,7 @@ import { PackageSearch } from 'lucide-react'
 import { forwardRef, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-export const SuggestionSearchCard = forwardRef(({ suggestions, isFocus, updateFocus, updateSearch }, ref) => {
+export const SuggestionSearchCard = forwardRef(({ suggestions, isFocus, updateFocus, updateSearch, updateSuggestions, find }, ref) => {
   // Para manejar el preventDefault, es necesario añadir el evento y eliminarlo despues
   useEffect(() => {
     if (!isFocus || suggestions.length === 0) return
@@ -33,7 +33,9 @@ export const SuggestionSearchCard = forwardRef(({ suggestions, isFocus, updateFo
   const handleClick = (e) => {
     e.preventDefault()
     updateFocus(false)
+    find({ suggestionSearchTrigger: e.currentTarget.dataset.name })
     updateSearch(e.currentTarget.dataset.name)
+    updateSuggestions([])
   }
 
   return (

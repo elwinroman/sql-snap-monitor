@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { ROUTES } from '@/constants'
 import { useSQLDefinition, useUsertable } from '@/hooks'
 
-export function useSearch({ inputBtn, updateSuggestions }) {
+export function useSearch() {
   const { getSQLDefinitionObject } = useSQLDefinition()
   const { getUsertableObject } = useUsertable()
 
@@ -12,8 +12,9 @@ export function useSearch({ inputBtn, updateSuggestions }) {
   const [previousSearch, updatePreviousSearch] = useState('')
   const currentLocation = useLocation()
 
-  const find = async () => {
-    const sanitizeSearch = search.trim()
+  // acepta un argumento de las sugerencias si se quiere realizar la petición al ahcer click en la sugerencia
+  const find = async ({ suggestionSearchTrigger = null } = {}) => {
+    const sanitizeSearch = suggestionSearchTrigger == null ? search.trim() : suggestionSearchTrigger.trim()
     if (sanitizeSearch === '') return
     if (sanitizeSearch === previousSearch) return
 
@@ -31,10 +32,7 @@ export function useSearch({ inputBtn, updateSuggestions }) {
   useEffect(() => {
     setSearch('')
     updatePreviousSearch('')
-    updateSuggestions([])
-    inputBtn.current.focus()
-    inputBtn.current.value = ''
-  }, [currentLocation, inputBtn])
+  }, [currentLocation])
 
   return { search, updateSearch, find }
 }
