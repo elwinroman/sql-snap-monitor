@@ -113,7 +113,7 @@ export function TableDescription() {
                       {item.type}
                     </span>
 
-                    {primaryKeyObject.columnId === item.id && item.isIdentity ? (
+                    {primaryKeyObject && primaryKeyObject.columnId === item.id && item.isIdentity ? (
                       <span className="text-xs text-stone-400">IDENTITY</span>
                     ) : !item.isNullable ? (
                       <span className="text-nowrap text-xs text-stone-400">NOT NULL</span>

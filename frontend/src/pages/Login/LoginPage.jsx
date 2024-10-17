@@ -42,15 +42,13 @@ export function LoginPage() {
   }
   return (
     <section className="flex h-screen w-full items-center overflow-auto bg-[#14161a]">
-      <div className="m-auto flex w-[500px] flex-col gap-8 rounded-md bg-[#26282d] px-14 py-16">
+      <div className="m-auto flex w-[500px] flex-col gap-6 rounded-md bg-[#26282d] px-14 py-16">
         {/* Loader */}
         {loading && <Loader className="loader absolute left-1/2 top-1/2 opacity-80" />}
 
         <header className="flex flex-col gap-3">
-          <h1 className="text-4xl font-semibold text-white">Iniciar sesión</h1>
-          <p className="font-medium text-zinc-400">
-            Hoy es un buen día para revisar tus SPs, Tablas, etc. Inicia sesión con tus credenciales SQL
-          </p>
+          <h1 className="text-3xl font-semibold text-white">Iniciar sesión</h1>
+          <p className="text-sm font-medium text-zinc-400">Inicia sesión con tus credenciales SQL a tu base de pruebas</p>
 
           {errorAuth && (
             <div className="flex gap-2 rounded-md border border-[#f53e7b59] bg-[#592e41] px-4 py-2">
@@ -63,23 +61,23 @@ export function LoginPage() {
         </header>
 
         <form onSubmit={onSubmitHandler} className="flex flex-col gap-8">
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-0.5">
               <Label text="Server" />
               <Input name="server" />
             </div>
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-0.5">
               <Label text="Database" />
               <Input name="dbname" />
             </div>
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-0.5">
               <Label text="Usuario SQL" />
               <Input name="username" />
             </div>
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-0.5">
               <Label text="Contraseña" />
               <PasswordInput name="password" type="password" />
             </div>

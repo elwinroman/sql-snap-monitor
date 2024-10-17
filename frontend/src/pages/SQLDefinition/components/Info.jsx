@@ -41,14 +41,14 @@ export function Info() {
 
   return (
     <div className="flex flex-col justify-items-start gap-6 sm:gap-8 md:gap-10 lg:flex-row">
-      <div className="flex flex-col gap-6">
+      <div className="flex basis-[45%] flex-col gap-6">
         <p className="text-prety text-sm dark:text-gray-300">
           Las definiciones de objetos se refieren a las descripciones y el código fuente de los objetos del sistema, como:
         </p>
         <ul className="flex flex-col gap-2 text-sm dark:text-gray-300 lg:gap-3">
           {tipos.map((item) => (
             <li key={item.id} className="flex items-start gap-2">
-              <span className="min-w-7 text-balance rounded-sm border border-zinc-700 bg-slate-800 py-0.5 text-center text-xs dark:text-gray-100">
+              <span className="min-w-7 text-balance rounded-sm border border-zinc-500 bg-indigo-800 py-0.5 text-center text-xs dark:text-gray-100">
                 {item.codigo}
               </span>
               <span>{item.description}</span>
@@ -71,12 +71,9 @@ export function Info() {
         </div>
       </div>
 
-      {/* <div className="overflow-hidden rounded-sm">
-        <img
-          src="https://img.freepik.com/vector-gratis/mejora-etapa-o-plan-tarifas-alojamiento-web-sala-servidores-pasos-progreso-tecnologia_39422-796.jpg?t=st=1726210397~exp=1726213997~hmac=8a057da9007415e09c1c2c8961951bdfd8eeb0dbce1a775efb8c8625ec55ab33&w=1380"
-          alt=""
-        />
-      </div> */}
+      <div className="basis-[55%] self-center overflow-hidden rounded-sm">
+        <img src="/53_1x_shots_so.png" alt="" />
+      </div>
     </div>
   )
 }
