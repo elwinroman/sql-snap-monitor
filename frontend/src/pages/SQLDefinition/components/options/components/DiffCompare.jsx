@@ -9,9 +9,12 @@ export function DiffCompare() {
   const { id } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
   const getSQLDefinitionAligmentObject = useSQLDefinitionStore((state) => state.getSQLDefinitionAligmentObject)
   const hasAligmentObject = useSQLDefinitionStore((state) => state.hasAligmentObject)
+  const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
   const handleClick = (e) => {
     e.preventDefault()
+
+    if (loadingAligment) return
 
     // buscar el objeto de alineación solo una vez
     if (id === null) getSQLDefinitionAligmentObject()
@@ -23,7 +26,7 @@ export function DiffCompare() {
     <>
       {hasAligmentObject ? (
         <button
-          className={`w-auto rounded-sm border border-zinc-400/30 px-2 py-0.5 transition duration-200 ${onDiffEditor ? 'bg-indigo-700 hover:bg-indigo-600' : 'bg-pink-700 hover:bg-pink-600'}`}
+          className={`${loadingAligment ? 'cursor-not-allowed' : ''} w-auto rounded-sm border border-zinc-400/30 px-2 py-0.5 transition duration-200 ${onDiffEditor ? 'bg-indigo-700 hover:bg-indigo-600' : 'bg-pink-700 hover:bg-pink-600'}`}
           onClick={handleClick}
         >
           <div className="flex flex-nowrap items-center justify-center gap-1">

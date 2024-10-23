@@ -2,6 +2,7 @@ import { CircleX, Code } from 'lucide-react'
 import { useEffect } from 'react'
 import { toast, Toaster } from 'sonner'
 
+import { LoaderDot } from '@/components/loader/loader-dot/LoaderDot'
 import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
@@ -27,6 +28,8 @@ export function SQLDefinitionPage() {
 
   const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
   const isMaximized = useConfigStore((state) => state.isMaximized)
+
+  const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
   // Maneja los errores, muestra y limpia la notificación al buscar un objeto QSL
   useEffect(() => {
@@ -79,7 +82,13 @@ export function SQLDefinitionPage() {
 
           <div className="flex gap-2">
             {/* Opciones del editor */}
-            <EditorOptions />
+            {loadingAligment ? (
+              <div className="mr-4">
+                <LoaderDot />
+              </div>
+            ) : (
+              <EditorOptions />
+            )}
           </div>
         </div>
       )}
