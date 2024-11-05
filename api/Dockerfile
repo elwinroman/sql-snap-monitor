@@ -1,23 +1,30 @@
-FROM node:lts-alpine3.20 AS base
+FROM node:22-slim AS base
 
 WORKDIR /app
 
-
 FROM base AS build
 
-RUN apk update && apk add --no-cache dumb-init
+# Instalar PNPM
+RUN npm install -g pnpm
+
+RUN apt-get update && \
+    apt-get install -y dumb-init
 
 COPY package*.json /app
 
-RUN npm ci
+# Instalar dependencias usando PNPM
+RUN pnpm install
 
+# Copiar archivos de configuración
 COPY tsconfig*.json /app
 COPY .swcrc /app
 COPY src /app/src
 
-RUN npm run build && \
-    npm prune --production
+# Ejecutar el comando de construcción
+RUN pnpm run build
 
+# Eliminar las dependencias de desarrollo si es necesario
+RUN pnpm prune --prod
 
 FROM base AS release
 
