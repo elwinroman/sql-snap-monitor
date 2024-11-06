@@ -1,7 +1,5 @@
+import { Eye, EyeOff } from 'lucide-react'
 import { useRef, useState } from 'react'
-
-import { Eye as EyeIcon } from '@/icons/eye'
-import { EyeOff as EyeOffIcon } from '@/icons/eye-off'
 
 export function PasswordInput({ name }) {
   const [visible, setVisible] = useState(false)
@@ -29,7 +27,7 @@ export function PasswordInput({ name }) {
         required
       />
       <i className="user-select-none absolute right-3 top-3 cursor-pointer text-slate-300" onClick={handleClick} autoComplete="off">
-        {visible ? <EyeIcon width={16} height={16} /> : <EyeOffIcon width={16} height={16} />}
+        {visible ? <Eye size={16} /> : <EyeOff size={16} />}
       </i>
     </div>
   )

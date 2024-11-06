@@ -1,3 +1,5 @@
+import { Clock } from 'lucide-react'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -7,7 +9,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { ClockHour5 as ClockHour5Icon } from '@/icons/clock-hour-5'
 import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 export function SessionExpiredAlert() {
@@ -30,11 +31,11 @@ export function SessionExpiredAlert() {
           <AlertDialogHeader>
             <AlertDialogTitle>Sesión expirada</AlertDialogTitle>
           </AlertDialogHeader>
-          <AlertDialogDescription className="flex items-center gap-2">
-            <i className="text-rose-500">
-              <ClockHour5Icon width={28} height={28} />
+          <AlertDialogDescription className="flex gap-2">
+            <i className="pt-0.5 text-rose-500">
+              <Clock size={20} />
             </i>
-            <span>Su sesión ha expirado. Por favor, inicia sesión de nuevo.</span>
+            <span className="text-sm text-zinc-300">Su sesión ha expirado. Por favor, vuelva a iniciar sesión para continuar.</span>
           </AlertDialogDescription>
           <AlertDialogFooter>
             <AlertDialogAction asChild>
