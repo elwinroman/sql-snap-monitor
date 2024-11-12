@@ -48,11 +48,15 @@ export class AuthController {
   }
 
   checkSession = async (req: Request, res: Response, next: NextFunction) => {
-    const { isSessionActive } = req.session
+    const { credentials, isSessionActive } = req.session
 
     try {
       if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED)
-      return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa' })
+
+      const authModel = await new AuthModel(credentials as Credentials)
+      const result = await authModel.checkLogin()
+
+      return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa', time: result })
     } catch (err) {
       next(err)
     }

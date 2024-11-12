@@ -8,4 +8,5 @@ export interface DatabaseInfo {
 
 export interface ForAuthenticating {
   login(): Promise<DatabaseInfo | CustomError | undefined>
+  checkLogin(): Promise<string | CustomError | undefined>
 }

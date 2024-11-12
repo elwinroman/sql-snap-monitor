@@ -36,4 +36,20 @@ export class AuthModel implements ForAuthenticating {
       conn?.close()
     }
   }
+
+  async checkLogin(): Promise<string | CustomError | undefined> {
+    const conn = await connection(this.credentials)
+    const request = await conn?.request()
+
+    try {
+      const stmt = 'SELECT GETDATE() AS date'
+      const res = await request?.query(stmt)
+
+      const date = await res?.recordset[0].date
+      return date
+    } catch (error) {
+      if (!(error instanceof sql.RequestError)) throw error
+      handleRequestError(error)
+    }
+  }
 }
