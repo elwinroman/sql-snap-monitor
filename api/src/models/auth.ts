@@ -32,8 +32,6 @@ export class AuthModel implements ForAuthenticating {
       if (!(error instanceof sql.RequestError)) throw error
 
       handleRequestError(error)
-    } finally {
-      conn?.close()
     }
   }
 

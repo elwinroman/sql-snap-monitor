@@ -70,8 +70,6 @@ export class ObjectModel implements ForRetrievingObject {
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       handleRequestError(error)
-    } finally {
-      conn?.close()
     }
   }
 
@@ -146,8 +144,6 @@ export class ObjectModel implements ForRetrievingObject {
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       handleRequestError(error)
-    } finally {
-      conn?.close()
     }
   }
 
@@ -185,8 +181,6 @@ export class ObjectModel implements ForRetrievingObject {
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       handleRequestError(error)
-    } finally {
-      conn?.close()
     }
   }
 
@@ -353,8 +347,6 @@ export class ObjectModel implements ForRetrievingObject {
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       handleRequestError(error)
-    } finally {
-      conn?.close()
     }
   }
 
@@ -405,8 +397,6 @@ export class ObjectModel implements ForRetrievingObject {
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       handleRequestError(error)
-    } finally {
-      conn?.close()
     }
   }
 
@@ -442,8 +432,6 @@ export class ObjectModel implements ForRetrievingObject {
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       handleRequestError(error)
-    } finally {
-      conn?.close()
     }
   }
 }
