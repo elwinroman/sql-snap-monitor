@@ -1,0 +1,17 @@
+.card {
+  /* Gradiente radial */
+  background-image: 
+    radial-gradient(circle at -3000% -3000%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)),
+    /* Malla de fondo con dos gradientes lineales */
+    linear-gradient(to right, #5e5e5e12 1px, transparent 1px),
+    linear-gradient(to bottom, #5e5e5e12 1px, transparent 1px);
+
+  /* Tamaño de cada capa */
+  background-size: cover, 24px 24px, 24px 24px;
+
+  /* Repetición para la malla */
+  background-repeat: no-repeat, repeat, repeat;
+
+  /* Color de fondo (si es necesario) */
+  /* background-color: #0B1A2B; */
+}

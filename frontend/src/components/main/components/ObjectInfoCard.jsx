@@ -71,19 +71,21 @@ export function ObjectInfoCard() {
     },
   ]
 
+  if (SQLDefinitionObject.id == null) return
+
   return (
     <>
       {!onDiffEditor ? (
         <ListObjectProperties info={info} />
       ) : (
         <div className="flex gap-2">
-          <div className="flex flex-col gap-2">
-            <span className="text-sm font-semibold text-zinc-300">Objeto de alineación</span>
+          <div className="flex basis-1/2 flex-col gap-2">
+            <span className="text-sm font-semibold text-zinc-400">Objeto de alineación</span>
             <ListObjectProperties info={infoAligment} />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-sm font-semibold text-zinc-300">Objeto local</span>
+          <div className="flex basis-1/2 flex-col gap-2">
+            <span className="text-sm font-semibold text-zinc-400">Objeto local</span>
             <ListObjectProperties info={info} />
           </div>
         </div>

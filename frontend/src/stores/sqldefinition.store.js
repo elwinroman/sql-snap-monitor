@@ -141,6 +141,7 @@ export const useSQLDefinitionStore = create(
         set({ SQLDefinitionObject: { ...ObjectInitialState } })
         set({ SQLDefinitionAligmentObject: { ...AligmentObjectInitialState } })
         set({ ...SQLDefinitionInitialState })
+        set({ errorAligment: null })
       },
     }),
     {
