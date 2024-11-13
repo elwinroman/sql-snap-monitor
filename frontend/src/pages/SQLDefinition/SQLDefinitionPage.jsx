@@ -67,7 +67,7 @@ export function SQLDefinitionPage() {
             </div>
           )}
 
-          <div className="flex flex-col items-center justify-between gap-2 px-6 py-4 md:flex-row">
+          <div className="flex flex-col justify-between gap-x-5 gap-y-4 px-6 py-4 sm:items-center md:flex-row">
             {!onDiffEditor ? (
               <h4 className="flex items-center gap-2 text-base font-bold text-zinc-300">
                 <i>
