@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 import { COMMON_ERROR_CODES } from '@/constants'
 import { AuthModel } from '@/models/auth'
-import { Credentials, MyCustomError } from '@/models/schemas'
+import { Credentials, LoginResult, MyCustomError } from '@/models/schemas'
 import { encrypt } from '@/utils'
 
 export class AuthController {
@@ -15,7 +15,7 @@ export class AuthController {
     const authModel = new AuthModel(credentials)
 
     try {
-      const result = await authModel.login()
+      const { data } = (await authModel.login()) as LoginResult
       const token = await jwt.sign({ credentials }, process.env.JWT_SECRET as string, { expiresIn: '48h' })
 
       return res
@@ -27,7 +27,7 @@ export class AuthController {
           sameSite: 'strict', // cookie no disponible para otros sitios
           maxAge: 1000 * 60 * 60 * 48, // cookie expira en 1 hora
         })
-        .json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', data: result })
+        .json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', data })
     } catch (err) {
       next(err)
     }

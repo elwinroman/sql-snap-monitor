@@ -4,9 +4,14 @@ export interface DatabaseInfo {
   name: string
   compatibility: number
   description: string | null
+  server: string
+}
+
+export interface LoginResult {
+  data: DatabaseInfo
 }
 
 export interface ForAuthenticating {
-  login(): Promise<DatabaseInfo | CustomError | undefined>
+  login(): Promise<LoginResult | undefined>
   checkLogin(): Promise<string | CustomError | undefined>
 }
