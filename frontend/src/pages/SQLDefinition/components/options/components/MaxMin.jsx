@@ -16,7 +16,7 @@ export function MaxMin() {
     <TooltipProvider>
       <Tooltip delayDuration={150}>
         <TooltipTrigger asChild>
-          <button className="" onClick={handleClick}>
+          <button className="transition-transform hover:scale-110" onClick={handleClick}>
             {isMaximized ? (
               <i className="text-white">
                 <Minimize size={16} />

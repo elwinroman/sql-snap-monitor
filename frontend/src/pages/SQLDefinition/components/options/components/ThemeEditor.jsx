@@ -18,11 +18,11 @@ export function ThemeEditor() {
     <>
       <Select value={theme} onValueChange={(value) => handleChange(value)}>
         <SelectTrigger className="h-7 w-[140px] py-2">
-          <SelectValue placeholder="Elije tu tema" />
+          <SelectValue />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel className="text-zinc-400">Elije tu theme</SelectLabel>
+            <SelectLabel className="text-zinc-400">Editor theme</SelectLabel>
             {myThemes.map((themeItem) => (
               <SelectItem key={themeItem.tag} value={themeItem.tag}>
                 {themeItem.name}
