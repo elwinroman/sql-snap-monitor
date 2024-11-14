@@ -35,7 +35,7 @@ export function LoginUsername() {
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>QA</AvatarFallback>
               </Avatar>
-              <span className="select-none text-sm font-semibold text-zinc-200">{username}</span>
+              <span className="hidden select-none text-sm font-semibold text-zinc-200 md:block">{username}</span>
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="center" sideOffset={10}>

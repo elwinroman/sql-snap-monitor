@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants'
 
-import { AplicationLogo, Configuration, GithubRepo, HamburguerMenu, LoginUsername, SearchInput } from './components'
+import { AplicationLogo, Configuration, GithubRepo, LoginUsername, SearchInput } from './components'
 
 export function Navbar() {
   const currentLocation = useLocation()
@@ -14,9 +14,6 @@ export function Navbar() {
       <ul className="flex h-full flex-row items-center py-6">
         {/* Aplication logo */}
         <AplicationLogo />
-
-        {/* Hamburguer menu */}
-        <HamburguerMenu />
 
         {/* Input de búsqueda */}
         {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && <SearchInput />}

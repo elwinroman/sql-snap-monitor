@@ -56,7 +56,7 @@ export function NavbarMenu() {
         {menuList.map((menu) => (
           <li key={menu.id}>
             <NavLink
-              className={`group relative z-10 inline-block rounded-sm px-2 py-1.5 transition-colors before:absolute before:left-0 before:top-[40px] before:w-full before:content-[''] ${currentLocation.pathname === menu.href ? 'before:border-b-4 before:border-b-zinc-300' : ''} `}
+              className={`group relative z-10 inline-block rounded-sm px-3 py-1.5 transition-colors before:absolute before:left-0 before:top-[40px] before:w-full before:content-[''] ${currentLocation.pathname === menu.href ? 'before:border-b-4 before:border-b-zinc-300' : ''} `}
               to={menu.href}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
