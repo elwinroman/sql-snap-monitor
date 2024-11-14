@@ -1,15 +1,32 @@
-import sql from 'mssql'
+import sql, { ConnectionPool } from 'mssql'
 
 import { CONN_ERROR, CONN_ERROR_CODES } from '@/constants'
 import { Credentials, MyCustomError } from '@/models/schemas'
 import { decrypt } from '@/utils'
 
-export async function connection(credentials: Credentials) {
-  const config = {
-    user: credentials.username,
-    password: decrypt(credentials.password),
-    database: credentials.dbname,
-    server: credentials.server,
+interface PoolStack {
+  [key: string]: Promise<ConnectionPool>
+}
+
+const pools: PoolStack = {} // almacena múltiples instancias (Advanced Pool Management)
+
+/**
+ * Crea y conecta un nuevo pool de conexiones a la base de datos.
+ * @param config - Credenciales para la conexión.
+ * @returns La instancia de ConnectionPool conectada.
+ * @throws MyCustomError - Si ocurre un error de conexión específico.
+ */
+async function createPool(config: Credentials): Promise<ConnectionPool> {
+  const key = JSON.stringify(config)
+
+  const existingPool = await getPool(key)
+  if (existingPool) throw new Error('El pool ya existe')
+
+  const newConfig = {
+    user: config.username,
+    password: decrypt(config.password),
+    database: config.dbname,
+    server: config.server,
     pool: {
       max: 10,
       min: 0,
@@ -22,8 +39,8 @@ export async function connection(credentials: Credentials) {
   }
 
   try {
-    const conn = await sql.connect(config)
-    return conn
+    pools[key] = new sql.ConnectionPool(newConfig).connect()
+    return pools[key]
   } catch (error) {
     if (!(error instanceof sql.ConnectionError)) throw error
     if (error.code === CONN_ERROR.ELOGIN) throw new MyCustomError(CONN_ERROR_CODES.ELOGIN)
@@ -33,4 +50,27 @@ export async function connection(credentials: Credentials) {
 
     throw error
   }
+}
+
+/**
+ * Obtiene un pool de conexión existente.
+ * @param name - Clave que representa la configuración del pool.
+ * @returns El pool de conexiones si existe, o null si no existe.
+ */
+async function getPool(name: string): Promise<ConnectionPool | null> {
+  return pools[name] || null
+}
+
+/**
+ * Obtiene un pool de conexiones, creándolo si no existe.
+ * @param config - Credenciales para la conexión.
+ * @returns El pool de conexiones si ya existe o uno nuevo si no.
+ */
+export async function connection(config: Credentials): Promise<ConnectionPool> {
+  const key = JSON.stringify(config)
+
+  const pool = await getPool(key)
+  if (pool) return pool
+
+  return createPool(config)
 }
