@@ -5,7 +5,7 @@ import { Credentials, MyCustomError } from '@/models/schemas'
 import { decrypt } from '@/utils'
 
 interface PoolStack {
-  [key: string]: Promise<ConnectionPool>
+  [key: string]: ConnectionPool
 }
 
 const pools: PoolStack = {} // almacena múltiples instancias (Advanced Pool Management)
@@ -39,7 +39,7 @@ async function createPool(config: Credentials): Promise<ConnectionPool> {
   }
 
   try {
-    pools[key] = new sql.ConnectionPool(newConfig).connect()
+    pools[key] = await new sql.ConnectionPool(newConfig).connect()
     return pools[key]
   } catch (error) {
     if (!(error instanceof sql.ConnectionError)) throw error
