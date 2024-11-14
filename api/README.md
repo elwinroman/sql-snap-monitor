@@ -31,8 +31,8 @@ PORT: Puerto en el que se ejecutará el servidor. Si no se especifica, el valor 
 ALLOWED_ORIGIN: Dirección o dominio desde el cual se permiten solicitudes al servidor (origen permitido para CORS).
 JWT_SECRET: Clave secreta utilizada para firmar y verificar tokens JWT (JSON Web Token).
 SESSION_SECRET: Clave secreta para la gestión de sesiones en el servidor, utilizada para firmar las cookies de la sesión.
-ENCRYPT_KEY: Clave utilizada para la encriptación de datos sensibles (32 caracteres)
-ENCRYPT_IV: Vector de inicialización utilizado en los algoritmos de cifrado (16 caracteres)
+INIT_VECTOR: Vector de inicialización utilizado en los algoritmos de cifrado (16 caracteres)
+PASS_PHRASE: Clave utilizada para la encriptación de datos sensibles
 ```
 **Nota:** La variable **ALLOWED_ORIGIN** debe contener la dirección y el puerto del servidor frontend. Generalmente, en modo desarrollo, el puerto es **5173**, mientras que en producción, es **4173**. Estos son los puertos predefinidos utilizados por **ViteJS**. Asegúrate de incluir la dirección correcta en la configuración. Si el proyecto frontend está expuesto y no se está ejecutando en **localhost**, asegúrate de actualizar la dirección en la variable **ALLOWED_ORIGIN** para reflejar la dirección pública correspondiente.
 

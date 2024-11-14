@@ -2,7 +2,7 @@ import sql, { ConnectionPool } from 'mssql'
 
 import { CONN_ERROR, CONN_ERROR_CODES } from '@/constants'
 import { Credentials, MyCustomError } from '@/models/schemas'
-import { decrypt } from '@/utils'
+import { decryptString } from '@/utils'
 
 interface PoolStack {
   [key: string]: ConnectionPool
@@ -24,7 +24,7 @@ async function createPool(config: Credentials): Promise<ConnectionPool> {
 
   const newConfig = {
     user: config.username,
-    password: decrypt(config.password),
+    password: decryptString(config.password),
     database: config.dbname,
     server: config.server,
     pool: {

@@ -6,12 +6,12 @@ import jwt from 'jsonwebtoken'
 import { COMMON_ERROR_CODES } from '@/constants'
 import { AuthModel } from '@/models/auth'
 import { Credentials, LoginResult, MyCustomError } from '@/models/schemas'
-import { encrypt } from '@/utils'
+import { encryptString } from '@/utils'
 
 export class AuthController {
   login = async (req: Request, res: Response, next: NextFunction) => {
     const { server, dbname, username, password }: Credentials = req.body
-    const credentials = { server, dbname, username, password: encrypt(password) }
+    const credentials = { server, dbname, username, password: encryptString(password) }
     const authModel = new AuthModel(credentials)
 
     try {
