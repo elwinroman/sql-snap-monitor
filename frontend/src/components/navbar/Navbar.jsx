@@ -15,6 +15,9 @@ export function Navbar() {
         {/* Aplication logo */}
         <AplicationLogo />
 
+        {/* Espacio blanco */}
+        <div className="flex-grow"></div>
+
         {/* Input de búsqueda */}
         {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && <SearchInput />}
 
