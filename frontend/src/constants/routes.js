@@ -3,4 +3,5 @@ export const ROUTES = {
   LOGIN: '/login',
   SQL_DEFINITION: '/sqldefinition',
   USERTABLE: '/usertable',
+  ALIGMENT: '/aligment',
 }

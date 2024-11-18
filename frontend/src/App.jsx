@@ -7,7 +7,7 @@ import { InfoCards } from '@/components/main/components/InfoCards'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { ROUTES } from '@/constants'
 import Layout from '@/layouts/Layout'
-import { HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
+import { AligmentPage, HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 
 function Error() {
   return <div>Error 404</div>
@@ -19,6 +19,7 @@ function App() {
   }, [])
   return (
     <>
+      {/* Página principal */}
       <Routes>
         <Route
           path={ROUTES.HOME}
@@ -30,6 +31,8 @@ function App() {
             </ProtectedLayout>
           }
         />
+
+        {/* Página definiciones SQL */}
         <Route
           path={ROUTES.SQL_DEFINITION}
           element={
@@ -41,6 +44,8 @@ function App() {
             </ProtectedLayout>
           }
         />
+
+        {/* Página Tabla de usuario */}
         <Route
           path={ROUTES.USERTABLE}
           element={
@@ -52,7 +57,14 @@ function App() {
             </ProtectedLayout>
           }
         />
+
+        {/* Login */}
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+
+        {/* Página de aligment */}
+        <Route path={ROUTES.ALIGMENT} element={<AligmentPage />} />
+
+        {/* Error 404 */}
         <Route path="*" element={<Error />} />
       </Routes>
     </>

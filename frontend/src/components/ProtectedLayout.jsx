@@ -9,7 +9,7 @@ export function ProtectedLayout({ children }) {
   const isSessionExpired = useAuthStore((state) => state.isSessionExpired)
   const checkSession = useAuthStore((state) => state.checkSession)
 
-  if (!isAuthenticated) return <Navigate to="/login" />
+  if (!isAuthenticated) return <Navigate to="/aligment" />
   checkSession()
   // console.log(isSessionExpired)
   return (
