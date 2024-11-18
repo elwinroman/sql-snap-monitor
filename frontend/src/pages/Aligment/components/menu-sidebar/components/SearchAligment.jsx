@@ -13,6 +13,7 @@ export function SearchAligment() {
   const getObject = useAligmentStore((state) => state.getObject)
   const search = useAligmentStore((state) => state.search)
   const updateSearch = useAligmentStore((state) => state.updateSearch)
+  const loading = useAligmentStore((state) => state.loading)
 
   // validation state
   const validate = useAligmentStore((state) => state.validate)
@@ -32,7 +33,7 @@ export function SearchAligment() {
       updateValidate({ state: isValidate })
       updateValidationError({ msg })
 
-      if (isValidate) getObject()
+      if (isValidate && !loading) getObject()
     }
     setHasInput(true)
   }
