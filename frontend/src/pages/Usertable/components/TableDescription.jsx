@@ -73,7 +73,7 @@ export function TableDescription() {
                     {/* Clave primaria */}
                     {primaryKeyObject && primaryKeyObject.columnId === item.id && (
                       <TooltipProvider>
-                        <Tooltip delayDuration={150}>
+                        <Tooltip delayDuration={100}>
                           <TooltipTrigger>
                             <KeyIcon width={14} height={14} />
                           </TooltipTrigger>
@@ -88,7 +88,7 @@ export function TableDescription() {
                     {/* Clave foránea */}
                     {foreignKeysFormattedList[item.name] && (
                       <TooltipProvider>
-                        <Tooltip delayDuration={150}>
+                        <Tooltip delayDuration={100}>
                           <TooltipTrigger>
                             <KeyRoundIcon width={14} height={14} />
                           </TooltipTrigger>

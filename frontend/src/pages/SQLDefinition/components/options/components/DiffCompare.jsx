@@ -40,7 +40,7 @@ export function DiffCompare() {
         </button>
       ) : (
         <TooltipProvider>
-          <Tooltip delayDuration={150}>
+          <Tooltip delayDuration={100}>
             <TooltipTrigger asChild>
               <button
                 className={`w-auto cursor-not-allowed rounded-sm border border-zinc-400/30 bg-gray-800 px-2 py-0.5 transition duration-200`}

@@ -19,7 +19,7 @@ export function SideBySide() {
 
   return (
     <TooltipProvider>
-      <Tooltip delayDuration={150}>
+      <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
           <button
             className={`group rounded-sm px-1.5 py-1.5 transition-colors hover:bg-black ${!renderSideBySide ? 'bg-black' : 'bg-transparent'}`}

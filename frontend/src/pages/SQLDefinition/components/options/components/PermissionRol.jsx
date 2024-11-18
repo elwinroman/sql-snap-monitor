@@ -26,7 +26,7 @@ export function PermissionRol() {
 
   return (
     <TooltipProvider>
-      <Tooltip delayDuration={150}>
+      <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
           {permission.length === 0 ? (
             <button className="rounded-sm py-1.5">
