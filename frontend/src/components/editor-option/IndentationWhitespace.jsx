@@ -26,7 +26,7 @@ export function IndentationWhitespace() {
 
   return (
     <TooltipProvider>
-      <Tooltip delayDuration={150}>
+      <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
           <button
             className={`group rounded-sm px-1.5 py-1.5 hover:bg-black ${renderWhitespace === RENDER_WHITESPACE_OPTION.all ? 'bg-black' : 'bg-transparent'}`}

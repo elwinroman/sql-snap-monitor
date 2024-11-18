@@ -1,4 +1,4 @@
-import * as Themes from '../themes'
+import * as Themes from './monaco-themes'
 
 export const THEMES = [
   {

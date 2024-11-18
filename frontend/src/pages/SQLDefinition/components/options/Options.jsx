@@ -1,11 +1,12 @@
+import { FontSize } from '@/components/editor-option/FontSize'
+import { IndentationWhitespace } from '@/components/editor-option/IndentationWhitespace'
+import { ThemeEditor } from '@/components/editor-option/ThemeEditor'
+
 import { CopyClipboard } from './components/CopyClipboard'
 import { DiffCompare } from './components/DiffCompare'
-import { FontSize } from './components/FontSize'
-import { IndentationWhitespace } from './components/IndentationWhitespace'
 import { MaxMin } from './components/MaxMin'
 import { PermissionRol } from './components/PermissionRol'
 import { SideBySide } from './components/SideBySide'
-import { ThemeEditor } from './components/ThemeEditor'
 
 export function Options() {
   return (

@@ -1,10 +1,10 @@
 import Editor from '@monaco-editor/react'
 
+import { THEMES } from '@/constants'
 import { useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
-import { THEMES } from './constants/themes'
 
 export function EditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)

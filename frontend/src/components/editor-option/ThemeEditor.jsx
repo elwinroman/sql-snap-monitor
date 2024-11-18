@@ -1,5 +1,5 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { THEMES } from '@/pages/SQLDefinition/components/editor-code/constants/themes'
+import { THEMES } from '@/constants/themes'
 import { useEditorStore } from '@/stores'
 
 export function ThemeEditor() {

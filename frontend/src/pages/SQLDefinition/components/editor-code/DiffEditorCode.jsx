@@ -2,11 +2,11 @@ import './styles/editor.style.css'
 
 import { DiffEditor } from '@monaco-editor/react'
 
+import { THEMES } from '@/constants'
 import { useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
-import { THEMES } from './constants/themes'
 
 export function DiffEditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
