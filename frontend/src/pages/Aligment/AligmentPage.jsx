@@ -1,6 +1,4 @@
-import { Menu } from 'lucide-react'
-
-import { EditorAligmentOption, EditorCodeAligment, MenuSidebar } from './components'
+import { EditorCodeAligment, HeaderEditor, MenuSidebar } from './components'
 
 export function AligmentPage() {
   // const widthPage = '200px'
@@ -12,25 +10,8 @@ export function AligmentPage() {
 
       {/* overflow: hidden fixea bug de autorezise de monaco-editor */}
       <main className="w-auto flex-auto overflow-hidden">
-        {/* Cabecera */}
-        <header className="flex flex-col justify-start gap-x-5 gap-y-2 px-3 py-3 sm:items-center lg:flex-row lg:justify-between">
-          <button className="flex-[1_1_0] hover:bg-zinc-200">
-            <i className="block sm:hidden">
-              <Menu size={18} />
-            </i>
-          </button>
-
-          {/* Información */}
-          <div className="flex flex-[0_0_auto] flex-wrap items-center gap-2">
-            <h4 className="flex items-center gap-2 text-sm font-semibold text-zinc-300">
-              <span className="text-amber-400">uspGetManagerEmployees</span>
-            </h4>
-            <span className="max-w-sm text-nowrap text-sm text-zinc-400 sm:max-w-full"> (Actualizado al día de ayer)</span>
-          </div>
-
-          {/* Opciones del editor */}
-          <EditorAligmentOption className="flex-[1_1_0]" />
-        </header>
+        {/* Cabecera editor */}
+        <HeaderEditor />
 
         {/* Editor code */}
         <EditorCodeAligment />

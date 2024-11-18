@@ -36,6 +36,7 @@ export const useAligmentStore = create(
 
         if (res.status === 'error') {
           set({ loading: false })
+          set({ object: { ...AligmentObjectInitialState } })
           set({
             error: {
               statusCode: res.statusCode,
