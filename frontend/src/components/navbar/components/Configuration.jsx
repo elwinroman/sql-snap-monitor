@@ -6,7 +6,7 @@ export function Configuration() {
   return (
     <li>
       <Sheet>
-        <SheetTrigger className="grid h-9 place-content-center rounded-md px-3 hover:bg-zinc-200 hover:text-accent-foreground dark:hover:bg-zinc-700">
+        <SheetTrigger className="grid h-9 place-content-center rounded-sm px-3 hover:bg-zinc-200 hover:text-accent-foreground dark:hover:bg-zinc-700">
           <i>
             <Bolt size={16} />
           </i>

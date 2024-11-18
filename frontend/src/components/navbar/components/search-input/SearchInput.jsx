@@ -71,7 +71,7 @@ export function SearchInput() {
 
   return (
     <div className="relative">
-      <li>
+      <li className="w-24 sm:w-72 md:w-80 lg:w-96">
         <InputWithIcon
           ref={inputBtn}
           size="default"

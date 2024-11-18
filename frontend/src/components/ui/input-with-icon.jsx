@@ -26,7 +26,7 @@ const InputWithIcon = forwardRef(({ className, type, endIcon, handleClick, isFoc
         >
           {/* <EndIcon.type className={cn('h-[18px] w-[18px]')} {...endIcon.props} /> */}
           <TooltipProvider>
-            <Tooltip delayDuration={150}>
+            <Tooltip delayDuration={100}>
               <TooltipTrigger asChild>
                 <EndIcon.type className={cn('h-[18px] w-[18px]')} {...endIcon.props} />
               </TooltipTrigger>
