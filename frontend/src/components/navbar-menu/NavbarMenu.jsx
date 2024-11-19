@@ -20,6 +20,11 @@ export function NavbarMenu() {
       title: 'Tabla de usuario',
       href: ROUTES.USERTABLE,
     },
+    {
+      id: 2,
+      title: 'Aligment',
+      href: '/aligment',
+    },
   ]
 
   /**
