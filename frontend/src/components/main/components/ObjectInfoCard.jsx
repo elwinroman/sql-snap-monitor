@@ -100,7 +100,7 @@ function ListObjectProperties({ info }) {
       {info.map((item) => (
         <li
           key={item.id}
-          className="flex max-w-64 items-center justify-between gap-6 rounded-sm border border-owborder bg-owcard px-2.5 py-1.5"
+          className="flex max-w-64 items-center justify-between gap-6 rounded-sm border border-owborder bg-card px-2.5 py-1.5"
         >
           <div className="flex items-baseline gap-2">
             <h6 className="text-xs font-normal text-zinc-600 dark:text-zinc-400">{item.title}</h6>

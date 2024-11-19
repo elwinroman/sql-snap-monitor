@@ -31,7 +31,7 @@ export function UsertablePage() {
 
   return (
     <>
-      <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-owcard px-8 py-8">
+      <div className="flex flex-col gap-2 rounded-md border border-ownavbar bg-card px-8 py-8">
         <h4 className="flex items-center gap-2 pb-2 text-base font-bold text-zinc-300">
           <i>
             <Table size={20} />

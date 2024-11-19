@@ -74,7 +74,7 @@ export function NavbarMenu() {
       {/*  Hover menú dinámico (Similar a vercel) */}
       <div
         ref={menuBackdrop}
-        className={`pointer-events-none fixed left-0 top-0 h-[var(--height)] w-[var(--width)] translate-x-[var(--left)] translate-y-[var(--top)] rounded-sm bg-zinc-700/50 opacity-0 backdrop-blur-lg transition-all duration-200 ease-in-out`}
+        className={`pointer-events-none fixed left-0 top-0 h-[var(--height)] w-[var(--width)] translate-x-[var(--left)] translate-y-[var(--top)] rounded-sm bg-background opacity-0 backdrop-blur-lg transition-all duration-200 ease-in-out`}
       ></div>
     </>
   )

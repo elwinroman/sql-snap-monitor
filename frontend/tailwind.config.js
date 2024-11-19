@@ -19,7 +19,8 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
+        baselayer: 'var(--baselayer)',
+        background: 'var(--background)',
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
@@ -46,11 +47,8 @@ module.exports = {
           foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
+          DEFAULT: 'var(--card)',
           foreground: 'hsl(var(--card-foreground))',
-        },
-        owmain: {
-          DEFAULT: 'var(--ow-main)',
         },
         ownavbar: {
           DEFAULT: 'var(--ow-navbar)',

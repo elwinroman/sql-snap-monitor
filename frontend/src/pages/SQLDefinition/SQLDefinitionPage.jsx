@@ -53,7 +53,7 @@ export function SQLDefinitionPage() {
     <>
       {SQLDefinitionCode && (
         <div
-          className={`overflow-hidden rounded-md border border-owborder bg-owcard ${SQLDefinitionCode ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
+          className={`overflow-hidden rounded-md border border-owborder bg-card ${SQLDefinitionCode ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
         >
           {/* Si no existe conexión con el servidor de alineación (mensaje de error) */}
           {errorAligment && errorAligment.statusCode !== 404 && (

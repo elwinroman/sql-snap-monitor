@@ -6,9 +6,9 @@ import { Footer } from '@/sections/footer'
 
 export default function Layout({ children }) {
   return (
-    <div className="App flex w-full overflow-y-auto bg-owmain">
+    <div className="App bg-baselayer flex w-full overflow-y-auto">
       {/* <Sidebar /> */}
-      <main className="mx-auto flex h-screen w-full flex-col bg-owmain px-4 sm:px-5 md:px-6 lg:px-7">
+      <main className="bg-baselayer mx-auto flex h-screen w-full flex-col px-4 sm:px-5 md:px-6 lg:px-7">
         <div className="relative mb-6">
           <Navbar />
           <NavbarMenu />

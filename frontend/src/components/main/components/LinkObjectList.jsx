@@ -13,7 +13,7 @@ export function LinkObjectList({ objectList, updateObject, fetchObjectAction }) 
     fetchObjectAction()
   }
   return (
-    <div className="flex w-fit flex-col gap-2 bg-owmain">
+    <div className="bg-baselayer flex w-fit flex-col gap-2">
       <h6 className="flex items-baseline gap-2 text-sm text-white">
         <span>Se encontraron {objectList.length} coincidencias del objeto</span>
         <span className="pt-2 text-zinc-400">Selecciona uno de ellos</span>

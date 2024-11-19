@@ -20,9 +20,7 @@ export function PermissionRol() {
 
   let text = ''
 
-  permission.length === 0
-    ? (text = 'El objeto no tiene permisos explícitos asignados a roles específicos')
-    : (text = hasRoles ? 'Ocultar permisos y roles' : 'Ver permisos y roles')
+  permission.length === 0 ? (text = 'No existe roles asignados') : (text = hasRoles ? 'Ocultar permisos y roles' : 'Ver permisos y roles')
 
   return (
     <TooltipProvider>
