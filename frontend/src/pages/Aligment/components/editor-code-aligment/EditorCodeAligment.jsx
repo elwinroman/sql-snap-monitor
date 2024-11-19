@@ -26,6 +26,7 @@ export function EditorCodeAligment() {
   const action = useAligmentStore((state) => state.action)
   const viewMode = useAligmentStore((state) => state.viewMode)
   const error = useAligmentStore((state) => state.error)
+  const loading = useAligmentStore((state) => state.loading)
   const { name, schema, permission, definition } = useAligmentStore((state) => state.object)
 
   const roles = formatPermissionRoles(permission, schema, name)
@@ -66,7 +67,7 @@ export function EditorCodeAligment() {
       language="sql"
       defaultValue={defaultCode}
       theme={theme}
-      value={code}
+      value={!loading ? code : 'Buscando información, esto puede tardar unos segundos...'}
       options={{ ...fullOptions }}
       loading={<div>Cargando...</div>}
     />

@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { cn } from '@/lib/utils'
 
-const InputWithIcon = forwardRef(({ className, type, endIcon, handleClick, isFocus, ...props }, ref) => {
+const InputWithIcon = forwardRef(({ className, type, endIcon, handleClick, isFocus, title, ...props }, ref) => {
   const EndIcon = endIcon
   const { disabled } = props
 
@@ -31,7 +31,7 @@ const InputWithIcon = forwardRef(({ className, type, endIcon, handleClick, isFoc
                 <EndIcon.type className={cn('h-[18px] w-[18px]')} {...endIcon.props} />
               </TooltipTrigger>
               <TooltipContent side="bottom">
-                <p>Buscar</p>
+                <p>{title}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

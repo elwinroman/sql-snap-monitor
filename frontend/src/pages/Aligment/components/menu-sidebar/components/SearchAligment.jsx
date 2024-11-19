@@ -35,7 +35,6 @@ export function SearchAligment() {
 
       if (isValidate && !loading) getObject()
     }
-    setHasInput(true)
   }
 
   const handleChange = (e) => {
@@ -68,6 +67,7 @@ export function SearchAligment() {
           handleClick={handleClick}
           isFocus={isFocus}
           spellCheck="false"
+          title="Borrar"
         />
       </label>
       {!validate && <span className="text-xs text-rose-500">{validationError}</span>}

@@ -85,6 +85,7 @@ export function SearchInput() {
           handleClick={handleClick}
           isFocus={isFocus}
           spellCheck="false"
+          title="Buscar"
           disabled={loadingSqlDefinition || loadingUsertable}
         />
       </li>

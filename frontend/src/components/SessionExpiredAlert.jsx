@@ -1,4 +1,5 @@
 import { Clock } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 import {
   AlertDialog,
@@ -16,12 +17,15 @@ export function SessionExpiredAlert() {
   const resetSQLDefinitionStore = useSQLDefinitionStore((state) => state.reset)
   const resetUsertTableStore = useUserTableStore((state) => state.reset)
 
+  const navigate = useNavigate()
+
   const handleClick = () => {
     clearAuthStore()
     resetSQLDefinitionStore()
     resetUsertTableStore()
     useSQLDefinitionStore.persist.clearStorage()
     useUserTableStore.persist.clearStorage()
+    navigate('/login')
   }
 
   return (

@@ -12,26 +12,31 @@ export function ViewModeRadio() {
     updateViewMode({ viewMode: value })
   }
 
+  if (action !== SELECT_ACTION.objeto) return
+
   return (
-    <RadioGroup value={viewMode} onValueChange={handleChange} disabled={action !== SELECT_ACTION.objeto}>
-      <div className="flex items-center space-x-2">
-        <label className="flex items-center gap-2">
-          <RadioGroupItem value={VIEW_MODE.objeto_mas_roles} />
-          <span className="text-sm text-zinc-200">Mostrar OBJETO + ROLES</span>
-        </label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <label className="flex items-center gap-2">
-          <RadioGroupItem value={VIEW_MODE.solo_objeto} />
-          <span className="text-sm text-zinc-200">Mostrar SOLO OBJETO</span>
-        </label>
-      </div>
-      <div className="flex items-center space-x-2">
-        <label className="flex items-center gap-2">
-          <RadioGroupItem value={VIEW_MODE.solo_roles} />
-          <span className="text-sm text-zinc-200">Mostrar SOLO ROLES</span>
-        </label>
-      </div>
-    </RadioGroup>
+    <div className="flex flex-col gap-1.5">
+      <h3 className="text-xs text-zinc-500">SELECCIONA COMO QUIERES VER:</h3>
+      <RadioGroup value={viewMode} onValueChange={handleChange} disabled={action !== SELECT_ACTION.objeto}>
+        <div className="flex items-center space-x-2">
+          <label className="flex items-center gap-2">
+            <RadioGroupItem value={VIEW_MODE.objeto_mas_roles} />
+            <span className="text-sm text-zinc-300">Mostrar OBJETO + ROLES</span>
+          </label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <label className="flex items-center gap-2">
+            <RadioGroupItem value={VIEW_MODE.solo_objeto} />
+            <span className="text-sm text-zinc-300">Mostrar SOLO OBJETO</span>
+          </label>
+        </div>
+        <div className="flex items-center space-x-2">
+          <label className="flex items-center gap-2">
+            <RadioGroupItem value={VIEW_MODE.solo_roles} />
+            <span className="text-sm text-zinc-300">Mostrar SOLO ROLES</span>
+          </label>
+        </div>
+      </RadioGroup>
+    </div>
   )
 }
