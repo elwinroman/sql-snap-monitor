@@ -2,8 +2,9 @@ import 'dotenv/config'
 
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import { z } from 'zod'
 
-import { COMMON_ERROR_CODES } from '@/constants'
+import { COMMON_ERROR_CODES, VALIDATION_ERROR_MSG } from '@/constants'
 import { AuthModel } from '@/models/auth'
 import { Credentials, LoginResult, MyCustomError } from '@/models/schemas'
 import { encryptString } from '@/utils'
@@ -11,10 +12,37 @@ import { encryptString } from '@/utils'
 export class AuthController {
   login = async (req: Request, res: Response, next: NextFunction) => {
     const { server, dbname, username, password }: Credentials = req.body
-    const credentials = { server, dbname, username, password: encryptString(password) }
-    const authModel = new AuthModel(credentials)
 
+    // Validación
     try {
+      const LoginSchema = z.object({
+        server: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .max(64, { message: VALIDATION_ERROR_MSG.MAX })
+          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY }),
+        dbname: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .max(64, { message: VALIDATION_ERROR_MSG.MAX })
+          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY }),
+        username: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .max(64, { message: VALIDATION_ERROR_MSG.MAX })
+          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY }),
+        password: z.string({ required_error: VALIDATION_ERROR_MSG.REQUIRED }).trim().max(64, { message: VALIDATION_ERROR_MSG.MAX }),
+      })
+
+      LoginSchema.parse({ server, dbname, username, password })
+    } catch (err) {
+      return next(err)
+    }
+
+    // Funcionalidad
+    try {
+      const credentials = { server, dbname, username, password: encryptString(password) }
+      const authModel = new AuthModel(credentials)
       const { data } = (await authModel.login()) as LoginResult
       const token = await jwt.sign({ credentials }, process.env.JWT_SECRET as string, { expiresIn: '48h' })
 
@@ -36,8 +64,10 @@ export class AuthController {
   logout = async (req: Request, res: Response, next: NextFunction) => {
     const { isSessionActive } = req.session
 
+    // Validación
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED))
+
     try {
-      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED)
       return res
         .clearCookie('access_token')
         .status(200)
@@ -50,9 +80,10 @@ export class AuthController {
   checkSession = async (req: Request, res: Response, next: NextFunction) => {
     const { credentials, isSessionActive } = req.session
 
-    try {
-      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED)
+    // Validación
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED))
 
+    try {
       const authModel = await new AuthModel(credentials as Credentials)
       const result = await authModel.checkLogin()
 
