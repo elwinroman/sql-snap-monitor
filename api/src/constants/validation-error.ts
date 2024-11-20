@@ -1,5 +1,6 @@
 export const VALIDATION_ERROR_MSG = {
-  REQUIRED: 'El campo es requerido',
-  MAX: 'Sobrepasaste el máximo de caracteres permitidos',
-  NOEMPTY: 'El campo no puede estar vacio',
+  REQUIRED: 'Este campo es obligatorio',
+  MAX: 'Has superado el número máximo de caracteres permitidos',
+  MIN: 'El campo debe tener al menos un mínimo de caracteres',
+  NOEMPTY: 'Este campo no puede estar vacío',
 }

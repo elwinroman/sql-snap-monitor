@@ -15,10 +15,21 @@ export function handleError(err: unknown, req: Request, res: Response, _next: Ne
   // Manejar errores de validación (zod)
   if (err instanceof z.ZodError) {
     console.error(err.stack)
-    const formattedError = err.errors.map(error => ({
-      field: error.path.join('.'),
-      message: error.message,
-    }))
+
+    const formattedError = err.errors.map(error => {
+      let minimum: number | bigint | undefined
+      let maximum: number | bigint | undefined
+
+      if (error.code === z.ZodIssueCode.too_small) minimum = (error as z.ZodTooSmallIssue).minimum
+      if (error.code === z.ZodIssueCode.too_big) maximum = (error as z.ZodTooBigIssue).maximum
+
+      return {
+        field: error.path.join('.'),
+        message: error.message,
+        minimum,
+        maximum,
+      }
+    })
     return res.status(400).json({ status: 'error', statusCode: 400, message: 'Error en la validación', originalError: formattedError })
   }
 

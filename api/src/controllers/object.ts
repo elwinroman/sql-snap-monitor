@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
-import { COMMON_ERROR_CODES, TypeSearch } from '@/constants/'
+import { COMMON_ERROR_CODES, TypeSearch, VALIDATION_ERROR_MSG } from '@/constants/'
 import { ObjectModel } from '@/models/object'
 import {
   Credentials,
@@ -19,12 +19,28 @@ export class ObjectController {
     const { search } = req.query
     const { credentials, isSessionActive } = req.session
 
-    try {
-      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
-      //todo: validate query-param search
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
 
+    // Validación
+    try {
+      const SearchSchema = z.object({
+        search: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
+          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+      })
+
+      SearchSchema.parse({ search })
+    } catch (err) {
+      return next(err)
+    }
+
+    // Funcionalidad
+    try {
       const objectModel = await new ObjectModel(credentials as Credentials)
       const { data, meta } = (await objectModel.findSQLDefinitionByName(search as string)) as ResponseSQLDefinitionObjects
+
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
       next(err)
@@ -51,23 +67,32 @@ export class ObjectController {
 
   // Obtiene un objeto de alineación
   getSQLDefinitionAligmentObject = async (req: Request, res: Response, next: NextFunction) => {
-    const { name, idSchema } = req.query
+    const { name, schemaName } = req.query
+
+    // Validación
+    try {
+      const AligmentObjectSchema = z.object({
+        name: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
+          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+        schemaName: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY })
+          .max(64, { message: VALIDATION_ERROR_MSG.MAX }),
+      })
+
+      AligmentObjectSchema.parse({ name, schemaName })
+    } catch (err) {
+      return next(err)
+    }
 
     try {
-      if (name == null) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro name es requerido' })
-      if (idSchema == null) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro idSchema es requerido' })
-
-      const nameObject = z.string().safeParse(name)
-      const idSchemaNumber = z.coerce.number().safeParse(idSchema)
-
-      if (!nameObject.success)
-        throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro name debe ser un string' })
-      if (!idSchemaNumber.success)
-        throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro idSchema debe ser un número' })
-
       const { data } = (await new ObjectModel(CredentialsFromEnv).getSQLDefinitionAligmentById(
-        nameObject.data,
-        idSchemaNumber.data,
+        name as string,
+        schemaName as string,
       )) as ResponseSQLDefinitionRecordObject
 
       res.status(200).json({ status: 'success', statusCode: 200, data })
@@ -80,12 +105,28 @@ export class ObjectController {
     const { search } = req.query
     const { credentials, isSessionActive } = req.session
 
-    try {
-      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
-      //todo: validate param-query search
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
 
+    // Validación
+    try {
+      const SearchSchema = z.object({
+        search: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
+          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+      })
+
+      SearchSchema.parse({ search })
+    } catch (err) {
+      return next(err)
+    }
+
+    // Funcionalidad
+    try {
       const objectModel = await new ObjectModel(credentials as Credentials)
       const { data, meta } = (await objectModel.findUserTableByName(search as string)) as ResponseUserTableObjects
+
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
       next(err)
@@ -114,21 +155,33 @@ export class ObjectController {
     const { search, type } = req.query
     const { credentials, isSessionActive } = req.session
 
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+
+    // Validación
     try {
-      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
+      const SearchSuggestionSchema = z.object({
+        search: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .trim()
+          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
+          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+        type: z
+          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .transform(val => val.trim())
+          .pipe(
+            z.nativeEnum(TypeSearch, {
+              message: `Se espera que este campo reciba 'sqldefinition' o 'usertable'`,
+            }),
+          ),
+      })
 
-      if (search == null) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro search es requerido' })
-      if (
-        type &&
-        (type as string).toLowerCase().trim() !== TypeSearch.SQLDEFINITION &&
-        (type as string).toLowerCase().trim() !== TypeSearch.USERTABLE
-      )
-        throw new MyCustomError({
-          status: 'error',
-          statusCode: 400,
-          message: `El parámetro type debe ser de dos tipos <${TypeSearch.SQLDEFINITION}> o <${TypeSearch.USERTABLE}>`,
-        })
+      SearchSuggestionSchema.parse({ search, type })
+    } catch (err) {
+      return next(err)
+    }
 
+    // Funcionalidad
+    try {
       const objectModel = await new ObjectModel(credentials as Credentials)
       const { data, meta } = (await objectModel.searchByName(search as string, type as string)) as SearchResponse
 
