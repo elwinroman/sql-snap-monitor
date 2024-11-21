@@ -51,14 +51,27 @@ export class ObjectController {
     const { id } = req.params // id del objeto
     const { credentials, isSessionActive } = req.session
 
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+
+    // Validación
     try {
-      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
+      const FindSchema = z.object({
+        id: z
+          .string()
+          .transform(val => Number(val))
+          .pipe(z.number({ message: 'El campo ruta [id] debe ser un número' })),
+      })
 
-      const idNumber = z.coerce.number().safeParse(id)
-      if (!idNumber.success) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro Id debe ser un número' })
+      FindSchema.parse({ id })
+    } catch (err) {
+      return next(err)
+    }
 
+    // Funcionalidad
+    try {
       const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data } = (await objectModel.getSQLDefinitionById(idNumber.data)) as ResponseSQLDefinitionRecordObject
+      const { data } = (await objectModel.getSQLDefinitionById(parseInt(id))) as ResponseSQLDefinitionRecordObject
+
       res.status(200).json({ status: 'success', statusCode: 200, data })
     } catch (err) {
       next(err)
@@ -137,14 +150,27 @@ export class ObjectController {
     const { id } = req.params
     const { credentials, isSessionActive } = req.session
 
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+
+    // Validación
     try {
-      if (!isSessionActive) throw new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED)
+      const FindSchema = z.object({
+        id: z
+          .string()
+          .transform(val => Number(val))
+          .pipe(z.number({ message: 'El campo ruta [id] debe ser un número' })),
+      })
 
-      const idNumber = z.coerce.number().safeParse(id)
-      if (!idNumber.success) throw new MyCustomError({ status: 'error', statusCode: 400, message: 'El parámetro Id debe ser un número' })
+      FindSchema.parse({ id })
+    } catch (err) {
+      return next(err)
+    }
 
+    // Funcionalidad
+    try {
       const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data } = (await objectModel.getUserTableById(idNumber.data)) as ResponseUserTableRecordObject
+      const { data } = (await objectModel.getUserTableById(parseInt(id))) as ResponseUserTableRecordObject
+
       res.status(200).json({ status: 'success', statusCode: 200, data })
     } catch (err) {
       next(err)
