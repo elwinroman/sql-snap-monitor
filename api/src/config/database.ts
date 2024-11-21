@@ -42,11 +42,28 @@ async function createPool(config: Credentials): Promise<ConnectionPool> {
     pools[key] = await new sql.ConnectionPool(newConfig).connect()
     return pools[key]
   } catch (error) {
-    if (!(error instanceof sql.ConnectionError)) throw error
-    if (error.code === CONN_ERROR.ELOGIN) throw new MyCustomError(CONN_ERROR_CODES.ELOGIN)
-    if (error.code === CONN_ERROR.ETIMEOUT) throw new MyCustomError(CONN_ERROR_CODES.ETIMEOUT)
-    if (error.code === CONN_ERROR.ESOCKET) throw new MyCustomError(CONN_ERROR_CODES.ESOCKET)
-    if (error.code === CONN_ERROR.EDRIVER) throw new MyCustomError(CONN_ERROR_CODES.EDRIVER)
+    if (error instanceof sql.ConnectionError) {
+      const originalError = {
+        code: error.code,
+        number: undefined,
+        message: error.message,
+      }
+
+      if (error.code === CONN_ERROR.ELOGIN) throw new MyCustomError({ ...CONN_ERROR_CODES.ELOGIN, originalError })
+      if (error.code === CONN_ERROR.ETIMEOUT) throw new MyCustomError({ ...CONN_ERROR_CODES.ETIMEOUT, originalError })
+      if (error.code === CONN_ERROR.ESOCKET) throw new MyCustomError({ ...CONN_ERROR_CODES.ESOCKET, originalError })
+      if (error.code === CONN_ERROR.EALREADYCONNECTED) throw new MyCustomError({ ...CONN_ERROR_CODES.EALREADYCONNECTED, originalError })
+      if (error.code === CONN_ERROR.EALREADYCONNECTING) throw new MyCustomError({ ...CONN_ERROR_CODES.EALREADYCONNECTING, originalError })
+      if (error.code === CONN_ERROR.EINSTLOOKUP) throw new MyCustomError({ ...CONN_ERROR_CODES.EINSTLOOKUP, originalError })
+
+      // Por si acaso
+      throw new MyCustomError({
+        status: 'error',
+        statusCode: 400,
+        message: 'Error desconocido al intentar conectarse a la base de datos',
+        originalError,
+      })
+    }
 
     throw error
   }

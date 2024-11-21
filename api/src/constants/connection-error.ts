@@ -4,7 +4,9 @@ export enum CONN_ERROR {
   ELOGIN = 'ELOGIN',
   ETIMEOUT = 'ETIMEOUT',
   ESOCKET = 'ESOCKET',
-  EDRIVER = 'EDRIVER',
+  EALREADYCONNECTED = 'EALREADYCONNECTED',
+  EALREADYCONNECTING = 'EALREADYCONNECTING',
+  EINSTLOOKUP = 'EINSTLOOKUP',
 }
 
 type CustomErrorList = {
@@ -26,5 +28,20 @@ export const CONN_ERROR_CODES: CustomErrorList = {
     status: 'error',
     statusCode: 400,
     message: 'Error de conexión con el servidor',
+  },
+  EALREADYCONNECTED: {
+    status: 'error',
+    statusCode: 400,
+    message: 'La base de datos ya está conectada',
+  },
+  EALREADYCONNECTING: {
+    status: 'error',
+    statusCode: 400,
+    message: 'Ya se está conectando a la base de datos',
+  },
+  EINSTLOOKUP: {
+    status: 'error',
+    statusCode: 400,
+    message: 'Error en la búsqueda de instancias',
   },
 }

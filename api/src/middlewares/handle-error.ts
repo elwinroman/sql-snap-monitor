@@ -7,14 +7,14 @@ import { MyCustomError } from '@/models/schemas'
 export function handleError(err: unknown, req: Request, res: Response, _next: NextFunction) {
   // Manejar errores de conexión a la base de datos
   if (err instanceof MyCustomError) {
-    console.error(err.stack)
+    console.error(err)
     const { status, statusCode, message, originalError } = err
     return res.status(statusCode).json({ status, statusCode, message, originalError })
   }
 
   // Manejar errores de validación (zod)
   if (err instanceof z.ZodError) {
-    console.error(err.stack)
+    console.error(err)
 
     const formattedError = err.errors.map(error => {
       let minimum: number | bigint | undefined

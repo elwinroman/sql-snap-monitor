@@ -1,4 +1,5 @@
 export interface OriginalError {
+  code: string | undefined
   number: number | undefined
   message: string | undefined
 }
