@@ -7,9 +7,11 @@ import { z } from 'zod'
 import { COMMON_ERROR_CODES, VALIDATION_ERROR_MSG } from '@/constants'
 import { AuthModel } from '@/models/auth'
 import { Credentials, LoginResult, MyCustomError } from '@/models/schemas'
-import { encryptString } from '@/utils'
+import { UserModel } from '@/models/user'
+import { encryptString, generateHashForUniqueUID } from '@/utils'
 
 export class AuthController {
+  // Login para un usuario SQL
   login = async (req: Request, res: Response, next: NextFunction) => {
     const { server, dbname, username, password }: Credentials = req.body
 
@@ -41,10 +43,40 @@ export class AuthController {
 
     // Funcionalidad
     try {
-      const credentials = { server, dbname, username, password: encryptString(password) }
+      // sanitizar los datos
+      const credentials = {
+        server: server.trim(),
+        dbname: dbname.trim(),
+        username: username.trim().toLowerCase(),
+        password: encryptString(password.trim()),
+      }
+
       const authModel = new AuthModel(credentials)
       const { data } = (await authModel.login()) as LoginResult
-      const token = await jwt.sign({ credentials }, process.env.JWT_SECRET as string, { expiresIn: '48h' })
+
+      // buscar el usuario
+      const usernameHash = generateHashForUniqueUID({ server: data.server, username: credentials.username })
+      const userModel = new UserModel()
+      let user = await userModel.findUserByUsername(usernameHash)
+
+      // si no se encuentra el usuario en la BD de logs, se procede a registrar uno nuevo
+      if (!user) {
+        await userModel.registerUser({
+          cHashUsuarioUID: usernameHash,
+          cUsuario: credentials.username,
+          cServer: data.server,
+          cAliasServer: credentials.server,
+        })
+
+        user = await userModel.findUserByUsername(usernameHash)
+      }
+
+      // denegar acceso a la aplicación a un usuario desactivado
+      if (!user?.lVigente) return next(new MyCustomError(COMMON_ERROR_CODES.PERMISSION_REQUIRED))
+
+      // generar token con los datos del usuario
+      const userDataForToken = user
+      const token = jwt.sign({ ...userDataForToken }, process.env.JWT_SECRET as string, { expiresIn: '48h' })
 
       return res
         .status(200)
@@ -61,6 +93,7 @@ export class AuthController {
     }
   }
 
+  // Cerrar sesión
   logout = async (req: Request, res: Response, next: NextFunction) => {
     const { isSessionActive } = req.session
 
@@ -77,6 +110,7 @@ export class AuthController {
     }
   }
 
+  // Comprobar si la sesión está activa (por cookie y/o conexión a BD)
   checkSession = async (req: Request, res: Response, next: NextFunction) => {
     const { credentials, isSessionActive } = req.session
 

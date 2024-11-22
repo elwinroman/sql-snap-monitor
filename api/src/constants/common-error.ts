@@ -4,6 +4,7 @@ type CustomErrorList = {
   [key: string]: CustomError
 }
 
+// todo, convertir a minúscula los errores NOTFOUND a notfound
 export const COMMON_ERROR_CODES: CustomErrorList = {
   NOTFOUND: {
     status: 'error',
@@ -24,5 +25,10 @@ export const COMMON_ERROR_CODES: CustomErrorList = {
     status: 'error',
     statusCode: 401,
     message: 'No está autorizado para acceder a este recurso',
+  },
+  PERMISSION_REQUIRED: {
+    status: 'error',
+    statusCode: 403,
+    message: 'No tienes permisos para usar esta aplicación. Contacta con un administrador para reactivar',
   },
 }
