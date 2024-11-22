@@ -3,7 +3,7 @@ import sql from 'mssql'
 
 import { connection } from '@/config/database'
 import { COMMON_ERROR_CODES, TypeSearch } from '@/constants'
-import { formatSQLDataType, handleRequestError } from '@/utils'
+import { formatSQLDataType, throwRequestError } from '@/utils'
 
 import {
   Column,
@@ -69,7 +69,7 @@ export class ObjectModel implements ForRetrievingObject {
       return { data, meta: { length: data?.length } }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 
@@ -143,7 +143,7 @@ export class ObjectModel implements ForRetrievingObject {
       return { data }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 
@@ -180,7 +180,7 @@ export class ObjectModel implements ForRetrievingObject {
       return { data, meta: { length: data?.length } }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 
@@ -346,7 +346,7 @@ export class ObjectModel implements ForRetrievingObject {
       return { data }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 
@@ -396,7 +396,7 @@ export class ObjectModel implements ForRetrievingObject {
       return { data }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 
@@ -431,7 +431,7 @@ export class ObjectModel implements ForRetrievingObject {
       return { data: res.recordset, meta: { length: res.recordset.length } }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 }

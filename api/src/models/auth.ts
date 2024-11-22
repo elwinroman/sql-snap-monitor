@@ -1,7 +1,7 @@
 import sql from 'mssql'
 
 import { Credentials, CustomError, DatabaseInfo, ForAuthenticating, LoginResult } from '@/models/schemas'
-import { handleRequestError } from '@/utils/handle-request-error'
+import { throwRequestError } from '@/utils/handle-request-error'
 
 import { connection } from '../config/database'
 
@@ -32,13 +32,13 @@ export class AuthModel implements ForAuthenticating {
         compatibility: res.recordset[0].cmptlevel,
         description: res.recordset[0].value,
         server: res.recordset[0].server_name,
+        hasPerms: res.recordset[0].has_perms,
       }
 
       return { data }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 
@@ -54,7 +54,7 @@ export class AuthModel implements ForAuthenticating {
       return date
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
-      handleRequestError(error)
+      throwRequestError(error)
     }
   }
 }
