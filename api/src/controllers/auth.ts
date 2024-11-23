@@ -5,10 +5,8 @@ import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
 import { COMMON_ERROR_CODES, VALIDATION_ERROR } from '@/constants'
-import { AuthModel } from '@/models/auth'
-import { LogModel } from '@/models/log'
 import { Credentials, DatabaseDetails, MyCustomError } from '@/models/schemas'
-import { UserModel } from '@/models/user'
+import { AuthService, LogService, UserService } from '@/services'
 import { encryptString, generateHashForUniqueUID } from '@/utils'
 
 export class AuthController {
@@ -52,32 +50,32 @@ export class AuthController {
         password: encryptString(password.trim()),
       }
 
-      const authModel = new AuthModel(credentials)
-      const databaseDetails = (await authModel.login()) as DatabaseDetails
+      const authService = new AuthService(credentials)
+      const databaseDetails = (await authService.login()) as DatabaseDetails
 
       // buscar el usuario
       const usernameHash = generateHashForUniqueUID({ server: databaseDetails.server, username: credentials.username })
-      const userModel = new UserModel()
-      let user = await userModel.buscarUsuarioByUsername(usernameHash)
+      const userService = new UserService()
+      let user = await userService.buscarUsuarioByUsername(usernameHash)
 
       // si no se encuentra el usuario en la BD de logs, se procede a registrar uno nuevo
       if (!user) {
-        await userModel.registrarUsuario({
+        await userService.registrarUsuario({
           cHashUsuarioUID: usernameHash,
           cUsuario: credentials.username,
           cServer: databaseDetails.server,
           cAliasServer: databaseDetails.server,
         })
 
-        user = await userModel.buscarUsuarioByUsername(usernameHash)
+        user = await userService.buscarUsuarioByUsername(usernameHash)
       }
 
       // denegar acceso a la aplicación a un usuario desactivado
       if (!user?.lVigente) return next(new MyCustomError(COMMON_ERROR_CODES.permission_required))
 
       // registrar el acceso del usuario en el log
-      const logModel = new LogModel()
-      await logModel.registrarAcceso({
+      const logService = new LogService()
+      await logService.registrarAcceso({
         idUsuario: user.idUsuario,
         cDatabase: databaseDetails.name,
       })
@@ -132,8 +130,8 @@ export class AuthController {
     if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.sessionalreadyclosed))
 
     try {
-      const authModel = await new AuthModel(credentials as Credentials)
-      const result = await authModel.checkLogin()
+      const authService = new AuthService(credentials as Credentials)
+      const result = await authService.checkLogin()
 
       return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa', time: result })
     } catch (err) {

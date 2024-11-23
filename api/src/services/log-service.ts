@@ -1,20 +1,19 @@
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
-import { encryptString } from '@/utils'
-import { printRequestError } from '@/utils'
+import { encryptString, printRequestError } from '@/utils'
 
-import { Credentials, ForRetrievingLog, LogAccesoInput, LogBusquedaInput } from './schemas'
+import { Credentials, ForRetrievingLog, LogAccesoInput, LogBusquedaInput } from '../models/schemas'
 
-export class LogModel implements ForRetrievingLog {
+export class LogService implements ForRetrievingLog {
   private credentials: Credentials
 
   constructor() {
     this.credentials = {
-      server: process.env.LOG_DB_SERVER || '',
-      dbname: process.env.LOG_DB_NAME || '',
-      username: process.env.LOG_DB_USERNAME || '',
-      password: encryptString(process.env.LOG_DB_PASSWORD || ''),
+      server: process.env.LOG_DB_SERVER as string,
+      dbname: process.env.LOG_DB_NAME as string,
+      username: process.env.LOG_DB_USERNAME as string,
+      password: encryptString(process.env.LOG_DB_PASSWORD as string),
     }
   }
 

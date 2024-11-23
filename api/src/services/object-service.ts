@@ -24,9 +24,9 @@ import {
   SQLDefinitionRecordObject,
   UserTableObjects,
   UserTableRecordObject,
-} from './schemas'
+} from '../models/schemas'
 
-export class ObjectModel implements ForRetrievingObject {
+export class ObjectService implements ForRetrievingObject {
   private credentials: Credentials
 
   constructor(credentials: Credentials) {

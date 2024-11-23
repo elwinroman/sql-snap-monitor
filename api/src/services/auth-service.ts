@@ -1,11 +1,11 @@
 import sql from 'mssql'
 
 import { Credentials, CustomError, DatabaseDetails, ForAuthenticating } from '@/models/schemas'
-import { throwRequestError } from '@/utils/handle-request-error'
+import { throwRequestError } from '@/utils'
 
 import { connection } from '../config/database'
 
-export class AuthModel implements ForAuthenticating {
+export class AuthService implements ForAuthenticating {
   private credentials: Credentials
 
   constructor(credentials: Credentials) {

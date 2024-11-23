@@ -1,21 +1,19 @@
-// import { format } from '@formkit/tempo'
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
-import { encryptString } from '@/utils'
-import { printRequestError } from '@/utils'
+import { encryptString, printRequestError } from '@/utils'
 
-import { Credentials, ForRetrievingUser, ResponseUser, UserInput } from './schemas'
+import { Credentials, ForRetrievingUser, ResponseUser, UserInput } from '../models/schemas'
 
-export class UserModel implements ForRetrievingUser {
+export class UserService implements ForRetrievingUser {
   private credentials: Credentials
 
   constructor() {
     this.credentials = {
-      server: process.env.LOG_DB_SERVER || '',
-      dbname: process.env.LOG_DB_NAME || '',
-      username: process.env.LOG_DB_USERNAME || '',
-      password: encryptString(process.env.LOG_DB_PASSWORD || ''),
+      server: process.env.LOG_DB_SERVER as string,
+      dbname: process.env.LOG_DB_NAME as string,
+      username: process.env.LOG_DB_USERNAME as string,
+      password: encryptString(process.env.LOG_DB_PASSWORD as string),
     }
   }
 

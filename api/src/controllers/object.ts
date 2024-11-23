@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
 import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR } from '@/constants/'
-import { LogModel } from '@/models/log'
-import { ObjectModel } from '@/models/object'
 import {
   Credentials,
   CredentialsFromEnv,
@@ -14,6 +12,7 @@ import {
   SearchResponse,
   SQLDefinitionRecordObject,
 } from '@/models/schemas'
+import { LogService, ObjectService } from '@/services'
 
 export class ObjectController {
   findSQLDefinition = async (req: Request, res: Response, next: NextFunction) => {
@@ -39,8 +38,8 @@ export class ObjectController {
 
     // Funcionalidad
     try {
-      const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data, meta } = (await objectModel.findSQLDefinitionByName(search as string)) as ResponseSQLDefinitionObjects
+      const objectService = new ObjectService(credentials as Credentials)
+      const { data, meta } = (await objectService.findSQLDefinitionByName(search as string)) as ResponseSQLDefinitionObjects
 
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
@@ -70,12 +69,12 @@ export class ObjectController {
 
     // Funcionalidad
     try {
-      const objectModel = new ObjectModel(credentials as Credentials)
-      const object = (await objectModel.getSQLDefinitionById(parseInt(id))) as SQLDefinitionRecordObject
+      const objectService = new ObjectService(credentials as Credentials)
+      const object = (await objectService.getSQLDefinitionById(parseInt(id))) as SQLDefinitionRecordObject
 
       // registrar el log de la búsqueda del objeto hecho por el usuario
-      const logModel = new LogModel()
-      logModel.registrarBusqueda({
+      const logService = new LogService()
+      logService.registrarBusqueda({
         idUsuario: idUsuario as number,
         idTipoAccion: TYPE_ACTION.sqldefinition.id,
         cDatabase: credentials?.dbname as string,
@@ -135,17 +134,17 @@ export class ObjectController {
         isComparisonMode: isComparisonMode === 'true' ? true : undefined,
       }
 
-      const aligmentObject = (await new ObjectModel(CredentialsFromEnv).getSQLDefinitionAligmentById(
+      const aligmentObject = (await new ObjectService(CredentialsFromEnv).getSQLDefinitionAligmentById(
         params.name,
         params.schemaName,
       )) as SQLDefinitionRecordObject
 
       // registrar el log de la búsqueda del objeto
-      const logModel = new LogModel()
+      const logService = new LogService()
       // si el parámetro isComparisonMode es TRUE, se está realizando una comparación
       const actionType = params.isComparisonMode ? TYPE_ACTION.forcompare.id : TYPE_ACTION.sqldefinition.id
 
-      logModel.registrarBusqueda({
+      logService.registrarBusqueda({
         idUsuario: idUsuario ?? undefined,
         idTipoAccion: actionType,
         cDatabase: `${process.env.PREPROD_DB_NAME}_PROD` as string,
@@ -183,8 +182,8 @@ export class ObjectController {
 
     // Funcionalidad
     try {
-      const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data, meta } = (await objectModel.findUserTableByName(search as string)) as ResponseUserTableObjects
+      const objectService = new ObjectService(credentials as Credentials)
+      const { data, meta } = (await objectService.findUserTableByName(search as string)) as ResponseUserTableObjects
 
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
@@ -214,12 +213,12 @@ export class ObjectController {
 
     // Funcionalidad
     try {
-      const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data } = (await objectModel.getUserTableById(parseInt(id))) as ResponseUserTableRecordObject
+      const objectService = new ObjectService(credentials as Credentials)
+      const { data } = (await objectService.getUserTableById(parseInt(id))) as ResponseUserTableRecordObject
 
       // registrar el log de la búsqueda del objeto hecho por el usuario
-      const logModel = new LogModel()
-      logModel.registrarBusqueda({
+      const logService = new LogService()
+      logService.registrarBusqueda({
         idUsuario: idUsuario as number,
         idTipoAccion: TYPE_ACTION.usertable.id,
         cDatabase: credentials?.dbname as string,
@@ -263,8 +262,8 @@ export class ObjectController {
 
     // Funcionalidad
     try {
-      const objectModel = await new ObjectModel(credentials as Credentials)
-      const { data, meta } = (await objectModel.searchByName(search as string, type as string)) as SearchResponse
+      const objectService = new ObjectService(credentials as Credentials)
+      const { data, meta } = (await objectService.searchByName(search as string, type as string)) as SearchResponse
 
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
