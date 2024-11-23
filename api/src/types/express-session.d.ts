@@ -8,5 +8,6 @@ declare module 'express-session' {
   interface SessionData {
     credentials: Credentials
     isSessionActive: boolean
+    idUsuario: number
   }
 }

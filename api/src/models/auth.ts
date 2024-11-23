@@ -1,6 +1,6 @@
 import sql from 'mssql'
 
-import { Credentials, CustomError, DatabaseInfo, ForAuthenticating, LoginResult } from '@/models/schemas'
+import { Credentials, CustomError, DatabaseDetails, ForAuthenticating } from '@/models/schemas'
 import { throwRequestError } from '@/utils/handle-request-error'
 
 import { connection } from '../config/database'
@@ -12,7 +12,7 @@ export class AuthModel implements ForAuthenticating {
     this.credentials = { ...credentials }
   }
 
-  async login(): Promise<LoginResult | undefined> {
+  async login(): Promise<DatabaseDetails | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -28,15 +28,14 @@ export class AuthModel implements ForAuthenticating {
       `
       const res = await request.query(stmt)
 
-      const data: DatabaseInfo = {
+      const data: DatabaseDetails = {
         name: res.recordset[0].name,
         compatibility: res.recordset[0].cmptlevel,
         description: res.recordset[0].value,
         server: res.recordset[0].server_name,
-        hasPerms: res.recordset[0].has_perms,
       }
 
-      return { data }
+      return data
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       throwRequestError(error)

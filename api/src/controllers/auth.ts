@@ -6,7 +6,8 @@ import { z } from 'zod'
 
 import { COMMON_ERROR_CODES, VALIDATION_ERROR_MSG } from '@/constants'
 import { AuthModel } from '@/models/auth'
-import { Credentials, LoginResult, MyCustomError } from '@/models/schemas'
+import { LogModel } from '@/models/log'
+import { Credentials, DatabaseDetails, MyCustomError } from '@/models/schemas'
 import { UserModel } from '@/models/user'
 import { encryptString, generateHashForUniqueUID } from '@/utils'
 
@@ -52,10 +53,10 @@ export class AuthController {
       }
 
       const authModel = new AuthModel(credentials)
-      const { data } = (await authModel.login()) as LoginResult
+      const databaseDetails = (await authModel.login()) as DatabaseDetails
 
       // buscar el usuario
-      const usernameHash = generateHashForUniqueUID({ server: data.server, username: credentials.username })
+      const usernameHash = generateHashForUniqueUID({ server: databaseDetails.server, username: credentials.username })
       const userModel = new UserModel()
       let user = await userModel.findUserByUsername(usernameHash)
 
@@ -64,8 +65,8 @@ export class AuthController {
         await userModel.registerUser({
           cHashUsuarioUID: usernameHash,
           cUsuario: credentials.username,
-          cServer: data.server,
-          cAliasServer: credentials.server,
+          cServer: databaseDetails.server,
+          cAliasServer: databaseDetails.server,
         })
 
         user = await userModel.findUserByUsername(usernameHash)
@@ -78,6 +79,9 @@ export class AuthController {
       const userDataForToken = user
       const token = jwt.sign({ ...userDataForToken }, process.env.JWT_SECRET as string, { expiresIn: '48h' })
 
+      // almacenar las credenciales en la sesión para reutilizarlas (todo: usar redis o mongo-db en el futuro)
+      req.session.credentials = { ...credentials }
+
       return res
         .status(200)
         .cookie('access_token', token, {
@@ -87,7 +91,7 @@ export class AuthController {
           sameSite: 'strict', // cookie no disponible para otros sitios
           maxAge: 1000 * 60 * 60 * 48, // cookie expira en 1 hora
         })
-        .json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', data })
+        .json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', data: databaseDetails })
     } catch (err) {
       next(err)
     }
@@ -97,7 +101,6 @@ export class AuthController {
   logout = async (req: Request, res: Response, next: NextFunction) => {
     const { isSessionActive } = req.session
 
-    // Validación
     if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED))
 
     try {
@@ -114,7 +117,6 @@ export class AuthController {
   checkSession = async (req: Request, res: Response, next: NextFunction) => {
     const { credentials, isSessionActive } = req.session
 
-    // Validación
     if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED))
 
     try {
@@ -123,6 +125,8 @@ export class AuthController {
 
       return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa', time: result })
     } catch (err) {
+      // si se ha cambiado el password sql del usuario
+      res.clearCookie('access_token')
       next(err)
     }
   }
