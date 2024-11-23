@@ -1,6 +1,6 @@
 import { CustomError } from '@/models/schemas'
 
-export enum CONN_ERROR {
+export enum ConnErrorCode {
   ELOGIN = 'ELOGIN',
   ETIMEOUT = 'ETIMEOUT',
   ESOCKET = 'ESOCKET',
@@ -14,32 +14,32 @@ type CustomErrorList = {
 }
 
 export const CONN_ERROR_CODES: CustomErrorList = {
-  ELOGIN: {
+  elogin: {
     status: 'error',
     statusCode: 401,
     message: 'Error de autenticación',
   },
-  ETIMEOUT: {
+  etimeout: {
     status: 'error',
     statusCode: 408,
     message: 'Tiempo de espera agotado, el servidor no responde o no existe',
   },
-  ESOCKET: {
+  esocket: {
     status: 'error',
     statusCode: 400,
     message: 'Error de conexión con el servidor',
   },
-  EALREADYCONNECTED: {
+  ealreadyconnected: {
     status: 'error',
     statusCode: 400,
     message: 'La base de datos ya está conectada',
   },
-  EALREADYCONNECTING: {
+  ealreadyconnecting: {
     status: 'error',
     statusCode: 400,
     message: 'Ya se está conectando a la base de datos',
   },
-  EINSTLOOKUP: {
+  einstlookup: {
     status: 'error',
     statusCode: 400,
     message: 'Error en la búsqueda de instancias',

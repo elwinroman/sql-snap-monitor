@@ -6,27 +6,27 @@ type CustomErrorList = {
 
 // todo, convertir a minúscula los errores NOTFOUND a notfound
 export const COMMON_ERROR_CODES: CustomErrorList = {
-  NOTFOUND: {
+  notfound: {
     status: 'error',
     statusCode: 404,
     message: 'No se ha encontrado el objeto, vuelva a intentarlo',
   },
-  NOTFOUNDDESCRIPTION: {
+  notfoundescription: {
     status: 'error',
     statusCode: 404,
     message: 'No se ha encontrado ninguna descripción para el objeto',
   },
-  SESSIONALREADYCLOSED: {
+  sessionalreadyclosed: {
     status: 'error',
     statusCode: 403,
     message: 'La sesión ya no está activa',
   },
-  NOTAUTHORIZED: {
+  notauthorized: {
     status: 'error',
     statusCode: 401,
     message: 'No está autorizado para acceder a este recurso',
   },
-  PERMISSION_REQUIRED: {
+  permission_required: {
     status: 'error',
     statusCode: 403,
     message: 'No tienes permisos para usar esta aplicación. Contacta con un administrador para reactivar',

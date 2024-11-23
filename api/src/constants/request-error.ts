@@ -1,6 +1,6 @@
 import { CustomError } from '@/models/schemas'
 
-export enum REQUEST_ERROR {
+export enum RequestErrorCode {
   EREQUEST = 'EREQUEST',
   ETIMEOUT = 'ETIMEOUT',
   EARGS = 'EARGS',
@@ -13,27 +13,27 @@ type CustomErrorList = {
 }
 
 export const REQUEST_ERROR_CODES: CustomErrorList = {
-  EREQUEST: {
+  erequest: {
     status: 'error',
     statusCode: 400,
     message: 'Error en la consulta',
   },
-  ETIMEOUT: {
+  etimeout: {
     status: 'error',
     statusCode: 408,
     message: 'Tiempo de espera agotado en la consulta',
   },
-  EARGS: {
+  eargs: {
     status: 'error',
     statusCode: 400,
     message: 'Error en los argumentos de la consulta',
   },
-  EINJECT: {
+  einject: {
     status: 'error',
     statusCode: 400,
     message: 'Error al inyectar dependencias',
   },
-  ENOCONN: {
+  enoconn: {
     status: 'error',
     statusCode: 400,
     message: 'Error en la conexión',

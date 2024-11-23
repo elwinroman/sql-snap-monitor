@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
-import { COMMON_ERROR_CODES, VALIDATION_ERROR_MSG } from '@/constants'
+import { COMMON_ERROR_CODES, VALIDATION_ERROR } from '@/constants'
 import { AuthModel } from '@/models/auth'
 import { LogModel } from '@/models/log'
 import { Credentials, DatabaseDetails, MyCustomError } from '@/models/schemas'
@@ -20,21 +20,21 @@ export class AuthController {
     try {
       const LoginSchema = z.object({
         server: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .max(64, { message: VALIDATION_ERROR_MSG.MAX })
-          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY }),
+          .max(64, { message: VALIDATION_ERROR.max })
+          .min(1, { message: VALIDATION_ERROR.noempty }),
         dbname: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .max(64, { message: VALIDATION_ERROR_MSG.MAX })
-          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY }),
+          .max(64, { message: VALIDATION_ERROR.max })
+          .min(1, { message: VALIDATION_ERROR.noempty }),
         username: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .max(64, { message: VALIDATION_ERROR_MSG.MAX })
-          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY }),
-        password: z.string({ required_error: VALIDATION_ERROR_MSG.REQUIRED }).trim().max(64, { message: VALIDATION_ERROR_MSG.MAX }),
+          .max(64, { message: VALIDATION_ERROR.max })
+          .min(1, { message: VALIDATION_ERROR.noempty }),
+        password: z.string({ required_error: VALIDATION_ERROR.required }).trim().max(64, { message: VALIDATION_ERROR.max }),
       })
 
       LoginSchema.parse({ server, dbname, username, password })
@@ -73,7 +73,7 @@ export class AuthController {
       }
 
       // denegar acceso a la aplicación a un usuario desactivado
-      if (!user?.lVigente) return next(new MyCustomError(COMMON_ERROR_CODES.PERMISSION_REQUIRED))
+      if (!user?.lVigente) return next(new MyCustomError(COMMON_ERROR_CODES.permission_required))
 
       // registrar el acceso del usuario en el log
       const logModel = new LogModel()
@@ -113,7 +113,7 @@ export class AuthController {
   logout = async (req: Request, res: Response, next: NextFunction) => {
     const { isSessionActive } = req.session
 
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED))
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.sessionalreadyclosed))
 
     try {
       return res
@@ -129,7 +129,7 @@ export class AuthController {
   checkSession = async (req: Request, res: Response, next: NextFunction) => {
     const { credentials, isSessionActive } = req.session
 
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.SESSIONALREADYCLOSED))
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.sessionalreadyclosed))
 
     try {
       const authModel = await new AuthModel(credentials as Credentials)

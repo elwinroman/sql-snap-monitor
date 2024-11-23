@@ -53,7 +53,7 @@ export class ObjectModel implements ForRetrievingObject {
       request.input('name', sql.VarChar(128), name)
       const res = await request.query(stmt)
 
-      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
+      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.notfound)
 
       // todo: adapter
       const data = res.recordset.map((obj): SQLDefinitionObjects => {
@@ -98,7 +98,7 @@ export class ObjectModel implements ForRetrievingObject {
       request.input('id', sql.Int, id)
       const res = await request.query(stmt)
 
-      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
+      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.notfound)
 
       // obtener permisos (roles)
       const stmtRoles = `
@@ -162,7 +162,7 @@ export class ObjectModel implements ForRetrievingObject {
       request.input('name', sql.VarChar(128), name)
       const res = await request.query(stmt)
 
-      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
+      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.notfound)
 
       // todo: adapter
       const data = res.recordset.map((obj): UserTableObjects => {
@@ -205,7 +205,7 @@ export class ObjectModel implements ForRetrievingObject {
       const res = await request.query(stmtSearch)
 
       // si no encuentra el usertable, lanza un error de no encontrado
-      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
+      if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.notfound)
 
       // obtener columnas
       const stmtColumns = `
@@ -353,7 +353,7 @@ export class ObjectModel implements ForRetrievingObject {
       request.input('object_name', sql.VarChar(128), name).input('schema_name', sql.VarChar(64), schemaName)
       const res = await request.execute('SYS_ObtenerDefinicionSQL_SP')
 
-      if (res && res.recordset.length === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
+      if (res && res.recordset.length === 0) throw new MyCustomError(COMMON_ERROR_CODES.notfound)
 
       const objectId = res.recordset[0].object_id
 

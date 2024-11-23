@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
-import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR_MSG } from '@/constants/'
+import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR } from '@/constants/'
 import { LogModel } from '@/models/log'
 import { ObjectModel } from '@/models/object'
 import {
@@ -20,16 +20,16 @@ export class ObjectController {
     const { search } = req.query
     const { credentials, isSessionActive } = req.session
 
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
 
     // Validación
     try {
       const SearchSchema = z.object({
         search: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
-          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+          .min(3, { message: VALIDATION_ERROR.min })
+          .max(128, { message: VALIDATION_ERROR.max }),
       })
 
       SearchSchema.parse({ search })
@@ -52,7 +52,7 @@ export class ObjectController {
     const { id } = req.params // id del objeto
     const { credentials, isSessionActive, idUsuario } = req.session
 
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
 
     // Validación
     try {
@@ -99,15 +99,15 @@ export class ObjectController {
     try {
       const AligmentObjectSchema = z.object({
         name: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
-          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+          .min(3, { message: VALIDATION_ERROR.min })
+          .max(128, { message: VALIDATION_ERROR.max }),
         schemaName: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .min(1, { message: VALIDATION_ERROR_MSG.NOEMPTY })
-          .max(64, { message: VALIDATION_ERROR_MSG.MAX }),
+          .min(1, { message: VALIDATION_ERROR.noempty })
+          .max(64, { message: VALIDATION_ERROR.max }),
         isComparisonMode: z
           .string()
           .optional()
@@ -164,16 +164,16 @@ export class ObjectController {
     const { search } = req.query
     const { credentials, isSessionActive } = req.session
 
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
 
     // Validación
     try {
       const SearchSchema = z.object({
         search: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
-          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+          .min(3, { message: VALIDATION_ERROR.min })
+          .max(128, { message: VALIDATION_ERROR.max }),
       })
 
       SearchSchema.parse({ search })
@@ -196,7 +196,7 @@ export class ObjectController {
     const { id } = req.params
     const { credentials, isSessionActive, idUsuario } = req.session
 
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
 
     // Validación
     try {
@@ -238,18 +238,18 @@ export class ObjectController {
     const { search, type } = req.query
     const { credentials, isSessionActive } = req.session
 
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.NOTAUTHORIZED))
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
 
     // Validación
     try {
       const SearchSuggestionSchema = z.object({
         search: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .trim()
-          .min(3, { message: VALIDATION_ERROR_MSG.MIN })
-          .max(128, { message: VALIDATION_ERROR_MSG.MAX }),
+          .min(3, { message: VALIDATION_ERROR.min })
+          .max(128, { message: VALIDATION_ERROR.max }),
         type: z
-          .string({ required_error: VALIDATION_ERROR_MSG.REQUIRED })
+          .string({ required_error: VALIDATION_ERROR.required })
           .transform(val => val.trim())
           .refine(val => Object.values(TYPE_ACTION).some(({ name }) => name === val), {
             message: `Se espera que este campo reciba 'sqldefinition' o 'usertable'`,

@@ -1,6 +1,6 @@
 import { RequestError } from 'mssql'
 
-import { REQUEST_ERROR, REQUEST_ERROR_CODES } from '@/constants'
+import { REQUEST_ERROR_CODES, RequestErrorCode } from '@/constants'
 import { MyCustomError } from '@/models/schemas'
 
 /**
@@ -15,11 +15,11 @@ const mapRequestErrorToCustomError = (error: RequestError) => {
     number: error.number,
     message: error.message,
   }
-  if (error.code === REQUEST_ERROR.EREQUEST) return new MyCustomError({ ...REQUEST_ERROR_CODES.EREQUEST, originalError })
-  if (error.code === REQUEST_ERROR.ETIMEOUT) return new MyCustomError({ ...REQUEST_ERROR_CODES.ETIMEOUT, originalError })
-  if (error.code === REQUEST_ERROR.EARGS) return new MyCustomError({ ...REQUEST_ERROR_CODES.EARGS, originalError })
-  if (error.code === REQUEST_ERROR.EINJECT) return new MyCustomError({ ...REQUEST_ERROR_CODES.EINJECT, originalError })
-  if (error.code === REQUEST_ERROR.ENOCONN) return new MyCustomError({ ...REQUEST_ERROR_CODES.ENOCONN, originalError })
+  if (error.code === RequestErrorCode.EREQUEST) return new MyCustomError({ ...REQUEST_ERROR_CODES.EREQUEST, originalError })
+  if (error.code === RequestErrorCode.ETIMEOUT) return new MyCustomError({ ...REQUEST_ERROR_CODES.ETIMEOUT, originalError })
+  if (error.code === RequestErrorCode.EARGS) return new MyCustomError({ ...REQUEST_ERROR_CODES.EARGS, originalError })
+  if (error.code === RequestErrorCode.EINJECT) return new MyCustomError({ ...REQUEST_ERROR_CODES.EINJECT, originalError })
+  if (error.code === RequestErrorCode.ENOCONN) return new MyCustomError({ ...REQUEST_ERROR_CODES.ENOCONN, originalError })
 
   // Por si acaso (no están registrados todos los errores)
   return {

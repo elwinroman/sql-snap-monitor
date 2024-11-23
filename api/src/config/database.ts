@@ -1,6 +1,6 @@
 import sql, { ConnectionPool } from 'mssql'
 
-import { CONN_ERROR, CONN_ERROR_CODES } from '@/constants'
+import { CONN_ERROR_CODES, ConnErrorCode } from '@/constants'
 import { Credentials, MyCustomError } from '@/models/schemas'
 import { decryptString } from '@/utils'
 
@@ -49,12 +49,12 @@ async function createPool(config: Credentials): Promise<ConnectionPool> {
       message: error.message,
     }
 
-    if (error.code === CONN_ERROR.ELOGIN) throw new MyCustomError({ ...CONN_ERROR_CODES.ELOGIN, originalError })
-    if (error.code === CONN_ERROR.ETIMEOUT) throw new MyCustomError({ ...CONN_ERROR_CODES.ETIMEOUT, originalError })
-    if (error.code === CONN_ERROR.ESOCKET) throw new MyCustomError({ ...CONN_ERROR_CODES.ESOCKET, originalError })
-    if (error.code === CONN_ERROR.EALREADYCONNECTED) throw new MyCustomError({ ...CONN_ERROR_CODES.EALREADYCONNECTED, originalError })
-    if (error.code === CONN_ERROR.EALREADYCONNECTING) throw new MyCustomError({ ...CONN_ERROR_CODES.EALREADYCONNECTING, originalError })
-    if (error.code === CONN_ERROR.EINSTLOOKUP) throw new MyCustomError({ ...CONN_ERROR_CODES.EINSTLOOKUP, originalError })
+    if (error.code === ConnErrorCode.ELOGIN) throw new MyCustomError({ ...CONN_ERROR_CODES.elogin, originalError })
+    if (error.code === ConnErrorCode.ETIMEOUT) throw new MyCustomError({ ...CONN_ERROR_CODES.etimeout, originalError })
+    if (error.code === ConnErrorCode.ESOCKET) throw new MyCustomError({ ...CONN_ERROR_CODES.esocket, originalError })
+    if (error.code === ConnErrorCode.EALREADYCONNECTED) throw new MyCustomError({ ...CONN_ERROR_CODES.ealreadyconnected, originalError })
+    if (error.code === ConnErrorCode.EALREADYCONNECTING) throw new MyCustomError({ ...CONN_ERROR_CODES.ealreadyconnecting, originalError })
+    if (error.code === ConnErrorCode.EINSTLOOKUP) throw new MyCustomError({ ...CONN_ERROR_CODES.einstlookup, originalError })
 
     throw new MyCustomError({
       status: 'error',
