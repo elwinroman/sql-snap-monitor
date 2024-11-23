@@ -5,7 +5,7 @@ import { connection } from '@/config/database'
 import { encryptString } from '@/utils'
 import { printRequestError } from '@/utils'
 
-import { Credentials, ForRetrievingUser, ResponseUserData, UserInput } from './schemas'
+import { Credentials, ForRetrievingUser, ResponseUser, UserInput } from './schemas'
 
 export class UserModel implements ForRetrievingUser {
   private credentials: Credentials
@@ -20,13 +20,13 @@ export class UserModel implements ForRetrievingUser {
   }
 
   // Registra un usuario cuando no existe
-  public async registerUser(user: UserInput): Promise<boolean | undefined> {
+  public async registrarUsuario(user: UserInput): Promise<boolean | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
     try {
       const stmt = `
-        INSERT INTO dbo.Usuario (cHashUsuarioUID, cUsuario, cServer, cAliasServer, dtFechaRegistro)
+        INSERT INTO dbo.Usuario (cHashUsuarioUID, cUsuario, cServer, cAliasServer, dFechaRegistro)
         VALUES (@cHashUsuarioUID, @cUsuario, @cServer, @cAliasServer, GETDATE() AT TIME ZONE 'SA Pacific Standard Time')
       `
       request.input('cHashUsuarioUID', sql.Char(32), user.cHashUsuarioUID)
@@ -48,7 +48,7 @@ export class UserModel implements ForRetrievingUser {
   }
 
   // Busca al usuario por su cHashUsuarioUID
-  public async findUserByUsername(usernameHash: string): Promise<ResponseUserData | undefined> {
+  public async buscarUsuarioByUsername(usernameHash: string): Promise<ResponseUser | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 

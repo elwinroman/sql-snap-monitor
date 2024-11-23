@@ -5,14 +5,14 @@ export interface User {
   cUsuario: string
   cServer: string
   cAliasServer: string
-  dtFechaRegistro: Date
+  dFechaRegistro: Date
   lVigente: boolean
 }
 
-export type UserInput = Omit<User, 'idUsuario' | 'dtFechaRegistro' | 'lVigente'>
-export type ResponseUserData = Pick<User, 'idUsuario' | 'cUsuario' | 'lVigente'>
+export type UserInput = Omit<User, 'idUsuario' | 'dFechaRegistro' | 'lVigente'>
+export type ResponseUser = Pick<User, 'idUsuario' | 'cUsuario' | 'lVigente'>
 
 export interface ForRetrievingUser {
-  registerUser(user: UserInput): Promise<boolean | undefined>
-  findUserByUsername(usernameHash: string): Promise<ResponseUserData | undefined>
+  registrarUsuario(user: UserInput): Promise<boolean | undefined>
+  buscarUsuarioByUsername(usernameHash: string): Promise<ResponseUser | undefined>
 }

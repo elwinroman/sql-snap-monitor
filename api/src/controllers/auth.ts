@@ -58,18 +58,18 @@ export class AuthController {
       // buscar el usuario
       const usernameHash = generateHashForUniqueUID({ server: databaseDetails.server, username: credentials.username })
       const userModel = new UserModel()
-      let user = await userModel.findUserByUsername(usernameHash)
+      let user = await userModel.buscarUsuarioByUsername(usernameHash)
 
       // si no se encuentra el usuario en la BD de logs, se procede a registrar uno nuevo
       if (!user) {
-        await userModel.registerUser({
+        await userModel.registrarUsuario({
           cHashUsuarioUID: usernameHash,
           cUsuario: credentials.username,
           cServer: databaseDetails.server,
           cAliasServer: databaseDetails.server,
         })
 
-        user = await userModel.findUserByUsername(usernameHash)
+        user = await userModel.buscarUsuarioByUsername(usernameHash)
       }
 
       // denegar acceso a la aplicación a un usuario desactivado
