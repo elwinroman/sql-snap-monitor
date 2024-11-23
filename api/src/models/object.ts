@@ -2,7 +2,7 @@ import { format } from '@formkit/tempo'
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
-import { COMMON_ERROR_CODES, TypeSearch } from '@/constants'
+import { COMMON_ERROR_CODES, TYPE_ACTION } from '@/constants'
 import { formatSQLDataType, throwRequestError } from '@/utils'
 
 import {
@@ -17,7 +17,6 @@ import {
   MyCustomError,
   PermissionRol,
   ResponseSQLDefinitionObjects,
-  ResponseSQLDefinitionRecordObject,
   ResponseUserTableObjects,
   ResponseUserTableRecordObject,
   SearchResponse,
@@ -73,7 +72,7 @@ export class ObjectModel implements ForRetrievingObject {
   }
 
   // Obtiene un objecto por su id que tiene una definición SQL
-  public async getSQLDefinitionById(id: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined> {
+  public async getSQLDefinitionById(id: number): Promise<SQLDefinitionRecordObject | CustomError | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -138,7 +137,7 @@ export class ObjectModel implements ForRetrievingObject {
         isAligmentObject: false,
       }
 
-      return { data }
+      return data
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       throwRequestError(error)
@@ -345,13 +344,13 @@ export class ObjectModel implements ForRetrievingObject {
   public async getSQLDefinitionAligmentById(
     name: string,
     schemaName: string,
-  ): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined> {
+  ): Promise<SQLDefinitionRecordObject | CustomError | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
     const request2 = conn.request()
 
     try {
-      request.input('object_name', sql.VarChar(128), name).input('schema_name', sql.VarChar(128), schemaName)
+      request.input('object_name', sql.VarChar(128), name).input('schema_name', sql.VarChar(64), schemaName)
       const res = await request.execute('SYS_ObtenerDefinicionSQL_SP')
 
       if (res && res.recordset.length === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
@@ -384,7 +383,7 @@ export class ObjectModel implements ForRetrievingObject {
         isAligmentObject: true,
       }
 
-      return { data }
+      return data
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       throwRequestError(error)
@@ -397,8 +396,8 @@ export class ObjectModel implements ForRetrievingObject {
     const request = conn.request()
 
     let andType = ''
-    if (type === TypeSearch.SQLDEFINITION) andType = `AND type IN('P','FN','R','RF','TR','IF','TF','V')`
-    else if (type === TypeSearch.USERTABLE) andType = `AND type IN('U')`
+    if (type === TYPE_ACTION.sqldefinition.name) andType = `AND type IN('P','FN','R','RF','TR','IF','TF','V')`
+    else if (type === TYPE_ACTION.usertable.name) andType = `AND type IN('U')`
 
     try {
       const stmt = `

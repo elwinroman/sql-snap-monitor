@@ -61,10 +61,6 @@ export interface SQLDefinitionRecordObject {
   isAligmentObject: boolean
 }
 
-export interface ResponseSQLDefinitionRecordObject {
-  data: SQLDefinitionRecordObject
-}
-
 // Para objetos que son tablas de usuario
 
 export type UserTableObjects = SQLDefinitionObjects
@@ -167,9 +163,9 @@ export interface SearchResponse {
 
 export interface ForRetrievingObject {
   findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | CustomError | undefined>
-  getSQLDefinitionById(id: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined>
+  getSQLDefinitionById(id: number): Promise<SQLDefinitionRecordObject | CustomError | undefined>
   findUserTableByName(name: string): Promise<ResponseUserTableObjects | CustomError | undefined>
   getUserTableById(id: number): Promise<ResponseUserTableRecordObject | CustomError | undefined>
-  getSQLDefinitionAligmentById(name: string, schemaName: string): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined>
+  getSQLDefinitionAligmentById(name: string, schemaName: string): Promise<SQLDefinitionRecordObject | CustomError | undefined>
   searchByName(name: string, type?: string): Promise<SearchResponse | CustomError | undefined>
 }

@@ -75,12 +75,24 @@ export class AuthController {
       // denegar acceso a la aplicación a un usuario desactivado
       if (!user?.lVigente) return next(new MyCustomError(COMMON_ERROR_CODES.PERMISSION_REQUIRED))
 
+      // registrar el acceso del usuario en el log
+      const logModel = new LogModel()
+      await logModel.registrarAcceso({
+        idUsuario: user.idUsuario,
+        cDatabase: databaseDetails.name,
+      })
+
       // generar token con los datos del usuario
       const userDataForToken = user
       const token = jwt.sign({ ...userDataForToken }, process.env.JWT_SECRET as string, { expiresIn: '48h' })
 
       // almacenar las credenciales en la sesión para reutilizarlas (todo: usar redis o mongo-db en el futuro)
-      req.session.credentials = { ...credentials }
+      req.session.credentials = {
+        server: databaseDetails.server,
+        dbname: databaseDetails.name,
+        username: credentials.username,
+        password: credentials.password,
+      }
 
       return res
         .status(200)
