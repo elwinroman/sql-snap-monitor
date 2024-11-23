@@ -14,18 +14,19 @@ export class AuthModel implements ForAuthenticating {
 
   async login(): Promise<LoginResult | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     try {
-      const stmt = `SELECT
-                      name,
-                      cmptlevel,
-                      value = (SELECT TOP 1 value FROM sys.extended_properties WHERE class = 0),
-                      @@SERVERNAME AS server_name
-                    FROM sys.sysdatabases
-                    WHERE dbid = DB_ID()
-                  `
-      const res = await request?.query(stmt)
+      const stmt = `
+        SELECT
+          name,
+          cmptlevel,
+          value = (SELECT TOP 1 value FROM sys.extended_properties WHERE class = 0),
+          @@SERVERNAME AS server_name
+        FROM sys.sysdatabases
+        WHERE dbid = DB_ID()
+      `
+      const res = await request.query(stmt)
 
       const data: DatabaseInfo = {
         name: res.recordset[0].name,
@@ -44,13 +45,13 @@ export class AuthModel implements ForAuthenticating {
 
   async checkLogin(): Promise<string | CustomError | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     try {
       const stmt = 'SELECT GETDATE() AS date'
-      const res = await request?.query(stmt)
+      const res = await request.query(stmt)
 
-      const date = await res?.recordset[0].date
+      const date = await res.recordset[0].date
       return date
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error

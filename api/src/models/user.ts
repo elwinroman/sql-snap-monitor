@@ -22,7 +22,7 @@ export class UserModel implements ForRetrievingUser {
   // Registra un usuario cuando no existe
   public async registerUser(user: UserInput): Promise<boolean | undefined> {
     const conn = await connection(this.credentials)
-    const request = conn?.request()
+    const request = conn.request()
 
     try {
       const stmt = `
@@ -34,7 +34,7 @@ export class UserModel implements ForRetrievingUser {
       request.input('cServer', sql.VarChar(64), user.cServer)
       request.input('cAliasServer', sql.VarChar(64), user.cAliasServer)
 
-      const res = await request?.query(stmt)
+      const res = await request.query(stmt)
 
       if (res.rowsAffected[0] === 1) return true // se ha insertado correctamente (1 fila afectada)
       return false
@@ -50,7 +50,7 @@ export class UserModel implements ForRetrievingUser {
   // Busca al usuario por su cHashUsuarioUID
   public async findUserByUsername(usernameHash: string): Promise<ResponseUserData | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     try {
       const stmt = `
@@ -62,7 +62,7 @@ export class UserModel implements ForRetrievingUser {
       `
       request.input('usernameHash', sql.VarChar(32), usernameHash)
 
-      const res = await request?.query(stmt)
+      const res = await request.query(stmt)
 
       if (res.rowsAffected[0] === 1) return res.recordset[0]
       else return undefined

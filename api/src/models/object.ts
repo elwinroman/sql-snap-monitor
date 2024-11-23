@@ -37,7 +37,7 @@ export class ObjectModel implements ForRetrievingObject {
   // Busca uno o varios objectos por su nombre que tienen una definición SQL
   public async findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | CustomError | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     try {
       const stmt = `
@@ -51,22 +51,21 @@ export class ObjectModel implements ForRetrievingObject {
           AND A.name = @name
       `
 
-      await request?.input('name', sql.VarChar, name)
-      const res = await request?.query(stmt)
+      request.input('name', sql.VarChar(128), name)
+      const res = await request.query(stmt)
 
       if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
 
       // todo: adapter
-      const data =
-        res?.recordset.map((obj): SQLDefinitionObjects => {
-          return {
-            id: obj.object_id,
-            name: obj.name,
-            schema: obj.schema_name,
-          }
-        }) ?? []
+      const data = res.recordset.map((obj): SQLDefinitionObjects => {
+        return {
+          id: obj.object_id,
+          name: obj.name,
+          schema: obj.schema_name,
+        }
+      })
 
-      return { data, meta: { length: data?.length } }
+      return { data, meta: { length: data.length } }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       throwRequestError(error)
@@ -76,7 +75,7 @@ export class ObjectModel implements ForRetrievingObject {
   // Obtiene un objecto por su id que tiene una definición SQL
   public async getSQLDefinitionById(id: number): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     try {
       const stmt = `
@@ -97,8 +96,8 @@ export class ObjectModel implements ForRetrievingObject {
           AND A.object_id = @id
       `
 
-      await request?.input('id', sql.Int, id)
-      const res = await request?.query(stmt)
+      request.input('id', sql.Int, id)
+      const res = await request.query(stmt)
 
       if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
 
@@ -113,29 +112,28 @@ export class ObjectModel implements ForRetrievingObject {
         INNER JOIN sys.database_principals	C ON C.principal_id = A.grantee_principal_id
         WHERE B.object_id = @id2
       `
-      await request?.input('id2', sql.Int, id)
-      const resRoles = await request?.query(stmtRoles)
+      request.input('id2', sql.Int, id)
+      const resRoles = await request.query(stmtRoles)
 
-      const roles: PermissionRol[] =
-        resRoles?.recordset.map((obj): PermissionRol => {
-          return {
-            stateDesc: obj.state_desc,
-            permissionName: obj.permission_name,
-            name: obj.rol,
-          }
-        }) ?? []
+      const roles: PermissionRol[] = resRoles.recordset.map((obj): PermissionRol => {
+        return {
+          stateDesc: obj.state_desc,
+          permissionName: obj.permission_name,
+          name: obj.rol,
+        }
+      })
 
       // adapter
       const data: SQLDefinitionRecordObject = {
-        id: res?.recordset[0].object_id,
-        name: res?.recordset[0].name,
-        type: res?.recordset[0].type.trim(),
-        typeDesc: res?.recordset[0].type_desc,
-        schemaId: res?.recordset[0].schema_id,
-        schema: res?.recordset[0].schema_name,
-        createDate: format(res?.recordset[0].create_date, 'DD-MM-YYYY'),
-        modifyDate: format(res?.recordset[0].modify_date, 'DD-MM-YYYY'),
-        definition: res?.recordset[0].definition,
+        id: res.recordset[0].object_id,
+        name: res.recordset[0].name,
+        type: res.recordset[0].type.trim(),
+        typeDesc: res.recordset[0].type_desc,
+        schemaId: res.recordset[0].schema_id,
+        schema: res.recordset[0].schema_name,
+        createDate: format(res.recordset[0].create_date, 'DD-MM-YYYY'),
+        modifyDate: format(res.recordset[0].modify_date, 'DD-MM-YYYY'),
+        definition: res.recordset[0].definition,
         permission: roles,
         isAligmentObject: false,
       }
@@ -150,7 +148,7 @@ export class ObjectModel implements ForRetrievingObject {
   // Busca uno o mas usertables por su nombre
   public async findUserTableByName(name: string): Promise<ResponseUserTableObjects | CustomError | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     try {
       const stmt = `
@@ -162,22 +160,21 @@ export class ObjectModel implements ForRetrievingObject {
         INNER JOIN sys.schemas  B ON B.schema_id = A.schema_id
         WHERE type IN('U') AND A.name = @name
       `
-      await request?.input('name', sql.VarChar, name)
-      const res = await request?.query(stmt)
+      request.input('name', sql.VarChar(128), name)
+      const res = await request.query(stmt)
 
       if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
 
       // todo: adapter
-      const data =
-        res?.recordset.map((obj): UserTableObjects => {
-          return {
-            id: obj.object_id,
-            name: obj.name,
-            schema: obj.schema_name,
-          }
-        }) ?? []
+      const data = res.recordset.map((obj): UserTableObjects => {
+        return {
+          id: obj.object_id,
+          name: obj.name,
+          schema: obj.schema_name,
+        }
+      })
 
-      return { data, meta: { length: data?.length } }
+      return { data, meta: { length: data.length } }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       throwRequestError(error)
@@ -187,7 +184,7 @@ export class ObjectModel implements ForRetrievingObject {
   // Obtiene un usertable por su id para obtener sus descripciones, columnas, etc.
   public async getUserTableById(id: number): Promise<ResponseUserTableRecordObject | CustomError | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     try {
       // busca el usertable por su nombre
@@ -205,8 +202,8 @@ export class ObjectModel implements ForRetrievingObject {
         INNER JOIN sys.schemas  B ON B.schema_id = A.schema_id
         WHERE type IN('U') AND A.object_id = @id
       `
-      await request?.input('id', sql.Int, id)
-      const res = await request?.query(stmtSearch)
+      request.input('id', sql.Int, id)
+      const res = await request.query(stmtSearch)
 
       // si no encuentra el usertable, lanza un error de no encontrado
       if (res && res.rowsAffected[0] === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
@@ -226,7 +223,7 @@ export class ObjectModel implements ForRetrievingObject {
         INNER JOIN sys.types  B ON B.user_type_id = A.user_type_id
         WHERE A.object_id = ${id}
       `
-      const resColumns = await request?.query(stmtColumns)
+      const resColumns = await request.query(stmtColumns)
 
       // obtener las propiedades extendidas de las columnas
       const stmtExtendedProperties = `
@@ -239,7 +236,7 @@ export class ObjectModel implements ForRetrievingObject {
         WHERE B.class = 1 -- (1: OBJECT_OR_COLUMN)
           AND A.object_id = ${id}
       `
-      const resExtendedProperties = await request?.query(stmtExtendedProperties)
+      const resExtendedProperties = await request.query(stmtExtendedProperties)
 
       const stmtIndexes = `
         SELECT 
@@ -253,7 +250,7 @@ export class ObjectModel implements ForRetrievingObject {
         INNER JOIN sys.indexes        C ON C.index_id = B.index_id AND C.object_id = A.object_id
         WHERE A.object_id = ${id}
       `
-      const resIndexes = await request?.query(stmtIndexes)
+      const resIndexes = await request.query(stmtIndexes)
 
       const stmtForeignKeys = `
         SELECT 
@@ -269,7 +266,7 @@ export class ObjectModel implements ForRetrievingObject {
         INNER JOIN sys.columns				D ON D.column_id = B.referenced_column_id AND D.object_id = B.referenced_object_id
         WHERE A.object_id = ${id}
       `
-      const resForeignKeys = await request?.query(stmtForeignKeys)
+      const resForeignKeys = await request.query(stmtForeignKeys)
 
       const stmtTableExtendedProperties = `
         SELECT 
@@ -278,69 +275,64 @@ export class ObjectModel implements ForRetrievingObject {
         FROM sys.extended_properties
         WHERE major_id = ${id} AND minor_id = 0
       `
-      const resTableExtendedProperties = await request?.query(stmtTableExtendedProperties)
+      const resTableExtendedProperties = await request.query(stmtTableExtendedProperties)
 
       //todo: adapter
       const recordObject: UserTableRecordObject = {
-        id: res?.recordset[0].object_id,
-        name: res?.recordset[0].name,
-        type: res?.recordset[0].type.trim(),
-        typeDesc: res?.recordset[0].type_desc,
-        schemaId: res?.recordset[0].schema_id,
-        schema: res?.recordset[0].schema_name,
-        createDate: format(res?.recordset[0].create_date, 'DD-MM-YYYY'),
-        modifyDate: format(res?.recordset[0].modify_date, 'DD-MM-YYYY'),
+        id: res.recordset[0].object_id,
+        name: res.recordset[0].name,
+        type: res.recordset[0].type.trim(),
+        typeDesc: res.recordset[0].type_desc,
+        schemaId: res.recordset[0].schema_id,
+        schema: res.recordset[0].schema_name,
+        createDate: format(res.recordset[0].create_date, 'DD-MM-YYYY'),
+        modifyDate: format(res.recordset[0].modify_date, 'DD-MM-YYYY'),
         isAligmentObject: false,
       }
 
-      const tableExtendedProperties =
-        resTableExtendedProperties?.recordset.map((obj): ExtendedProperty => {
-          return {
-            propertyValue: obj.value,
-            propertyName: obj.name,
-          }
-        }) ?? []
+      const tableExtendedProperties = resTableExtendedProperties.recordset.map((obj): ExtendedProperty => {
+        return {
+          propertyValue: obj.value,
+          propertyName: obj.name,
+        }
+      })
 
-      const columns =
-        resColumns?.recordset.map((obj): Column => {
-          return {
-            id: obj.column_id,
-            name: obj.name,
-            type: formatSQLDataType(obj.type_name, obj.max_length, obj.precision, obj.scale),
-            isNullable: obj.is_nullable,
-            isIdentity: obj.is_identity,
-            extendedProperties:
-              resExtendedProperties?.recordset
-                .filter(element => element.column_id === obj.column_id)
-                .map(obj2 => ({
-                  propertyValue: obj2.value,
-                  propertyName: obj2.name,
-                })) ?? [],
-          }
-        }) ?? []
+      const columns = resColumns.recordset.map((obj): Column => {
+        return {
+          id: obj.column_id,
+          name: obj.name,
+          type: formatSQLDataType(obj.type_name, obj.max_length, obj.precision, obj.scale),
+          isNullable: obj.is_nullable,
+          isIdentity: obj.is_identity,
+          extendedProperties: resExtendedProperties.recordset
+            .filter(element => element.column_id === obj.column_id)
+            .map(obj2 => ({
+              propertyValue: obj2.value,
+              propertyName: obj2.name,
+            })),
+        }
+      })
 
-      const indexes =
-        resIndexes?.recordset.map((obj): Index => {
-          return {
-            columnId: obj.column_id,
-            name: obj.name,
-            typeDesc: obj.type_desc,
-            isPrimaryKey: obj.is_primary_key,
-            isUnique: obj.is_unique,
-          }
-        }) ?? []
+      const indexes = resIndexes.recordset.map((obj): Index => {
+        return {
+          columnId: obj.column_id,
+          name: obj.name,
+          typeDesc: obj.type_desc,
+          isPrimaryKey: obj.is_primary_key,
+          isUnique: obj.is_unique,
+        }
+      })
 
-      const foreignKeys =
-        resForeignKeys?.recordset.map(
-          (obj): ForeignKey => ({
-            columnId: obj.column_id,
-            referencedObjectId: obj.referenced_object_id,
-            referencedObject: obj.referenced_object,
-            referencedSchema: obj.referenced_schema,
-            referencedColumnId: obj.referenced_column_id,
-            referencedColumn: obj.referenced_column,
-          }),
-        ) ?? []
+      const foreignKeys = resForeignKeys.recordset.map(
+        (obj): ForeignKey => ({
+          columnId: obj.column_id,
+          referencedObjectId: obj.referenced_object_id,
+          referencedObject: obj.referenced_object,
+          referencedSchema: obj.referenced_schema,
+          referencedColumnId: obj.referenced_column_id,
+          referencedColumn: obj.referenced_column,
+        }),
+      )
 
       const data: FullUserTableObject = { ...recordObject, extendedProperties: tableExtendedProperties, columns, indexes, foreignKeys }
       return { data }
@@ -355,40 +347,39 @@ export class ObjectModel implements ForRetrievingObject {
     schemaName: string,
   ): Promise<ResponseSQLDefinitionRecordObject | CustomError | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
-    const request2 = await conn?.request()
+    const request = conn.request()
+    const request2 = conn.request()
 
     try {
-      await request?.input('object_name', sql.VarChar, name).input('schema_name', sql.VarChar, schemaName)
-      const res = await request?.execute('SYS_ObtenerDefinicionSQL_SP')
+      request.input('object_name', sql.VarChar(128), name).input('schema_name', sql.VarChar(128), schemaName)
+      const res = await request.execute('SYS_ObtenerDefinicionSQL_SP')
 
       if (res && res.recordset.length === 0) throw new MyCustomError(COMMON_ERROR_CODES.NOTFOUND)
 
-      const objectId = res?.recordset[0].object_id
+      const objectId = res.recordset[0].object_id
 
-      await request2?.input('id', sql.Int, objectId)
-      const resRoles = await request2?.execute('SYS_ObtenerRoles_SP')
+      request2.input('id', sql.Int, objectId)
+      const resRoles = await request2.execute('SYS_ObtenerRoles_SP')
 
-      const roles: PermissionRol[] =
-        resRoles?.recordset.map((obj): PermissionRol => {
-          return {
-            stateDesc: obj.state_desc,
-            permissionName: obj.permission_name,
-            name: obj.rol,
-          }
-        }) ?? []
+      const roles: PermissionRol[] = resRoles.recordset.map((obj): PermissionRol => {
+        return {
+          stateDesc: obj.state_desc,
+          permissionName: obj.permission_name,
+          name: obj.rol,
+        }
+      })
 
       // adapter
       const data: SQLDefinitionRecordObject = {
-        id: res?.recordset[0].object_id,
-        name: res?.recordset[0].name,
-        type: res?.recordset[0].type.trim(),
-        typeDesc: res?.recordset[0].type_desc,
-        schemaId: res?.recordset[0].schema_id,
-        schema: res?.recordset[0].schema_name,
-        createDate: format(res?.recordset[0].create_date, 'DD-MM-YYYY'),
-        modifyDate: format(res?.recordset[0].modify_date, 'DD-MM-YYYY'),
-        definition: res?.recordset[0].definition,
+        id: res.recordset[0].object_id,
+        name: res.recordset[0].name,
+        type: res.recordset[0].type.trim(),
+        typeDesc: res.recordset[0].type_desc,
+        schemaId: res.recordset[0].schema_id,
+        schema: res.recordset[0].schema_name,
+        createDate: format(res.recordset[0].create_date, 'DD-MM-YYYY'),
+        modifyDate: format(res.recordset[0].modify_date, 'DD-MM-YYYY'),
+        definition: res.recordset[0].definition,
         permission: roles,
         isAligmentObject: true,
       }
@@ -401,9 +392,9 @@ export class ObjectModel implements ForRetrievingObject {
   }
 
   // Retorna sugerencias de búsqueda de objetos según su tipo, si no existe tipo busca cualquier objeto
-  public async searchByName(name: string, type?: string): Promise<SearchResponse | CustomError | undefined> {
+  public async searchByName(name: string, type: string): Promise<SearchResponse | CustomError | undefined> {
     const conn = await connection(this.credentials)
-    const request = await conn?.request()
+    const request = conn.request()
 
     let andType = ''
     if (type === TypeSearch.SQLDEFINITION) andType = `AND type IN('P','FN','R','RF','TR','IF','TF','V')`
@@ -425,8 +416,8 @@ export class ObjectModel implements ForRetrievingObject {
         ORDER BY peso,name
       `
 
-      await request?.input('name', sql.VarChar, name)
-      const res = await request?.query(stmt)
+      request.input('name', sql.VarChar(128), name)
+      const res = await request.query(stmt)
 
       return { data: res.recordset, meta: { length: res.recordset.length } }
     } catch (error) {
