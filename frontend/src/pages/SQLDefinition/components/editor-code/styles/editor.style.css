@@ -1,5 +1,5 @@
-.side-by-side .editor.original::before { content: 'ALIGMENT'; }
-.side-by-side .editor.modified::before { content: 'MODIFICADO'; }
+.side-by-side .editor.original::before { content: var(--aligment-content); }
+.side-by-side .editor.modified::before { content: var(--current-database-content); }
 
 .side-by-side .editor.original::before,
 .side-by-side .editor.modified::before {

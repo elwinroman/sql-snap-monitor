@@ -3,7 +3,7 @@ import './styles/editor.style.css'
 import { DiffEditor } from '@monaco-editor/react'
 
 import { THEMES } from '@/constants'
-import { useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { useAuthStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
@@ -20,6 +20,8 @@ export function DiffEditorCode() {
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
+  const dbname = useAuthStore((state) => state.dbname)
+
   const code = hasRoles
     ? SQLDefinitionCode + formatPermissionRoles(SQLDefinitionObject.permission, SQLDefinitionObject.schema, SQLDefinitionObject.name)
     : SQLDefinitionCode
@@ -33,6 +35,10 @@ export function DiffEditorCode() {
       })
     }
   }
+
+  // Define la MARCA DE AGUA para usarse en CSS
+  document.documentElement.style.setProperty('--aligment-content', JSON.stringify('Aligment'))
+  document.documentElement.style.setProperty('--current-database-content', JSON.stringify(dbname))
 
   const fullOptions = { ...options, renderWhitespace, renderSideBySide, fontSize }
 
