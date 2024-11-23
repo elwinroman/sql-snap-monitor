@@ -11,7 +11,7 @@ import {
   ResponseUserTableRecordObject,
   SearchResponse,
   SQLDefinitionRecordObject,
-} from '@/models/schemas'
+} from '@/models'
 import { LogService, ObjectService } from '@/services'
 
 export class ObjectController {

@@ -1,4 +1,4 @@
-import { CustomError } from './custom-error.schema'
+import { CustomError } from './custom-error-model'
 
 // Para objetos que requiren obtener su definición SQL
 

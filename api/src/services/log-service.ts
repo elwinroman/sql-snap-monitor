@@ -1,9 +1,8 @@
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
+import { Credentials, ForRetrievingLog, LogAccesoInput, LogBusquedaInput } from '@/models'
 import { encryptString, printRequestError } from '@/utils'
-
-import { Credentials, ForRetrievingLog, LogAccesoInput, LogBusquedaInput } from '../models/schemas'
 
 export class LogService implements ForRetrievingLog {
   private credentials: Credentials

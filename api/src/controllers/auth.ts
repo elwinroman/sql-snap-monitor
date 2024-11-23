@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
 import { COMMON_ERROR_CODES, VALIDATION_ERROR } from '@/constants'
-import { Credentials, DatabaseDetails, MyCustomError } from '@/models/schemas'
+import { Credentials, DatabaseDetails, MyCustomError } from '@/models'
 import { AuthService, LogService, UserService } from '@/services'
 import { encryptString, generateHashForUniqueUID } from '@/utils'
 

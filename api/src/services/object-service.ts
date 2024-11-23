@@ -3,8 +3,6 @@ import sql from 'mssql'
 
 import { connection } from '@/config/database'
 import { COMMON_ERROR_CODES, TYPE_ACTION } from '@/constants'
-import { formatSQLDataType, throwRequestError } from '@/utils'
-
 import {
   Column,
   Credentials,
@@ -24,7 +22,8 @@ import {
   SQLDefinitionRecordObject,
   UserTableObjects,
   UserTableRecordObject,
-} from '../models/schemas'
+} from '@/models/'
+import { formatSQLDataType, throwRequestError } from '@/utils'
 
 export class ObjectService implements ForRetrievingObject {
   private credentials: Credentials

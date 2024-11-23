@@ -1,9 +1,8 @@
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
+import { Credentials, ForRetrievingUser, ResponseUser, UserInput } from '@/models'
 import { encryptString, printRequestError } from '@/utils'
-
-import { Credentials, ForRetrievingUser, ResponseUser, UserInput } from '../models/schemas'
 
 export class UserService implements ForRetrievingUser {
   private credentials: Credentials

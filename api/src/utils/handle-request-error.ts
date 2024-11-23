@@ -1,7 +1,7 @@
 import { RequestError } from 'mssql'
 
 import { REQUEST_ERROR_CODES, RequestErrorCode } from '@/constants'
-import { MyCustomError } from '@/models/schemas'
+import { MyCustomError } from '@/models'
 
 /**
  * Mapea un `RequestError` de MSSQL a un error personalizado o devuelve una respuesta por defecto para errores desconocidos.

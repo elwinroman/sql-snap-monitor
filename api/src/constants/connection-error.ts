@@ -1,4 +1,4 @@
-import { CustomError } from '@/models/schemas'
+import { CustomError } from '@/models'
 
 export enum ConnErrorCode {
   ELOGIN = 'ELOGIN',

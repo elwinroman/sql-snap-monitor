@@ -1,4 +1,4 @@
-import { CustomError } from '@/models/schemas'
+import { CustomError } from '@/models'
 
 type CustomErrorList = {
   [key: string]: CustomError

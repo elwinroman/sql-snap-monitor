@@ -1,7 +1,7 @@
 import sql, { ConnectionPool } from 'mssql'
 
 import { CONN_ERROR_CODES, ConnErrorCode } from '@/constants'
-import { Credentials, MyCustomError } from '@/models/schemas'
+import { Credentials, MyCustomError } from '@/models'
 import { decryptString } from '@/utils'
 
 interface PoolStack {

@@ -1,6 +1,6 @@
 import sql from 'mssql'
 
-import { Credentials, CustomError, DatabaseDetails, ForAuthenticating } from '@/models/schemas'
+import { Credentials, CustomError, DatabaseDetails, ForAuthenticating } from '@/models'
 import { throwRequestError } from '@/utils'
 
 import { connection } from '../config/database'

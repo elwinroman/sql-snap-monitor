@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
-import { MyCustomError } from '@/models/schemas'
+import { MyCustomError } from '@/models'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function handleError(err: unknown, req: Request, res: Response, _next: NextFunction) {

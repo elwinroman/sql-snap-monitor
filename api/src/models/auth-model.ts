@@ -1,4 +1,4 @@
-import { CustomError } from './custom-error.schema'
+import { CustomError } from './custom-error-model'
 
 /**
  * @typedef {Object} DatabaseInfo - Información de la base de datos.
