@@ -92,12 +92,19 @@ export async function getUserTable({ id }) {
  *
  * @returns {Promise}
  */
-export async function getSQLDefinitionAligmentObject({ name, schemaId }) {
-  const queryParams = `?name=${name}&idSchema=${schemaId}`
+export async function getSQLDefinitionAligmentObject({ name, schemaName, useCredentials = false, isComparisonMode = false }) {
+  // comparasinMode = true, solo cuando se está realizando la comparación
+  const comparisonMode = isComparisonMode ? '&isComparisonMode=true' : ''
+  const queryParams = `?name=${name}&schemaName=${schemaName}${comparisonMode}`
 
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition-aligment${queryParams}`)
+    // para los logs de búsqueda useCredentials = true
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition-aligment${queryParams}`, {
+      credentials: useCredentials ? 'include' : 'omit',
+    })
     const res = await response.json()
+
+    await new Promise((resolve) => setTimeout(resolve, 3000))
 
     return res
   } catch (error) {

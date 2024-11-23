@@ -29,10 +29,10 @@ export const useSQLDefinitionStore = create(
       // obtiene el objeto de definición de pre-producción
       getSQLDefinitionAligmentObject: async () => {
         const updateDiffEditor = useEditorStore.getState().updateDiffEditor
-        const { schemaId, name } = get().SQLDefinitionObject
+        const { schema, name } = get().SQLDefinitionObject
         set({ loadingAligment: true })
 
-        const res = await getSQLDefinitionAligmentObject({ name, schemaId })
+        const res = await getSQLDefinitionAligmentObject({ name, schemaName: schema, useCredentials: true, isComparisonMode: true })
 
         if (res.status === 'error') {
           set({ loadingAligment: false })

@@ -4,6 +4,7 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { AligmentObjectInitialState } from '@/models/object.model'
 import { SELECT_ACTION, VIEW_MODE } from '@/pages/Aligment/constants/select-actions'
 import { getSQLDefinitionAligmentObject } from '@/services'
+import { useAuthStore } from '@/stores'
 
 export const useAligmentStore = create(
   persist(
@@ -27,12 +28,13 @@ export const useAligmentStore = create(
 
       // Obtiene el objeto de definición
       getObject: async () => {
+        const isAuthenticated = useAuthStore.getState().isAuthenticated
         const name = get().search
         const sanitizedName = name.trim()
         set({ loading: true })
 
         // por ahora, el esquema id de la consulta es 'dbo' por defecto
-        const res = await getSQLDefinitionAligmentObject({ name: sanitizedName, schemaId: 1 })
+        const res = await getSQLDefinitionAligmentObject({ name: sanitizedName, schemaName: 'dbo', useCredentials: isAuthenticated })
 
         if (res.status === 'error') {
           set({ loading: false })
