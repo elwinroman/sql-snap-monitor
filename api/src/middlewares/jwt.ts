@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from 'express'
 import type { JwtPayload } from 'jsonwebtoken'
 import jwt from 'jsonwebtoken'
 
-import { CredentialsInitialState } from '@/models/schemas'
-
 interface TokenPayload extends JwtPayload {
   idUsuario: number
 }
@@ -15,12 +13,16 @@ export function verifyToken(req: Request, res: Response, next: NextFunction) {
   try {
     const tokenDecoded = jwt.verify(token, process.env.JWT_SECRET as string)
     const { idUsuario } = tokenDecoded as TokenPayload
-    req.session.idUsuario = idUsuario
-    req.session.isSessionActive = true
+
+    // pequeño fix cada vez que se reinicia el servidor
+    if (req.session.credentials) {
+      req.session.idUsuario = idUsuario
+      req.session.isSessionActive = true
+    }
   } catch {
     req.session.isSessionActive = false
-    req.session.idUsuario = -1
-    req.session.credentials = { ...CredentialsInitialState }
+    req.session.idUsuario = undefined
+    req.session.credentials = undefined
   }
   next()
 }
