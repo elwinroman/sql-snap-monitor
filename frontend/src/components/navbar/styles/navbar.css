@@ -1,5 +1,0 @@
-#navbar {
-  --bg-body-rgb: 20, 22, 26;
-
-  background: linear-gradient(to bottom,rgba(var(--bg-body-rgb),1),rgba(var(--bg-body-rgb),.738) 19%,rgba(var(--bg-body-rgb),.541) 34%,rgba(var(--bg-body-rgb),.382) 47%,rgba(var(--bg-body-rgb),.278) 56.5%,rgba(var(--bg-body-rgb),.194) 65%,rgba(var(--bg-body-rgb),.126) 73%,rgba(var(--bg-body-rgb),.075) 80.2%,rgba(var(--bg-body-rgb),.042) 86.1%,rgba(var(--bg-body-rgb),.021) 91%,rgba(var(--bg-body-rgb),.008) 95.2%,rgba(var(--bg-body-rgb),.002) 98.2%,rgba(var(--bg-body-rgb),0));
-}

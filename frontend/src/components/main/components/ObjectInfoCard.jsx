@@ -18,7 +18,6 @@ export function ObjectInfoCard() {
       id: 1,
       title: 'schema:',
       value: object.schema ?? '',
-      className: 'bg-rose-400/20 text-rose-400',
     },
     {
       id: 2,
@@ -26,19 +25,16 @@ export function ObjectInfoCard() {
       value: object.typeDesc ?? '',
       has_tag: true,
       tag: object.type ? `(${object.type})` : '',
-      className: 'bg-cyan-400/20 text-cyan-400',
     },
     {
       id: 3,
       title: 'fecha de creación:',
       value: object.createDate ?? '',
-      className: 'bg-emerald-500/20 text-emerald-500',
     },
     {
       id: 4,
       title: 'fecha de modificación:',
       value: object.modifyDate ?? '',
-      className: 'bg-indigo-400/20 text-indigo-400',
     },
   ]
 
@@ -47,7 +43,6 @@ export function ObjectInfoCard() {
       id: 1,
       title: 'schema:',
       value: aligmentObject.schema ?? '',
-      className: 'bg-rose-400/20 text-rose-400',
     },
     {
       id: 2,
@@ -55,19 +50,16 @@ export function ObjectInfoCard() {
       value: aligmentObject.typeDesc ?? '',
       has_tag: true,
       tag: aligmentObject.type ? `(${aligmentObject.type})` : '',
-      className: 'bg-cyan-400/20 text-cyan-400',
     },
     {
       id: 3,
       title: 'fecha de creación:',
       value: aligmentObject.createDate ?? '',
-      className: 'bg-emerald-500/20 text-emerald-500',
     },
     {
       id: 4,
       title: 'fecha de modificación:',
       value: aligmentObject.modifyDate ?? '',
-      className: 'bg-indigo-400/20 text-indigo-400',
     },
   ]
 

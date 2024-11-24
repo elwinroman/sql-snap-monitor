@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants'
 
-export function NavbarMenu() {
+export function NavbarMenu({ className }) {
   const currentLocation = useLocation()
 
   const menuBackdrop = useRef()
@@ -21,9 +21,9 @@ export function NavbarMenu() {
       href: ROUTES.USERTABLE,
     },
     {
-      id: 2,
+      id: 3,
       title: 'Aligment',
-      href: '/aligment',
+      href: ROUTES.ALIGMENT,
     },
   ]
 
@@ -52,7 +52,7 @@ export function NavbarMenu() {
   }
 
   return (
-    <>
+    <div className={`${className}`}>
       <ul
         ref={menuContainer}
         className="flex flex-nowrap overflow-x-auto overflow-y-hidden border-b border-b-zinc-700 pb-1.5"
@@ -81,6 +81,6 @@ export function NavbarMenu() {
         ref={menuBackdrop}
         className={`pointer-events-none fixed left-0 top-0 h-[var(--height)] w-[var(--width)] translate-x-[var(--left)] translate-y-[var(--top)] rounded-sm bg-background opacity-0 backdrop-blur-lg transition-all duration-200 ease-in-out`}
       ></div>
-    </>
+    </div>
   )
 }
