@@ -15,11 +15,11 @@ const mapRequestErrorToCustomError = (error: RequestError) => {
     number: error.number,
     message: error.message,
   }
-  if (error.code === RequestErrorCode.EREQUEST) return new MyCustomError({ ...REQUEST_ERROR_CODES.EREQUEST, originalError })
-  if (error.code === RequestErrorCode.ETIMEOUT) return new MyCustomError({ ...REQUEST_ERROR_CODES.ETIMEOUT, originalError })
-  if (error.code === RequestErrorCode.EARGS) return new MyCustomError({ ...REQUEST_ERROR_CODES.EARGS, originalError })
-  if (error.code === RequestErrorCode.EINJECT) return new MyCustomError({ ...REQUEST_ERROR_CODES.EINJECT, originalError })
-  if (error.code === RequestErrorCode.ENOCONN) return new MyCustomError({ ...REQUEST_ERROR_CODES.ENOCONN, originalError })
+  if (error.code === RequestErrorCode.EREQUEST) return new MyCustomError({ ...REQUEST_ERROR_CODES.erequest, originalError })
+  if (error.code === RequestErrorCode.ETIMEOUT) return new MyCustomError({ ...REQUEST_ERROR_CODES.etimeout, originalError })
+  if (error.code === RequestErrorCode.EARGS) return new MyCustomError({ ...REQUEST_ERROR_CODES.eargs, originalError })
+  if (error.code === RequestErrorCode.EINJECT) return new MyCustomError({ ...REQUEST_ERROR_CODES.einject, originalError })
+  if (error.code === RequestErrorCode.ENOCONN) return new MyCustomError({ ...REQUEST_ERROR_CODES.enoconn, originalError })
 
   // Por si acaso (no están registrados todos los errores)
   return {
