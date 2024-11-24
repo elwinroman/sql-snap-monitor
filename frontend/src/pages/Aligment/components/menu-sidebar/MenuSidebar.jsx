@@ -12,9 +12,12 @@ export function MenuSidebar({ className }) {
   const redirectLogin = () => navigate('/login')
 
   return (
-    <nav className={`${className} font-['Geist_Sans']`}>
-      <header className="flex h-14 items-center border-b border-zinc-700 px-6">
-        <button className="flex h-10 items-center gap-2 rounded-sm px-2 transition-colors hover:bg-zinc-700" onClick={backNavigation}>
+    <nav className={`${className} bg-card-strong font-['Geist_Sans'] font-light`}>
+      <header className="flex h-14 items-center border-b border-border px-6">
+        <button
+          className="hover:bg-background-alternate flex h-10 items-center gap-2 rounded-sm px-2 transition-colors"
+          onClick={backNavigation}
+        >
           <i>
             <ArrowBigLeft size={18} />
           </i>
@@ -27,9 +30,9 @@ export function MenuSidebar({ className }) {
         <div className="flex flex-col gap-6">
           {/* Texto */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-sm font-bold text-zinc-200">CONSULTA DE OBJETOS PARA ALINEACIÓN</h4>
+            <h4 className="text-sm font-bold text-primary">CONSULTA DE OBJETOS PARA ALINEACIÓN</h4>
 
-            <span className="text-sm text-zinc-200">
+            <span className="text-sm text-primary">
               Recupera los objetos alineados a <strong>pre-producción</strong> y dí adios a observaciones por devío de ambientes
             </span>
           </div>
@@ -49,7 +52,7 @@ export function MenuSidebar({ className }) {
           <div>
             <label className="flex gap-2">
               <Checkbox disabled={true} checked={true} className="mt-1" />
-              <span className="text-sm text-zinc-300">Al realizar la consulta acepto que mis datos sean recopilados.</span>
+              <span className="text-sm text-secondary">Al realizar la consulta acepto que mis datos sean recopilados.</span>
             </label>
           </div>
 
@@ -58,8 +61,11 @@ export function MenuSidebar({ className }) {
         </div>
       </div>
 
-      <footer className="flex h-20 items-center border-b border-t border-zinc-700 px-6">
-        <button className="flex h-10 items-center gap-2 rounded-sm px-2 transition-colors hover:bg-zinc-700" onClick={redirectLogin}>
+      <footer className="flex h-20 items-center border-b border-t border-border px-6">
+        <button
+          className="hover:bg-background-alternate flex h-10 items-center gap-2 rounded-sm px-2 transition-colors"
+          onClick={redirectLogin}
+        >
           <i>
             <User size={18} />
           </i>

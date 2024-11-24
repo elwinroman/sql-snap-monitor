@@ -55,19 +55,19 @@ export function NavbarMenu({ className }) {
     <div className={`${className}`}>
       <ul
         ref={menuContainer}
-        className="flex flex-nowrap overflow-x-auto overflow-y-hidden border-b border-b-zinc-700 pb-1.5"
-        style={{ scrollbarColor: 'transparent transparent', scrollBehavior: 'smooth' }}
+        className="flex flex-nowrap overflow-x-auto overflow-y-hidden border-b border-b-border pb-1.5"
+        style={{ scrollbarColor: 'transparent', scrollBehavior: 'smooth' }}
       >
         {menuList.map((menu) => (
           <li key={menu.id}>
             <NavLink
-              className={`group relative z-10 inline-block rounded-sm px-3 py-1.5 transition-colors before:absolute before:left-0 before:top-[40px] before:w-full before:content-[''] ${currentLocation.pathname === menu.href ? 'before:border-b-4 before:border-b-zinc-300' : ''} `}
+              className={`group relative z-10 inline-block rounded-sm px-3 py-1.5 transition-colors before:absolute before:left-0 before:top-[40px] before:w-full before:content-[''] ${currentLocation.pathname === menu.href ? 'before:rounded-full before:border-b-2 before:border-b-primary' : ''} `}
               to={menu.href}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
               <span
-                className={`text-nowrap font-['Geist_Sans'] text-sm transition-colors group-hover:text-zinc-200 ${currentLocation.pathname === menu.href ? 'text-zinc-200' : 'text-neutral-500'} `}
+                className={`text-nowrap font-['Geist_Sans'] text-sm transition-colors group-hover:text-primary dark:font-light ${currentLocation.pathname === menu.href ? 'text-primary' : 'text-muted'} `}
               >
                 {menu.title}
               </span>

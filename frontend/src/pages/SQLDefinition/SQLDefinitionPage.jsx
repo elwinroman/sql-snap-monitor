@@ -46,7 +46,7 @@ export function SQLDefinitionPage() {
     <>
       {object && (
         <div
-          className={`overflow-hidden rounded-md border border-owborder bg-card ${object ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
+          className={`overflow-hidden rounded-md border border-border bg-card ${object ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
         >
           {/* Si no existe conexión con el servidor de alineación (mensaje de error) */}
           {errorAligment && errorAligment.statusCode !== 404 && <AligmentConectionError />}

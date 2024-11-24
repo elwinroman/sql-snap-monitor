@@ -27,14 +27,14 @@ export function PermissionRol() {
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
           {permission.length === 0 ? (
-            <button className="rounded-sm py-1.5">
+            <button className="h-7 rounded-sm px-2">
               <i className="text-red-400">
                 <ShieldAlert size={14} />
               </i>
             </button>
           ) : (
             <button
-              className={`group rounded-sm px-1.5 py-1.5 hover:bg-black ${hasRoles ? 'bg-black' : 'bg-transparent'}`}
+              className={`group rounded-sm px-1.5 py-1.5 hover:bg-popover ${hasRoles ? 'bg-popover' : 'bg-transparent'}`}
               onClick={handleClick}
             >
               <i className="text-white group-hover:text-zinc-400">

@@ -11,20 +11,20 @@ export function BreadcrumCard() {
 
   return (
     <div className="flex flex-col items-baseline gap-2 sm:flex-row sm:gap-6">
-      <span className="text-xl text-zinc-400">EXPLORANDO</span>
+      <span className="text-xl text-secondary">Explorando</span>
 
       <div className="flex gap-4">
         <div className="flex flex-nowrap items-start gap-1">
-          <i className="text-slate-300">
+          <i className="text-secondary">
             <Server size={16} />
           </i>
-          <h1 className="text-sm font-medium text-slate-400">{server}</h1>
+          <h1 className="text-sm font-bold text-indigo-500">{server}</h1>
         </div>
         <div className="flex flex-nowrap items-start gap-1">
-          <i className="text-slate-300">
+          <i className="text-secondary">
             <DatabaseZap size={16} />
           </i>
-          <h1 className="text-sm font-medium text-slate-400">{dbname}</h1>
+          <h1 className="text-sm font-bold text-secondary">{dbname}</h1>
         </div>
       </div>
     </div>

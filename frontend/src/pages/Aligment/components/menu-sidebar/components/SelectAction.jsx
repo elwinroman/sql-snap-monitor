@@ -35,7 +35,7 @@ export function SelectAction() {
           <SelectContent>
             <SelectGroup>
               {actions.map((action) => (
-                <SelectItem key={action.id} value={action.value} className="text-zinc-300">
+                <SelectItem key={action.id} value={action.value} className="text-primary">
                   {action.name.toUpperCase()}
                 </SelectItem>
               ))}

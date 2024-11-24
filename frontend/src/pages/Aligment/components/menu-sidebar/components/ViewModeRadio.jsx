@@ -16,24 +16,24 @@ export function ViewModeRadio() {
 
   return (
     <div className="flex flex-col gap-1.5">
-      <h3 className="text-xs text-zinc-500">SELECCIONA COMO QUIERES VER:</h3>
+      <h3 className="text-xs font-semibold text-muted">SELECCIONA COMO QUIERES VER:</h3>
       <RadioGroup value={viewMode} onValueChange={handleChange} disabled={action !== SELECT_ACTION.objeto}>
         <div className="flex items-center space-x-2">
           <label className="flex items-center gap-2">
             <RadioGroupItem value={VIEW_MODE.objeto_mas_roles} />
-            <span className="text-sm text-zinc-300">Mostrar OBJETO + ROLES</span>
+            <span className="text-sm text-primary">Mostrar OBJETO + ROLES</span>
           </label>
         </div>
         <div className="flex items-center space-x-2">
           <label className="flex items-center gap-2">
             <RadioGroupItem value={VIEW_MODE.solo_objeto} />
-            <span className="text-sm text-zinc-300">Mostrar SOLO OBJETO</span>
+            <span className="text-sm text-primary">Mostrar SOLO OBJETO</span>
           </label>
         </div>
         <div className="flex items-center space-x-2">
           <label className="flex items-center gap-2">
             <RadioGroupItem value={VIEW_MODE.solo_roles} />
-            <span className="text-sm text-zinc-300">Mostrar SOLO ROLES</span>
+            <span className="text-sm text-primary">Mostrar SOLO ROLES</span>
           </label>
         </div>
       </RadioGroup>

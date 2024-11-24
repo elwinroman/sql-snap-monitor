@@ -26,7 +26,7 @@ export function DiffCompare() {
     <>
       {hasAligmentObject ? (
         <button
-          className={`${loadingAligment ? 'cursor-not-allowed' : ''} w-auto rounded-sm border border-zinc-400/30 px-2 py-0.5 transition duration-200 ${onDiffEditor ? 'bg-indigo-700 hover:bg-indigo-600' : 'bg-pink-700 hover:bg-pink-600'}`}
+          className={`${loadingAligment ? 'cursor-not-allowed' : ''} h-7 w-auto rounded-sm border border-zinc-400/30 px-2 transition duration-200 ${onDiffEditor ? 'bg-indigo-700 hover:bg-indigo-600' : 'bg-pink-700 hover:bg-pink-600'}`}
           onClick={handleClick}
         >
           <div className="flex flex-nowrap items-center justify-center gap-1">
@@ -43,7 +43,7 @@ export function DiffCompare() {
           <Tooltip delayDuration={100}>
             <TooltipTrigger asChild>
               <button
-                className={`w-auto cursor-not-allowed rounded-sm border border-zinc-400/30 bg-gray-800 px-2 py-0.5 transition duration-200`}
+                className={`h-7 w-auto cursor-not-allowed rounded-sm border border-zinc-400/30 bg-gray-800 px-2 transition duration-200`}
               >
                 <div className="flex items-center justify-center gap-1">
                   <i className="text-zinc-200">

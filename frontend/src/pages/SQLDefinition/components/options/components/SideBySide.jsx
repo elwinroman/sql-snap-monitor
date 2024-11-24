@@ -22,7 +22,7 @@ export function SideBySide() {
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
           <button
-            className={`group rounded-sm px-1.5 py-1.5 transition-colors hover:bg-black ${!renderSideBySide ? 'bg-black' : 'bg-transparent'}`}
+            className={`group h-7 rounded-sm px-2 transition-colors hover:bg-black ${!renderSideBySide ? 'bg-black' : 'bg-transparent'}`}
             onClick={handleClick}
           >
             <i className="text-white group-hover:text-zinc-400">

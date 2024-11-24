@@ -30,22 +30,24 @@ export function LoginUsername() {
       <div className="grid h-9 place-content-center px-3">
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div className="flex items-center gap-2">
+            <div className="group flex items-center gap-2">
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>QA</AvatarFallback>
               </Avatar>
-              <span className="hidden select-none text-sm font-semibold text-zinc-200 md:block">{username}</span>
+              <span className="hidden select-none text-sm font-semibold text-secondary transition-colors group-hover:text-primary md:block">
+                {username}
+              </span>
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="center" sideOffset={10}>
             <DropdownMenuLabel>Mi cuenta SQL</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <div className="flex gap-1">
+              <button onClick={closeSession} className="flex gap-1">
                 <User size={14} />
-                <button onClick={closeSession}>Cerrar sesión</button>
-              </div>
+                <span>Cerrar sesión</span>
+              </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

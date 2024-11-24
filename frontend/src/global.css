@@ -15,24 +15,28 @@
 
 @layer base {
   :root {
-    --baselayer: #fff;
-    --background: 0 0% 100%;
+    --baselayer: #f2f2f7;
+    --background: #f6f6f7;
+    --background-alternate: #e3e3e3;
     --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
+    --card: #fff;
     --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
+    --card-strong: #efefef;
+    --popover: #f6f6f7;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
+    --primary: rgb(35, 34, 38);
+    --primary-foreground: rgba(255, 255, 255, 90%);
+    --secondary: rgba(35, 34, 38, 70%);
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
+    --muted: rgb(135, 138, 153);
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
+    /* --accent: 210 40% 96.1%; */
+    /* --accent: #efefef; */
+    --accent: #e3e3e3;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
+    --border: #e9ebec;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
@@ -45,8 +49,6 @@
     /* Colores customizados */
     --ow-main: #f6f7f9;
     --ow-navbar: white;
-    --ow-border: #0000000d;
-    --ow-card: white;
 
     /* Tamaños */
     --navbar-height: 80px;
@@ -55,22 +57,24 @@
   .dark {
     --baselayer: #181919;
     --background: #26272c;
+    --background-alternate: #26272c;
     --foreground: 210 40% 98%;
     --card: #1e1f1f;
     --card-foreground: 210 40% 98%;
-    --popover: 223 8% 16%;
+    --card-strong: #181919;
+    --popover: rgb(10, 10, 10);
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 220 5% 25%;
+    --primary: rgba(255, 255, 255, 90%);
+    --primary-foreground: rgb(35, 34, 38);
+    --secondary: rgba(255,255,255,70%);
     --secondary-foreground: 210 40% 98%;
-    --muted: 220 5% 25%;
+    --muted: rgba(255, 255, 255, 50%);
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 220 5% 25%;
+    --accent: #3d3f43;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 5% 25%;
+    --border: rgba(255,255,255,6%);
     --input: 220 5% 25%;
     --ring: 212.7 26.8% 83.9%;
     --chart-1: 220 70% 50%;
@@ -82,8 +86,6 @@
     /* Colores customizados */
     --ow-main: #14161a;
     --ow-navbar: #1d1f25;
-    --ow-border: #ffffff0d;
-    --ow-card: #26282d;
   }
 }
 

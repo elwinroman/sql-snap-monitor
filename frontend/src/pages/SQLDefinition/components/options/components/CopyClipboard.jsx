@@ -51,7 +51,7 @@ export function CopyClipboard() {
     <>
       <canvas {...canvasProps} />
       <button
-        className={`w-auto rounded-sm border border-zinc-400/30 px-2 py-0.5 transition duration-200 ${copy ? 'bg-emerald-700' : 'bg-blue-700 hover:bg-blue-600'}`}
+        className={`h-7 w-auto rounded-sm border border-zinc-400/30 px-2 transition duration-200 ${copy ? 'bg-emerald-700' : 'bg-blue-700 hover:bg-blue-600'}`}
         onClick={handleClick}
       >
         <div className="flex items-center justify-center gap-1">

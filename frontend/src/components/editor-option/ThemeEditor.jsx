@@ -15,22 +15,20 @@ export function ThemeEditor() {
   const handleChange = (value) => updateTheme(value)
 
   return (
-    <>
-      <Select value={theme} onValueChange={(value) => handleChange(value)}>
-        <SelectTrigger className="h-7 w-[140px] py-2">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel className="text-zinc-400">Editor theme</SelectLabel>
-            {myThemes.map((themeItem) => (
-              <SelectItem key={themeItem.tag} value={themeItem.tag}>
-                {themeItem.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </>
+    <Select value={theme} onValueChange={(value) => handleChange(value)}>
+      <SelectTrigger className="h-7 w-[140px] py-2">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel className="text-zinc-400">Editor theme</SelectLabel>
+          {myThemes.map((themeItem) => (
+            <SelectItem key={themeItem.tag} value={themeItem.tag}>
+              {themeItem.name}
+            </SelectItem>
+          ))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   )
 }
