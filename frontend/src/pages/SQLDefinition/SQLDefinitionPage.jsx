@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { toast, Toaster } from 'sonner'
+import { toast } from 'sonner'
 
 import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
+import { Toaster } from '@/components/ui/sonner'
 import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 
 import { AligmentConectionError, DiffEditorCode, EditorCode, HeaderEditor, Info } from './components'
@@ -39,7 +40,7 @@ export function SQLDefinitionPage() {
     }
   }, [errorAligment, updateErrorAligment])
 
-  console.log(errorAligment)
+  // console.log(errorAligment)
   if (loading) return <LoaderSlack />
 
   return (
@@ -69,7 +70,7 @@ export function SQLDefinitionPage() {
         </>
       )}
 
-      <Toaster position="bottom-right" richColors className="p-5" />
+      <Toaster position="top-center" />
     </>
   )
 }

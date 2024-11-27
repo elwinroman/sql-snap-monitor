@@ -1,10 +1,11 @@
 import { Table } from 'lucide-react'
 import { useEffect } from 'react'
-import { toast, Toaster } from 'sonner'
+import { toast } from 'sonner'
 
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { LinkObjectList } from '@/components/main/components/LinkObjectList'
+import { Toaster } from '@/components/ui/sonner'
 import { useUserTableStore } from '@/stores'
 
 import { TableDescription } from './components'
@@ -51,7 +52,7 @@ export function UsertablePage() {
         {userTableColumnList && <TableDescription />}
       </div>
 
-      <Toaster position="bottom-right" richColors />
+      <Toaster position="bottom-right" />
     </>
   )
 }
