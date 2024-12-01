@@ -89,6 +89,7 @@ export interface ExtendedProperty {
  * @property {string} type - Tipo de dato de la columna (incluye max_length, precision y scale).
  * @property {boolean} isNullable - (1: Columna admite valores NULL, 0: Columna no admite valores NULL).
  * @property {boolean} isIdentity - (1: La columna tiene valores de identidad).
+ * @property {string | null} defaultDefinition - Expresión SQL que define el valor por defecto (si no tiene devuelve null).
  * @property {ExtendedProperty[]} extendedProperties - Propiedades extendidas de la columna.
  */
 export interface Column {
@@ -97,6 +98,7 @@ export interface Column {
   type: string
   isNullable: boolean
   isIdentity: boolean
+  defaultDefinition: string | null
   extendedProperties: ExtendedProperty[]
 }
 
@@ -154,8 +156,14 @@ export interface ResponseUserTableRecordObject {
   data: FullUserTableObject
 }
 
+export interface SuggestionSearch {
+  id: number
+  name: string
+  schemaName: string
+}
+
 export interface SearchResponse {
-  data: string[]
+  data: SuggestionSearch[]
   meta: {
     length: number
   }

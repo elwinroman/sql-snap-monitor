@@ -20,6 +20,7 @@ import {
   SearchResponse,
   SQLDefinitionObjects,
   SQLDefinitionRecordObject,
+  SuggestionSearch,
   UserTableObjects,
   UserTableRecordObject,
 } from '@/models/'
@@ -216,9 +217,11 @@ export class ObjectService implements ForRetrievingObject {
           A.precision,
           A.scale,
           A.is_nullable,
-          A.is_identity
+          A.is_identity,
+          C.definition AS default_definition
         FROM sys.columns      A
         INNER JOIN sys.types  B ON B.user_type_id = A.user_type_id
+        LEFT JOIN sys.default_constraints C ON C.parent_column_id = A.column_id AND C.parent_object_id = ${id}
         WHERE A.object_id = ${id}
       `
       const resColumns = await request.query(stmtColumns)
@@ -302,6 +305,7 @@ export class ObjectService implements ForRetrievingObject {
           type: formatSQLDataType(obj.type_name, obj.max_length, obj.precision, obj.scale),
           isNullable: obj.is_nullable,
           isIdentity: obj.is_identity,
+          defaultDefinition: obj.default_definition,
           extendedProperties: resExtendedProperties.recordset
             .filter(element => element.column_id === obj.column_id)
             .map(obj2 => ({
@@ -402,7 +406,9 @@ export class ObjectService implements ForRetrievingObject {
       const stmt = `
         SELECT 
           TOP 100
+          object_id,
           name,
+          SCHEMA_NAME(schema_id) AS schema_name,
           CASE 
             WHEN name LIKE CONCAT(@name, '%') THEN 1
             WHEN name LIKE CONCAT('%', @name, '%') THEN 2
@@ -410,14 +416,21 @@ export class ObjectService implements ForRetrievingObject {
           END AS peso
         FROM sys.objects
         WHERE name LIKE CONCAT('%', @name, '%') ${andType}
-        GROUP BY name
         ORDER BY peso,name
       `
 
       request.input('name', sql.VarChar(128), name)
       const res = await request.query(stmt)
 
-      return { data: res.recordset, meta: { length: res.recordset.length } }
+      const data = res.recordset.map((obj): SuggestionSearch => {
+        return {
+          id: obj.object_id,
+          name: obj.name,
+          schemaName: obj.schema_name,
+        }
+      })
+
+      return { data, meta: { length: res.recordset.length } }
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       throwRequestError(error)
