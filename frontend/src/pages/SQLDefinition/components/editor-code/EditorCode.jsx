@@ -6,15 +6,27 @@ import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
 
+const defaultCode = String.raw`
+/****************************************************************************************/
+/*     ______  _____ _______ __   _ _    _ _______ __   _ _____ ______   _____    /     */
+/*     |_____]   |   |______ | \  |  \  /  |______ | \  |   |   |     \ |     |  /      */
+/*     |_____] __|__ |______ |  \_|   \/   |______ |  \_| __|__ |_____/ |_____| .       */
+/*                                                                                      */
+/*                                  REALIZA TU CONSULTA                                 */
+/*                                                                                      */
+/****************************************************************************************/    
+`
+
 export function EditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
   const { schema, name, permission } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
-  const SQLDefinitionCode = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
+  const code = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const fontSize = useEditorStore((state) => state.fontSize)
   const theme = useEditorStore((state) => state.theme)
 
-  const code = hasRoles ? SQLDefinitionCode + formatPermissionRoles(permission, schema, name) : SQLDefinitionCode
+  let formattedCode = null
+  if (code) formattedCode = hasRoles ? code + formatPermissionRoles(permission, schema, name) : code
 
   // cargar themes de monaco
   const handleEditorDidMount = (monaco) => {
@@ -32,10 +44,10 @@ export function EditorCode() {
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"
-        defaultValue="// some comment"
+        defaultValue={defaultCode}
         height="88vh"
         theme={theme}
-        value={code}
+        value={formattedCode}
         options={{ ...fullOptions }}
         loading={<div>Cargando...</div>}
       />

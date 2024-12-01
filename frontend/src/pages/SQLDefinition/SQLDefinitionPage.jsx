@@ -2,20 +2,15 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import { LoaderSlack } from '@/components/loader/LoaderSlack'
-import { LinkObjectList } from '@/components/main/components/LinkObjectList'
 import { Toaster } from '@/components/ui/sonner'
 import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 
-import { AligmentConectionError, DiffEditorCode, EditorCode, HeaderEditor, Info } from './components'
+import { AligmentConectionError, DiffEditorCode, EditorCode, HeaderEditor } from './components'
 
 export function SQLDefinitionPage() {
-  const { name: object } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const error = useSQLDefinitionStore((state) => state.SQLDefinitionError)
   const updateError = useSQLDefinitionStore((state) => state.updateSQLDefinitionError)
 
-  const objectList = useSQLDefinitionStore((state) => state.SQLDefinitionObjectList)
-  const fetchObject = useSQLDefinitionStore((state) => state.fetchSQLDefinition)
-  const updateObject = useSQLDefinitionStore((state) => state.updateSQLDefinitionObject)
   const loading = useSQLDefinitionStore((state) => state.loading)
 
   const errorAligment = useSQLDefinitionStore((state) => state.errorAligment)
@@ -40,35 +35,22 @@ export function SQLDefinitionPage() {
     }
   }, [errorAligment, updateErrorAligment])
 
-  // console.log(errorAligment)
   if (loading) return <LoaderSlack />
 
   return (
     <>
-      {object && (
-        <div
-          className={`overflow-hidden rounded-md border border-border bg-card ${object ? 'pb-10' : ''} ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
-        >
-          {/* Si no existe conexión con el servidor de alineación (mensaje de error) */}
-          {errorAligment && errorAligment.statusCode !== 404 && <AligmentConectionError />}
+      <div
+        className={`overflow-hidden rounded-md border border-border bg-card pb-4 ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
+      >
+        {/* Si no existe conexión con el servidor de alineación (mensaje de error) */}
+        {errorAligment && errorAligment.statusCode !== 404 && <AligmentConectionError />}
 
-          {/* Cabecera del editpr */}
-          <HeaderEditor />
+        {/* Cabecera del editpr */}
+        <HeaderEditor />
 
-          {/* Muestra el editor del objeto o el editor de comparación */}
-          {object && (onDiffEditor ? <DiffEditorCode /> : <EditorCode />)}
-        </div>
-      )}
-
-      {!object && (
-        <>
-          {/* Información sobre la página actual */}
-          <Info />
-
-          {/* Multiples objetos */}
-          {objectList.length > 0 && <LinkObjectList objectList={objectList} updateObject={updateObject} fetchObjectAction={fetchObject} />}
-        </>
-      )}
+        {/* Muestra el editor del objeto o el editor de comparación */}
+        {onDiffEditor ? <DiffEditorCode /> : <EditorCode />}
+      </div>
 
       <Toaster position="top-center" />
     </>

@@ -25,13 +25,11 @@ export const AligmentObjectInitialState = {
 
 export const SQLDefinitionInitialState = {
   SQLDefinitionCode: null,
-  SQLDefinitionObjectList: [],
   SQLDefinitionError: null,
 }
 
 export const UserTableInitialState = {
   userTableColumnList: [],
-  userTableObjectList: [],
   userTableExtendedPropertieList: [],
   userTableIndexList: [],
   userTableForeignKeyList: [],

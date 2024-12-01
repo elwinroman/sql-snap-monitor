@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { ObjectInitialState, UserTableInitialState } from '@/models/object.model'
-import { findUserTable, getUserTable } from '@/services'
+import { getUserTable } from '@/services'
 
 export const useUserTableStore = create(
   persist(
@@ -22,38 +22,10 @@ export const useUserTableStore = create(
         set({ userTableObject: object })
       },
 
-      searchUserTable: async ({ name }) => {
-        set({ loading: true })
-        const res = await findUserTable({ name })
-
-        if (res.status === 'error') {
-          set({ ...UserTableInitialState })
-          set({ userTableObject: { ...ObjectInitialState } })
-          set({ userTableError: res })
-
-          set({ loading: false })
-          return
-        }
-
-        if (res.meta.length > 1) {
-          set({ ...UserTableInitialState })
-          set({ userTableObject: { ...ObjectInitialState } })
-          set({ userTableObjectList: res.data })
-          set({ loading: false })
-          return
-        }
-
-        set({ ...UserTableInitialState })
-        set({ userTableObject: res.data[0] })
-      },
-
-      fetchUserTable: async () => {
-        const object = get().userTableObject
-        if (object.id === null) return
-
+      fetchUserTable: async ({ id }) => {
         set({ loading: true })
 
-        const res = await getUserTable({ id: object.id })
+        const res = await getUserTable({ id })
 
         if (res.status === 'error') {
           set({ ...UserTableInitialState })

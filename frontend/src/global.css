@@ -57,7 +57,7 @@
   .dark {
     --baselayer: #181919;
     --background: #26272c;
-    --background-alternate: #26272c;
+    --background-alternate: #1f2024;
     --foreground: 210 40% 98%;
     --card: #1e1f1f;
     --card-foreground: 210 40% 98%;
@@ -68,7 +68,7 @@
     --primary-foreground: rgb(35, 34, 38);
     --secondary: rgba(255,255,255,70%);
     --secondary-foreground: 210 40% 98%;
-    --muted: rgba(255, 255, 255, 50%);
+    --muted: rgba(255, 255, 255, 40%);
     --muted-foreground: 215 20.2% 65.1%;
     --accent: #3d3f43;
     --accent-foreground: 210 40% 98%;

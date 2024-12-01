@@ -2,7 +2,8 @@ import { useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants'
 
-import { AplicationLogo, Configuration, GithubRepo, LoginUsername, SearchInput } from './components'
+import { AplicationLogo, Configuration, GithubRepo, LoginUsername, Search } from './components'
+import { SearchProvider } from './components/search/context/search'
 
 export function Navbar({ className }) {
   const currentLocation = useLocation()
@@ -17,7 +18,12 @@ export function Navbar({ className }) {
         <div className="flex-grow"></div>
 
         {/* Input de búsqueda */}
-        {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && <SearchInput />}
+        {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && (
+          // <SearchInput key={currentLocation.pathname} />
+          <SearchProvider>
+            <Search />
+          </SearchProvider>
+        )}
 
         {/* Usuario logueado o inicio de sesión */}
         <LoginUsername />
