@@ -3,7 +3,7 @@ import './App.css'
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { InfoCards } from '@/components/main/components/InfoCards'
+import { ServerDatabaseInfo } from '@/components/main/ServerDatabaseInfo'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { ROUTES } from '@/constants'
 import Layout from '@/layouts/Layout'
@@ -38,7 +38,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards />
+                <ServerDatabaseInfo />
                 <SQLDefinitionPage />
               </Layout>
             </ProtectedLayout>
@@ -51,7 +51,7 @@ function App() {
           element={
             <ProtectedLayout>
               <Layout>
-                <InfoCards />
+                <ServerDatabaseInfo />
                 <UsertablePage />
               </Layout>
             </ProtectedLayout>

@@ -5,7 +5,7 @@ import { LoaderSlack } from '@/components/loader/LoaderSlack'
 import { Toaster } from '@/components/ui/sonner'
 import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 
-import { AligmentConectionError, DiffEditorCode, EditorCode, HeaderEditor } from './components'
+import { AligmentConectionError, DiffEditorCode, EditorCode, HeaderEditor, ObjectInfoPanel } from './components'
 
 export function SQLDefinitionPage() {
   const error = useSQLDefinitionStore((state) => state.SQLDefinitionError)
@@ -39,13 +39,15 @@ export function SQLDefinitionPage() {
 
   return (
     <>
+      <ObjectInfoPanel />
+
       <div
         className={`overflow-hidden rounded-md border border-border bg-card pb-4 ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
       >
         {/* Si no existe conexión con el servidor de alineación (mensaje de error) */}
         {errorAligment && errorAligment.statusCode !== 404 && <AligmentConectionError />}
 
-        {/* Cabecera del editpr */}
+        {/* Cabecera del editor */}
         <HeaderEditor />
 
         {/* Muestra el editor del objeto o el editor de comparación */}

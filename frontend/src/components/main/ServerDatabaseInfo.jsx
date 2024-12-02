@@ -1,13 +1,17 @@
 import { DatabaseZap, Server } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 
+import { ROUTES } from '@/constants'
 import { useAuthStore, useEditorStore } from '@/stores'
 
-export function BreadcrumCard() {
+export function ServerDatabaseInfo() {
   const dbname = useAuthStore((state) => state.dbname)
   const server = useAuthStore((state) => state.server)
   const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
 
-  if (onDiffEditor) return
+  const currentLocation = useLocation()
+
+  if (currentLocation.pathname === ROUTES.SQL_DEFINITION && onDiffEditor) return
 
   return (
     <div className="flex flex-col items-baseline gap-2 sm:flex-row sm:gap-6">
