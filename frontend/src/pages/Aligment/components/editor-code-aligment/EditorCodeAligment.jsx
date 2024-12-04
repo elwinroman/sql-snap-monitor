@@ -1,5 +1,6 @@
 import Editor from '@monaco-editor/react'
 
+import { CopyClipboard } from '@/components/main/CopyClipboard'
 import { THEMES } from '@/constants'
 import { useAligmentStore, useEditorStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
@@ -62,14 +63,21 @@ export function EditorCodeAligment() {
   const fullOptions = { ...options, renderWhitespace, fontSize }
 
   return (
-    <Editor
-      beforeMount={handleEditorDidMount}
-      language="sql"
-      defaultValue={defaultCode}
-      theme={theme}
-      value={!loading ? code : 'Buscando información, esto puede tardar unos segundos...'}
-      options={{ ...fullOptions }}
-      loading={<div>Cargando...</div>}
-    />
+    <div className="group relative h-full">
+      <Editor
+        beforeMount={handleEditorDidMount}
+        language="sql"
+        defaultValue={defaultCode}
+        theme={theme}
+        value={!loading ? code : 'Buscando información, esto puede tardar unos segundos...'}
+        options={{ ...fullOptions }}
+        loading={<div>Cargando...</div>}
+      />
+
+      {/* Copiar */}
+      <div className="absolute right-36 top-3">
+        <CopyClipboard text={code} />
+      </div>
+    </div>
   )
 }

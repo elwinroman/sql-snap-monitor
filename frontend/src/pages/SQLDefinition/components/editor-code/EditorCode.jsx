@@ -1,7 +1,8 @@
 import Editor from '@monaco-editor/react'
 
+import { CopyClipboard } from '@/components/main/CopyClipboard'
 import { THEMES } from '@/constants'
-import { useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
@@ -24,6 +25,7 @@ export function EditorCode() {
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const fontSize = useEditorStore((state) => state.fontSize)
   const theme = useEditorStore((state) => state.theme)
+  const isMaximized = useConfigStore((state) => state.isMaximized)
 
   let formattedCode = null
   if (code) formattedCode = hasRoles ? code + formatPermissionRoles(permission, schema, name) : code
@@ -40,17 +42,22 @@ export function EditorCode() {
   const fullOptions = { ...options, renderWhitespace, fontSize }
 
   return (
-    <div>
+    <div className="group relative">
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"
         defaultValue={defaultCode}
-        height="88vh"
+        height={isMaximized ? '100vh' : '88vh'}
         theme={theme}
         value={formattedCode}
         options={{ ...fullOptions }}
         loading={<div>Cargando...</div>}
       />
+
+      {/* Butón de copiar */}
+      <div className="absolute right-36 top-3">
+        <CopyClipboard text={formattedCode} />
+      </div>
     </div>
   )
 }
