@@ -1,4 +1,3 @@
-import { Search as SearchIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -6,6 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { ROUTES, TYPE_SEARCH } from '@/constants'
 
 import { SearchResult } from './components/search-result/SearchResult'
+import { SearchTrigger } from './components/SearchTrigger'
 import { useSearch } from './hooks/useSearch'
 
 export function Search() {
@@ -44,12 +44,7 @@ export function Search() {
   return (
     <li>
       {/* Abre el dialog de búsqueda */}
-      <button className="flex h-9 place-content-center items-center gap-2 rounded-sm px-3 transition-colors hover:bg-background">
-        <SearchIcon size={16} />
-        <kbd className="font-mono pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 text-[10px] font-medium text-muted-foreground opacity-100">
-          <span className="text-xs">⌘</span>J
-        </kbd>
-      </button>
+      <SearchTrigger reset={reset} updateOpen={updateOpen} />
 
       {/* Dialog de búsqueda */}
       <Dialog open={open} onOpenChange={updateOpen}>
