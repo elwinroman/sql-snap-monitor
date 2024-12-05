@@ -17,6 +17,8 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         // customizado
         danger: 'bg-amber-500 hover:bg-amber-500/90 text-zinc-800',
+        variant01: 'bg-[#3577f1] hover:bg-[#3577f1]/90 text-white',
+        variant02: 'bg-[#F1AF35] hover:bg-[#F1AF35]/90 text-white',
       },
       size: {
         default: 'h-10 px-4 py-2',

@@ -35,11 +35,11 @@ export function ButtonGroup() {
 
   return (
     <section className="flex w-full gap-2">
-      <Button variant="danger" size="default" className="w-full" onClick={handleClickConsultar} disabled={loading}>
+      <Button variant="variant01" size="default" className="w-full" onClick={handleClickConsultar} disabled={loading}>
         <span className="font-[Geist_Sans]">Consultar</span>
       </Button>
 
-      <Button variant="secondary" size="default" className="w-full" onClick={handleClickLimpiar} disabled={loading}>
+      <Button variant="default" size="default" className="w-full" onClick={handleClickLimpiar} disabled={loading}>
         Limpiar
       </Button>
     </section>

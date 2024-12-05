@@ -22,7 +22,7 @@ export function ServerDatabaseInfo() {
           <i className="text-secondary">
             <Server size={16} />
           </i>
-          <h1 className="text-sm font-bold text-indigo-500">{server}</h1>
+          <h1 className="text-sm font-bold text-secondary">{server}</h1>
         </div>
         <div className="flex flex-nowrap items-start gap-1">
           <i className="text-secondary">

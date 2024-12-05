@@ -41,14 +41,14 @@ export function LoginPage() {
     }
   }
   return (
-    <section className="flex h-screen w-full items-center overflow-auto bg-[#14161a]">
-      <div className="m-auto flex w-[500px] flex-col gap-6 rounded-md bg-[#26282d] px-14 py-16">
+    <section className="flex h-screen w-full items-center overflow-auto bg-baselayer">
+      <div className="m-auto flex w-[480px] flex-col gap-6 rounded-md bg-card px-10 py-10 shadow-md">
         {/* Loader */}
         {loading && <Loader className="loader absolute left-1/2 top-1/2 opacity-80" />}
 
-        <header className="flex flex-col gap-3">
-          <h1 className="text-3xl font-semibold text-white">Iniciar sesión</h1>
-          <p className="text-sm font-medium text-zinc-400">Inicia sesión con tus credenciales SQL a tu base de pruebas</p>
+        <header className="flex flex-col items-center gap-3">
+          <h1 className="text-xl font-semibold text-indigo-500">Bienvenido!</h1>
+          <p className="text-sm text-secondary">Inicia sesión con tus credenciales SQL a tu base de pruebas</p>
 
           {errorAuth && (
             <div className="flex gap-2 rounded-md border border-[#f53e7b59] bg-[#592e41] px-4 py-2">
@@ -64,17 +64,17 @@ export function LoginPage() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-0.5">
               <Label text="Server" />
-              <Input name="server" />
+              <Input name="server" placeholder="Ingresa el nombre de tu servidor" />
             </div>
 
             <div className="flex flex-col gap-0.5">
               <Label text="Database" />
-              <Input name="dbname" />
+              <Input name="dbname" placeholder="Ingresa el nombre de tu BD" />
             </div>
 
             <div className="flex flex-col gap-0.5">
               <Label text="Usuario SQL" />
-              <Input name="username" />
+              <Input name="username" placeholder="Ingresa tu usuario SQL" />
             </div>
 
             <div className="flex flex-col gap-0.5">
@@ -86,7 +86,7 @@ export function LoginPage() {
           <div>
             <button
               type="submit"
-              className={`w-full select-none rounded-md border border-transparent px-3 py-2 font-medium text-zinc-700 hover:bg-[#06f4aa] ${loading ? 'bg-[#00e19b] opacity-60' : 'bg-[#00e19b]'}`}
+              className={`w-full select-none rounded-md border border-transparent px-3 py-2 font-medium text-white hover:bg-emerald-400 ${loading ? 'bg-[#00e19b] opacity-60' : 'bg-emerald-500'}`}
             >
               Iniciar sesión
             </button>

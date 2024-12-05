@@ -26,7 +26,7 @@ export function LoginUsername() {
   }
 
   return (
-    <li>
+    <li className="list-none">
       <div className="grid h-9 place-content-center px-3">
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -35,7 +35,7 @@ export function LoginUsername() {
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>QA</AvatarFallback>
               </Avatar>
-              <span className="hidden select-none text-sm font-semibold text-secondary transition-colors group-hover:text-primary md:block">
+              <span className="hidden select-none text-sm font-medium text-secondary transition-colors group-hover:text-primary md:block">
                 {username}
               </span>
             </div>
