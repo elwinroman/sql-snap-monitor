@@ -7,6 +7,7 @@ export function DiffCompare() {
   const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
   const updateDiffEditor = useEditorStore((state) => state.updateDiffEditor)
   const { id } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
+  const { id: objectId } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const getSQLDefinitionAligmentObject = useSQLDefinitionStore((state) => state.getSQLDefinitionAligmentObject)
   const hasAligmentObject = useSQLDefinitionStore((state) => state.hasAligmentObject)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
@@ -28,6 +29,7 @@ export function DiffCompare() {
         <button
           className={`${loadingAligment ? 'cursor-not-allowed' : ''} h-7 w-auto rounded-sm border border-zinc-400/30 px-2 transition duration-200 ${onDiffEditor ? 'bg-indigo-700 hover:bg-indigo-600' : 'bg-pink-700 hover:bg-pink-600'}`}
           onClick={handleClick}
+          disabled={!objectId}
         >
           <div className="flex flex-nowrap items-center justify-center gap-1">
             <i className="text-white">

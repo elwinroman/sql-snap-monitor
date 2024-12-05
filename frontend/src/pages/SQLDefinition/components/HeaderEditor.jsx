@@ -8,11 +8,13 @@ export function HeaderEditor() {
   const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
+  const headerObjectName = object.name ? `${object.schema}.${object.name}` : 'Definiciones SQL'
+
   return (
     <div className="flex flex-col justify-between gap-x-5 gap-y-4 px-6 py-4 sm:items-center md:flex-row">
       {!onDiffEditor ? (
-        <h4 className="flex items-center gap-2 font-semibold text-zinc-300">
-          <span className="text-primary">{object.name}</span>
+        <h4 className="flex items-center gap-2 font-medium text-zinc-300">
+          <span className="text-primary">{headerObjectName}</span>
         </h4>
       ) : (
         <h3 className="max-w-sm text-sm text-zinc-200 sm:max-w-full">

@@ -11,7 +11,7 @@ export function ItemList({ children, data }) {
   // cada vez que hace click en el item, se recupera el objeto (sqldefinition o usertable)
   const getObject = (e) => {
     e.preventDefault('id', e.currentTarget.dataset.id)
-    console.log()
+
     if (type === TYPE_SEARCH.SQLDEFINITION) fetchSQLDefinition({ id: e.currentTarget.dataset.id })
     if (type === TYPE_SEARCH.USERTABLE) fetchUsertable({ id: e.currentTarget.dataset.id })
     updateOpen(false) // cerrar dialog de búsqueda

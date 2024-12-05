@@ -28,7 +28,6 @@ export function SearchProvider({ children }) {
 
   // elimina un elemento de la lista de favoritos
   const deleteFavorite = (id) => {
-    console.log('eliminando favoritos')
     const newFavorites = [...favorites]
     const index = newFavorites.findIndex((element) => element === id)
     newFavorites.splice(index, 1)

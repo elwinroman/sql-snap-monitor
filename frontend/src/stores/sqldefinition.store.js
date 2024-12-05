@@ -59,6 +59,7 @@ export const useSQLDefinitionStore = create(
 
       // obtener el objeto mediante su ID
       fetchSQLDefinition: async ({ id }) => {
+        const updateDiffEditor = useEditorStore.getState().updateDiffEditor
         set({ loading: true })
 
         const res = await getSQLDefinitionObject({ id })
@@ -77,7 +78,9 @@ export const useSQLDefinitionStore = create(
         }
 
         // success
-        set({ ...SQLDefinitionInitialState })
+        set({ hasAligmentObject: true })
+        updateDiffEditor(false)
+        set({ SQLDefinitionAligmentObject: { ...AligmentObjectInitialState } })
         set({
           SQLDefinitionObject: {
             id: res.data.id,
@@ -91,6 +94,7 @@ export const useSQLDefinitionStore = create(
             permission: res.data.permission,
           },
         })
+        set({ ...AligmentObjectInitialState })
         set({ SQLDefinitionCode: res.data.definition })
         set({ loading: false })
       },
@@ -110,7 +114,9 @@ export const useSQLDefinitionStore = create(
       // excluye de la persistencia, algunos estados del store
       partialize: (state) =>
         Object.fromEntries(
-          Object.entries(state).filter(([key]) => !['SQLDefinitionError', 'errorAligment', 'loading', 'loadingAligment'].includes(key)),
+          Object.entries(state).filter(
+            ([key]) => !['SQLDefinitionError', 'errorAligment', 'loading', 'loadingAligment', 'hasAligmentObject'].includes(key),
+          ),
         ),
     },
   ),

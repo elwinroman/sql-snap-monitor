@@ -8,7 +8,7 @@ export function PermissionRol() {
   const updateRoles = useEditorStore((state) => state.updateRoles)
   const SQLDefinitionObject = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
 
-  const { permission } = SQLDefinitionObject
+  const { permission, id } = SQLDefinitionObject
 
   const handleClick = (e) => {
     e.preventDefault()
@@ -21,6 +21,8 @@ export function PermissionRol() {
   let text = ''
 
   permission.length === 0 ? (text = 'No existe roles asignados') : (text = hasRoles ? 'Ocultar permisos y roles' : 'Ver permisos y roles')
+
+  if (!id) return
 
   return (
     <TooltipProvider>
