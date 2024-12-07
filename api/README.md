@@ -20,11 +20,17 @@ npm install
 ## Configuración de variables de entorno
 Crea un archivo `.env` en la raíz del proyecto **api** (backend) y define las variables de entorno necesarias según el `.env.sample`
 ```plaintext
-# Configuración de base de datos (BD de alineación)
-DB_SERVER: Nombre del servidor donde se encuentra alojada la base de datos.
-DB_USERNAME: Nombre de usuario utilizado para la autenticación en la base de datos (usuario SQL).
-DB_PASSWORD: Contraseña correspondiente al usuario de la base de datos (contraseña SQL).
-DB_NAME: Nombre de la base de datos a la que se conectará la aplicación.
+# Configuración de base de datos (BD de alineación - PREPROD)
+PREPROD_DBSERVER: Nombre del servidor.
+PREPROD_DBNAME: Nombre de la base de datos.
+PREPROD_DBUSERNAME: Nombre de usuario.
+PREPROD_DBPASSWORD: Contraseña correspondiente al usuario.
+
+# Configuración de base de datos (BD de la aplicación)
+DBSERVER: Nombre del servidor.
+DBNAME: Nombre de la base de datos.
+DBUSERNAME: Nombre de usuario.
+DBPASSWORD: Contraseña correspondiente al usuario.
 
 # Configuración del servidor backend
 PORT: Puerto en el que se ejecutará el servidor. Si no se especifica, el valor predeterminado es 3000.
