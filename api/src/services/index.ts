@@ -1,4 +1,6 @@
 export * from './auth-service'
 export * from './log-service'
-export * from './object-service'
+export * from './search-service'
+export * from './sqldefinition-service'
 export * from './user-service'
+export * from './usertable-service'

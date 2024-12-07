@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
-import { createAuthRouter } from '@/routes/auth'
-import { createObjectRouter } from '@/routes/object'
+import { createAuthRouter } from '@/routes/auth-route'
+import { createObjectRouter } from '@/routes/object-route'
 
 export function createAllRouter() {
   const router = Router()

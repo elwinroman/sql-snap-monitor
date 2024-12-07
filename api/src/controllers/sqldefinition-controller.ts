@@ -2,19 +2,10 @@ import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
 import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR } from '@/constants/'
-import {
-  Credentials,
-  CredentialsFromEnv,
-  MyCustomError,
-  ResponseSQLDefinitionObjects,
-  ResponseUserTableObjects,
-  ResponseUserTableRecordObject,
-  SearchResponse,
-  SQLDefinitionRecordObject,
-} from '@/models'
-import { LogService, ObjectService } from '@/services'
+import { Credentials, CredentialsFromEnv, MyCustomError, ResponseSQLDefinitionObjects, SQLDefinitionRecordObject } from '@/models'
+import { LogService, SQLDefinitionService } from '@/services'
 
-export class ObjectController {
+export class SQLDefinitionController {
   findSQLDefinition = async (req: Request, res: Response, next: NextFunction) => {
     const { search } = req.query
     const { credentials, isSessionActive } = req.session
@@ -38,8 +29,8 @@ export class ObjectController {
 
     // Funcionalidad
     try {
-      const objectService = new ObjectService(credentials as Credentials)
-      const { data, meta } = (await objectService.findSQLDefinitionByName(search as string)) as ResponseSQLDefinitionObjects
+      const sqlDefinitionService = new SQLDefinitionService(credentials as Credentials)
+      const { data, meta } = (await sqlDefinitionService.findSQLDefinitionByName(search as string)) as ResponseSQLDefinitionObjects
 
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
@@ -69,8 +60,8 @@ export class ObjectController {
 
     // Funcionalidad
     try {
-      const objectService = new ObjectService(credentials as Credentials)
-      const object = (await objectService.getSQLDefinitionById(parseInt(id))) as SQLDefinitionRecordObject
+      const sqlDefinitionService = new SQLDefinitionService(credentials as Credentials)
+      const object = (await sqlDefinitionService.getSQLDefinitionById(parseInt(id))) as SQLDefinitionRecordObject
 
       // registrar el log de la búsqueda del objeto hecho por el usuario
       const logService = new LogService()
@@ -134,7 +125,7 @@ export class ObjectController {
         isComparisonMode: isComparisonMode === 'true' ? true : undefined,
       }
 
-      const aligmentObject = (await new ObjectService(CredentialsFromEnv).getSQLDefinitionAligmentById(
+      const aligmentObject = (await new SQLDefinitionService(CredentialsFromEnv).getSQLDefinitionAligmentById(
         params.name,
         params.schemaName,
       )) as SQLDefinitionRecordObject
@@ -154,118 +145,6 @@ export class ObjectController {
       })
 
       res.status(200).json({ status: 'success', statusCode: 200, data: aligmentObject })
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  findUserTable = async (req: Request, res: Response, next: NextFunction) => {
-    const { search } = req.query
-    const { credentials, isSessionActive } = req.session
-
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
-
-    // Validación
-    try {
-      const SearchSchema = z.object({
-        search: z
-          .string({ required_error: VALIDATION_ERROR.required })
-          .trim()
-          .min(3, { message: VALIDATION_ERROR.min })
-          .max(128, { message: VALIDATION_ERROR.max }),
-      })
-
-      SearchSchema.parse({ search })
-    } catch (err) {
-      return next(err)
-    }
-
-    // Funcionalidad
-    try {
-      const objectService = new ObjectService(credentials as Credentials)
-      const { data, meta } = (await objectService.findUserTableByName(search as string)) as ResponseUserTableObjects
-
-      res.status(200).json({ status: 'success', statusCode: 200, data, meta })
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  getUserTable = async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params
-    const { credentials, isSessionActive, idUsuario } = req.session
-
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
-
-    // Validación
-    try {
-      const FindSchema = z.object({
-        id: z
-          .string()
-          .transform(val => Number(val))
-          .pipe(z.number({ message: 'El campo ruta [id] debe ser un número' })),
-      })
-
-      FindSchema.parse({ id })
-    } catch (err) {
-      return next(err)
-    }
-
-    // Funcionalidad
-    try {
-      const objectService = new ObjectService(credentials as Credentials)
-      const { data } = (await objectService.getUserTableById(parseInt(id))) as ResponseUserTableRecordObject
-
-      // registrar el log de la búsqueda del objeto hecho por el usuario
-      const logService = new LogService()
-      logService.registrarBusqueda({
-        idUsuario: idUsuario as number,
-        idTipoAccion: TYPE_ACTION.usertable.id,
-        cDatabase: credentials?.dbname as string,
-        cSchema: data.schema,
-        cBusqueda: data.name,
-        lProduccion: data.isAligmentObject,
-      })
-
-      res.status(200).json({ status: 'success', statusCode: 200, data })
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  getSearchSuggestion = async (req: Request, res: Response, next: NextFunction) => {
-    const { search, type } = req.query
-    const { credentials, isSessionActive } = req.session
-
-    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.notauthorized))
-
-    // Validación
-    try {
-      const SearchSuggestionSchema = z.object({
-        search: z
-          .string({ required_error: VALIDATION_ERROR.required })
-          .trim()
-          .min(3, { message: VALIDATION_ERROR.min })
-          .max(128, { message: VALIDATION_ERROR.max }),
-        type: z
-          .string({ required_error: VALIDATION_ERROR.required })
-          .transform(val => val.trim())
-          .refine(val => Object.values(TYPE_ACTION).some(({ name }) => name === val), {
-            message: `Se espera que este campo reciba 'sqldefinition' o 'usertable'`,
-          }),
-      })
-
-      SearchSuggestionSchema.parse({ search, type })
-    } catch (err) {
-      return next(err)
-    }
-
-    // Funcionalidad
-    try {
-      const objectService = new ObjectService(credentials as Credentials)
-      const { data, meta } = (await objectService.searchByName(search as string, type as string)) as SearchResponse
-
-      res.status(200).json({ status: 'success', statusCode: 200, data, meta })
     } catch (err) {
       next(err)
     }
