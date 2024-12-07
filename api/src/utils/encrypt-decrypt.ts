@@ -2,12 +2,10 @@ import 'dotenv/config'
 
 import { createCipheriv, createDecipheriv, createHash } from 'node:crypto'
 
-if (!process.env.INIT_VECTOR || !process.env.PASS_PHRASE) {
-  throw new Error('INIT_VECTOR y PASS_PHRASE deben ser definidas en las variables de entorno')
-}
+import { INIT_VECTOR, PASS_PHRASE } from '@/config/enviroment'
 
-const initVector = process.env.INIT_VECTOR
-const passPhrase = process.env.PASS_PHRASE
+const initVector = INIT_VECTOR
+const passPhrase = PASS_PHRASE
 
 function getKey(passPhrase: string) {
   // const salt = Buffer.from([]); // No usar salt
@@ -17,18 +15,14 @@ function getKey(passPhrase: string) {
 }
 
 export function encryptString(plainText: string, urlFriendly: boolean = false) {
-  try {
-    const keyBytes = getKey(passPhrase)
-    const iv = Buffer.from(initVector, 'utf8')
-    const cipher = createCipheriv('aes-256-cbc', keyBytes, iv)
+  const keyBytes = getKey(passPhrase)
+  const iv = Buffer.from(initVector, 'utf8')
+  const cipher = createCipheriv('aes-256-cbc', keyBytes, iv)
 
-    let encrypted = cipher.update(plainText, 'utf8', 'base64')
-    encrypted += cipher.final('base64')
+  let encrypted = cipher.update(plainText, 'utf8', 'base64')
+  encrypted += cipher.final('base64')
 
-    return urlFriendly ? encodeURIComponent(encrypted) : encrypted
-  } catch {
-    throw new Error('Error al encriptar la contraseña, las variables de entorno deben ser definidas [initVector] (16 bytes) y [passPhrase]')
-  }
+  return urlFriendly ? encodeURIComponent(encrypted) : encrypted
 }
 
 export function decryptString(cipherText: string) {
@@ -41,7 +35,7 @@ export function decryptString(cipherText: string) {
     decrypted += decipher.final('utf8')
 
     return decrypted
-  } catch (e) {
-    console.error(e) // error al desencriptar
+  } catch (err) {
+    console.log('err:', err) // error al desencriptar
   }
 }

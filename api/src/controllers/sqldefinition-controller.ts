@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
+import { PREPROD_DBNAME } from '@/config/enviroment'
 import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR } from '@/constants/'
-import { Credentials, CredentialsFromEnv, MyCustomError, ResponseSQLDefinitionObjects, SQLDefinitionRecordObject } from '@/models'
+import { Credentials, CredentialsFromEnv_PREPROD, MyCustomError, ResponseSQLDefinitionObjects, SQLDefinitionRecordObject } from '@/models'
 import { LogService, SQLDefinitionService } from '@/services'
 
 export class SQLDefinitionController {
@@ -125,7 +126,7 @@ export class SQLDefinitionController {
         isComparisonMode: isComparisonMode === 'true' ? true : undefined,
       }
 
-      const aligmentObject = (await new SQLDefinitionService(CredentialsFromEnv).getSQLDefinitionAligmentById(
+      const aligmentObject = (await new SQLDefinitionService(CredentialsFromEnv_PREPROD).getSQLDefinitionAligmentById(
         params.name,
         params.schemaName,
       )) as SQLDefinitionRecordObject
@@ -138,7 +139,8 @@ export class SQLDefinitionController {
       logService.registrarBusqueda({
         idUsuario: idUsuario ?? undefined,
         idTipoAccion: actionType,
-        cDatabase: `${process.env.PREPROD_DB_NAME}_PROD` as string,
+        // cDatabase: PREPROD_DBNAME,
+        cDatabase: `${PREPROD_DBNAME}_PROD`,
         cSchema: aligmentObject.schema,
         cBusqueda: aligmentObject.name,
         lProduccion: aligmentObject.isAligmentObject,

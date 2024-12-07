@@ -1,10 +1,11 @@
 import 'dotenv/config'
 
 import { createAllRouter } from './config/all.route'
+import { ALLOWED_ORIGIN, PORT } from './config/enviroment'
 import { Server } from './config/server.controller'
 
 new Server({
-  port: Number(process.env.PORT),
+  port: PORT,
   routes: createAllRouter(),
-  allowedOrigin: process.env.ALLOWED_ORIGIN,
+  allowedOrigin: ALLOWED_ORIGIN,
 }).start()

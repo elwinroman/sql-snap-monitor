@@ -1,19 +1,14 @@
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
-import { Credentials, ForRetrievingUser, ResponseUser, UserInput } from '@/models'
-import { encryptString, printRequestError } from '@/utils'
+import { Credentials, CredentialsFromEnv, ForRetrievingUser, ResponseUser, UserInput } from '@/models'
+import { printRequestError } from '@/utils'
 
 export class UserService implements ForRetrievingUser {
   private credentials: Credentials
 
   constructor() {
-    this.credentials = {
-      server: process.env.LOG_DB_SERVER as string,
-      dbname: process.env.LOG_DB_NAME as string,
-      username: process.env.LOG_DB_USERNAME as string,
-      password: encryptString(process.env.LOG_DB_PASSWORD as string),
-    }
+    this.credentials = { ...CredentialsFromEnv }
   }
 
   // Registra un usuario cuando no existe

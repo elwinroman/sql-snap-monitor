@@ -1,3 +1,13 @@
+import {
+  DBNAME,
+  DBPASSWORD,
+  DBSERVER,
+  DBUSERNAME,
+  PREPROD_DBNAME,
+  PREPROD_DBPASSWORD,
+  PREPROD_DBSERVER,
+  PREPROD_DBUSERNAME,
+} from '@/config/enviroment'
 import { encryptString } from '@/utils'
 
 export interface Credentials {
@@ -7,16 +17,16 @@ export interface Credentials {
   dbname: string
 }
 
-export const CredentialsInitialState: Credentials = {
-  server: '',
-  username: '',
-  password: '',
-  dbname: '',
+export const CredentialsFromEnv_PREPROD: Credentials = {
+  server: PREPROD_DBSERVER,
+  username: PREPROD_DBUSERNAME,
+  password: encryptString(PREPROD_DBPASSWORD),
+  dbname: PREPROD_DBNAME,
 }
 
 export const CredentialsFromEnv: Credentials = {
-  server: process.env.PREPROD_DB_SERVER || '',
-  username: process.env.PREPROD_DB_USERNAME || '',
-  password: encryptString(process.env.PREPROD_DB_PASSWORD as string) || '',
-  dbname: process.env.PREPROD_DB_NAME || '',
+  server: DBSERVER,
+  username: DBUSERNAME,
+  password: encryptString(DBPASSWORD),
+  dbname: DBNAME,
 }

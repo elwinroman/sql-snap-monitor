@@ -5,12 +5,13 @@ import session from 'express-session'
 
 import { handleError, routeNotFound, verifyToken } from '@/middlewares'
 
+import { SESSION_SECRET } from './enviroment'
 import { NetworkController } from './network.controller'
 
 interface Options {
-  port?: number
+  port: number
   routes: Router
-  allowedOrigin?: string
+  allowedOrigin: string
 }
 
 export class Server {
@@ -20,21 +21,19 @@ export class Server {
   private allowedOrigin: string
 
   constructor(options: Options) {
-    const { port = 3000, routes, allowedOrigin = '*' } = options
-
+    const { port, routes, allowedOrigin } = options
     this.port = port
     this.routes = routes
     this.allowedOrigin = allowedOrigin
 
-    if (!process.env.SESSION_SECRET) throw new Error('SESSION_SECRET debe ser definido en las variables de entorno')
-    if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET debe ser definido en las variables de entorno')
+    console.log(SESSION_SECRET)
   }
 
   public start() {
-    this.app.use(cors({ credentials: true, origin: process.env.ALLOWED_ORIGIN }))
+    this.app.use(cors({ credentials: true, origin: this.allowedOrigin }))
     this.app.use(json())
     this.app.use(cookieParser())
-    this.app.use(session({ secret: process.env.SESSION_SECRET as string, resave: false, saveUninitialized: false }))
+    this.app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
     this.app.use(verifyToken)
 
     this.app.use(this.routes)

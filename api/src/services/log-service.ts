@@ -1,19 +1,14 @@
 import sql from 'mssql'
 
 import { connection } from '@/config/database'
-import { Credentials, ForRetrievingLog, LogAccesoInput, LogBusquedaInput } from '@/models'
-import { encryptString, printRequestError } from '@/utils'
+import { Credentials, CredentialsFromEnv, ForRetrievingLog, LogAccesoInput, LogBusquedaInput } from '@/models'
+import { printRequestError } from '@/utils'
 
 export class LogService implements ForRetrievingLog {
   private credentials: Credentials
 
   constructor() {
-    this.credentials = {
-      server: process.env.LOG_DB_SERVER as string,
-      dbname: process.env.LOG_DB_NAME as string,
-      username: process.env.LOG_DB_USERNAME as string,
-      password: encryptString(process.env.LOG_DB_PASSWORD as string),
-    }
+    this.credentials = { ...CredentialsFromEnv }
   }
 
   // Registra el acceso de un usuario en el log

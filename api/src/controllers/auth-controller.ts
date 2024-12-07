@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
+import { JWT_SECRET } from '@/config/enviroment'
 import { COMMON_ERROR_CODES, VALIDATION_ERROR } from '@/constants'
 import { Credentials, DatabaseDetails, MyCustomError } from '@/models'
 import { AuthService, LogService, UserService } from '@/services'
@@ -82,7 +83,7 @@ export class AuthController {
 
       // generar token con los datos del usuario
       const userDataForToken = user
-      const token = jwt.sign({ ...userDataForToken }, process.env.JWT_SECRET as string, { expiresIn: '48h' })
+      const token = jwt.sign({ ...userDataForToken }, JWT_SECRET, { expiresIn: '48h' })
 
       // almacenar las credenciales en la sesión para reutilizarlas (todo: usar redis o mongo-db en el futuro)
       req.session.credentials = {
