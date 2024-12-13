@@ -1,5 +1,6 @@
 export * from './auth-controller'
 export * from './busqueda-reciente-controller'
+export * from './favorito-controller'
 export * from './search-controller'
 export * from './sqldefinition-controller'
 export * from './usertable-controller'

@@ -1,4 +1,6 @@
 export * from './auth-service'
+export * from './busqueda-reciente-service'
+export * from './favorito-service'
 export * from './log-service'
 export * from './search-service'
 export * from './sqldefinition-service'

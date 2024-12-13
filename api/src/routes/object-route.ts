@@ -1,6 +1,12 @@
 import { Router } from 'express'
 
-import { BusquedaRecienteController, SearchController, SQLDefinitionController, UsertableController } from '@/controllers'
+import {
+  BusquedaRecienteController,
+  FavoritoController,
+  SearchController,
+  SQLDefinitionController,
+  UsertableController,
+} from '@/controllers'
 
 export function createObjectRouter() {
   const router = Router()
@@ -9,6 +15,7 @@ export function createObjectRouter() {
   const usertableController = new UsertableController()
   const searchController = new SearchController()
   const busquedaRecienteController = new BusquedaRecienteController()
+  const favoritoController = new FavoritoController()
 
   // busqueda
   router.get('/', searchController.obtenerSugerencias)
@@ -26,6 +33,11 @@ export function createObjectRouter() {
   router.post('/busqueda-reciente', busquedaRecienteController.registrarBusquedaReciente)
   router.get('/busqueda-reciente', busquedaRecienteController.obtenerBusquedasRecientes)
   router.delete('/busqueda-reciente/:id', busquedaRecienteController.eliminarBusquedaReciente)
+
+  // busquedas favoritas
+  router.post('/favorito', favoritoController.registrarFavorito)
+  router.get('/favorito', favoritoController.obtenerFavoritos)
+  router.delete('/favorito/:id', favoritoController.eliminarFavorito)
 
   return router
 }
