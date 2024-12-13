@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { SearchController, SQLDefinitionController, UsertableController } from '@/controllers'
+import { BusquedaRecienteController, SearchController, SQLDefinitionController, UsertableController } from '@/controllers'
 
 export function createObjectRouter() {
   const router = Router()
@@ -8,6 +8,7 @@ export function createObjectRouter() {
   const sqlDefinitionController = new SQLDefinitionController()
   const usertableController = new UsertableController()
   const searchController = new SearchController()
+  const busquedaRecienteController = new BusquedaRecienteController()
 
   // busqueda
   router.get('/', searchController.obtenerSugerencias)
@@ -20,6 +21,11 @@ export function createObjectRouter() {
   // tablas de usuario
   router.get('/usertable', usertableController.buscarUsertableByName)
   router.get('/usertable/:id', usertableController.obtenerUsertableById)
+
+  // busquedas recientes
+  router.post('/busqueda-reciente', busquedaRecienteController.registrarBusquedaReciente)
+  router.get('/busqueda-reciente', busquedaRecienteController.obtenerBusquedasRecientes)
+  router.delete('/busqueda-reciente/:id', busquedaRecienteController.eliminarBusquedaReciente)
 
   return router
 }

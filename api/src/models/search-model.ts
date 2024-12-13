@@ -1,5 +1,3 @@
-import { CustomError } from './custom-error-model'
-
 export interface SuggestionSearch {
   id: number
   name: string
@@ -13,6 +11,12 @@ export interface SearchResponse {
   }
 }
 
+export interface GetObjectIds {
+  schema_name: string
+  object_name: string
+}
+
 export interface ForRetrievingSearch {
-  obtenerSugerencias(name: string, type?: string): Promise<SearchResponse | CustomError | undefined>
+  obtenerSugerencias(name: string, type?: string): Promise<SearchResponse | undefined>
+  getIdsInBulk(objects: GetObjectIds[]): Promise<number[] | undefined>
 }
