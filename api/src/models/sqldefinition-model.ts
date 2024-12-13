@@ -1,6 +1,4 @@
-import { CustomError } from './custom-error-model'
-
-// Para objetos que requiren obtener su definición SQL
+// Para objetos que requieren obtener su definición SQL
 
 /**
  * @typedef {Object} SQLDefinitionObjects - Objetos encontrados que requieren obtener su definición SQL.
@@ -62,7 +60,7 @@ export interface SQLDefinitionRecordObject {
 }
 
 export interface ForRetrievingObject {
-  findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | CustomError | undefined>
-  getSQLDefinitionById(id: number): Promise<SQLDefinitionRecordObject | CustomError | undefined>
-  getSQLDefinitionAligmentById(name: string, schemaName: string): Promise<SQLDefinitionRecordObject | CustomError | undefined>
+  findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | undefined>
+  getSQLDefinitionById(id: number): Promise<SQLDefinitionRecordObject | undefined>
+  getSQLDefinitionAligmentById(name: string, schemaName: string): Promise<SQLDefinitionRecordObject | undefined>
 }

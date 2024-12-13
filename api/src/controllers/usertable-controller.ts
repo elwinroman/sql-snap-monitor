@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
 import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR } from '@/constants/'
-import { Credentials, MyCustomError, ResponseUsertableObjects, ResponseUsertableRecordObject } from '@/models'
+import { MyCustomError, ResponseUsertableObjects, ResponseUsertableRecordObject } from '@/models'
 import { LogService, UsertableService } from '@/services'
 
 export class UsertableController {
@@ -29,7 +29,7 @@ export class UsertableController {
 
     // Funcionalidad
     try {
-      const usertableService = new UsertableService(credentials as Credentials)
+      const usertableService = new UsertableService(credentials)
       const { data, meta } = (await usertableService.buscarUsertableByName(search as string)) as ResponseUsertableObjects
 
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
@@ -60,7 +60,7 @@ export class UsertableController {
 
     // Funcionalidad
     try {
-      const usertableService = new UsertableService(credentials as Credentials)
+      const usertableService = new UsertableService(credentials)
       const { data } = (await usertableService.obtenerUsertableById(parseInt(id))) as ResponseUsertableRecordObject
 
       // registrar el log de la búsqueda del objeto hecho por el usuario
@@ -68,7 +68,7 @@ export class UsertableController {
       logService.registrarBusqueda({
         idUsuario: idUsuario as number,
         idTipoAccion: TYPE_ACTION.usertable.id,
-        cDatabase: credentials?.dbname as string,
+        cDatabase: credentials.dbname as string,
         cSchema: data.schema,
         cBusqueda: data.name,
         lProduccion: data.isAligmentObject,

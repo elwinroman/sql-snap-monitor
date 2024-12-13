@@ -4,7 +4,6 @@ import sql from 'mssql'
 import { connection } from '@/config/database'
 import { COMMON_ERROR_CODES } from '@/constants'
 import {
-  BusquedaRecienteFindResponse,
   BusquedaRecienteGetInput,
   BusquedaRecienteInput,
   BusquedaRecienteRes,
@@ -52,7 +51,7 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
   }
 
   // Busca la búsqueda reciente
-  public async encontrarBusquedaReciente(busquedaReciente: BusquedaRecienteInput): Promise<BusquedaRecienteFindResponse | undefined> {
+  public async encontrarBusquedaReciente(busquedaReciente: BusquedaRecienteInput): Promise<number | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -74,12 +73,9 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
       const res = await request.query(stmt)
 
       // se encontró
-      if (res && res.rowsAffected[0] === 1) {
-        return {
-          id: res.recordset[0].idBusquedaReciente,
-        }
-      }
+      if (res && res.rowsAffected[0] === 1) return res.recordset[0].idBusquedaReciente
 
+      // no se encontró
       return undefined
     } catch (err) {
       if (!(err instanceof sql.RequestError)) throw err

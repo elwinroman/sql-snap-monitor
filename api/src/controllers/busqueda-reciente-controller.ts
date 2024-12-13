@@ -110,17 +110,17 @@ export class BusquedaRecienteController {
       }
 
       const busquedaRecienteService = new BusquedaRecienteService()
-      const busquedaReciente = await busquedaRecienteService.encontrarBusquedaReciente(data)
+      const busquedaRecienteId = await busquedaRecienteService.encontrarBusquedaReciente(data)
 
       let message = ''
       // si no se encuentra la búsqueda del objeto, se registra
-      if (!busquedaReciente) {
+      if (!busquedaRecienteId) {
         await busquedaRecienteService.registrarBusquedaReciente(data)
-        message = 'Se ha registrado la nueva búsqueda reciente correctamente'
+        message = 'Se ha registrado correctamente la nueva búsqueda reciente'
       }
       // caso contrario, se actualiza la fecha de busqueda y su vigencia en caso de estar eliminado
       else {
-        await busquedaRecienteService.actualizarBusquedaRecienteById(busquedaReciente.id)
+        await busquedaRecienteService.actualizarBusquedaRecienteById(busquedaRecienteId)
         message = 'Ya existe la búsqueda reciente, se ha actualizado la fecha y la vigencia'
       }
 

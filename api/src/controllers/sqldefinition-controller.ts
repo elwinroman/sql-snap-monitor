@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { PREPROD_DBNAME } from '@/config/enviroment'
 import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR } from '@/constants/'
-import { Credentials, CredentialsFromEnv_PREPROD, MyCustomError, ResponseSQLDefinitionObjects, SQLDefinitionRecordObject } from '@/models'
+import { CredentialsFromEnv_PREPROD, MyCustomError, ResponseSQLDefinitionObjects, SQLDefinitionRecordObject } from '@/models'
 import { LogService, SQLDefinitionService } from '@/services'
 
 export class SQLDefinitionController {
@@ -30,7 +30,7 @@ export class SQLDefinitionController {
 
     // Funcionalidad
     try {
-      const sqlDefinitionService = new SQLDefinitionService(credentials as Credentials)
+      const sqlDefinitionService = new SQLDefinitionService(credentials)
       const { data, meta } = (await sqlDefinitionService.findSQLDefinitionByName(search as string)) as ResponseSQLDefinitionObjects
 
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })
@@ -61,7 +61,7 @@ export class SQLDefinitionController {
 
     // Funcionalidad
     try {
-      const sqlDefinitionService = new SQLDefinitionService(credentials as Credentials)
+      const sqlDefinitionService = new SQLDefinitionService(credentials)
       const object = (await sqlDefinitionService.getSQLDefinitionById(parseInt(id))) as SQLDefinitionRecordObject
 
       // registrar el log de la búsqueda del objeto hecho por el usuario
@@ -69,7 +69,7 @@ export class SQLDefinitionController {
       logService.registrarBusqueda({
         idUsuario: idUsuario as number,
         idTipoAccion: TYPE_ACTION.sqldefinition.id,
-        cDatabase: credentials?.dbname as string,
+        cDatabase: credentials.dbname as string,
         cSchema: object.schema,
         cBusqueda: object.name,
         lProduccion: object.isAligmentObject,

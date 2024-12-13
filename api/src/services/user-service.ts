@@ -57,7 +57,8 @@ export class UserService implements ForRetrievingUser {
       const res = await request.query(stmt)
 
       if (res.rowsAffected[0] === 1) return res.recordset[0]
-      else return undefined
+
+      return undefined
     } catch (err) {
       if (!(err instanceof sql.RequestError)) {
         console.log(err)

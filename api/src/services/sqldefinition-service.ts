@@ -5,7 +5,6 @@ import { connection } from '@/config/database'
 import { COMMON_ERROR_CODES } from '@/constants'
 import {
   Credentials,
-  CustomError,
   ForRetrievingObject,
   MyCustomError,
   PermissionRol,
@@ -23,7 +22,7 @@ export class SQLDefinitionService implements ForRetrievingObject {
   }
 
   // Busca uno o varios objectos por su nombre que tienen una definición SQL
-  public async findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | CustomError | undefined> {
+  public async findSQLDefinitionByName(name: string): Promise<ResponseSQLDefinitionObjects | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -61,7 +60,7 @@ export class SQLDefinitionService implements ForRetrievingObject {
   }
 
   // Obtiene un objecto por su id que tiene una definición SQL
-  public async getSQLDefinitionById(id: number): Promise<SQLDefinitionRecordObject | CustomError | undefined> {
+  public async getSQLDefinitionById(id: number): Promise<SQLDefinitionRecordObject | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -133,10 +132,7 @@ export class SQLDefinitionService implements ForRetrievingObject {
     }
   }
 
-  public async getSQLDefinitionAligmentById(
-    name: string,
-    schemaName: string,
-  ): Promise<SQLDefinitionRecordObject | CustomError | undefined> {
+  public async getSQLDefinitionAligmentById(name: string, schemaName: string): Promise<SQLDefinitionRecordObject | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
     const request2 = conn.request()

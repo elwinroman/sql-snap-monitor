@@ -111,12 +111,12 @@ export class FavoritoController {
 
       const favoritoService = new FavoritoService()
       const favoritoId = await favoritoService.encontrarFavorito(data)
-      console.log(favoritoId)
+
       let message = ''
       // si no se encuentra la búsqueda del objeto, se registra
       if (!favoritoId) {
         await favoritoService.registrarFavorito(data)
-        message = 'Se ha registrado la nueva búsqueda favorita correctamente'
+        message = 'Se ha registrado correctamente la nueva búsqueda favorita'
       }
       // caso contrario, se actualiza la fecha de busqueda del favorito y su vigencia en caso de estar eliminado
       else {

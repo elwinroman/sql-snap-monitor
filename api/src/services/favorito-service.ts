@@ -71,7 +71,7 @@ export class FavoritoService implements ForRetrievingFavorito {
       request.input('cNombreObjeto', sql.VarChar(128), favorito.cNombreObjeto)
 
       const res = await request.query(stmt)
-      console.log(res)
+
       // se encontró
       if (res && res.rowsAffected[0] === 1) return res.recordset[0].idFavorito
 

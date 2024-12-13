@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 
 import { COMMON_ERROR_CODES, TYPE_ACTION, VALIDATION_ERROR } from '@/constants/'
-import { Credentials, MyCustomError, SearchResponse } from '@/models'
+import { MyCustomError, SearchResponse } from '@/models'
 import { SearchService } from '@/services'
 
 export class SearchController {
@@ -35,7 +35,7 @@ export class SearchController {
 
     // Funcionalidad
     try {
-      const searchService = new SearchService(credentials as Credentials)
+      const searchService = new SearchService(credentials)
       const { data, meta } = (await searchService.obtenerSugerencias(search as string, type as string)) as SearchResponse
 
       res.status(200).json({ status: 'success', statusCode: 200, data, meta })

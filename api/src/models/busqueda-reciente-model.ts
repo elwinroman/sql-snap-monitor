@@ -15,10 +15,6 @@ export interface BusquedaReciente {
 export type BusquedaRecienteInput = Omit<BusquedaReciente, 'idBusquedaReciente' | 'dFecha' | 'lVigente'>
 export type BusquedaRecienteGetInput = Pick<BusquedaReciente, 'idUsuario' | 'idTipoAccion' | 'cDatabase'>
 
-export interface BusquedaRecienteFindResponse {
-  id: number
-}
-
 export type BusquedaRecienteRes = Pick<BusquedaReciente, 'idBusquedaReciente' | 'cSchema' | 'cNombreObjeto' | 'dFecha'>
 
 export interface BusquedaRecienteResponse {
@@ -30,7 +26,7 @@ export interface BusquedaRecienteResponse {
 
 export interface ForRetrievingBusquedaReciente {
   registrarBusquedaReciente(busquedaReciente: BusquedaRecienteInput): Promise<boolean | undefined>
-  encontrarBusquedaReciente(busquedaReciente: BusquedaReciente): Promise<BusquedaRecienteFindResponse | undefined>
+  encontrarBusquedaReciente(busquedaReciente: BusquedaReciente): Promise<number | undefined>
   eliminarBusquedaReciente(id: number): Promise<boolean | undefined>
   obtenerBusquedasRecientes(
     busquedaReciente: BusquedaRecienteGetInput,

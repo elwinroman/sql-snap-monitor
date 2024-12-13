@@ -131,7 +131,7 @@ export class AuthController {
     if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.sessionalreadyclosed))
 
     try {
-      const authService = new AuthService(credentials as Credentials)
+      const authService = new AuthService(credentials)
       const result = await authService.checkLogin()
 
       return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa', time: result })

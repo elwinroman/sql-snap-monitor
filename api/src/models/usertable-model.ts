@@ -1,4 +1,3 @@
-import { CustomError } from './custom-error-model'
 import { SQLDefinitionObjects, SQLDefinitionRecordObject } from './sqldefinition-model'
 
 // Para objetos que son tablas de usuario
@@ -96,6 +95,6 @@ export interface ResponseUsertableRecordObject {
 }
 
 export interface ForRetrievingUsertable {
-  buscarUsertableByName(name: string): Promise<ResponseUsertableObjects | CustomError | undefined>
-  obtenerUsertableById(id: number): Promise<ResponseUsertableRecordObject | CustomError | undefined>
+  buscarUsertableByName(name: string): Promise<ResponseUsertableObjects | undefined>
+  obtenerUsertableById(id: number): Promise<ResponseUsertableRecordObject | undefined>
 }

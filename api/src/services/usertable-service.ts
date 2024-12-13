@@ -6,7 +6,6 @@ import { COMMON_ERROR_CODES } from '@/constants'
 import {
   Column,
   Credentials,
-  CustomError,
   ExtendedProperty,
   ForeignKey,
   ForRetrievingUsertable,
@@ -28,7 +27,7 @@ export class UsertableService implements ForRetrievingUsertable {
   }
 
   // Busca uno o mas usertables por su nombre
-  public async buscarUsertableByName(name: string): Promise<ResponseUsertableObjects | CustomError | undefined> {
+  public async buscarUsertableByName(name: string): Promise<ResponseUsertableObjects | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -64,7 +63,7 @@ export class UsertableService implements ForRetrievingUsertable {
   }
 
   // Obtiene un usertable por su id para obtener sus descripciones, columnas, etc.
-  public async obtenerUsertableById(id: number): Promise<ResponseUsertableRecordObject | CustomError | undefined> {
+  public async obtenerUsertableById(id: number): Promise<ResponseUsertableRecordObject | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
