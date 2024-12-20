@@ -144,8 +144,6 @@ export class BusquedaRecienteController {
           object_name: busquedaReciente?.cNombreObjeto as string,
         })
 
-        // const dFechaFormatted = format(busquedaReciente?.dFecha as Date, 'DD-MM-YYYY HH:mm:ss')
-
         res.status(200).json({
           status: 'success',
           statusCode: 200,
@@ -198,7 +196,6 @@ export class BusquedaRecienteController {
 
   eliminarTodoBusquedasRecientes = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params
-    console.log(id)
     const { isSessionActive, idUsuario, credentials } = req.session
 
     if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.sessionalreadyclosed))

@@ -58,8 +58,6 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
         lVigente: res.recordset[0].lVigente,
       }
 
-      console.log(data)
-
       return data
     } catch (err) {
       if (!(err instanceof sql.RequestError)) throw err

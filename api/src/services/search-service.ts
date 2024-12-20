@@ -116,8 +116,6 @@ export class SearchService implements ForRetrievingSearch {
         SELECT OBJECT_ID(CONCAT('${object.schema_name}', '.', '${object.object_name}')) AS object_id
       `
       const res = await request.query(stmt)
-      console.log(res)
-      console.log(res.recordset[0].object_id)
       return res.recordset[0].object_id
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
