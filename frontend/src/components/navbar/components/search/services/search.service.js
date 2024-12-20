@@ -1,7 +1,7 @@
 let controller
 
 /**
- * Obtiene la definición de un objeto por su nombre e idSchema (de la base de datos de alineación)
+ * Obtiene las sugerencias de un objeto por su nombre
  *
  * @param {Object} param
  * @param {string} param.search - Nombre del objeto de búsqueda (caracter por caracter)
@@ -10,10 +10,6 @@ let controller
  * @returns {Promise}
  */
 export async function getSearchSuggestions({ search, type }) {
-  // if (type == null) {
-  //   if (controller) controller.abort()
-  //   return
-  // }
   const searchParam = `search=${search}`
   const typeParam = `type=${type}`
 
@@ -21,7 +17,6 @@ export async function getSearchSuggestions({ search, type }) {
 
   try {
     if (controller) controller.abort()
-
     controller = new AbortController()
     const signal = controller.signal
 
@@ -31,7 +26,13 @@ export async function getSearchSuggestions({ search, type }) {
     })
     const res = await response.json()
 
-    return res
+    const formattedData = res.data.map((obj) => ({
+      objectId: obj.id,
+      cSchema: obj.schemaName,
+      cNombreObjeto: obj.name,
+    }))
+
+    return { data: formattedData }
   } catch (err) {
     if (err.name === 'AbortError') return err
     throw new Error(err)
