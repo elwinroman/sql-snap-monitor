@@ -72,7 +72,6 @@ export class FavoritoController {
         res.status(200).json({ status: 'success', statusCode: 200, meta: favoritos.meta, data: formattedData })
       }
     } catch (err) {
-      console.log(err)
       next(err)
     }
   }
@@ -108,21 +107,56 @@ export class FavoritoController {
       }
 
       const favoritoService = new FavoritoService()
+      const searchService = new SearchService(credentials)
       const favoritoId = await favoritoService.encontrarFavorito(data)
 
       let message = ''
+      let favorito = undefined
+
       // si no se encuentra la búsqueda del objeto, se registra
       if (!favoritoId) {
-        await favoritoService.registrarFavorito(data)
+        favorito = await favoritoService.registrarFavorito(data)
         message = 'Se ha registrado correctamente la nueva búsqueda favorita'
-      }
-      // caso contrario, se actualiza la fecha de busqueda del favorito y su vigencia en caso de estar eliminado
-      else {
-        await favoritoService.actualizarFavoritoById(favoritoId)
-        message = 'Ya existe la búsqueda favorita, se ha actualizado la fecha y la vigencia'
-      }
 
-      res.status(200).json({ status: 'success', statusCode: 200, message })
+        const objectId = await searchService.getObjectId({
+          schema_name: favorito?.cSchema as string,
+          object_name: favorito?.cNombreObjeto as string,
+        })
+
+        res.status(200).json({
+          status: 'success',
+          statusCode: 200,
+          message,
+          action: 'Inserted',
+          data: {
+            id: favorito?.idFavorito,
+            objectId: objectId,
+            ...favorito,
+          },
+        })
+      }
+      // caso contrario, se actualiza la fecha de busqueda y su vigencia en caso de estar eliminado
+      else {
+        const favorito = await favoritoService.actualizarFavoritoById(favoritoId)
+        message = 'Ya existe al búsqueda favorita, se ha actualizado la fecha y la vigencia'
+
+        const objectId = await searchService.getObjectId({
+          schema_name: favorito?.cSchema as string,
+          object_name: favorito?.cNombreObjeto as string,
+        })
+
+        res.status(200).json({
+          status: 'success',
+          statusCode: 200,
+          message,
+          action: 'Updated',
+          data: {
+            id: favorito?.idFavorito,
+            objectId: objectId,
+            ...favorito,
+          },
+        })
+      }
     } catch (err) {
       next(err)
     }

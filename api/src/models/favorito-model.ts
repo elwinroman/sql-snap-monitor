@@ -25,7 +25,8 @@ export interface FavoritoResponse {
 }
 
 export interface ForRetrievingFavorito {
-  registrarFavorito(favorito: FavoritoInput): Promise<boolean | undefined>
+  registrarFavorito(favorito: FavoritoInput): Promise<Favorito | undefined>
+  actualizarFavoritoById(id: number): Promise<Favorito | undefined>
   encontrarFavorito(favorito: Favorito): Promise<number | undefined>
   eliminarFavorito(id: number): Promise<boolean | undefined>
   obtenerFavoritos(favorito: FavoritoGetInput, pagination: PaginationInput): Promise<FavoritoResponse | undefined>
