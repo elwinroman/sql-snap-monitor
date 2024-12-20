@@ -19,7 +19,7 @@ export class UserService implements ForRetrievingUser {
     try {
       const stmt = `
         INSERT INTO dbo.Usuario (cHashUsuarioUID, cUsuario, cServer, cAliasServer, dFechaRegistro)
-        VALUES (@cHashUsuarioUID, @cUsuario, @cServer, @cAliasServer, GETDATE() AT TIME ZONE 'SA Pacific Standard Time')
+        VALUES (@cHashUsuarioUID, @cUsuario, @cServer, @cAliasServer, GETUTCDATE())
       `
       request.input('cHashUsuarioUID', sql.Char(32), user.cHashUsuarioUID)
       request.input('cUsuario', sql.VarChar(64), user.cUsuario)

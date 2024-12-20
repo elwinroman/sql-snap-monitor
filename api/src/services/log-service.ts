@@ -19,7 +19,7 @@ export class LogService implements ForRetrievingLog {
     try {
       const stmt = `
         INSERT INTO dbo.LogAcceso (idUsuario, cDatabase, dFechaAcceso)
-        VALUES (@idUsuario, @cDatabase, GETDATE() AT TIME ZONE 'SA Pacific Standard Time')
+        VALUES (@idUsuario, @cDatabase, GETUTCDATE())
       `
       request.input('idUsuario', sql.Int, log.idUsuario)
       request.input('cDatabase', sql.VarChar(64), log.cDatabase)
@@ -45,7 +45,7 @@ export class LogService implements ForRetrievingLog {
     try {
       const stmt = `
         INSERT INTO dbo.LogBusqueda (idUsuario, idTipoAccion, cDatabase, cSchema, cBusqueda, lProduccion, dFechaBusqueda)
-        VALUES (@idUsuario, @idTipoAccion, @cDatabase, @cSchema, @cBusqueda, @lProduccion, GETDATE() AT TIME ZONE 'SA Pacific Standard Time')
+        VALUES (@idUsuario, @idTipoAccion, @cDatabase, @cSchema, @cBusqueda, @lProduccion, GETUTCDATE())
       `
       request.input('idUsuario', sql.Int, log.idUsuario)
       request.input('idTipoAccion', sql.Int, log.idTipoAccion)

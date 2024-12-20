@@ -47,7 +47,7 @@ export class AuthService implements ForAuthenticating {
     const request = conn.request()
 
     try {
-      const stmt = 'SELECT GETDATE() AS date'
+      const stmt = 'SELECT GETUTCDATE() AS date'
       const res = await request.query(stmt)
 
       const date = await res.recordset[0].date

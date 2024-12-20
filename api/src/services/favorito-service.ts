@@ -32,7 +32,7 @@ export class FavoritoService implements ForRetrievingFavorito {
     try {
       const stmt = `
         INSERT INTO dbo.Favorito (idUsuario, idTipoAccion, cDatabase, cSchema, cNombreObjeto, dFecha, lVigente)
-        VALUES (@idUsuario, @idTipoAccion, @cDatabase, @cSchema, @cNombreObjeto, GETDATE(), 1)
+        VALUES (@idUsuario, @idTipoAccion, @cDatabase, @cSchema, @cNombreObjeto, GETUTCDATE(), 1)
       `
       request.input('idUsuario', sql.Int, Favorito.idUsuario)
       request.input('idTipoAccion', sql.Int, Favorito.idTipoAccion)
@@ -91,7 +91,7 @@ export class FavoritoService implements ForRetrievingFavorito {
     try {
       const stmt = `
         UPDATE dbo.Favorito 
-        SET dFecha = GETDATE(), lVigente = 1
+        SET dFecha = GETUTCDATE(), lVigente = 1
         WHERE idFavorito = @id
       `
       request.input('id', sql.Int, id)

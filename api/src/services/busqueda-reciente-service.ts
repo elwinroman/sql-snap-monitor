@@ -34,7 +34,7 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
       const stmt = `
         INSERT INTO dbo.BusquedaReciente (idUsuario, idTipoAccion, cDatabase, cSchema, cNombreObjeto, dFecha, lVigente)
         OUTPUT INSERTED.*
-        VALUES (@idUsuario, @idTipoAccion, @cDatabase, @cSchema, @cNombreObjeto, GETDATE(), 1)
+        VALUES (@idUsuario, @idTipoAccion, @cDatabase, @cSchema, @cNombreObjeto, GETUTCDATE(), 1)
       `
       request.input('idUsuario', sql.Int, busquedaReciente.idUsuario)
       request.input('idTipoAccion', sql.Int, busquedaReciente.idTipoAccion)
@@ -108,7 +108,7 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
     try {
       const stmt = `
         UPDATE dbo.BusquedaReciente 
-        SET dFecha = GETDATE(), lVigente = 1
+        SET dFecha = GETUTCDATE(), lVigente = 1
         WHERE idBusquedaReciente = @id
       `
       request.input('id', sql.Int, id)
