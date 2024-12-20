@@ -4,6 +4,7 @@ import sql from 'mssql'
 import { connection } from '@/config/database'
 import { COMMON_ERROR_CODES } from '@/constants'
 import {
+  BusquedaReciente,
   BusquedaRecienteGetInput,
   BusquedaRecienteInput,
   BusquedaRecienteRes,
@@ -25,13 +26,14 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
   }
 
   // Registra uan nueva búsqueda reciente
-  public async registrarBusquedaReciente(busquedaReciente: BusquedaRecienteInput): Promise<boolean | undefined> {
+  public async registrarBusquedaReciente(busquedaReciente: BusquedaRecienteInput): Promise<BusquedaReciente | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
     try {
       const stmt = `
         INSERT INTO dbo.BusquedaReciente (idUsuario, idTipoAccion, cDatabase, cSchema, cNombreObjeto, dFecha, lVigente)
+        OUTPUT INSERTED.*
         VALUES (@idUsuario, @idTipoAccion, @cDatabase, @cSchema, @cNombreObjeto, GETDATE(), 1)
       `
       request.input('idUsuario', sql.Int, busquedaReciente.idUsuario)
@@ -42,8 +44,23 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
 
       const res = await request.query(stmt)
 
-      if (res && res.rowsAffected[0] === 1) return true // se ha insertado correctamente (1 fila afectada)
-      return false
+      if (res && res.rowsAffected[0] !== 1) return undefined // no se ha insertado correctamente
+
+      // insertado correctamente
+      const data = {
+        idBusquedaReciente: res.recordset[0].idBusquedaReciente,
+        idUsuario: res.recordset[0].idUsuario,
+        idTipoAccion: res.recordset[0].idTipoAccion,
+        cDatabase: res.recordset[0].cDatabase,
+        cSchema: res.recordset[0].cSchema,
+        cNombreObjeto: res.recordset[0].cNombreObjeto,
+        dFecha: format(res.recordset[0].dFecha, 'DD-MM-YYYY HH:mm:ss'),
+        lVigente: res.recordset[0].lVigente,
+      }
+
+      console.log(data)
+
+      return data
     } catch (err) {
       if (!(err instanceof sql.RequestError)) throw err
       throwRequestError(err)
@@ -84,7 +101,7 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
   }
 
   // Actualizar la búsqueda reciente
-  public async actualizarBusquedaRecienteById(id: number): Promise<boolean | undefined> {
+  public async actualizarBusquedaRecienteById(id: number): Promise<BusquedaReciente | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -98,8 +115,23 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
 
       const res = await request.query(stmt)
 
-      if (res && res.rowsAffected[0] === 1) return true // se ha updateado correctamente (1 fila afectada)
-      return false
+      if (res && res.rowsAffected[0] !== 1) return undefined // no se ha updateado correctamente
+
+      const stmtRecovery = `SELECT * FROM dbo.BusquedaReciente WHERE idBusquedaReciente = ${id}`
+      const resRecovery = await request.query(stmtRecovery)
+
+      const data = {
+        idBusquedaReciente: resRecovery.recordset[0].idBusquedaReciente,
+        idUsuario: resRecovery.recordset[0].idUsuario,
+        idTipoAccion: resRecovery.recordset[0].idTipoAccion,
+        cDatabase: resRecovery.recordset[0].cDatabase,
+        cSchema: resRecovery.recordset[0].cSchema,
+        cNombreObjeto: resRecovery.recordset[0].cNombreObjeto,
+        dFecha: format(resRecovery.recordset[0].dFecha, 'DD-MM-YYYY HH:mm:ss'),
+        lVigente: resRecovery.recordset[0].lVigente,
+      }
+
+      return data
     } catch (err) {
       if (!(err instanceof sql.RequestError)) throw err
       throwRequestError(err)
@@ -200,7 +232,6 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
           total,
         } as Pagination,
       }
-      console.log(meta)
 
       return { data, meta }
     } catch (err) {

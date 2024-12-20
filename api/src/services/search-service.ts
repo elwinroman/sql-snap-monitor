@@ -2,7 +2,7 @@ import sql from 'mssql'
 
 import { connection } from '@/config/database'
 import { TYPE_ACTION } from '@/constants'
-import { Credentials, ForRetrievingSearch, GetObjectIds, SearchResponse, SuggestionSearch } from '@/models/'
+import { Credentials, ForRetrievingSearch, GetObjectId, SearchResponse, SuggestionSearch } from '@/models/'
 import { throwRequestError } from '@/utils'
 
 export class SearchService implements ForRetrievingSearch {
@@ -56,8 +56,8 @@ export class SearchService implements ForRetrievingSearch {
     }
   }
 
-  // Obtiene los IDs de un objeto a través de su schema_name.object_name
-  public async getIdsInBulk(objects: GetObjectIds[]): Promise<number[] | undefined> {
+  // Obtiene masivamente los IDs de un objeto a través de su schema_name.object_name
+  public async getIdsInBulk(objects: GetObjectId[]): Promise<number[] | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
@@ -103,6 +103,25 @@ export class SearchService implements ForRetrievingSearch {
     } catch (err) {
       if (!(err instanceof sql.RequestError)) throw err
       throwRequestError(err)
+    }
+  }
+
+  // Obtiene el object_id de un objeto a traves de su schema_name.object_name
+  public async getObjectId(object: GetObjectId): Promise<number | undefined> {
+    const conn = await connection(this.credentials)
+    const request = conn.request()
+
+    try {
+      const stmt = `
+        SELECT OBJECT_ID(CONCAT('${object.schema_name}', '.', '${object.object_name}')) AS object_id
+      `
+      const res = await request.query(stmt)
+      console.log(res)
+      console.log(res.recordset[0].object_id)
+      return res.recordset[0].object_id
+    } catch (error) {
+      if (!(error instanceof sql.RequestError)) throw error
+      throwRequestError(error)
     }
   }
 }

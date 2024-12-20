@@ -74,7 +74,6 @@ export class BusquedaRecienteController {
         res.status(200).json({ status: 'success', statusCode: 200, meta: busquedasRecientes.meta, data: formattedData })
       }
     } catch (err) {
-      console.log(err)
       next(err)
     }
   }
@@ -110,21 +109,57 @@ export class BusquedaRecienteController {
       }
 
       const busquedaRecienteService = new BusquedaRecienteService()
+      const searchService = new SearchService(credentials)
       const busquedaRecienteId = await busquedaRecienteService.encontrarBusquedaReciente(data)
 
       let message = ''
+      let busquedaReciente = undefined
       // si no se encuentra la búsqueda del objeto, se registra
       if (!busquedaRecienteId) {
-        await busquedaRecienteService.registrarBusquedaReciente(data)
+        busquedaReciente = await busquedaRecienteService.registrarBusquedaReciente(data)
         message = 'Se ha registrado correctamente la nueva búsqueda reciente'
+
+        const objectId = await searchService.getObjectId({
+          schema_name: busquedaReciente?.cSchema as string,
+          object_name: busquedaReciente?.cNombreObjeto as string,
+        })
+
+        res.status(200).json({
+          status: 'success',
+          statusCode: 200,
+          message,
+          action: 'Inserted',
+          data: {
+            id: busquedaReciente?.idBusquedaReciente,
+            objectId: objectId,
+            ...busquedaReciente,
+          },
+        })
       }
       // caso contrario, se actualiza la fecha de busqueda y su vigencia en caso de estar eliminado
       else {
-        await busquedaRecienteService.actualizarBusquedaRecienteById(busquedaRecienteId)
+        const busquedaReciente = await busquedaRecienteService.actualizarBusquedaRecienteById(busquedaRecienteId)
         message = 'Ya existe la búsqueda reciente, se ha actualizado la fecha y la vigencia'
-      }
 
-      res.status(200).json({ status: 'success', statusCode: 200, message })
+        const objectId = await searchService.getObjectId({
+          schema_name: busquedaReciente?.cSchema as string,
+          object_name: busquedaReciente?.cNombreObjeto as string,
+        })
+
+        // const dFechaFormatted = format(busquedaReciente?.dFecha as Date, 'DD-MM-YYYY HH:mm:ss')
+
+        res.status(200).json({
+          status: 'success',
+          statusCode: 200,
+          message,
+          action: 'Updated',
+          data: {
+            id: busquedaReciente?.idBusquedaReciente,
+            objectId: objectId,
+            ...busquedaReciente,
+          },
+        })
+      }
     } catch (err) {
       next(err)
     }

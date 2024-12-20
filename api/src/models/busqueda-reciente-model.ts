@@ -25,7 +25,8 @@ export interface BusquedaRecienteResponse {
 }
 
 export interface ForRetrievingBusquedaReciente {
-  registrarBusquedaReciente(busquedaReciente: BusquedaRecienteInput): Promise<boolean | undefined>
+  registrarBusquedaReciente(busquedaReciente: BusquedaRecienteInput): Promise<BusquedaReciente | undefined>
+  actualizarBusquedaRecienteById(id: number): Promise<BusquedaReciente | undefined>
   encontrarBusquedaReciente(busquedaReciente: BusquedaReciente): Promise<number | undefined>
   eliminarBusquedaReciente(id: number): Promise<boolean | undefined>
   obtenerBusquedasRecientes(

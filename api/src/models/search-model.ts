@@ -11,12 +11,13 @@ export interface SearchResponse {
   }
 }
 
-export interface GetObjectIds {
+export interface GetObjectId {
   schema_name: string
   object_name: string
 }
 
 export interface ForRetrievingSearch {
   obtenerSugerencias(name: string, type?: string): Promise<SearchResponse | undefined>
-  getIdsInBulk(objects: GetObjectIds[]): Promise<number[] | undefined>
+  getIdsInBulk(objects: GetObjectId[]): Promise<number[] | undefined>
+  getObjectId(object: GetObjectId): Promise<number | undefined>
 }
