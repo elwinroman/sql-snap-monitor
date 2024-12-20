@@ -1,5 +1,3 @@
-import 'dotenv/config'
-
 import { createCipheriv, createDecipheriv, createHash } from 'node:crypto'
 
 import { INIT_VECTOR, PASS_PHRASE } from '@/config/enviroment'

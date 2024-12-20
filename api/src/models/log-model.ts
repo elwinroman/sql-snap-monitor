@@ -17,7 +17,6 @@ export interface LogBusqueda {
   cBusqueda: string
   lProduccion: boolean
   dFechaBusqueda: Date
-  lVigente: boolean
 }
 
 export type LogBusquedaInput = Omit<LogBusqueda, 'idLogBusqueda' | 'dFechaBusqueda' | 'lVigente'>
