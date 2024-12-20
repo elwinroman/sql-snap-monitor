@@ -6,7 +6,13 @@ export const EDITOR_OPTIONS = {
 // Basado en el tiempo promedio de reacción de un ser humano (en milisegundos)
 export const DEBOUNCE_DELAY = 300
 
-export const TYPE_SEARCH = {
-  SQLDEFINITION: 'sqldefinition',
-  USERTABLE: 'usertable',
+export const TYPE_ACTION = {
+  sqldefinition: {
+    id: 1,
+    name: 'sqldefinition',
+  },
+  usertable: {
+    id: 2,
+    name: 'usertable',
+  },
 }

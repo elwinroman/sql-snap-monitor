@@ -1,4 +1,5 @@
 import { History } from 'lucide-react'
+import { useState } from 'react'
 
 import { useSearch } from '../../../hooks/useSearch'
 import { Card } from './card'
@@ -6,25 +7,61 @@ import { DeleteItem } from './delete-item'
 import { ItemList } from './item-list'
 
 export function RecentSearch() {
-  const { recents, deleteRecent } = useSearch()
+  const [itemsToShow, setItemsToShow] = useState(5) // mostrar los 5 primeros resultados
+  const [showAll, setShowAll] = useState(false) // mostrar todo o mostrar 'itemsToShow'
+  const { recents, deleteRecent, deleteAllRecents } = useSearch()
   const title = 'Búsquedas recientes'
 
-  return (
-    <Card title={title}>
-      {recents.map((data) => (
-        <ItemList key={data.id} data={data}>
-          <History size={13} className="text-secondary group-hover:text-primary" />
+  // Mostrar todas las búsqueda recientes o mostrar menos
+  const handleShowAllItems = (e) => {
+    e.preventDefault()
 
-          <div className="flex w-full justify-between gap-1 transition-colors">
-            <span className="overflow-hidden text-secondary group-hover:text-primary">{data.name}</span>
+    const show = !showAll
+    if (show) setItemsToShow(recents.length)
+    else setItemsToShow(5)
+
+    setShowAll(!showAll)
+  }
+
+  // Eliminar todas las búsquedas recientes
+  const handleEliminarTodo = (e) => {
+    e.preventDefault()
+
+    deleteAllRecents()
+  }
+
+  return (
+    <Card title={title} className="relative">
+      <button
+        className="absolute right-1 top-1 w-fit px-4 py-1 text-left text-xs text-rose-400 transition-colors hover:text-rose-500"
+        onClick={handleEliminarTodo}
+      >
+        <span>Borrar todo</span>
+      </button>
+
+      {recents.slice(0, itemsToShow).map((data) => (
+        <ItemList key={data.id} data={data}>
+          <History size={13} className="mt-0.5 text-secondary group-hover:text-primary" />
+
+          <div className="flex w-full items-center justify-between gap-1 transition-colors">
+            <span className="overflow-hidden text-secondary group-hover:text-primary">{data.cNombreObjeto}</span>
             <div className="flex items-center gap-2">
-              <span className="overflow-hidden rounded-sm bg-background px-1 py-0.5 text-xs text-muted">{data.schemaName}</span>
+              <span className="overflow-hidden rounded-sm bg-background px-1 py-0.5 text-xs text-muted">{data.cSchema}</span>
 
               <DeleteItem action={deleteRecent} id={data.id} content="Eliminar" />
             </div>
           </div>
         </ItemList>
       ))}
+
+      {recents.length >= itemsToShow && (
+        <button
+          className="w-fit px-4 py-1 text-left text-xs text-blue-400 transition-colors hover:text-blue-500"
+          onClick={handleShowAllItems}
+        >
+          <span>{!showAll ? 'Ver mas' : 'Ver menos'}</span>
+        </button>
+      )}
     </Card>
   )
 }
