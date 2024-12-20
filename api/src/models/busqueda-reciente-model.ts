@@ -33,4 +33,5 @@ export interface ForRetrievingBusquedaReciente {
     busquedaReciente: BusquedaRecienteGetInput,
     pagination: PaginationInput,
   ): Promise<BusquedaRecienteResponse | undefined>
+  eliminarTodoBusquedasRecientes(busquedaReciente: BusquedaRecienteGetInput): Promise<boolean | undefined>
 }

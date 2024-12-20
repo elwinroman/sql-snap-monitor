@@ -33,6 +33,7 @@ export function createObjectRouter() {
   router.post('/busqueda-reciente', busquedaRecienteController.registrarBusquedaReciente)
   router.get('/busqueda-reciente', busquedaRecienteController.obtenerBusquedasRecientes)
   router.delete('/busqueda-reciente/:id', busquedaRecienteController.eliminarBusquedaReciente)
+  router.delete('/busqueda-reciente/all/tipo-accion/:id', busquedaRecienteController.eliminarTodoBusquedasRecientes)
 
   // busquedas favoritas
   router.post('/favorito', favoritoController.registrarFavorito)

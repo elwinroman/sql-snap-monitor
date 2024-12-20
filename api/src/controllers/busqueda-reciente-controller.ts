@@ -195,4 +195,46 @@ export class BusquedaRecienteController {
       next(err)
     }
   }
+
+  eliminarTodoBusquedasRecientes = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params
+    console.log(id)
+    const { isSessionActive, idUsuario, credentials } = req.session
+
+    if (!isSessionActive) return next(new MyCustomError(COMMON_ERROR_CODES.sessionalreadyclosed))
+
+    // Validación
+    try {
+      const busquedaRecienteSchema = z.object({
+        id: z
+          .string()
+          .transform(val => Number(val))
+          .pipe(z.number({ message: 'El campo debe ser un número' })),
+      })
+      busquedaRecienteSchema.parse({ id })
+    } catch (err) {
+      return next(err)
+    }
+
+    // Eliminar todos los registro (lVigente = 0)
+    try {
+      const data = {
+        idUsuario: idUsuario as number,
+        idTipoAccion: parseInt(id),
+        cDatabase: credentials.dbname,
+      }
+      const busquedaRecienteService = new BusquedaRecienteService()
+      const response = await busquedaRecienteService.eliminarTodoBusquedasRecientes(data)
+
+      if (!response) return res.status(400).json({ status: 'error', statusCode: 400, message: 'No existen registros para eliminar' })
+
+      return res.status(200).json({
+        status: 'success',
+        statusCode: 200,
+        message: 'Se ha eliminado correctamente todos los registros para el idTipoAccion: ' + id,
+      })
+    } catch (err) {
+      next(err)
+    }
+  }
 }

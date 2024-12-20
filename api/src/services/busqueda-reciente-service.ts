@@ -239,4 +239,31 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
       throwRequestError(err)
     }
   }
+
+  // Elimina todas las búsquedas recientes
+  public async eliminarTodoBusquedasRecientes(busquedaReciente: BusquedaRecienteGetInput): Promise<boolean | undefined> {
+    const conn = await connection(this.credentials)
+    const request = conn.request()
+
+    try {
+      const stmt = `
+        UPDATE dbo.BusquedaReciente 
+        SET lVigente = 0 
+        WHERE idUsuario = @idUsuario 
+          AND idTipoAccion = @idTipoAccion
+          AND cDatabase = @cDatabase
+      `
+      request.input('idUsuario', sql.Int, busquedaReciente.idUsuario)
+      request.input('idTipoAccion', sql.Int, busquedaReciente.idTipoAccion)
+      request.input('cDatabase', sql.VarChar(64), busquedaReciente.cDatabase)
+
+      const res = await request.query(stmt)
+
+      if (res && res.rowsAffected[0] !== 0) return true
+      return false
+    } catch (err) {
+      if (!(err instanceof sql.RequestError)) throw err
+      throwRequestError(err)
+    }
+  }
 }
