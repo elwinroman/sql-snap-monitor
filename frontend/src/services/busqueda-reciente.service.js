@@ -36,7 +36,7 @@ export async function obtenerBusquedasRecientes({ idTipoAccion, start = null, li
 export async function eliminarBusquedaReciente({ id }) {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/busqueda-reciente/${id}`, {
-      method: 'DELETE',
+      method: 'PATCH',
       credentials: 'include',
     })
     const res = await response.json()
@@ -81,7 +81,7 @@ export async function registrarBusquedaReciente({ idTipoAccion, cSchema, cNombre
 export async function eliminarTodoBusquedasRecientes({ idTipoAccion }) {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/busqueda-reciente/all/tipo-accion/${idTipoAccion}`, {
-      method: 'DELETE',
+      method: 'PATCH',
       credentials: 'include',
     })
     const res = await response.json()

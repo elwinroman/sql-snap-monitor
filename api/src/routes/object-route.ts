@@ -32,13 +32,13 @@ export function createObjectRouter() {
   // busquedas recientes
   router.post('/busqueda-reciente', busquedaRecienteController.registrarBusquedaReciente)
   router.get('/busqueda-reciente', busquedaRecienteController.obtenerBusquedasRecientes)
-  router.delete('/busqueda-reciente/:id', busquedaRecienteController.eliminarBusquedaReciente)
-  router.delete('/busqueda-reciente/all/tipo-accion/:id', busquedaRecienteController.eliminarTodoBusquedasRecientes)
+  router.patch('/busqueda-reciente/:id', busquedaRecienteController.eliminarBusquedaReciente)
+  router.patch('/busqueda-reciente/all/tipo-accion/:id', busquedaRecienteController.eliminarTodoBusquedasRecientes)
 
   // busquedas favoritas
   router.post('/favorito', favoritoController.registrarFavorito)
   router.get('/favorito', favoritoController.obtenerFavoritos)
-  router.delete('/favorito/:id', favoritoController.eliminarFavorito)
+  router.patch('/favorito/:id', favoritoController.eliminarFavorito)
 
   return router
 }
