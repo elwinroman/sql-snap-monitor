@@ -16,10 +16,10 @@ export function FavoriteSearch() {
           <i className="text-amber group-hover:text-primary">
             <Star size={13} />
           </i>
-          <div className="flex w-full justify-between gap-1 transition-colors">
-            <span className="overflow-hidden text-secondary group-hover:text-primary">{data.name}</span>
+          <div className="flex w-full items-center justify-between gap-1 transition-colors">
+            <span className="overflow-hidden text-secondary group-hover:text-primary">{data.cNombreObjeto}</span>
             <div className="flex items-center gap-2">
-              <span className="overflow-hidden rounded-sm bg-background px-1 py-0.5 text-xs text-muted">{data.schemaName}</span>
+              <span className="overflow-hidden rounded-sm bg-background px-1 py-1 text-xs text-muted">{data.schemaName}</span>
 
               <DeleteItem action={deleteFavorite} id={data.id} content="Eliminar" />
             </div>

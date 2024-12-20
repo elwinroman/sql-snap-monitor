@@ -6,7 +6,7 @@ export function AligmentPage() {
 
   return (
     <section className="flex h-screen w-full flex-row">
-      <MenuSidebar className="bg-baselayer hidden min-w-[200px] max-w-[350px] basis-[30%] flex-col sm:flex" />
+      <MenuSidebar className="hidden min-w-[200px] max-w-[350px] basis-[30%] flex-col bg-baselayer sm:flex" />
 
       {/* overflow: hidden fixea bug de autorezise de monaco-editor */}
       <main className="flex w-auto flex-auto flex-col overflow-hidden">
@@ -16,7 +16,9 @@ export function AligmentPage() {
         {/* Editor code */}
         <EditorCodeAligment />
 
-        <footer className="grid h-10 place-content-center text-sm text-foreground">Departamento de Aseguramiento de Calidad</footer>
+        <footer className="grid h-10 place-content-center text-sm text-secondary">
+          <span>Departamento de Aseguramiento de Calidad 🚀 Developed by aroman</span>
+        </footer>
       </main>
     </section>
   )
