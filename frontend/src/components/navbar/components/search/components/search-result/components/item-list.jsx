@@ -1,5 +1,4 @@
 import { TYPE_ACTION } from '@/constants'
-// import { registrarBusquedaReciente } from '@/services'
 import { useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
 import { useSearch } from '../../../hooks/useSearch'
@@ -17,11 +16,7 @@ export function ItemList({ children, data }) {
     if (type.name === TYPE_ACTION.usertable.name) fetchUsertable({ id: e.currentTarget.dataset.id })
 
     // agrega al estado el item clickeado y lo registra en la base de datos
-    addRecents({
-      idTipoAccion: type.id,
-      cSchema: data.cSchema,
-      cNombreObjeto: data.cNombreObjeto,
-    })
+    addRecents(data, type.id)
 
     updateOpen(false) // cerrar dialog de búsqueda
   }

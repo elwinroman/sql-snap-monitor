@@ -190,9 +190,18 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
           A.cSchema,
           A.cNombreObjeto,
           A.dFecha,
-          B.total
+          lFavorito = IIF(B.idFavorito IS NULL, 0, 1),
+          C.total
         FROM BusquedasRecientesCTE A
-        CROSS JOIN TotalRegistrosCTE B
+        -- Si la búsqueda reciente es un favorito
+        LEFT JOIN dbo.Favorito B 
+          ON B.idUsuario = @idUsuario 
+          AND B.idTipoAccion = @idTipoAccion 
+          AND B.cDatabase = @cDatabase
+          AND B.cSchema = A.cSchema
+          AND B.cNombreObjeto = A.cNombreObjeto
+          AND B.lVigente = 1
+        CROSS JOIN TotalRegistrosCTE C
         ORDER BY A.dFecha DESC
         OFFSET COALESCE(@start, 0) ROWS
         FETCH NEXT COALESCE(@limit, ${DEFAULT_MAX_PAGINATION}) ROWS ONLY
@@ -215,6 +224,7 @@ export class BusquedaRecienteService implements ForRetrievingBusquedaReciente {
           cSchema: obj.cSchema,
           cNombreObjeto: obj.cNombreObjeto,
           dFecha: format(obj.dFecha, 'DD-MM-YYYY HH:mm:ss'),
+          lFavorito: Boolean(obj.lFavorito),
         }
       })
 

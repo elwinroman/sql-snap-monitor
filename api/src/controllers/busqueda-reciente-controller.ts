@@ -66,6 +66,7 @@ export class BusquedaRecienteController {
             cSchema: object.cSchema,
             cNombreObjeto: object.cNombreObjeto,
             dFecha: object.dFecha,
+            lFavorito: object.lFavorito,
           }))
         }
 

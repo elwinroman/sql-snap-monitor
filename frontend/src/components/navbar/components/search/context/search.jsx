@@ -2,7 +2,15 @@ import { createContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import { ROUTES, TYPE_ACTION } from '@/constants'
-import { eliminarBusquedaReciente, eliminarTodoBusquedasRecientes, obtenerBusquedasRecientes, registrarBusquedaReciente } from '@/services'
+import {
+  eliminarBusquedaReciente,
+  eliminarFavorito,
+  eliminarTodoBusquedasRecientes,
+  obtenerBusquedasRecientes,
+  obtenerFavoritos,
+  registrarBusquedaReciente,
+  registrarFavorito,
+} from '@/services'
 
 export const SearchContext = createContext()
 
@@ -20,6 +28,7 @@ export function SearchProvider({ children }) {
 
   // obtener las búsquedas recientes y favoritos
   useEffect(() => {
+    // inicializar algunos estados
     const initTypes = () => {
       const type = {
         id: -1,
@@ -37,6 +46,7 @@ export function SearchProvider({ children }) {
       setType(type)
     }
 
+    // obtener las búsquedas recientes
     const fetchRecentSearch = async () => {
       const type = currentLocation.pathname === ROUTES.SQL_DEFINITION ? TYPE_ACTION.sqldefinition.id : TYPE_ACTION.usertable.id
       const limit = 50 // solo se recuperará los 50 primeros resultados (rendimiento)
@@ -45,13 +55,30 @@ export function SearchProvider({ children }) {
         const res = await obtenerBusquedasRecientes({ idTipoAccion: type, start: 0, limit })
         if (res.status === 'error' && res.statusCode === 404) setRecents([])
         else setRecents(res.data)
-      } catch (error) {
-        console.error('Error en el fetching:', error)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    // obtener las búsquedas favoritas
+    const fetchFavorites = async () => {
+      const type = currentLocation.pathname === ROUTES.SQL_DEFINITION ? TYPE_ACTION.sqldefinition.id : TYPE_ACTION.usertable.id
+
+      try {
+        const res = await obtenerFavoritos({ idTipoAccion: type })
+        if (res.status === 'error' && res.statusCode === 404) setFavorites([])
+        else {
+          const dataFormatted = res.data.map((obj) => ({ ...obj, lFavorito: true })) // a la lista de favoritos, agrega un flag lFavorito = truem para mantener a nivel visual el icono de favoritos filled cuando se realiza la búsqueda
+          setFavorites(dataFormatted)
+        }
+      } catch (err) {
+        console.error(err)
       }
     }
 
     initTypes()
     fetchRecentSearch()
+    fetchFavorites()
   }, [currentLocation])
 
   const updateOpen = (state) => setOpen(state)
@@ -63,46 +90,93 @@ export function SearchProvider({ children }) {
     setSuggestions(suggestions)
   }
 
-  // actualiza el estado de la lista de búsquedas favoritas
-  const updateFavorites = (favorites) => {
-    if (favorites.length === 0) setSuggestions([])
-    setSuggestions(favorites)
-  }
-
   // elimina un elemento de la lista de favoritos
   const deleteFavorite = (id) => {
     const newFavorites = [...favorites]
-    const index = newFavorites.findIndex((element) => element === id)
+    const index = newFavorites.findIndex((element) => element.id === id)
+    const objectId = newFavorites[index].objectId
+
     newFavorites.splice(index, 1)
 
-    // api delete de favoritos
+    eliminarFavorito({ id })
     setFavorites(newFavorites)
-  }
 
-  const addFavorite = (id, name) => {
-    //
-    const newFavorites = [...favorites]
-    newFavorites.unshift({ id, name })
-
-    // api añadir a favoritos
-    setFavorites({ id, name })
-  }
-
-  // actualiza el estado de la lista de búsquedas recientes
-  const updateRecents = (recents) => {
-    if (recents.length === 0) setSuggestions([])
-    setFavorites(recents)
-  }
-
-  const addRecents = async ({ idTipoAccion, cSchema, cNombreObjeto }) => {
+    // actualizar las búsquedas recientes a nivel visual (star icon)
     const newRecents = [...recents]
+    const indexOnRecent = newRecents.findIndex((element) => element.objectId === objectId)
+    if (indexOnRecent !== -1) newRecents[indexOnRecent].lFavorito = false
+    setRecents(newRecents)
+  }
+
+  const addFavorite = async ({ idTipoAccion, cSchema, cNombreObjeto }) => {
+    const newFavorites = [...favorites]
+
+    // generar un ID temporal para la actualización optimista (OPTIMISTIC UI)
+    const tempId = `temp-${Date.now()}`
+
+    // crear una nueva lista de favoritos con el nuevo elemento optimista
+    const temporalFavorite = {
+      id: tempId, // ID temporal
+      objectId: null,
+      cSchema,
+      cNombreObjeto,
+    }
+
+    // buscar si existe el objeto en el estado
+    const index = newFavorites.findIndex((element) => element.cSchema === cSchema && element.cNombreObjeto === cNombreObjeto)
+
+    // si existe, se elimina de su posición actual y se inserta el objeto en la primera fila, sino solo se agrega el objeto en la primera fila
+    if (index !== -1) newFavorites.splice(index, 1)
+    newFavorites.unshift(temporalFavorite)
+
+    setFavorites(newFavorites)
+
+    try {
+      // registrar favorito en la BD
+      const res = await registrarFavorito({
+        idTipoAccion,
+        cSchema,
+        cNombreObjeto,
+      })
+
+      // buscar y reemplazar el objeto con ID temporal por el ID real
+      const updatedFavorites = newFavorites.map((fav) =>
+        fav.id === tempId
+          ? {
+              id: res.data.id, // ID real recibido de la API
+              objectId: res.data.objectId,
+              cSchema: res.data.cSchema,
+              cNombreObjeto: res.data.cNombreObjeto,
+            }
+          : fav,
+      )
+
+      // actualizar el estado local con el id object_id real
+      setFavorites(updatedFavorites)
+    } catch (err) {
+      console.error(err)
+
+      // revertir el estado si ocurre un error
+      setFavorites(favorites)
+    }
+  }
+
+  const addRecents = async (recentSearch, idType) => {
+    const newRecents = [...recents]
+
+    const data = {
+      idTipoAccion: idType,
+      cSchema: recentSearch.cSchema,
+      cNombreObjeto: recentSearch.cNombreObjeto,
+      lFavorito: recentSearch.lFavorito,
+    }
 
     // registrar en la bd (este gestiona si actualizar o insertar)
     try {
       const res = await registrarBusquedaReciente({
-        idTipoAccion,
-        cSchema,
-        cNombreObjeto,
+        idTipoAccion: data.idTipoAccion,
+        cSchema: data.cSchema,
+        cNombreObjeto: data.cNombreObjeto,
       })
 
       // buscar si existe en el estado mediante el object_id
@@ -116,6 +190,7 @@ export function SearchProvider({ children }) {
         objectId: res.data.objectId,
         cSchema: res.data.cSchema,
         cNombreObjeto: res.data.cNombreObjeto,
+        lFavorito: data.lFavorito, // mantener el icono favorito a nivel visual
       })
 
       setRecents(newRecents)
@@ -158,12 +233,10 @@ export function SearchProvider({ children }) {
         suggestions,
         updateSuggestions,
         favorites,
-        updateFavorites,
         deleteFavorite,
         addFavorite,
         recents,
         addRecents,
-        updateRecents,
         deleteRecent,
         deleteAllRecents,
         reset,

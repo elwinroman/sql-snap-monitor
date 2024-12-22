@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useSearch } from '../../../hooks/useSearch'
 import { Card } from './card'
 import { DeleteItem } from './delete-item'
+import { FavoriteItem } from './favorite-item'
 import { ItemList } from './item-list'
 
 export function RecentSearch() {
@@ -48,6 +49,7 @@ export function RecentSearch() {
             <div className="flex items-center gap-2">
               <span className="overflow-hidden rounded-sm bg-background px-1 py-0.5 text-xs text-muted">{data.cSchema}</span>
 
+              <FavoriteItem data={data} content="Favorito" />
               <DeleteItem action={deleteRecent} id={data.id} content="Eliminar" />
             </div>
           </div>

@@ -15,7 +15,9 @@ export interface BusquedaReciente {
 export type BusquedaRecienteInput = Omit<BusquedaReciente, 'idBusquedaReciente' | 'dFecha' | 'lVigente'>
 export type BusquedaRecienteGetInput = Pick<BusquedaReciente, 'idUsuario' | 'idTipoAccion' | 'cDatabase'>
 
-export type BusquedaRecienteRes = Pick<BusquedaReciente, 'idBusquedaReciente' | 'cSchema' | 'cNombreObjeto' | 'dFecha'>
+export type BusquedaRecienteRes = Pick<BusquedaReciente, 'idBusquedaReciente' | 'cSchema' | 'cNombreObjeto' | 'dFecha'> & {
+  lFavorito: boolean
+}
 
 export interface BusquedaRecienteResponse {
   data: BusquedaRecienteRes[]
