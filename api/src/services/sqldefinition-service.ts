@@ -34,7 +34,7 @@ export class SQLDefinitionService implements ForRetrievingObject {
           B.name AS schema_name
         FROM sys.objects            A
         INNER JOIN sys.schemas      B ON B.schema_id = A.schema_id
-        WHERE type IN('P','FN','R','RF','TR','IF','TF','V')
+        WHERE type IN('P','FN','TR','TF','V')
           AND A.name = @name
       `
 
@@ -79,7 +79,7 @@ export class SQLDefinitionService implements ForRetrievingObject {
         FROM sys.objects            A
         INNER JOIN sys.schemas      B ON B.schema_id = A.schema_id
         INNER JOIN sys.sql_modules  C ON C.object_id = A.object_id
-        WHERE type IN('P','FN','R','RF','TR','IF','TF','V')
+        WHERE type IN('P','FN','TR','TF','V')
           AND A.object_id = @id
       `
 

@@ -18,7 +18,7 @@ export class SearchService implements ForRetrievingSearch {
     const request = conn.request()
 
     let andType = ''
-    if (type === TYPE_ACTION.sqldefinition.name) andType = `AND type IN('P','FN','R','RF','TR','IF','TF','V')`
+    if (type === TYPE_ACTION.sqldefinition.name) andType = `AND type IN('P','FN','TR','TF','V')`
     else if (type === TYPE_ACTION.usertable.name) andType = `AND type IN('U')`
 
     try {

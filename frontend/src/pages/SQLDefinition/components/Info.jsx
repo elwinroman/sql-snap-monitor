@@ -1,46 +1,9 @@
 import './info.css'
 
+import { SYS_OBJECT_TYPES } from '@/constants'
 import { CloudCodeIcon, CloudIdsIcon, DatabaseMigrationIcon, DataLossIcon } from '@/icons'
 
 export function Info() {
-  const tipos = [
-    {
-      id: 1,
-      codigo: 'P',
-      description: 'Procedimiento almacenado',
-    },
-    {
-      id: 2,
-      codigo: 'TR',
-      description: 'Disparador (Trigger)',
-    },
-    {
-      id: 3,
-      codigo: 'V',
-      description: 'Vista (View)',
-    },
-    {
-      id: 4,
-      codigo: 'TF',
-      description: 'Función con valor de tabla',
-    },
-    {
-      id: 5,
-      codigo: 'IF',
-      description: 'Función con valor de tabla en línea ',
-    },
-    {
-      id: 6,
-      codigo: 'FN',
-      description: 'Función escalar',
-    },
-    {
-      id: 7,
-      codigo: 'R',
-      description: 'Regla - Es un tipo de objeto obsoleto',
-    },
-  ]
-
   return (
     <section>
       <div className="grid grid-cols-12 grid-rows-2 gap-4">
@@ -68,12 +31,12 @@ export function Info() {
           <CardTitle>Tipos de objetos soportados</CardTitle>
           <CardDescription>Las definiciones SQL admiten una variedad de objetos</CardDescription>
           <div className="grid w-full grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-x-4 gap-y-2">
-            {tipos.map((tipo) => (
-              <div key={tipo.id} className="flex items-center gap-2">
+            {SYS_OBJECT_TYPES.map((type) => (
+              <div key={type.type} className="flex items-center gap-2">
                 <span className="grid min-h-7 min-w-7 place-content-center rounded-sm border border-zinc-800 bg-zinc-950 text-sm font-semibold">
-                  {tipo.codigo}
+                  {type.type}
                 </span>
-                <span className="text-[0.84rem] text-zinc-300">{tipo.description}</span>
+                <span className="text-[0.84rem] text-zinc-300">{type.description}</span>
               </div>
             ))}
           </div>
