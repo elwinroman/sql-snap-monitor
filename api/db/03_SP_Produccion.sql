@@ -28,7 +28,7 @@ BEGIN
 	INNER JOIN sys.schemas      B ON B.schema_id = A.schema_id
 	INNER JOIN sys.sql_modules  C ON C.object_id = A.object_id
 	WHERE type IN('P','FN','R','RF','TR','IF','TF','V')
-		AND A.name = @object_name AND B.schema_id = @schema_name
+		AND A.name = @object_name AND B.name = @schema_name
 END
 
 GO
