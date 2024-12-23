@@ -8,7 +8,8 @@ import { FavoriteItem } from './favorite-item'
 import { ItemList } from './item-list'
 
 export function RecentSearch() {
-  const [itemsToShow, setItemsToShow] = useState(5) // mostrar los 5 primeros resultados
+  const MIN_SHOW_ITEMS = 5
+  const [itemsToShow, setItemsToShow] = useState(MIN_SHOW_ITEMS) // limitar resultados
   const [showAll, setShowAll] = useState(false) // mostrar todo o mostrar 'itemsToShow'
   const { recents, deleteRecent, deleteAllRecents } = useSearch()
   const title = 'Búsquedas recientes'
@@ -19,7 +20,7 @@ export function RecentSearch() {
 
     const show = !showAll
     if (show) setItemsToShow(recents.length)
-    else setItemsToShow(5)
+    else setItemsToShow(MIN_SHOW_ITEMS)
 
     setShowAll(!showAll)
   }
@@ -56,7 +57,7 @@ export function RecentSearch() {
         </ItemList>
       ))}
 
-      {recents.length >= itemsToShow && (
+      {recents.length >= itemsToShow && recents.length !== MIN_SHOW_ITEMS && (
         <button
           className="w-fit px-4 py-1 text-left text-xs text-blue-400 transition-colors hover:text-blue-500"
           onClick={handleShowAllItems}
