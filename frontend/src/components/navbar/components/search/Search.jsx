@@ -36,13 +36,13 @@ export function Search() {
 
       {/* Dialog de búsqueda */}
       <Dialog open={open} onOpenChange={updateOpen}>
-        <DialogContent className="flex h-[50%] flex-col gap-1 overflow-hidden bg-baselayer p-0 shadow-lg">
+        <DialogContent className="flex h-auto max-h-[50%] min-h-[40%] flex-col gap-1 overflow-hidden bg-baselayer p-0 shadow-lg">
           <DialogHeader>
             <DialogDescription />
             <DialogTitle className="flex flex-col pt-3.5">
               <span className="mx-3.5 w-fit rounded-sm bg-background px-1.5 py-0.5 text-xs font-semibold text-muted">{type.name}</span>
               <input
-                className="flex h-10 w-full rounded-sm bg-baselayer px-4 text-sm font-semibold text-primary file:bg-transparent placeholder:font-normal placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-5"
+                className="placeholder:text-spark flex h-10 w-full rounded-sm bg-baselayer px-4 text-sm font-semibold text-primary file:bg-transparent placeholder:font-normal focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-5"
                 placeholder="Busca tu objeto aquí"
                 onInput={onInput}
                 spellCheck={false}

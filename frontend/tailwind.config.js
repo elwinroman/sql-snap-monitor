@@ -33,6 +33,7 @@ module.exports = {
           DEFAULT: 'var(--secondary)',
           foreground: 'hsl(var(--secondary-foreground))',
         },
+        spark: 'var(--spark)',
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',

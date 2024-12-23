@@ -30,6 +30,7 @@
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: rgb(135, 138, 153);
     --muted-foreground: 215.4 16.3% 46.9%;
+    --spark: rgba(35, 34, 38, 40%);
     /* --accent: 210 40% 96.1%; */
     /* --accent: #efefef; */
     --accent: #e3e3e3;
@@ -68,8 +69,9 @@
     --primary-foreground: rgb(35, 34, 38);
     --secondary: rgba(255,255,255,70%);
     --secondary-foreground: 210 40% 98%;
-    --muted: rgba(255, 255, 255, 40%);
+    --muted: rgba(255, 255, 255, 45%);
     --muted-foreground: 215 20.2% 65.1%;
+    --spark: rgba(255,255,255,25%);
     --accent: #3d3f43;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
