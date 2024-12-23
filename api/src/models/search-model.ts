@@ -2,6 +2,7 @@ export interface SuggestionSearch {
   id: number
   name: string
   schemaName: string
+  typeDesc: string
 }
 
 export interface SearchResponse {

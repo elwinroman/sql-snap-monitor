@@ -30,6 +30,7 @@ export async function getSearchSuggestions({ search, type }) {
       objectId: obj.id,
       cSchema: obj.schemaName,
       cNombreObjeto: obj.name,
+      cTypeDesc: obj.typeDesc,
     }))
 
     return { data: formattedData }

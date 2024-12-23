@@ -28,6 +28,7 @@ export class SearchService implements ForRetrievingSearch {
           object_id,
           name,
           SCHEMA_NAME(schema_id) AS schema_name,
+          type_desc,
           CASE 
             WHEN name LIKE CONCAT(@name, '%') THEN 1
             WHEN name LIKE CONCAT('%', @name, '%') THEN 2
@@ -46,6 +47,7 @@ export class SearchService implements ForRetrievingSearch {
           id: obj.object_id,
           name: obj.name,
           schemaName: obj.schema_name,
+          typeDesc: obj.type_desc.trim(),
         }
       })
 
