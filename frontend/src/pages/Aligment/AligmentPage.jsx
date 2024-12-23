@@ -17,7 +17,9 @@ export function AligmentPage() {
         <EditorCodeAligment />
 
         <footer className="grid h-10 place-content-center text-sm text-secondary">
-          <span>Departamento de Aseguramiento de Calidad 🚀 Developed by aroman</span>
+          <span>
+            © 2025 <strong>Departamento de Aseguramiento de Calidad</strong>
+          </span>
         </footer>
       </main>
     </section>

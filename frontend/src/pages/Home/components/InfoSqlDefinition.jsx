@@ -3,7 +3,7 @@ import './info.css'
 import { SYS_OBJECT_TYPES } from '@/constants'
 import { CloudCodeIcon, CloudIdsIcon, DatabaseMigrationIcon, DataLossIcon } from '@/icons'
 
-export function Info() {
+export function InfoSqlDefinition() {
   return (
     <section>
       <div className="grid grid-cols-12 grid-rows-2 gap-4">
