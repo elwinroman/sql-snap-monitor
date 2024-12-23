@@ -12,6 +12,12 @@ export const useAuthStore = create(
       dbname: null,
       server: null,
       errorAuth: null,
+      errorViewDefinition: null,
+      errorApiConection: false, // API connection error (505)
+
+      updateErrorViewDefinition: (state) => {
+        set({ errorViewDefinition: state })
+      },
 
       /**
        * Login user
@@ -46,11 +52,19 @@ export const useAuthStore = create(
         set({ errorAuth: null })
       },
 
-      // Comprueba la conexión del usuario (cookie expired)
+      // Comprueba la conexión del usuario
       checkSession: async () => {
-        const res = await checkSession()
-        // Unauthorized
-        if (res.status === 'error') set({ isSessionExpired: true })
+        try {
+          const res = await checkSession()
+          // Token expirado
+          if (res.status === 'error') set({ isSessionExpired: true })
+
+          // si el usuario no tiene permisos de VIEWDEFINITION
+          if (!res.data.viewdefinition_permission) set({ errorViewDefinition: true })
+          else set({ errorViewDefinition: null })
+        } catch (err) {
+          set({ errorApiConection: true })
+        }
       },
 
       // Clear auth store
@@ -60,6 +74,7 @@ export const useAuthStore = create(
         set({ dbname: null })
         set({ server: null })
         set({ errorAuth: null })
+        set({ errorViewDefinition: null })
         set({ isSessionExpired: false })
       },
     }),

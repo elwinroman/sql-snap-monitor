@@ -1,6 +1,7 @@
+import { format } from '@formkit/tempo'
 import sql from 'mssql'
 
-import { Credentials, CustomError, DatabaseDetails, ForAuthenticating } from '@/models'
+import { Credentials, DatabaseDetails, ForAuthenticating, Health } from '@/models'
 import { throwRequestError } from '@/utils'
 
 import { connection } from '../config/database'
@@ -42,16 +43,23 @@ export class AuthService implements ForAuthenticating {
     }
   }
 
-  async checkLogin(): Promise<string | CustomError | undefined> {
+  async checkLogin(): Promise<Health | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
     try {
-      const stmt = 'SELECT GETUTCDATE() AS date'
+      const stmt = `
+        SELECT 
+          GETUTCDATE() AS date,
+          viewdefinition_permission = COALESCE((SELECT TOP 1 IIF(definition IS NULL, 0, 1) FROM sys.sql_modules), 0)
+      `
       const res = await request.query(stmt)
 
-      const date = await res.recordset[0].date
-      return date
+      const data: Health = {
+        date: format(res.recordset[0].date, 'DD-MM-YYYY HH:mm:ss'),
+        viewdefinition_permission: Boolean(res.recordset[0].viewdefinition_permission),
+      }
+      return data
     } catch (error) {
       if (!(error instanceof sql.RequestError)) throw error
       throwRequestError(error)

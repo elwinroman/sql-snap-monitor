@@ -104,10 +104,8 @@ export async function getSQLDefinitionAligmentObject({ name, schemaName, useCred
     })
     const res = await response.json()
 
-    await new Promise((resolve) => setTimeout(resolve, 3000))
-
     return res
   } catch (error) {
-    throw new Error(error)
+    return { error }
   }
 }

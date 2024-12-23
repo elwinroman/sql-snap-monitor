@@ -17,7 +17,12 @@ export interface DatabaseDetails {
   server: string
 }
 
+export interface Health {
+  date: string | Date
+  viewdefinition_permission: boolean
+}
+
 export interface ForAuthenticating {
   login(): Promise<DatabaseDetails | undefined>
-  checkLogin(): Promise<string | CustomError | undefined>
+  checkLogin(): Promise<Health | CustomError | undefined>
 }

@@ -56,6 +56,8 @@ export async function checkSession() {
     const res = await response.json()
     return res
   } catch (err) {
-    throw new Error(err)
+    // error de conexión con la API
+    if (err instanceof TypeError) console.error(err)
+    // throw new Error(err)
   }
 }

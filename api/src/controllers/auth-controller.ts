@@ -132,7 +132,7 @@ export class AuthController {
       const authService = new AuthService(credentials)
       const result = await authService.checkLogin()
 
-      return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa', time: result })
+      return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa', data: { ...result } })
     } catch (err) {
       // si se ha cambiado el password sql del usuario
       res.clearCookie('access_token')
