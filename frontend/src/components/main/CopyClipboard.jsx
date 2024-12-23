@@ -18,7 +18,7 @@ export function CopyClipboard({ text }) {
 
   return (
     <button
-      className={`invisible grid h-7 w-7 place-content-center rounded-md border-border bg-border opacity-0 shadow-md backdrop-blur-md transition-colors before:absolute before:-translate-x-2 before:translate-y-7 before:-rotate-12 before:text-sm before:font-bold before:text-rose-500 before:transition-all before:content-['Copiado!'] hover:bg-baselayer group-hover:visible group-hover:opacity-100 ${copy ? 'before:visible before:opacity-100' : 'before:invisible before:opacity-0'}`}
+      className={`invisible grid h-7 w-7 place-content-center rounded-md border-border bg-border opacity-0 shadow-md backdrop-blur-md transition-colors duration-700 before:absolute before:-translate-x-2 before:translate-y-7 before:-rotate-12 before:text-sm before:font-bold before:text-rose-500 before:transition-all before:content-['Copiado!'] hover:bg-baselayer group-hover:visible group-hover:opacity-100 ${copy ? 'before:visible before:opacity-100' : 'before:invisible before:opacity-0'}`}
       onClick={handleCopy}
     >
       {!copy ? <Copy size={14} className="text-primary" /> : <Check size={14} className="text-primary" />}

@@ -29,7 +29,7 @@ export function Navbar({ className }) {
         <LoginUsername />
 
         {/* Icono configuración */}
-        <Configuration />
+        {/* <Configuration /> */}
 
         {/* Repo link */}
         <GithubRepo />
