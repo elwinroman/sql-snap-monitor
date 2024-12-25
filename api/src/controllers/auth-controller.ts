@@ -63,7 +63,7 @@ export class AuthController {
           cHashUsuarioUID: usernameHash,
           cUsuario: credentials.username,
           cServer: databaseDetails.server,
-          cAliasServer: databaseDetails.server,
+          cAliasServer: server,
         })
 
         user = await userService.buscarUsuarioByUsername(usernameHash)
@@ -85,7 +85,7 @@ export class AuthController {
 
       // almacenar las credenciales en la sesión para reutilizarlas (todo: usar redis o mongo-db en el futuro)
       req.session.credentials = {
-        server: databaseDetails.server,
+        server: server,
         dbname: databaseDetails.name,
         username: credentials.username,
         password: credentials.password,
@@ -131,7 +131,6 @@ export class AuthController {
     try {
       const authService = new AuthService(credentials)
       const result = await authService.checkLogin()
-
       return res.status(200).json({ status: 'success', statusCode: 200, message: 'Sesión activa', data: { ...result } })
     } catch (err) {
       // si se ha cambiado el password sql del usuario
