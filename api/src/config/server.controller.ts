@@ -25,8 +25,6 @@ export class Server {
     this.port = port
     this.routes = routes
     this.allowedOrigin = allowedOrigin
-
-    console.log(SESSION_SECRET)
   }
 
   public start() {

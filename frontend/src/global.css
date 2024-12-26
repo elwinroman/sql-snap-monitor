@@ -131,7 +131,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(backgrounds/hero-blur.webp);
+    background-image: url(/backgrounds/hero-blur.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -140,12 +140,15 @@
 
   .gradient-text {
     background: linear-gradient(90deg, #ff7a18, #af002d 70%);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .login-box-background {
-    background-image: linear-gradient(0deg, rgba(var(--background-default-channel) / 0.92), rgba(var(--background-default-channel) / 0.92)), url(backgrounds/background-3-blur.webp);
+    background-image: 
+      linear-gradient(0deg, rgba(var(--background-default-channel) / 0.92), 
+      rgba(var(--background-default-channel) / 0.92)), 
+      url(/backgrounds/background-3-blur.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
