@@ -7,6 +7,7 @@ import { ServerDatabaseInfo } from '@/components/main/ServerDatabaseInfo'
 import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { ROUTES } from '@/constants'
 import Layout from '@/layouts/Layout'
+import LayoutLanding from '@/layouts/LayoutLanding'
 import { AligmentPage, HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 
 function Error() {
@@ -25,9 +26,9 @@ function App() {
           path={ROUTES.HOME}
           element={
             <ProtectedLayout>
-              <Layout>
+              <LayoutLanding>
                 <HomePage />
-              </Layout>
+              </LayoutLanding>
             </ProtectedLayout>
           }
         />

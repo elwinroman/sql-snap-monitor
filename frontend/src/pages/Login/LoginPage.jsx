@@ -41,14 +41,35 @@ export function LoginPage() {
     }
   }
   return (
-    <section className="flex h-screen w-full items-center overflow-auto bg-baselayer">
-      <div className="m-auto flex w-[480px] flex-col gap-6 rounded-md bg-card px-10 py-10 shadow-md">
+    <section className="flex h-screen w-full items-center overflow-auto bg-background">
+      {/* Welcome right  */}
+      <div className="login-box-background hidden h-full w-full max-w-md place-content-center p-6 md:grid">
+        <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-4">
+            <h3 className="font-['Barlow'] text-2xl">Hola, Bienvenido</h3>
+            <p className="text-secondary">Se eficaz en la gestión de metadatos SQL</p>
+          </div>
+
+          <img
+            className="aspect-[4/3]"
+            alt="Dashboard illustration"
+            src="https://assets.minimals.cc/public/assets/illustrations/illustration-dashboard.webp"
+          ></img>
+
+          <h2 className="text-muted">SQL Snap Monitor</h2>
+
+          <img src="microsoft-sql-server-logo.svg" width={36} height={36} alt="logo de microsoft sql server" className="max-w-none" />
+        </div>
+      </div>
+
+      {/* Formulario */}
+      <div className="m-auto flex w-[480px] flex-col gap-6 rounded-md px-10 py-10">
         {/* Loader */}
         {loading && <Loader className="loader absolute left-1/2 top-1/2 opacity-80" />}
 
         <header className="flex flex-col items-center gap-3">
-          <h1 className="text-xl font-semibold text-indigo-500">Bienvenido!</h1>
-          <p className="text-sm text-secondary">Inicia sesión con tus credenciales SQL a tu base de pruebas</p>
+          <h1 className="text-xl font-bold text-primary">Inicia sesión con tu cuenta</h1>
+          <p className="text-sm text-secondary">Usa tus credenciales SQL de tu base de datos de pruebas</p>
 
           {errorAuth && (
             <div className="flex gap-2 rounded-md border border-[#f53e7b59] bg-[#592e41] px-4 py-2">

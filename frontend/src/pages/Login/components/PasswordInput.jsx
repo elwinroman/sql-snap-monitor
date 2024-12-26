@@ -23,7 +23,7 @@ export function PasswordInput({ name }) {
         type={visible ? 'text' : 'password'}
         name={name}
         ref={inputRef}
-        className="h-10 w-full rounded-sm border border-border bg-[#292b2c] px-3 text-sm outline-none transition-colors duration-300 placeholder:text-[14px] placeholder:opacity-60 hover:border-emerald-800 focus:border-emerald-800"
+        className="h-10 w-full rounded-sm border border-gray-500/20 bg-transparent px-3 text-sm outline-none transition-colors duration-300 placeholder:text-[14px] placeholder:text-muted placeholder:opacity-60 focus:border-transparent focus:outline-offset-0 focus:outline-white"
         placeholder="Ingresa tu contraseña"
         required
       />
