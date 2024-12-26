@@ -1,6 +1,6 @@
-@import url("@fontsource-variable/open-sans");
+@import url("@fontsource-variable/public-sans");
 @import url("@fontsource-variable/fira-code");
-@import url("@fontsource/dela-gothic-one");
+@import url("@fontsource/barlow/800.css");
 @import url("@fontsource/geist-sans/300.css");
 @import url("@fontsource/geist-sans/400.css");
 @import url("@fontsource/geist-sans/500.css");
@@ -15,20 +15,21 @@
 
 @layer base {
   :root {
-    --baselayer: #f2f2f7;
-    --background: #f6f6f7;
+    --background: #f4f6f8;
+    --background-paper: #FFFFFF;
+    --background-paper-channel: rgba(255,255,255,0.9);
     --background-alternate: #e3e3e3;
+    --background-neutral: #F4F6F8;
     --foreground: 222.2 84% 4.9%;
     --card: #fff;
-    --card-foreground: 222.2 84% 4.9%;
     --card-strong: #efefef;
     --popover: #f6f6f7;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: rgb(35, 34, 38);
+    --primary: #1C252E; /* text-primary */
     --primary-foreground: rgba(255, 255, 255, 90%);
-    --secondary: rgba(35, 34, 38, 70%);
+    --secondary: #637381; /* text-secondary */
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: rgb(135, 138, 153);
+    --muted: #919EAB; /* text-disabled */
     --muted-foreground: 215.4 16.3% 46.9%;
     --spark: rgba(35, 34, 38, 40%);
     /* --accent: 210 40% 96.1%; */
@@ -37,7 +38,10 @@
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: #e9ebec;
+
+    /* --border: #e9ebec; */
+    --border: rgba(145,158,171,0.12);
+
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
@@ -47,36 +51,42 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
 
-    /* Colores customizados */
-    --ow-main: #f6f7f9;
-    --ow-navbar: white;
+    /* Shadows */
+    --custom-shadow-card: 0 0 2px 0 rgba(145 158 171 / 0.2),0 12px 24px -4px rgba(145 158 171 / 0.12);
+    --custom-shadow-dropdown: 0 0 2px 0 rgba(145 158 171 / 0.24),-20px 20px 40px -4px rgba(145 158 171 / 0.24);
+    --custom-shadow-dialog: -40px 40px 80px -8px rgba(0 0 0 / 0.24);
+
+    --action-hover: rgba(145 158 171 / 0.13);
 
     /* Tamaños */
     --navbar-height: 80px;
   }
 
   .dark {
-    --baselayer: #181919;
-    --background: #26272c;
+    --background: #141a21;
     --background-alternate: #1f2024;
+    --background-paper: #1C252E;
+    --background-paper-channel: rgba(28,37,46,0.9);
+    --background-neutral: #28323D;
+    --background-default-channel: 20 26 33;
     --foreground: 210 40% 98%;
-    --card: #1e1f1f;
-    --card-foreground: 210 40% 98%;
+    --card: #1c252e;
     --card-strong: #181919;
     --popover: rgb(10, 10, 10);
     --popover-foreground: 210 40% 98%;
-    --primary: rgba(255, 255, 255, 90%);
+    --primary: #FFFFFF; /* text-primary */
     --primary-foreground: rgb(35, 34, 38);
-    --secondary: rgba(255,255,255,70%);
+    --secondary: #919EAB; /* text-secondary */
     --secondary-foreground: 210 40% 98%;
-    --muted: rgba(255, 255, 255, 45%);
+    --muted: #637381; /* text-disabled */
     --muted-foreground: 215 20.2% 65.1%;
     --spark: rgba(255,255,255,25%);
     --accent: #3d3f43;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: rgba(255,255,255,6%);
+    /* --border: rgba(255,255,255,6%); */
+    --border: rgba(145,158,171,0.08); /* border-navbar */
     --input: 220 5% 25%;
     --ring: 212.7 26.8% 83.9%;
     --chart-1: 220 70% 50%;
@@ -85,9 +95,16 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    /* Colores customizados */
-    --ow-main: #14161a;
-    --ow-navbar: #1d1f25;
+    /* Shadows */
+    --custom-shadow-card: 0 0 2px 0 rgba(0 0 0 / 0.2),0 12px 24px -4px rgba(0 0 0 / 0.12);
+    --custom-shadow-dropdown: 0 0 2px 0 rgba(0 0 0 / 0.24),-20px 20px 40px -4px rgba(0 0 0 / 0.24);
+    --custom-shadow-dialog: -40px 40px 80px -8px rgba(0 0 0 / 0.24);
+
+    --action-hover: rgba(145 158 171 / 0.08);
+
+    --palette-divider: rgba(145 158 171 / 0.2);
+    --palete-grey-700: #454F5B;
+    --palete-grey-800: #1C252E;
   }
 }
 
@@ -98,7 +115,43 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .mix-colored-background {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfMjc0OV8xNDUxODYpIiBmaWxsLW9wYWNpdHk9IjAuMTIiLz4KPGRlZnM+CjxyYWRpYWxHcmFkaWVudCBpZD0icGFpbnQwX3JhZGlhbF8yNzQ5XzE0NTE4NiIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgxMjAgMS44MTgxMmUtMDUpIHJvdGF0ZSgtNDUpIHNjYWxlKDEyMy4yNSkiPgo8c3RvcCBzdG9wLWNvbG9yPSIjMDBCOEQ5Ii8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzAwQjhEOSIgc3RvcC1vcGFjaXR5PSIwIi8+CjwvcmFkaWFsR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+Cg=="), url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiBmaWxsPSJ1cmwoI3BhaW50MF9yYWRpYWxfMjc0OV8xNDUxODcpIiBmaWxsLW9wYWNpdHk9IjAuMTIiLz4KPGRlZnM+CjxyYWRpYWxHcmFkaWVudCBpZD0icGFpbnQwX3JhZGlhbF8yNzQ5XzE0NTE4NyIgY3g9IjAiIGN5PSIwIiByPSIxIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgZ3JhZGllbnRUcmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEyMCkgcm90YXRlKDEzNSkgc2NhbGUoMTIzLjI1KSI+CjxzdG9wIHN0b3AtY29sb3I9IiNGRjU2MzAiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkY1NjMwIiBzdG9wLW9wYWNpdHk9IjAiLz4KPC9yYWRpYWxHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K");
+    background-size: 50%, 50%;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(20px);
+    background-position: right top, left bottom;
+    outline: 0px;
+  }
+
+  .main-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://assets.minimals.cc/public/assets/images/home/hero-blur.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: -1;
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #ff7a18, #af002d 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .login-box-background {
+    background-image: linear-gradient(0deg, rgba(var(--background-default-channel) / 0.92), rgba(var(--background-default-channel) / 0.92)),url(https://assets.minimals.cc/public/assets/background/background-3-blur.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
 }
+
 
 /* Customizar el scrollbawr */
 @layer utilities {

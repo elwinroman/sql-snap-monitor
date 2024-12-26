@@ -5,7 +5,7 @@ module.exports = {
   prefix: '',
   theme: {
     fontFamily: {
-      sans: ['Open Sans Variable', 'Geist Sans', 'sans-serif'],
+      sans: ['Public Sans Variable', 'Geist Sans', 'sans-serif'],
     },
     container: {
       center: true,
@@ -22,7 +22,10 @@ module.exports = {
         baselayer: 'var(--baselayer)',
         background: {
           DEFAULT: 'var(--background)',
+          paper: 'var(--background-paper)',
           alternate: 'var(--background-alternate)',
+          paperChanel: 'var(--background-paper-channel)',
+          neutral: 'var(--background-neutral)',
         },
         foreground: 'hsl(var(--foreground))',
         primary: {
@@ -52,12 +55,12 @@ module.exports = {
         },
         card: {
           DEFAULT: 'var(--card)',
-          foreground: 'hsl(var(--card-foreground))',
           strong: 'var(--card-strong)',
         },
-        ownavbar: {
-          DEFAULT: 'var(--ow-navbar)',
+        palette: {
+          diviver: 'var(--palette-divider)',
         },
+        actionHover: 'var(--action-hover)',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -77,6 +80,12 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      boxShadow: {
+        'custom-z1': '0 1px 2px 0 rgba(0, 0, 0, 0.16)',
+        'custom-card': 'var(--custom-shadow-card)',
+        'custom-dropdown': 'var(--custom-shadow-dropdown)',
+        'custom-dialog': 'var(--custom-shadow-dialog)',
       },
     },
   },
