@@ -131,7 +131,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url(https://assets.minimals.cc/public/assets/images/home/hero-blur.webp);
+    background-image: url(backgrounds/hero-blur.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -145,7 +145,7 @@
   }
 
   .login-box-background {
-    background-image: linear-gradient(0deg, rgba(var(--background-default-channel) / 0.92), rgba(var(--background-default-channel) / 0.92)),url(https://assets.minimals.cc/public/assets/background/background-3-blur.webp);
+    background-image: linear-gradient(0deg, rgba(var(--background-default-channel) / 0.92), rgba(var(--background-default-channel) / 0.92)), url(backgrounds/background-3-blur.webp);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

@@ -32,7 +32,7 @@ export function LoginUsername() {
           <DropdownMenuTrigger>
             <div className="group flex items-center gap-2">
               <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarImage src="shadcn-profile-morty.jpg" />
                 <AvatarFallback>QA</AvatarFallback>
               </Avatar>
               <span className="hidden select-none text-sm font-medium text-secondary transition-colors group-hover:text-primary md:block">

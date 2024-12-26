@@ -50,11 +50,7 @@ export function LoginPage() {
             <p className="text-secondary">Se eficaz en la gestión de metadatos SQL</p>
           </div>
 
-          <img
-            className="aspect-[4/3]"
-            alt="Dashboard illustration"
-            src="https://assets.minimals.cc/public/assets/illustrations/illustration-dashboard.webp"
-          ></img>
+          <img className="aspect-[4/3]" alt="Dashboard illustration" src="illustrations/illustration-dashboard.webp"></img>
 
           <h2 className="text-muted">SQL Snap Monitor</h2>
 
