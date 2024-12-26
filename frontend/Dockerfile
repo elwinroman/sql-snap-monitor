@@ -1,4 +1,4 @@
-FROM node:22-slim AS build
+FROM node:22.11.0-slim AS build
 
 # Define un argumento que se pasará durante la construcción
 ARG VITE_API_URL=PRODUCTION_API_URL
