@@ -43,13 +43,11 @@ export function RecentSearch() {
 
       {recents.slice(0, itemsToShow).map((data) => (
         <ItemList key={data.id} data={data}>
-          <History size={13} className="mt-0.5 text-secondary group-hover:text-primary" />
+          <History size={14} className="mt-0.5 text-primary" />
 
           <div className="flex w-full items-center justify-between gap-1 transition-colors">
-            <span className="overflow-hidden text-secondary group-hover:text-primary">{data.cNombreObjeto}</span>
+            <span className="overflow-hidden text-primary">{data.cNombreObjeto}</span>
             <div className="flex items-center gap-2">
-              <span className="overflow-hidden rounded-sm bg-background px-1 py-0.5 text-xs text-muted">{data.cSchema}</span>
-
               <FavoriteItem data={data} content="Favorito" />
               <DeleteItem action={deleteRecent} id={data.id} content="Eliminar" />
             </div>

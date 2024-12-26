@@ -6,7 +6,7 @@ export function AplicationLogo() {
   return (
     <div>
       <NavLink to={ROUTES.HOME} className="flex gap-2 transition-colors">
-        <span className="font-['Dela_Gothic_One'] text-sm text-primary">SQL SnapMonitor</span>
+        <span className="font-bold text-primary">SQL SnapMonitor</span>
       </NavLink>
     </div>
   )

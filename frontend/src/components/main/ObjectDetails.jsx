@@ -27,15 +27,12 @@ export function ObjectDetails({ object }) {
   return (
     <ul className="flex flex-col flex-wrap gap-2 sm:flex-row">
       {info.map((item) => (
-        <li
-          key={item.id}
-          className="flex max-w-64 items-center justify-between gap-6 rounded-sm border border-border bg-card px-2.5 py-1.5"
-        >
+        <li key={item.id} className="shadow-custom-card flex max-w-64 items-center justify-between gap-6 rounded-sm bg-card px-2.5 py-1.5">
           <div className="flex items-baseline gap-2">
-            <h6 className="text-xs font-normal text-muted">{item.title}</h6>
-            <p className="text-xs font-semibold text-primary dark:font-medium">
+            <h6 className="text-xs font-semibold text-muted">{item.title}</h6>
+            <p className="text-xs font-semibold text-primary">
               <span>{item.value} </span>
-              {item.has_tag && <span className="text-xs text-amber-400">{item.tag}</span>}
+              {item.has_tag && <span className="text-xs text-amber-500">{item.tag}</span>}
             </p>
           </div>
         </li>

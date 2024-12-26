@@ -15,8 +15,8 @@ export function ViewModeRadio() {
   if (action !== SELECT_ACTION.objeto) return
 
   return (
-    <div className="flex flex-col gap-1.5 rounded-sm border border-border p-3">
-      <h3 className="text-xs font-semibold text-muted">SELECCIONA COMO QUIERES VER:</h3>
+    <div className="flex flex-col gap-1.5 rounded-sm border border-dashed border-gray-500/30 bg-card p-3">
+      <h3 className="text-xs font-semibold text-secondary">SELECCIONA COMO QUIERES VER:</h3>
       <RadioGroup value={viewMode} onValueChange={handleChange} disabled={action !== SELECT_ACTION.objeto}>
         <div className="flex items-center space-x-2">
           <label className="flex items-center gap-2">

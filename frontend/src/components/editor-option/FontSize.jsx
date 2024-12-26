@@ -18,18 +18,24 @@ export function FontSize() {
 
   return (
     <div className="flex h-7 flex-nowrap rounded-sm">
-      <button className="group rounded-l-sm border-y border-l border-border bg-background px-1.5 hover:bg-accent" onClick={handleClickDown}>
-        <i className="text-secondary group-hover:text-zinc-400">
+      <button
+        className="bg-background-paperChanel group rounded-l-sm border-y border-l border-gray-500/20 px-1.5 hover:bg-white/[0.08]"
+        onClick={handleClickDown}
+      >
+        <i className="text-primary group-hover:text-secondary">
           <AArrowDown size={14} />
         </i>
       </button>
 
-      <div className="border border-border/10 bg-background">
+      <div className="bg-background-neutral border border-gray-500/20">
         <span className="px-1.5 text-xs">{fontSize}</span>
       </div>
 
-      <button className="group rounded-r-sm border-y border-r border-border bg-background px-1.5 hover:bg-accent" onClick={handleClickUp}>
-        <i className="text-secondary group-hover:text-zinc-400">
+      <button
+        className="bg-background-paperChanel group rounded-r-sm border-y border-r border-gray-500/20 px-1.5 hover:bg-white/[0.08]"
+        onClick={handleClickUp}
+      >
+        <i className="text-primary group-hover:text-secondary">
           <AArrowUp size={14} />
         </i>
       </button>

@@ -21,7 +21,7 @@ export function ThemeEditor() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel className="text-zinc-400">Editor theme</SelectLabel>
+          <SelectLabel className="text-muted">Editor theme</SelectLabel>
           {myThemes.map((themeItem) => (
             <SelectItem key={themeItem.tag} value={themeItem.tag}>
               {themeItem.name}

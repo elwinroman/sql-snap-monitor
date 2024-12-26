@@ -9,7 +9,7 @@ export function SearchTrigger({ reset, updateOpen }) {
 
   return (
     <button
-      className="flex h-9 place-content-center items-center gap-2 rounded-sm px-3 transition-colors hover:bg-background"
+      className="hover:bg-actionHover flex h-9 place-content-center items-center gap-2 rounded-sm px-3 transition-colors"
       onClick={handleOpenDialog}
     >
       <SearchIcon size={16} />

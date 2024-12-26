@@ -13,14 +13,10 @@ export function FavoriteSearch() {
     <Card title={title}>
       {favorites.map((data) => (
         <ItemList key={data.id} data={data}>
-          <i className="text-amber group-hover:text-primary">
-            <Star size={13} />
-          </i>
+          <Star size={14} className="mt-0.5 text-primary" />
           <div className="flex w-full items-center justify-between gap-1 transition-colors">
-            <span className="overflow-hidden text-secondary group-hover:text-primary">{data.cNombreObjeto}</span>
+            <span className="overflow-hidden text-primary">{data.cNombreObjeto}</span>
             <div className="flex items-center gap-2">
-              <span className="overflow-hidden rounded-sm bg-background px-1 py-0.5 text-xs text-muted">{data.cSchema}</span>
-
               <DeleteItem action={deleteFavorite} id={data.id} content="Eliminar" />
             </div>
           </div>

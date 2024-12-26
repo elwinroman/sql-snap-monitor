@@ -11,7 +11,7 @@ export function Options() {
   return (
     <div className="transition duration-200">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 sm:justify-end sm:gap-x-5 sm:gap-y-4">
-        <div className="flex flex-nowrap items-center gap-1">
+        <div className="flex flex-nowrap items-center gap-2">
           <ThemeEditor />
           <FontSize />
           <PermissionRol />

@@ -15,12 +15,12 @@ export function ObjectInfoPanel() {
       ) : (
         <div className="flex gap-2">
           <div className="flex basis-1/2 flex-col gap-2">
-            <span className="text-sm font-semibold text-zinc-400">Objeto de alineación</span>
+            <span className="text-sm font-semibold text-secondary">Objeto de alineación</span>
             <ObjectDetails object={aligmentObject} />
           </div>
 
           <div className="flex basis-1/2 flex-col gap-2">
-            <span className="text-sm font-semibold text-zinc-400">Objeto local</span>
+            <span className="text-sm font-semibold text-secondary">Objeto local</span>
             <ObjectDetails object={object} />
           </div>
         </div>

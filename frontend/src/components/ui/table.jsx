@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 
 const Table = forwardRef(({ className, ...props }, ref) => (
   <div className="relative w-full overflow-auto">
-    <table ref={ref} className={cn('w-full table-auto caption-bottom text-sm', className)} {...props} />
+    <table ref={ref} className={cn('w-full table-auto caption-bottom border-0 text-sm', className)} {...props} />
   </div>
 ))
 Table.displayName = 'Table'
@@ -27,7 +27,7 @@ TableFooter.displayName = 'TableFooter'
 const TableRow = forwardRef(({ className, ...props }, ref) => (
   <tr
     ref={ref}
-    className={cn('border-b border-zinc-700 transition-colors hover:bg-border data-[state=selected]:bg-muted', className)}
+    className={cn('hover:bg-actionHover data-[state=selected]:bg-actionHover border-b border-border transition-colors', className)}
     {...props}
   />
 ))
@@ -36,14 +36,17 @@ TableRow.displayName = 'TableRow'
 const TableHead = forwardRef(({ className, ...props }, ref) => (
   <th
     ref={ref}
-    className={cn('h-12 bg-border pl-4 text-left align-middle font-medium text-primary [&:has([role=checkbox])]:pr-0', className)}
+    className={cn(
+      'bg-background-neutral h-12 pl-4 text-left align-middle font-semibold text-secondary [&:has([role=checkbox])]:pr-0',
+      className,
+    )}
     {...props}
   />
 ))
 TableHead.displayName = 'TableHead'
 
 const TableCell = forwardRef(({ className, ...props }, ref) => (
-  <td ref={ref} className={cn('py-4 pl-4 align-middle [&:has([role=checkbox])]:pr-0', className)} {...props} />
+  <td ref={ref} className={cn('border-0 py-4 pl-4 align-middle [&:has([role=checkbox])]:pr-0', className)} {...props} />
 ))
 TableCell.displayName = 'TableCell'
 

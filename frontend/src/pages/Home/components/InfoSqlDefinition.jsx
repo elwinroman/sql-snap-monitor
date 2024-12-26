@@ -1,12 +1,10 @@
-import './info.css'
-
 import { SYS_OBJECT_TYPES } from '@/constants'
 import { CloudCodeIcon, CloudIdsIcon, DatabaseMigrationIcon, DataLossIcon } from '@/icons'
 
-export function InfoSqlDefinition() {
+export function InfoSqlDefinition({ className }) {
   return (
     <section>
-      <div className="grid grid-cols-12 grid-rows-2 gap-4">
+      <div className={`${className} grid grid-cols-12 grid-rows-2 gap-4`}>
         <Card className="col-span-12 row-span-1 sm:col-span-6 md:col-span-4 lg:col-span-3">
           <CardTitle>Definiciones SQL</CardTitle>
           <CardDescription>
@@ -33,10 +31,10 @@ export function InfoSqlDefinition() {
           <div className="grid w-full grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-x-4 gap-y-2">
             {SYS_OBJECT_TYPES.map((type) => (
               <div key={type.type} className="flex items-center gap-2">
-                <span className="grid min-h-7 min-w-7 place-content-center rounded-sm border border-zinc-800 bg-zinc-950 text-sm font-semibold">
+                <span className="grid min-h-7 min-w-7 place-content-center rounded-sm bg-slate-300 text-sm font-semibold dark:bg-zinc-950">
                   {type.type}
                 </span>
-                <span className="text-[0.84rem] text-zinc-300">{type.description}</span>
+                <span className="text-[0.84rem] text-secondary">{type.description}</span>
               </div>
             ))}
           </div>
@@ -80,16 +78,14 @@ export function InfoSqlDefinition() {
 
 function Card({ children, className }) {
   return (
-    <div className={`card flex flex-col gap-4 rounded-sm border border-zinc-700 bg-[#181a1d] px-6 py-6 shadow-lg ${className}`}>
-      {children}
-    </div>
+    <div className={`shadow-custom-card bg-background-paperChanel flex flex-col gap-4 rounded-sm px-6 py-6 ${className}`}>{children}</div>
   )
 }
 
 function CardTitle({ children }) {
-  return <span className="text-lg font-semibold text-slate-200">{children}</span>
+  return <span className="text-lg font-semibold text-primary">{children}</span>
 }
 
 function CardDescription({ children, className }) {
-  return <p className={`text-sm text-zinc-300 ${className}`}>{children}</p>
+  return <p className={`text-sm text-secondary ${className}`}>{children}</p>
 }

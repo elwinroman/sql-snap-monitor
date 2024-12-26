@@ -36,10 +36,10 @@ export function PermissionRol() {
             </button>
           ) : (
             <button
-              className={`group rounded-sm px-1.5 py-1.5 hover:bg-popover ${hasRoles ? 'bg-popover' : 'bg-transparent'}`}
+              className={`group rounded-sm px-1.5 py-1.5 hover:bg-white/[0.08] ${hasRoles ? 'bg-white/[0.16]' : 'bg-transparent'}`}
               onClick={handleClick}
             >
-              <i className="text-white group-hover:text-zinc-400">
+              <i className="text-primary group-hover:text-secondary">
                 <ShieldEllipsis size={14} />
               </i>
             </button>

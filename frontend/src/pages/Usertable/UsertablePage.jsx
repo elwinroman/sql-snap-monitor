@@ -33,8 +33,8 @@ export function UsertablePage() {
     <>
       {object.id && <ObjectDetails object={object} />}
 
-      <div className="flex flex-col gap-2 rounded-md border border-border bg-card px-6 py-6">
-        <h4 className="flex items-center gap-2 pb-2 text-base font-medium text-zinc-300">
+      <div className="shadow-custom-card flex flex-col gap-2 rounded-md bg-card px-6 py-6">
+        <h4 className="flex items-center gap-2 pb-2 text-base font-medium">
           <span className="text-primary">{headerObjectName}</span>
         </h4>
 
