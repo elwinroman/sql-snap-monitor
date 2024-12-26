@@ -6,7 +6,7 @@ import { useSearch } from '../../../hooks/useSearch'
 export function ItemList({ children, data }) {
   const fetchSQLDefinition = useSQLDefinitionStore((state) => state.fetchSQLDefinition)
   const fetchUsertable = useUserTableStore((state) => state.fetchUserTable)
-  const { updateOpen, addRecents, type } = useSearch()
+  const { updateOpen, addRecents, type, favorites } = useSearch()
 
   // cada vez que hace click en el item, se recupera el objeto (sqldefinition o usertable)
   const getObject = (e) => {
@@ -14,6 +14,12 @@ export function ItemList({ children, data }) {
 
     if (type.name === TYPE_ACTION.sqldefinition.name) fetchSQLDefinition({ id: e.currentTarget.dataset.id })
     if (type.name === TYPE_ACTION.usertable.name) fetchUsertable({ id: e.currentTarget.dataset.id })
+
+    // comprobar que el objeto buscado tenga lFavorito (cuando se busca desde las SUGERENCIAS), si no lo tiene actualiza su valor desde Favorites
+    if (data.lFavorito == null) {
+      const index = favorites.findIndex((element) => element.objectId === data.objectId)
+      data.lFavorito = index !== -1
+    }
 
     // agrega al estado el item clickeado y lo registra en la base de datos
     addRecents(data, type.id)
