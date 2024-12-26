@@ -1,6 +1,6 @@
-# Omnissiah
+# Sql Snap Monitor
 
-Omnissiah es una aplicación web para gestionar tareas de Quality Assurance, permite realizar consultas de definiciones SQL a una base de datos de pruebas y compararlos con la base de datos de pre-producción, permite obtener el diccionario de las tablas de usuario, etc. Esta aplicación está construida con Node.js y React.
+Es una aplicación web para gestionar tareas de Quality Assurance, permite realizar consultas de definiciones SQL a una base de datos de pruebas y compararlos con la base de datos de pre-producción, permite obtener el diccionario de las tablas de usuario, etc. Esta aplicación está construida con Node.js y React.
 
 ## Características
 - Login a una base de datos con tu usuario SQL (con soporte solo a SQL SERVER).
@@ -18,7 +18,7 @@ CLIENT_PORT: Este es el puerto en el que se ejecuta la aplicación del cliente (
 DOMAIN: Esta variable especifica el dominio o la dirección IP del servidor donde se despliega la aplicación. Puede usarse para acceder a los servicios del backend y frontend desde otras máquinas en la misma red local
 ```
 
-2. Configura las variables de entorno del servicio backend **api**. Consulta el `README.md` del backend para configurar sus variables de entorno. Ten en cuenta que para levantar la dockerización del proyecto, no es necesario configurar las variables de entorno **PORT** y **ALLOWED_ORIGIN**
+2. Configura las variables de entorno dentro de `docker-compose.yml` del servicio backend **api**. Consulta el `README.md` del backend para configurar sus variables de entorno. Ten en cuenta que para levantar la dockerización del proyecto, no es necesario configurar las variables de entorno **PORT** y **ALLOWED_ORIGIN**
 
 ## Como levantar
 Ejecuta el siguiente comando para levantar el servicio
@@ -54,3 +54,5 @@ cd frontend
 dos2unix env.sh
 ```
 Este comando convierte el archivo a terminaciones de línea LF.
+
+**Actualización 26/12/2024 (Fixed):** Se ha solucionado el error usando `dos2unix` en el Dockerfile (frontend)
