@@ -1,4 +1,5 @@
 export * from './Aligment/AligmentPage'
+export * from './Error-500'
 export * from './Home/HomePage'
 export * from './Login/LoginPage'
 export * from './SQLDefinition/SQLDefinitionPage'

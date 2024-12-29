@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
+import { Error500 } from '@/pages'
 import { useAuthStore } from '@/stores'
 
 import { SessionExpiredAlert } from './SessionExpiredAlert'
@@ -10,10 +11,13 @@ export function ProtectedLayout({ children }) {
   const isSessionExpired = useAuthStore((state) => state.isSessionExpired)
   const errorViewDefinition = useAuthStore((state) => state.errorViewDefinition)
   const checkSession = useAuthStore((state) => state.checkSession)
+  const errorApiConection = useAuthStore((state) => state.errorApiConection)
 
   if (!isAuthenticated) return <Navigate to="/aligment" />
   checkSession()
-  // console.log(isSessionExpired)
+
+  if (errorApiConection) return <Error500 />
+
   return (
     <>
       {isSessionExpired && <SessionExpiredAlert></SessionExpiredAlert>}

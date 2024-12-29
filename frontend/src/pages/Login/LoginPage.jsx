@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Loader } from '@/components/loader/Loader'
+import { Button } from '@/components/ui/button'
 import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
 import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
@@ -10,6 +11,7 @@ import { Label } from './components/Label'
 import { PasswordInput } from './components/PasswordInput'
 
 export function LoginPage() {
+  const [errorAPI, setErrorAPI] = useState(false)
   const loginUser = useAuthStore((state) => state.loginUser)
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const errorAuth = useAuthStore((state) => state.errorAuth)
@@ -33,6 +35,7 @@ export function LoginPage() {
       setLoading(true)
       await loginUser({ credentials })
     } catch (err) {
+      setErrorAPI(true)
       throw new Error(err)
     } finally {
       await useSQLDefinitionStore.persist.rehydrate()
@@ -66,15 +69,6 @@ export function LoginPage() {
         <header className="flex flex-col items-center gap-3">
           <h1 className="text-xl font-bold text-primary">Inicia sesión con tu cuenta</h1>
           <p className="text-sm text-secondary">Usa tus credenciales SQL de tu base de datos de pruebas</p>
-
-          {errorAuth && (
-            <div className="flex gap-2 rounded-md border border-[#f53e7b59] bg-[#592e41] px-4 py-2">
-              <i className="pt-0.5">
-                <AlertCircleIcon width={22} height={22} />
-              </i>
-              <p className="text-sm text-white">{errorAuth.message}</p>
-            </div>
-          )}
         </header>
 
         <form onSubmit={onSubmitHandler} className="flex flex-col gap-8">
@@ -101,13 +95,27 @@ export function LoginPage() {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className={`w-full select-none rounded-md border border-transparent px-3 py-2 font-medium text-white hover:bg-emerald-400 ${loading ? 'bg-[#00e19b] opacity-60' : 'bg-emerald-500'}`}
-            >
+            <Button type="submit" className="w-full" variant={loading ? 'disabled' : 'default'}>
               Iniciar sesión
-            </button>
+            </Button>
           </div>
+
+          {errorAuth && (
+            <div className="flex items-center gap-2 rounded-md border border-[#f53e7b59] bg-[#592e41] px-4 py-2">
+              <i className="pt-0.5">
+                <AlertCircleIcon width={22} height={22} />
+              </i>
+              <p className="text-sm text-white">{errorAuth.message}</p>
+            </div>
+          )}
+          {errorAPI && (
+            <div className="flex items-center gap-2 rounded-md border border-[#f53e7b59] bg-[#592e41] px-4 py-2">
+              <i className="pt-0.5">
+                <AlertCircleIcon width={22} height={22} />
+              </i>
+              <p className="text-sm text-white">Internar Server Error 500</p>
+            </div>
+          )}
         </form>
       </div>
     </section>

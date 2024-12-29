@@ -29,30 +29,35 @@ export const useAligmentStore = create(
       // Obtiene el objeto de definición
       getObject: async () => {
         const isAuthenticated = useAuthStore.getState().isAuthenticated
+        const updateErrorApiConection = useAuthStore.getState().updateErrorApiConection
         const name = get().search
         const sanitizedName = name.trim()
         set({ loading: true })
 
-        // por ahora, el esquema id de la consulta es 'dbo' por defecto
-        const res = await getSQLDefinitionAligmentObject({ name: sanitizedName, schemaName: 'dbo', useCredentials: isAuthenticated })
+        try {
+          // por ahora, el esquema id de la consulta es 'dbo' por defecto
+          const res = await getSQLDefinitionAligmentObject({ name: sanitizedName, schemaName: 'dbo', useCredentials: isAuthenticated })
 
-        if (res.status === 'error') {
+          if (res.status === 'error') {
+            set({ loading: false })
+            set({ object: { ...AligmentObjectInitialState } })
+            set({
+              error: {
+                statusCode: res.statusCode,
+                message: res.message,
+                originalError: res.originalError,
+              },
+            })
+
+            return
+          }
+          set({ object: { ...res.data } })
+          set({ error: null })
           set({ loading: false })
-          set({ object: { ...AligmentObjectInitialState } })
-          set({
-            error: {
-              statusCode: res.statusCode,
-              message: res.message,
-              originalError: res.originalError,
-            },
-          })
-
-          return
+        } catch (err) {
+          updateErrorApiConection(true)
+          set({ loading: false })
         }
-
-        set({ object: { ...res.data } })
-        set({ loading: false })
-        set({ error: null })
       },
 
       reset: () => {
@@ -66,7 +71,9 @@ export const useAligmentStore = create(
 
       // excluye de la persistencia, algunos estados del store
       partialize: (state) =>
-        Object.fromEntries(Object.entries(state).filter(([key]) => !['error', 'loading', 'validate', 'validationError'].includes(key))),
+        Object.fromEntries(
+          Object.entries(state).filter(([key]) => !['error', 'loading', 'validate', 'validationError', 'errorConectionApi'].includes(key)),
+        ),
     },
   ),
 )

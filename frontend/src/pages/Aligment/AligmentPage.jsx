@@ -1,8 +1,11 @@
+import { Error500 } from '@/pages'
+import { useAuthStore } from '@/stores'
+
 import { EditorCodeAligment, HeaderEditor, MenuSidebar } from './components'
 
 export function AligmentPage() {
-  // const widthPage = '200px'
-  // const handleChange = (value) => updateTheme(value)
+  const errorApiConection = useAuthStore((state) => state.errorApiConection)
+  if (errorApiConection) return <Error500 />
 
   return (
     <section className="flex h-screen w-full flex-row">

@@ -105,7 +105,7 @@ export async function getSQLDefinitionAligmentObject({ name, schemaName, useCred
     const res = await response.json()
 
     return res
-  } catch (error) {
-    return { error }
+  } catch (err) {
+    if (err instanceof TypeError) console.error(err)
   }
 }

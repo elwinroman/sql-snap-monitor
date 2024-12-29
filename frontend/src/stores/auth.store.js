@@ -19,6 +19,10 @@ export const useAuthStore = create(
         set({ errorViewDefinition: state })
       },
 
+      updateErrorApiConection: (state) => {
+        set({ errorApiConection: state })
+      },
+
       /**
        * Login user
        * @param {Object} credentials - Credenciales sql del usuario (server, database, user, password)
@@ -57,7 +61,10 @@ export const useAuthStore = create(
         try {
           const res = await checkSession()
           // Token expirado
-          if (res.status === 'error') set({ isSessionExpired: true })
+          if (res.status === 'error') {
+            set({ isSessionExpired: true })
+            return
+          }
 
           // si el usuario no tiene permisos de VIEWDEFINITION
           if (!res.data.viewdefinition_permission) set({ errorViewDefinition: true })
@@ -83,7 +90,7 @@ export const useAuthStore = create(
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
 
       // excluye de la persistencia, algunos estados del store
-      partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['errorAuth'].includes(key))),
+      partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['errorAuth', 'errorApiConection'].includes(key))),
     },
   ),
 )
