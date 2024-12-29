@@ -27,7 +27,7 @@ TableFooter.displayName = 'TableFooter'
 const TableRow = forwardRef(({ className, ...props }, ref) => (
   <tr
     ref={ref}
-    className={cn('hover:bg-actionHover data-[state=selected]:bg-actionHover border-b border-border transition-colors', className)}
+    className={cn('hover:bg-action-hover data-[state=selected]:bg-action-hover border-b border-border transition-colors', className)}
     {...props}
   />
 ))
@@ -37,7 +37,7 @@ const TableHead = forwardRef(({ className, ...props }, ref) => (
   <th
     ref={ref}
     className={cn(
-      'bg-background-neutral h-12 pl-4 text-left align-middle font-semibold text-secondary [&:has([role=checkbox])]:pr-0',
+      'h-12 bg-background-neutral pl-4 text-left align-middle font-semibold text-secondary [&:has([role=checkbox])]:pr-0',
       className,
     )}
     {...props}

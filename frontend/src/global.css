@@ -38,6 +38,7 @@
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
+    --disabled: rgba(145 158 171 / 0.8);
 
     /* --border: #e9ebec; */
     --border: rgba(145,158,171,0.12);
@@ -57,9 +58,40 @@
     --custom-shadow-dialog: -40px 40px 80px -8px rgba(0 0 0 / 0.24);
 
     --action-hover: rgba(145 158 171 / 0.13);
+    --action-disabled: rgba(145 158 171 / 0.24); 
 
     /* Tamaños */
     --navbar-height: 80px;
+
+    /* Paleta de colores */
+    --palette-primary-lighter: #C8FAD6;
+    --palette-primary-light: #5BE49B;
+    --palette-primary-main: #00A76F;
+    --palette-primary-dark: #007867;
+    --palette-primary-darker: #004B50;
+
+    --palette-secondary-lighter: #EFD6FF;
+    --palette-secondary-light: #C684FF;
+    --palette-secondary-main: #8E33FF;
+    --palette-secondary-dark: #5119B7;
+    --palette-secondary-darker: #27097A;
+
+    --palette-info-lighter: #CAFDF5;
+    --palette-info-light: #61F3F3;
+    --palette-info-main: #00B8D9;
+    --palette-info-dark: #006C9C;
+    --palette-info-darker: #003768;
+    
+    --palette-grey-50: #FCFDFD;
+    --palette-grey-100: #F9FAFB;
+    --palette-grey-200: #F4F6F8;
+    --palette-grey-300: #DFE3E8;
+    --palette-grey-400: #C4CDD5;
+    --palette-grey-500: #919EAB;
+    --palette-grey-600: #637381;
+    --palette-grey-700: #454F5B;
+    --palette-grey-800: #1C252E;
+    --palette-grey-900: #141A21;
   }
 
   .dark {
@@ -75,7 +107,7 @@
     --popover: rgb(10, 10, 10);
     --popover-foreground: 210 40% 98%;
     --primary: #FFFFFF; /* text-primary */
-    --primary-foreground: rgb(35, 34, 38);
+    --primary-foreground: #232226;
     --secondary: #919EAB; /* text-secondary */
     --secondary-foreground: 210 40% 98%;
     --muted: #637381; /* text-disabled */
@@ -85,6 +117,7 @@
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+    --disabled: rgba(145 158 171 / 0.8);
     /* --border: rgba(255,255,255,6%); */
     --border: rgba(145,158,171,0.08); /* border-navbar */
     --input: 220 5% 25%;
@@ -101,10 +134,9 @@
     --custom-shadow-dialog: -40px 40px 80px -8px rgba(0 0 0 / 0.24);
 
     --action-hover: rgba(145 158 171 / 0.08);
+    --action-disabled: rgba(145 158 171 / 0.24); 
 
     --palette-divider: rgba(145 158 171 / 0.2);
-    --palete-grey-700: #454F5B;
-    --palete-grey-800: #1C252E;
   }
 }
 

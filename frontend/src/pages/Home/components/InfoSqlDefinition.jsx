@@ -78,7 +78,7 @@ export function InfoSqlDefinition({ className }) {
 
 function Card({ children, className }) {
   return (
-    <div className={`shadow-custom-card bg-background-paperChanel flex flex-col gap-4 rounded-sm px-6 py-6 ${className}`}>{children}</div>
+    <div className={`bg-background-paperchanel flex flex-col gap-4 rounded-sm px-6 py-6 shadow-custom-card ${className}`}>{children}</div>
   )
 }
 

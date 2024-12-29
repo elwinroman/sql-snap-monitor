@@ -18,7 +18,7 @@ export function MenuSidebar({ className }) {
     <nav className={`${className} mix-colored-background overflow-y-auto overflow-x-hidden shadow-xl`}>
       <header className="flex h-[53px] min-h-[53px] items-center border-b border-border px-6">
         {isAuthenticated ? (
-          <button className="hover:bg-actionHover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={backNavigation}>
+          <button className="hover:bg-action-hover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={backNavigation}>
             <ArrowBigLeft size={18} />
 
             <span className="text-sm">Regresar</span>
@@ -65,7 +65,7 @@ export function MenuSidebar({ className }) {
 
       <footer className="flex h-20 min-h-14 items-center px-6">
         {!isAuthenticated ? (
-          <button className="hover:bg-actionHover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={redirectLogin}>
+          <button className="hover:bg-action-hover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={redirectLogin}>
             <User size={18} />
             <span className="text-sm">Iniciar sesión</span>
           </button>

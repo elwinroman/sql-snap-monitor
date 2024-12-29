@@ -24,7 +24,7 @@ module.exports = {
           DEFAULT: 'var(--background)',
           paper: 'var(--background-paper)',
           alternate: 'var(--background-alternate)',
-          paperChanel: 'var(--background-paper-channel)',
+          paperchanel: 'var(--background-paper-channel)',
           neutral: 'var(--background-neutral)',
         },
         foreground: 'hsl(var(--foreground))',
@@ -49,6 +49,7 @@ module.exports = {
           DEFAULT: 'var(--accent)',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        disabled: 'var(--disabled)',
         popover: {
           DEFAULT: 'var(--popover)',
           foreground: 'hsl(var(--popover-foreground))',
@@ -57,10 +58,25 @@ module.exports = {
           DEFAULT: 'var(--card)',
           strong: 'var(--card-strong)',
         },
+        action: {
+          hover: 'var(--action-hover)',
+          disabled: 'var(--action-disabled)',
+        },
         palette: {
           diviver: 'var(--palette-divider)',
+          grey: {
+            50: 'var(--palette-grey-50)',
+            100: 'var(--palette-grey-100)',
+            200: 'var(--palette-grey-200)',
+            300: 'var(--palette-grey-300)',
+            400: 'var(--palette-grey-400)',
+            500: 'var(--palette-grey-500)',
+            600: 'var(--palette-grey-600)',
+            700: 'var(--palette-grey-700)',
+            800: 'var(--palette-grey-800)',
+            900: 'var(--palette-grey-900)',
+          },
         },
-        actionHover: 'var(--action-hover)',
       },
       borderRadius: {
         lg: 'var(--radius)',
