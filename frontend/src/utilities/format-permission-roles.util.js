@@ -10,7 +10,7 @@
  *    GO
  */
 export function formatPermissionRoles(permission, schema, objectName) {
-  if (!permission.length) return ''
+  if (permission == null || !permission.length) return ''
 
   let cad = ''
   const openGo = 'GO\n'
