@@ -1,3 +1,5 @@
+import { API_URL } from '@/enviroment/enviroment'
+
 let controller
 
 /**
@@ -20,7 +22,7 @@ export async function getSearchSuggestions({ search, type }) {
     controller = new AbortController()
     const signal = controller.signal
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects${queryParams}`, {
+    const response = await fetch(`${API_URL}/objects${queryParams}`, {
       credentials: 'include',
       signal,
     })

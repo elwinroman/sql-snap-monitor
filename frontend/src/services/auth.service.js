@@ -1,3 +1,5 @@
+import { API_URL } from '@/enviroment/enviroment'
+
 /**
  * Función para autenticar a un usuario
  *
@@ -7,7 +9,7 @@
  */
 export async function login({ credentials }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -30,7 +32,7 @@ export async function login({ credentials }) {
  */
 export async function logout() {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
+    const response = await fetch(`${API_URL}/auth/logout`, {
       method: 'POST',
       credentials: 'include',
     })
@@ -49,7 +51,7 @@ export async function logout() {
  */
 export async function checkSession() {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/health`, {
+    const response = await fetch(`${API_URL}/auth/health`, {
       credentials: 'include',
     })
 

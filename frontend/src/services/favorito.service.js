@@ -1,3 +1,5 @@
+import { API_URL } from '@/enviroment/enviroment'
+
 /**
  * Obtiene una lista de las búsquedas favoritas
  *
@@ -11,12 +13,9 @@ export async function obtenerFavoritos({ idTipoAccion, start = null, limit = nul
   const limitParam = limit ? `&limit=${limit}` : ''
 
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/objects/favorito?idTipoAccion=${idTipoAccion}${startParam}${limitParam}`,
-      {
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${API_URL}/objects/favorito?idTipoAccion=${idTipoAccion}${startParam}${limitParam}`, {
+      credentials: 'include',
+    })
     const res = await response.json()
 
     return res
@@ -35,7 +34,7 @@ export async function obtenerFavoritos({ idTipoAccion, start = null, limit = nul
  */
 export async function eliminarFavorito({ id }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/favorito/${id}`, {
+    const response = await fetch(`${API_URL}/objects/favorito/${id}`, {
       method: 'PATCH',
       credentials: 'include',
     })
@@ -59,7 +58,7 @@ export async function eliminarFavorito({ id }) {
  */
 export async function registrarFavorito({ idTipoAccion, cSchema, cNombreObjeto }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/favorito`, {
+    const response = await fetch(`${API_URL}/objects/favorito`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

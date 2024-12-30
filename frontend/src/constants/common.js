@@ -16,3 +16,5 @@ export const TYPE_ACTION = {
     name: 'usertable',
   },
 }
+
+export const APP_NAME = 'SQL Snap Monitor'

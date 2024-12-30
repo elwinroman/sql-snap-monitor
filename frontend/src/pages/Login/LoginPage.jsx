@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 import { Loader } from '@/components/loader/Loader'
 import { Button } from '@/components/ui/button'
+import { APP_NAME } from '@/constants'
 import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
 import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
 
@@ -55,7 +56,7 @@ export function LoginPage() {
 
           <img className="aspect-[4/3]" alt="Dashboard illustration" src="illustrations/illustration-dashboard.webp"></img>
 
-          <h2 className="text-muted">SQL Snap Monitor</h2>
+          <h2 className="text-muted">{APP_NAME}</h2>
 
           <img src="microsoft-sql-server-logo.svg" width={36} height={36} alt="logo de microsoft sql server" className="max-w-none" />
         </div>

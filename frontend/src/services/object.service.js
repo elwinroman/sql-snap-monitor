@@ -1,3 +1,5 @@
+import { API_URL } from '@/enviroment/enviroment'
+
 /**
  * Busca un objeto que tenga una definición SQL por su nombre
  *
@@ -8,7 +10,7 @@
  */
 export async function findSQLDefinitionObject({ name }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition?search=${name}`, {
+    const response = await fetch(`${API_URL}/objects/sqldefinition?search=${name}`, {
       credentials: 'include',
     })
     const res = await response.json()
@@ -30,7 +32,7 @@ export async function findSQLDefinitionObject({ name }) {
  */
 export async function getSQLDefinitionObject({ id }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition/${id}`, {
+    const response = await fetch(`${API_URL}/objects/sqldefinition/${id}`, {
       credentials: 'include',
     })
     const res = await response.json()
@@ -51,7 +53,7 @@ export async function getSQLDefinitionObject({ id }) {
  */
 export async function findUserTable({ name }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/usertable?search=${name}`, {
+    const response = await fetch(`${API_URL}/objects/usertable?search=${name}`, {
       credentials: 'include',
     })
     const res = await response.json()
@@ -72,7 +74,7 @@ export async function findUserTable({ name }) {
  */
 export async function getUserTable({ id }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/usertable/${id}`, {
+    const response = await fetch(`${API_URL}/objects/usertable/${id}`, {
       credentials: 'include',
     })
     const res = await response.json()
@@ -99,7 +101,7 @@ export async function getSQLDefinitionAligmentObject({ name, schemaName, useCred
 
   try {
     // para los logs de búsqueda useCredentials = true
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/sqldefinition-aligment${queryParams}`, {
+    const response = await fetch(`${API_URL}/objects/sqldefinition-aligment${queryParams}`, {
       credentials: useCredentials ? 'include' : 'omit',
     })
     const res = await response.json()

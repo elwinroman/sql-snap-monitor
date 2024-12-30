@@ -1,3 +1,5 @@
+import { APP_NAME } from '@/constants'
+
 import { InfoSqlDefinition } from './components/InfoSqlDefinition'
 
 export function HomePage() {
@@ -9,7 +11,7 @@ export function HomePage() {
           <div className="flex flex-col items-center gap-10 text-center">
             <div className="flex flex-col gap-6">
               <h1 className="max-w-3xl font-['Barlow'] text-2xl font-bold tracking-normal sm:text-4xl md:text-5xl lg:text-6xl/none">
-                Optimiza tu gestión con <span className="gradient-text">SQL Snap Monitor</span>
+                Optimiza tu gestión con <span className="gradient-text">{APP_NAME}</span>
               </h1>
               <p className="mx-auto max-w-[700px] text-balance text-[20px]">
                 Herramienta de gestión de metadatos SQL, definiciones SQL, información de tablas de usuario, y más.

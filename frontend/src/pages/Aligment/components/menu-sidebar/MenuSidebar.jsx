@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { LoginUsername } from '@/components/navbar/components'
 import { Checkbox } from '@/components/ui/checkbox'
+import { APP_NAME } from '@/constants'
 import { useAuthStore } from '@/stores'
 
 import { ButtonGroup, SearchAligment, SelectAction, ViewModeRadio } from './components'
@@ -24,7 +25,7 @@ export function MenuSidebar({ className }) {
             <span className="text-sm">Regresar</span>
           </button>
         ) : (
-          <span className="font-bold text-primary">Quality Tools</span>
+          <span className="font-bold text-primary">{APP_NAME}</span>
         )}
       </header>
 

@@ -1,3 +1,5 @@
+import { API_URL } from '@/enviroment/enviroment'
+
 /**
  * Obtiene una lista de búsquedas recientes
  *
@@ -11,12 +13,9 @@ export async function obtenerBusquedasRecientes({ idTipoAccion, start = null, li
   const limitParam = limit ? `&limit=${limit}` : ''
 
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/objects/busqueda-reciente?idTipoAccion=${idTipoAccion}${startParam}${limitParam}`,
-      {
-        credentials: 'include',
-      },
-    )
+    const response = await fetch(`${API_URL}/objects/busqueda-reciente?idTipoAccion=${idTipoAccion}${startParam}${limitParam}`, {
+      credentials: 'include',
+    })
     const res = await response.json()
 
     return res
@@ -35,7 +34,7 @@ export async function obtenerBusquedasRecientes({ idTipoAccion, start = null, li
  */
 export async function eliminarBusquedaReciente({ id }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/busqueda-reciente/${id}`, {
+    const response = await fetch(`${API_URL}/objects/busqueda-reciente/${id}`, {
       method: 'PATCH',
       credentials: 'include',
     })
@@ -59,7 +58,7 @@ export async function eliminarBusquedaReciente({ id }) {
  */
 export async function registrarBusquedaReciente({ idTipoAccion, cSchema, cNombreObjeto }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/busqueda-reciente`, {
+    const response = await fetch(`${API_URL}/objects/busqueda-reciente`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -80,7 +79,7 @@ export async function registrarBusquedaReciente({ idTipoAccion, cSchema, cNombre
  */
 export async function eliminarTodoBusquedasRecientes({ idTipoAccion }) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/objects/busqueda-reciente/all/tipo-accion/${idTipoAccion}`, {
+    const response = await fetch(`${API_URL}/objects/busqueda-reciente/all/tipo-accion/${idTipoAccion}`, {
       method: 'PATCH',
       credentials: 'include',
     })
