@@ -11,7 +11,7 @@ export function HeaderEditor() {
   return (
     <header className="flex flex-col justify-start gap-x-5 gap-y-2 bg-card px-4 py-3 sm:items-center lg:flex-row lg:justify-between">
       {loading ? (
-        <LoaderDot />
+        <LoaderDot className="px-3" />
       ) : (
         <div className="flex flex-[0_0_auto] flex-wrap items-center gap-2">
           <h4 className="flex items-center gap-2 text-sm font-semibold text-zinc-300">

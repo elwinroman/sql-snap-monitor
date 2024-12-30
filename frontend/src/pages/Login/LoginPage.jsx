@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { Loader } from '@/components/loader/Loader'
+import { LoaderSpinnerBot } from '@/components/loader/loader-spinner-bot/LoaderSpinnerBot'
 import { Button } from '@/components/ui/button'
 import { APP_NAME } from '@/constants'
 import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
@@ -63,9 +63,11 @@ export function LoginPage() {
       </div>
 
       {/* Formulario */}
-      <div className="m-auto flex w-[480px] flex-col gap-6 rounded-md px-10 py-10">
+      <div
+        className={`relative m-auto flex w-[480px] flex-col gap-6 rounded-md px-10 py-10 ${loading ? 'pointer-events-none opacity-70' : ''}`}
+      >
         {/* Loader */}
-        {loading && <Loader className="loader absolute left-1/2 top-1/2 opacity-80" />}
+        {loading && <LoaderSpinnerBot className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80" />}
 
         <header className="flex flex-col items-center gap-3">
           <h1 className="text-xl font-bold text-primary">Inicia sesión con tu cuenta</h1>

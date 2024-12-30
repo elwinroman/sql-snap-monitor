@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
-import { LoaderSlack } from '@/components/loader/LoaderSlack'
+import { LoaderSlack } from '@/components/loader/loader-slack/LoaderSlack'
 import { Toaster } from '@/components/ui/sonner'
 import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 
@@ -35,7 +35,7 @@ export function SQLDefinitionPage() {
     }
   }, [errorAligment, updateErrorAligment])
 
-  if (loading) return <LoaderSlack />
+  if (loading) return <LoaderSlack className="mt-24" />
 
   return (
     <>

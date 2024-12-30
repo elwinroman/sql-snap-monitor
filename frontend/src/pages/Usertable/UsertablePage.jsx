@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
-import { LoaderSlack } from '@/components/loader/LoaderSlack'
+import { LoaderSlack } from '@/components/loader/loader-slack/LoaderSlack'
 import { ObjectDetails } from '@/components/main/ObjectDetails'
 import { Toaster } from '@/components/ui/sonner'
 import { useUserTableStore } from '@/stores'

@@ -1,5 +1,9 @@
 import './loader-dot.css'
 
-export function LoaderDot() {
-  return <span className="loader-dot opacity-80"></span>
+export function LoaderDot({ className }, { props }) {
+  return (
+    <div className={`opacity-80 ${className}`} {...props}>
+      <span className="loader-dot"></span>
+    </div>
+  )
 }
