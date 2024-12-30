@@ -1,6 +1,6 @@
 import './styles/error-500.style.css'
 
-export function Error500Illustration() {
+export function Error500() {
   return (
     <svg className="illustration-error-500" focusable="false" aria-hidden="true" viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
       <defs>

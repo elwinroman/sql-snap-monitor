@@ -8,11 +8,7 @@ import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { ROUTES } from '@/constants'
 import Layout from '@/layouts/Layout'
 import LayoutLanding from '@/layouts/LayoutLanding'
-import { AligmentPage, HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
-
-function Error() {
-  return <div>Error 404</div>
-}
+import { AligmentPage, Error404, HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 
 function App() {
   useEffect(() => {
@@ -66,7 +62,7 @@ function App() {
         <Route path={ROUTES.ALIGMENT} element={<AligmentPage />} />
 
         {/* Error 404 */}
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<Error404 />} />
       </Routes>
     </>
   )
