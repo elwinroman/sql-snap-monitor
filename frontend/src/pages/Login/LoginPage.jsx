@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import { LoaderSpinnerBot } from '@/components/loader/loader-spinner-bot/LoaderSpinnerBot'
 import { Button } from '@/components/ui/button'
@@ -72,6 +72,12 @@ export function LoginPage() {
         <header className="flex flex-col items-center gap-3">
           <h1 className="text-xl font-bold text-primary">Inicia sesión con tu cuenta</h1>
           <p className="text-sm text-secondary">Usa tus credenciales SQL de tu base de datos de pruebas</p>
+          <p className="text-sm text-secondary flex gap-1">
+            <span>¿Solo buscas objetos de pre-producción?</span>
+            <Link to="/aligment" className="text-palette-primary-main hover:underline ">
+              Empieza aquí
+            </Link>
+          </p>
         </header>
 
         <form onSubmit={onSubmitHandler} className="flex flex-col gap-8">

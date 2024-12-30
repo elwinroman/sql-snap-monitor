@@ -76,6 +76,13 @@ module.exports = {
             800: 'var(--palette-grey-800)',
             900: 'var(--palette-grey-900)',
           },
+          primary: {
+            lighter: 'var(--palette-primary-lighter)',
+            light: 'var(--palette-primary-light)',
+            main: 'var(--palette-primary-main)',
+            dark: 'var(--palette-primary-dark)',
+            darker: 'var( --palette-primary-darker)',
+          },
         },
       },
       borderRadius: {
