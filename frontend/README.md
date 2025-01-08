@@ -79,6 +79,6 @@ El formateador de código utilizado en el proyecto es **Prettier**, que garantiz
 ### Plugins necesarios de VSCode
 1. [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint): Herramienta para identificar y reportar patrones en el código Typescript.
 2. [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss): Mejora la experiencia de desarrollo con Tailwind CSS al proporcionar autocompletado, sugerencias de clases y documentación en línea directamente en el editor. Ofrece una vista previa de las clases de utilidad, lo que facilita la creación de diseños responsivos y personalizados de manera más eficiente, reduciendo errores y mejorando la productividad.
-
+3. [Headwind](https://marketplace.visualstudio.com/items?itemName=heybourn.headwind): Headwind es un clasificador de clases CSS Tailwind para VSCode. Refuerza el orden coherente de las clases analizando el código y reimprimiendo las etiquetas de clase para que sigan un orden determinado. Se ejecuta al guardar, eliminará las clases duplicadas e incluso puede ordenar espacios de trabajo enteros.
 
 ## Ejecución de pruebas
