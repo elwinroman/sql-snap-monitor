@@ -7,7 +7,7 @@ export function Error500() {
   }
 
   return (
-    <section className="grid h-screen w-screen place-content-center">
+    <section className="grid w-screen h-screen place-content-center">
       <article className="w-full max-w-[448px] flex flex-col text-center items-center gap-16">
         <div className="flex flex-col items-center gap-4">
           <h3 className="font-['Barlow'] text-3xl">Internal server error 500</h3>

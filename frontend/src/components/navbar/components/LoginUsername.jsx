@@ -27,15 +27,15 @@ export function LoginUsername() {
 
   return (
     <li className="list-none">
-      <div className="grid h-9 place-content-center px-3">
+      <div className="grid px-3 h-9 place-content-center">
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div className="group flex items-center gap-2">
+            <div className="flex items-center gap-2 group">
               <Avatar>
                 <AvatarImage src="shadcn-profile-morty.jpg" />
                 <AvatarFallback>QA</AvatarFallback>
               </Avatar>
-              <span className="hidden select-none text-sm font-medium text-secondary transition-colors group-hover:text-primary md:block">
+              <span className="hidden text-sm font-medium transition-colors select-none text-secondary group-hover:text-primary md:block">
                 {username}
               </span>
             </div>

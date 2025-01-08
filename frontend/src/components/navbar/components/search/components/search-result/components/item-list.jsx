@@ -31,7 +31,7 @@ export function ItemList({ children, data }) {
     <li key={data.id}>
       <button
         data-id={data.objectId}
-        className="hover:bg-action-hover group pointer-events-auto flex w-full cursor-pointer items-center gap-2 border-b border-dashed border-b-gray-500/40 px-4 py-2 text-left align-text-top text-sm text-secondary"
+        className="flex items-center w-full gap-2 px-4 py-2 text-sm text-left align-text-top border-b border-dashed cursor-pointer pointer-events-auto hover:bg-action-hover group border-b-gray-500/40 text-secondary"
         onClick={getObject}
       >
         {children}

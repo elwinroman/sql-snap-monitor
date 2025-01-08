@@ -24,7 +24,7 @@ export const Columns = [
       }
 
       return (
-        <button className="flex w-full items-center gap-2" onClick={handleNumberSort}>
+        <button className="flex items-center w-full gap-2" onClick={handleNumberSort}>
           <span>Nro</span>
           {{
             asc: <ArrowDown01 size={14} className="text-secondary" />,
@@ -46,7 +46,7 @@ export const Columns = [
     },
     header: ({ column }) => {
       return (
-        <button className="flex w-full items-center gap-2" onClick={column.getToggleSortingHandler()}>
+        <button className="flex items-center w-full gap-2" onClick={column.getToggleSortingHandler()}>
           <span>Nombre columna</span>
           {{
             asc: <ArrowDownAZ size={14} className="text-secondary" />,
@@ -97,7 +97,7 @@ export const Columns = [
     size: 50,
     header: ({ column }) => {
       return (
-        <button className="flex w-full items-center gap-2" onClick={column.getToggleSortingHandler()}>
+        <button className="flex items-center w-full gap-2" onClick={column.getToggleSortingHandler()}>
           <span>Tipo</span>
           {{
             asc: <ArrowDownAZ size={14} className="text-primary" />,
@@ -109,7 +109,7 @@ export const Columns = [
     cell: ({ row }) => {
       const { tipo } = row.original
       return (
-        <span className="bg-background-neutral w-fit rounded-sm px-1 py-0.5 text-center text-xs font-semibold text-secondary">{tipo}</span>
+        <span className="w-fit rounded-sm bg-background-neutral px-1 py-0.5 text-center text-xs font-semibold text-secondary">{tipo}</span>
       )
     },
   },
@@ -167,7 +167,7 @@ export const Columns = [
           {descripcion.length > 1 && (
             <Popover>
               <PopoverTrigger>
-                <i className="grid place-items-center rounded-sm p-1.5 text-red-400 transition-colors hover:bg-background">
+                <i className="grid place-items-center rounded-sm p-1.5 text-red-400 transition-colors hover:bg-action-hover">
                   <MessageCircleWarning size={14} />
                 </i>
               </PopoverTrigger>

@@ -24,7 +24,7 @@ export function HomePage() {
               <div className="flex flex-col gap-1">
                 <h3 className="text-sm font-bold text-muted">SOPORTE PARA</h3>
               </div>
-              <div className="flex flex-col items-center justify-center gap-2 rounded border border-border px-4 py-4 text-primary dark:border-transparent">
+              <div className="flex flex-col items-center justify-center gap-2 px-4 py-4 border rounded border-border text-primary dark:border-transparent">
                 <img src="microsoft-sql-server-logo.svg" width={70} height={70} alt="logo de microsoft sql server" className="max-w-none" />
                 <span className="text-sm text-secondary">MSSQL Server</span>
               </div>
@@ -33,13 +33,13 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="w-full bg-background py-32">
-        <div className="mx-auto flex max-w-screen-xl flex-col gap-6">
+      <section className="w-full py-32 bg-background">
+        <div className="flex flex-col max-w-screen-xl gap-6 mx-auto">
           <h3 className="text-sm font-bold text-muted">HERRAMIENTAS</h3>
           <h2 className="font-['Barlow'] text-4xl font-bold tracking-normal">
             Definiciones <span>SQL</span>
           </h2>
-          <InfoSqlDefinition className="mx-auto max-w-screen-xl" />
+          <InfoSqlDefinition className="max-w-screen-xl mx-auto" />
         </div>
       </section>
 

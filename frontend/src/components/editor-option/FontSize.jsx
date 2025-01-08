@@ -17,7 +17,7 @@ export function FontSize() {
   }
 
   return (
-    <div className="flex h-7 flex-nowrap rounded-sm">
+    <div className="flex rounded-sm h-7 flex-nowrap">
       <button
         className="bg-background-paperchanel group rounded-l-sm border-y border-l border-gray-500/20 px-1.5 hover:bg-white/[0.08]"
         onClick={handleClickDown}

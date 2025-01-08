@@ -10,7 +10,7 @@ export function SuggestionResult() {
     <Card title={title}>
       {suggestions.map((data) => (
         <ItemList key={data.objectId} data={data}>
-          <div className="flex w-full items-center justify-between gap-1 transition-colors">
+          <div className="flex items-center justify-between w-full gap-1 transition-colors">
             <p className="flex flex-col">
               <span className="overflow-hidden text-[0.75rem] text-secondary">{data.cSchema}</span>
               <span className="overflow-hidden text-primary group-hover:text-primary">{data.cNombreObjeto}</span>

@@ -21,7 +21,7 @@ const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) 
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className="w-4 h-4 opacity-50" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -29,14 +29,14 @@ SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
 const SelectScrollUpButton = React.forwardRef(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollUpButton ref={ref} className={cn('flex cursor-default items-center justify-center py-1', className)} {...props}>
-    <ChevronUp className="h-4 w-4" />
+    <ChevronUp className="w-4 h-4" />
   </SelectPrimitive.ScrollUpButton>
 ))
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
 
 const SelectScrollDownButton = React.forwardRef(({ className, ...props }, ref) => (
   <SelectPrimitive.ScrollDownButton ref={ref} className={cn('flex cursor-default items-center justify-center py-1', className)} {...props}>
-    <ChevronDown className="h-4 w-4" />
+    <ChevronDown className="w-4 h-4" />
   </SelectPrimitive.ScrollDownButton>
 ))
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName
@@ -83,9 +83,9 @@ const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => 
     )}
     {...props}
   >
-    <span className="absolute left-2 flex h-3 w-3 items-center justify-center">
+    <span className="absolute flex items-center justify-center w-3 h-3 left-2">
       <SelectPrimitive.ItemIndicator>
-        <Check className="h-3 w-3" />
+        <Check className="w-3 h-3" />
       </SelectPrimitive.ItemIndicator>
     </span>
 

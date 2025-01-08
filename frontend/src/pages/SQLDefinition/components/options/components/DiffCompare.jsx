@@ -31,7 +31,7 @@ export function DiffCompare() {
           onClick={handleClick}
           disabled={!objectId}
         >
-          <div className="flex flex-nowrap items-center justify-center gap-1">
+          <div className="flex items-center justify-center gap-1 flex-nowrap">
             <i className="text-white">
               <GitCompare size={14} />
             </i>

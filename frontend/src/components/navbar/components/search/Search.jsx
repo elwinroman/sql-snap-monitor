@@ -44,7 +44,7 @@ export function Search() {
                 {type.name}
               </span>
               <input
-                className="flex h-10 w-full rounded-sm bg-transparent px-4 font-semibold text-primary file:bg-transparent placeholder:font-normal placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-5"
+                className="flex w-full h-10 px-4 font-semibold bg-transparent rounded-sm text-primary file:bg-transparent placeholder:font-normal placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-5"
                 placeholder="Busca tu objeto aquí"
                 onInput={onInput}
                 spellCheck={false}
@@ -53,7 +53,7 @@ export function Search() {
           </DialogHeader>
 
           {/* Separador */}
-          <div className="-mx-1 h-px bg-border"></div>
+          <div className="h-px -mx-1 bg-border"></div>
 
           {/* Body card */}
           <SearchResult />

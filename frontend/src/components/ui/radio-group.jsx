@@ -20,7 +20,7 @@ const RadioGroupItem = forwardRef(function RadioGroupItem({ className, ...props 
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Circle className="h-2 w-2 fill-current text-current" />
+        <Circle className="w-2 h-2 text-current fill-current" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )

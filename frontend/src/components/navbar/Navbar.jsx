@@ -10,7 +10,7 @@ export function Navbar({ className }) {
 
   return (
     <header id="navbar" className={`w-full flex-[0_0_var(--navbar-height)] transition-all ${className}`}>
-      <ul className="flex h-full flex-row items-center py-6">
+      <ul className="flex flex-row items-center h-full py-6">
         {/* Aplication logo */}
         <AplicationLogo />
 

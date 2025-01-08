@@ -42,7 +42,7 @@ export function EditorCode() {
   const fullOptions = { ...options, renderWhitespace, fontSize }
 
   return (
-    <div className="group relative">
+    <div className="relative group">
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"

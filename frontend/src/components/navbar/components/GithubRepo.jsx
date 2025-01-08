@@ -12,7 +12,7 @@ export function GithubRepo() {
     <li>
       <Sheet>
         <SheetTrigger
-          className="hover:bg-action-over grid h-9 place-content-center rounded-md px-3 text-secondary transition-colors hover:text-primary"
+          className="grid px-3 transition-colors rounded-md hover:bg-action-over h-9 place-content-center text-secondary hover:text-primary"
           onClick={handleClick}
         >
           <i>

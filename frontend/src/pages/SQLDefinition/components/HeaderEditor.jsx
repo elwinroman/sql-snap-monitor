@@ -11,7 +11,7 @@ export function HeaderEditor() {
   const headerObjectName = object.name ? `${object.schema}.${object.name}` : 'Definiciones SQL'
 
   return (
-    <div className="flex flex-col justify-between gap-x-5 gap-y-4 px-6 py-4 sm:items-center md:flex-row">
+    <div className="flex flex-col justify-between px-6 py-4 gap-x-5 gap-y-4 sm:items-center md:flex-row">
       {!onDiffEditor ? (
         <h4 className="flex items-center gap-2">
           <span className="text-base font-medium text-primary">{headerObjectName}</span>

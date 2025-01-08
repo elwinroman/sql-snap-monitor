@@ -19,7 +19,7 @@ export function MenuSidebar({ className }) {
     <nav className={`${className} mix-colored-background overflow-y-auto overflow-x-hidden shadow-xl`}>
       <header className="flex h-[53px] min-h-[53px] items-center border-b border-border px-6">
         {isAuthenticated ? (
-          <button className="hover:bg-action-hover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={backNavigation}>
+          <button className="flex items-center h-10 gap-2 px-2 transition-colors rounded-sm hover:bg-action-hover" onClick={backNavigation}>
             <ArrowBigLeft size={18} />
 
             <span className="text-sm">Regresar</span>
@@ -35,7 +35,7 @@ export function MenuSidebar({ className }) {
           <div className="flex flex-col gap-3">
             <h4 className="text-sm font-bold text-primary">CONSULTA DE OBJETOS PARA ALINEACIÓN</h4>
 
-            <span className="text-balance text-sm text-primary">
+            <span className="text-sm text-balance text-primary">
               Recupera los objetos alineados a <strong>pre-producción</strong> y dí adios a observaciones por desvío de ambientes
             </span>
           </div>
@@ -64,9 +64,9 @@ export function MenuSidebar({ className }) {
         </div>
       </div>
 
-      <footer className="flex h-20 min-h-14 items-center px-6">
+      <footer className="flex items-center h-20 px-6 min-h-14">
         {!isAuthenticated ? (
-          <button className="hover:bg-action-hover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={redirectLogin}>
+          <button className="flex items-center h-10 gap-2 px-2 transition-colors rounded-sm hover:bg-action-hover" onClick={redirectLogin}>
             <User size={18} />
             <span className="text-sm">Iniciar sesión</span>
           </button>

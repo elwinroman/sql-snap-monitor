@@ -9,7 +9,7 @@ export function HeaderEditor() {
   const fullName = name ? `${schema}.${name}` : 'PRE-PRODUCCIÓN'
 
   return (
-    <header className="flex flex-col justify-start gap-x-5 gap-y-2 bg-card px-4 py-3 sm:items-center lg:flex-row lg:justify-between">
+    <header className="flex flex-col justify-start px-4 py-3 gap-x-5 gap-y-2 bg-card sm:items-center lg:flex-row lg:justify-between">
       {loading ? (
         <LoaderDot className="px-3" />
       ) : (
@@ -17,7 +17,7 @@ export function HeaderEditor() {
           <h4 className="flex items-center gap-2 text-sm font-semibold text-zinc-300">
             <span className="text-amber-400">{fullName}</span>
           </h4>
-          <span className="max-w-sm text-nowrap text-sm text-secondary sm:max-w-full"> (Actualizado al día de ayer)</span>
+          <span className="max-w-sm text-sm text-nowrap text-secondary sm:max-w-full"> (Actualizado al día de ayer)</span>
         </div>
       )}
 

@@ -35,7 +35,7 @@ export function RecentSearch() {
   return (
     <Card title={title} className="relative">
       <button
-        className="absolute right-1 top-1 w-fit px-4 py-1 text-left text-xs text-rose-400 transition-colors hover:text-rose-500"
+        className="absolute px-4 py-1 text-xs text-left transition-colors right-1 top-1 w-fit text-rose-400 hover:text-rose-500"
         onClick={handleEliminarTodo}
       >
         <span>Borrar todo</span>
@@ -45,7 +45,7 @@ export function RecentSearch() {
         <ItemList key={data.id} data={data}>
           <History size={14} className="mt-0.5 text-primary" />
 
-          <div className="flex w-full items-center justify-between gap-1 transition-colors">
+          <div className="flex items-center justify-between w-full gap-1 transition-colors">
             <span className="overflow-hidden text-primary">{data.cNombreObjeto}</span>
             <div className="flex items-center gap-2">
               <FavoriteItem data={data} content="Favorito" />
@@ -57,7 +57,7 @@ export function RecentSearch() {
 
       {recents.length >= itemsToShow && recents.length !== MIN_SHOW_ITEMS && (
         <button
-          className="w-fit px-4 py-1 text-left text-xs text-blue-400 transition-colors hover:text-blue-500"
+          className="px-4 py-1 text-xs text-left text-blue-400 transition-colors w-fit hover:text-blue-500"
           onClick={handleShowAllItems}
         >
           <span>{!showAll ? 'Ver mas' : 'Ver menos'}</span>

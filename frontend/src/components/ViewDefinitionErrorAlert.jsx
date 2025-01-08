@@ -49,7 +49,7 @@ export function ViewDefinitionErrorAlert() {
             <i className="pt-0.5 text-rose-500">
               <Ban size={20} />
             </i>
-            <span className="text-balance text-sm text-zinc-300">
+            <span className="text-sm text-balance text-zinc-300">
               No tienes permisos para acceder a las definiciones SQL (<strong>VIEW DEFINITION</strong>). Por favor, contacta con tu
               administrador de base de datos para solicitar el acceso necesario.
             </span>

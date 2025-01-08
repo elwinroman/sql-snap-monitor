@@ -31,7 +31,7 @@ export function InfoSqlDefinition({ className }) {
           <div className="grid w-full grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-x-4 gap-y-2">
             {SYS_OBJECT_TYPES.map((type) => (
               <div key={type.type} className="flex items-center gap-2">
-                <span className="grid min-h-7 min-w-7 place-content-center rounded-sm bg-slate-300 text-sm font-semibold dark:bg-zinc-950">
+                <span className="grid text-sm font-semibold rounded-sm min-h-7 min-w-7 place-content-center bg-slate-300 dark:bg-zinc-950">
                   {type.type}
                 </span>
                 <span className="text-[0.84rem] text-secondary">{type.description}</span>
@@ -57,7 +57,7 @@ export function InfoSqlDefinition({ className }) {
               Explora y personaliza el editor de código para adaptarlo a tu flujo de trabajo.
             </CardDescription>
             <div>
-              <img src="programming-code-editor-illustration-1024x819.png" alt="" className="h-44 bg-cover" />
+              <img src="programming-code-editor-illustration-1024x819.png" alt="" className="bg-cover h-44" />
             </div>
           </div>
         </Card>

@@ -2,7 +2,7 @@ import { APP_NAME } from '@/constants'
 
 export function SideBox() {
   return (
-    <div className="login-box-background hidden h-full w-full max-w-md place-content-center p-6 md:grid">
+    <div className="hidden w-full h-full max-w-md p-6 login-box-background place-content-center md:grid">
       <div className="flex flex-col items-center gap-6">
         <div className="flex flex-col items-center gap-4">
           <h3 className="font-['Barlow'] text-2xl">Hola, Bienvenido</h3>

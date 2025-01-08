@@ -77,7 +77,7 @@ export function DiffEditorCode() {
       if (root.current == null) {
         root.current = ReactDOM.createRoot(componentContainer)
         root.current.render(
-          <div className="absolute right-6 top-3 z-50">
+          <div className="absolute z-50 right-6 top-3">
             <CopyClipboard text={aligmentCode} />
           </div>,
         )
@@ -85,7 +85,7 @@ export function DiffEditorCode() {
       if (root2.current == null) {
         root2.current = ReactDOM.createRoot(componentContainer2)
         root2.current.render(
-          <div className="absolute right-6 top-3 z-50">
+          <div className="absolute z-50 right-6 top-3">
             <CopyClipboard text={formattedCode} />
           </div>,
         )
@@ -134,7 +134,7 @@ export function DiffEditorCode() {
   const fullOptions = { ...options, renderWhitespace, renderSideBySide, fontSize }
 
   return (
-    <div className="group relative">
+    <div className="relative group">
       <DiffEditor
         beforeMount={handleEditorDidMount}
         language="sql"

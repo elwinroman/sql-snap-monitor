@@ -63,7 +63,7 @@ export function EditorCodeAligment() {
   const fullOptions = { ...options, renderWhitespace, fontSize }
 
   return (
-    <div className="group relative h-full">
+    <div className="relative h-full group">
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"

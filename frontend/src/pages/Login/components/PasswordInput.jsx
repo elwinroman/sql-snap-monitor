@@ -27,7 +27,7 @@ export function PasswordInput({ name }) {
         placeholder="Ingresa tu contraseña"
         required
       />
-      <i className="user-select-none absolute right-3 top-3 cursor-pointer text-slate-300" onClick={handleClick} autoComplete="off">
+      <i className="absolute cursor-pointer user-select-none right-3 top-3 text-slate-300" onClick={handleClick} autoComplete="off">
         {visible ? <Eye size={16} /> : <EyeOff size={16} />}
       </i>
     </div>

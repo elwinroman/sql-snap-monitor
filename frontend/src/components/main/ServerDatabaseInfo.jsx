@@ -18,13 +18,13 @@ export function ServerDatabaseInfo() {
       <span className="text-xl text-primary">Explorando</span>
 
       <div className="flex gap-4">
-        <div className="flex flex-nowrap items-start gap-1">
+        <div className="flex items-start gap-1 flex-nowrap">
           <i className="text-secondary">
             <Server size={16} />
           </i>
           <h1 className="text-sm font-bold text-secondary">{server}</h1>
         </div>
-        <div className="flex flex-nowrap items-start gap-1">
+        <div className="flex items-start gap-1 flex-nowrap">
           <i className="text-secondary">
             <DatabaseZap size={16} />
           </i>
