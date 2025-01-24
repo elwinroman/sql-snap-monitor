@@ -34,11 +34,6 @@ const envSchema = z.object({
     .string()
     .min(1, 'SESSION_SECRET no puede estar vacío')
     .default('f8fc8dbaa5806006a7710d6cbd98dacba7d579de80e639e4705d42c7ac91ee56'),
-  INIT_VECTOR: z
-    .string()
-    .min(16, 'INIT_VECTOR tiene que ser de 16 caracteres')
-    .max(16, 'INIT_VECTOR tiene que ser de 16 caracteres')
-    .default('CzgberY2qaQDDy1z'),
   PASS_PHRASE: z
     .string()
     .min(1, 'PASS_PHRASE no puede estar vacío')
@@ -67,6 +62,5 @@ export const {
   ALLOWED_ORIGIN,
   JWT_SECRET,
   SESSION_SECRET,
-  INIT_VECTOR,
   PASS_PHRASE,
 } = data

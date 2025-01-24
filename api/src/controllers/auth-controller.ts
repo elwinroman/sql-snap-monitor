@@ -6,15 +6,16 @@ import { JWT_SECRET } from '@/config/enviroment'
 import { COMMON_ERROR_CODES, VALIDATION_ERROR } from '@/constants'
 import { Credentials, DatabaseDetails, MyCustomError } from '@/models'
 import { AuthService, LogService, UserService } from '@/services'
-import { encryptString, generateHashForUniqueUID } from '@/utils'
+import { generateHashForUniqueUID } from '@/utils'
+import cryptocode from '@/utils'
 
 export class AuthController {
   // Login para un usuario SQL
   login = async (req: Request, res: Response, next: NextFunction) => {
     const { server, dbname, username, password }: Credentials = req.body
 
-    // Validación
     try {
+      // validar
       const LoginSchema = z.object({
         server: z
           .string({ required_error: VALIDATION_ERROR.required })
@@ -29,31 +30,27 @@ export class AuthController {
         username: z
           .string({ required_error: VALIDATION_ERROR.required })
           .trim()
+          .toLowerCase()
           .max(64, { message: VALIDATION_ERROR.max })
           .min(1, { message: VALIDATION_ERROR.noempty }),
         password: z.string({ required_error: VALIDATION_ERROR.required }).trim().max(64, { message: VALIDATION_ERROR.max }),
       })
 
-      LoginSchema.parse({ server, dbname, username, password })
-    } catch (err) {
-      return next(err)
-    }
+      const inputData = LoginSchema.parse({ server, dbname, username, password })
 
-    // Funcionalidad
-    try {
-      // sanitizar los datos
+      // funcionalidad
       const credentials = {
-        server: server.trim(),
-        dbname: dbname.trim(),
-        username: username.trim().toLowerCase(),
-        password: encryptString(password.trim()),
+        server: inputData.server,
+        dbname: inputData.dbname,
+        username: cryptocode.encrypt(inputData.username),
+        password: cryptocode.encrypt(inputData.password),
       }
 
       const authService = new AuthService(credentials)
       const databaseDetails = (await authService.login()) as DatabaseDetails
 
       // buscar el usuario
-      const usernameHash = generateHashForUniqueUID({ server: databaseDetails.server, username: credentials.username })
+      const usernameHash = generateHashForUniqueUID({ server: databaseDetails.server, username: inputData.username })
       const userService = new UserService()
       let user = await userService.buscarUsuarioByUsername(usernameHash)
 

@@ -8,7 +8,6 @@ import {
   PREPROD_DBSERVER,
   PREPROD_DBUSERNAME,
 } from '@/config/enviroment'
-import { encryptString } from '@/utils'
 
 export interface Credentials {
   server: string
@@ -20,13 +19,13 @@ export interface Credentials {
 export const CredentialsFromEnv_PREPROD: Credentials = {
   server: PREPROD_DBSERVER,
   username: PREPROD_DBUSERNAME,
-  password: encryptString(PREPROD_DBPASSWORD),
+  password: PREPROD_DBPASSWORD,
   dbname: PREPROD_DBNAME,
 }
 
 export const CredentialsFromEnv: Credentials = {
   server: DBSERVER,
   username: DBUSERNAME,
-  password: encryptString(DBPASSWORD),
+  password: DBPASSWORD,
   dbname: DBNAME,
 }
