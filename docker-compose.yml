@@ -19,7 +19,7 @@ services:
       - DBPASSWORD=your-encrypted-dbpassword
 
       - NODE_ENV=production
-      - ALLOWED_ORIGIN=http://${DOMAIN}:${CLIENT_PORT}
+      - ALLOWED_ORIGIN=${DOMAIN}:${CLIENT_PORT}
       - PORT=3000
       - JWT_SECRET=79e994b74e85f0d96c963b44287844feeee5edd04bd26cf354199f1843429cea72557a04945a4eb08cb5a548c64cc5c83172c5838bfc04711c1e414bdcf53fbd
       - SESSION_SECRET=f8fc8dbaa5806006a7710d6cbd98dacba7d579de80e639e4705d42c7ac91ee56
@@ -31,4 +31,4 @@ services:
     ports:
       - "${CLIENT_PORT}:80"
     environment:
-      - VITE_API_URL=http://${DOMAIN}:${BACKEND_PORT}
+      - VITE_API_URL=${DOMAIN}:${BACKEND_PORT}
