@@ -9,21 +9,20 @@ services:
       # Credenciales para la base de datos de pre-producción
       - PREPROD_DBSERVER=your-preprod-dbserver
       - PREPROD_DBNAME=your-preprod-dbname
-      - PREPROD_DBUSERNAME=your-preprod-dbuser
-      - PREPROD_DBPASSWORD=your-preprod-dbpassword
+      - PREPROD_DBUSERNAME=your-encrypted-preprod-dbuser
+      - PREPROD_DBPASSWORD=your-encrypted-preprod-dbpassword
 
       # Credenciales para la base de datos de logs (almacenar acceso, búsquedas, usuarios)
       - DBSERVER=your-dbserver
       - DBNAME=your-dbname
-      - DBUSERNAME=your-dbuser
-      - DBPASSWORD=your-dbpassword
+      - DBUSERNAME=your-encrypted-dbuser
+      - DBPASSWORD=your-encrypted-dbpassword
 
       - NODE_ENV=production
       - ALLOWED_ORIGIN=http://${DOMAIN}:${CLIENT_PORT}
       - PORT=3000
       - JWT_SECRET=79e994b74e85f0d96c963b44287844feeee5edd04bd26cf354199f1843429cea72557a04945a4eb08cb5a548c64cc5c83172c5838bfc04711c1e414bdcf53fbd
       - SESSION_SECRET=f8fc8dbaa5806006a7710d6cbd98dacba7d579de80e639e4705d42c7ac91ee56
-      - INIT_VECTOR=CzgberY2qaQDDy1z
       - PASS_PHRASE=C0553C58301E2B9FC2D7D78ABB886B6CB923C55E0BAFAEEA5BB703D60104C24E
   client:
     image: web:latest
