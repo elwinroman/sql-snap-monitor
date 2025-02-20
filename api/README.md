@@ -34,7 +34,7 @@ DBPASSWORD: Contraseña correspondiente al usuario encriptado.
 
 # Configuración del servidor backend
 PORT: Puerto en el que se ejecutará el servidor. Si no se especifica, el valor predeterminado es 3000.
-ALLOWED_ORIGIN: Dirección o dominio desde el cual se permiten solicitudes al servidor (origen permitido para CORS).
+ALLOWED_ORIGINS: Lista de dominio/s (separado por comas) desde el cual se permiten solicitudes al servidor (origen permitido para CORS).
 JWT_SECRET: Clave secreta utilizada para firmar y verificar tokens JWT (JSON Web Token).
 SESSION_SECRET: Clave secreta para la gestión de sesiones en el servidor, utilizada para firmar las cookies de la sesión.
 PASS_PHRASE: Clave utilizada para la encriptación de datos sensibles

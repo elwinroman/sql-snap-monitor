@@ -19,11 +19,14 @@ const envSchema = z.object({
     .default('3000')
     .transform(val => Number(val))
     .pipe(z.number({ message: 'PORT debe ser un número' })),
-  ALLOWED_ORIGIN: z
+  ALLOWED_ORIGINS: z
     .string()
-    .url({ message: 'URL inválida' })
-    .min(1, 'ALLOWED_ORIGIN no puede estar vacío')
-    .default('http://localhost:5173'),
+    .optional()
+    .default('http://localhost:5173')
+    .transform(val => val.split(',').map(url => url.trim()))
+    .refine(urls => urls.every(url => z.string().url().safeParse(url).success), {
+      message: 'Una o más URLs en ALLOWED_ORIGIN no son válidas',
+    }),
   JWT_SECRET: z
     .string()
     .min(1, 'JWT_SECRET no puede estar vacío')
@@ -59,7 +62,7 @@ export const {
   DBUSERNAME,
   DBPASSWORD,
   PORT,
-  ALLOWED_ORIGIN,
+  ALLOWED_ORIGINS,
   JWT_SECRET,
   SESSION_SECRET,
   PASS_PHRASE,
