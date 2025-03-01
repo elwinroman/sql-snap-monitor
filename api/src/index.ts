@@ -1,9 +1,17 @@
-import { createAllRouter } from './config/all.route'
-import { ALLOWED_ORIGINS, PORT } from './config/enviroment'
-import { Server } from './config/server.controller'
+import express from 'express'
 
-new Server({
-  port: PORT,
-  routes: createAllRouter(),
-  allowedOrigins: ALLOWED_ORIGINS,
-}).start()
+function bootstrap() {
+  const app = express()
+
+  app.get('/welcome', (req, res) => {
+    res.send('hello world')
+  })
+
+  const port = 3000
+
+  app.listen(port, () => {
+    console.log(`[APP] - Starting application on port ${port}`)
+  })
+}
+
+bootstrap()
