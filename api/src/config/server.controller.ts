@@ -35,10 +35,15 @@ export class Server {
           // same-origin, curl
           if (!origin) return callback(null, true)
 
+          const url = new URL(origin)
+          const domain = url.hostname
+          
           // si no se encuentra en la lista de origenes permitidos se deniega el acceso
-          if (this.allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'Política CORS de este sitio no permite el acceso desde el origen especificado.'
-            return callback(new Error(msg), false)
+          for (const allowedOrigin of this.allowedOrigins) {
+            if (!allowedOrigin.includes(domain)) {
+              const msg = `Política CORS: Acceso no autorizado para ${origin}`
+              return callback(new Error(msg), false)
+            }
           }
 
           return callback(null, true)

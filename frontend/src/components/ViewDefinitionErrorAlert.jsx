@@ -21,6 +21,11 @@ export function ViewDefinitionErrorAlert() {
   const resetSqlDefinition = useSQLDefinitionStore((state) => state.reset)
   const resetUsertable = useUserTableStore((state) => state.reset)
 
+  const logoutUser = useAuthStore((state) => state.logoutUser)
+  const resetSQLDefinitionStore = useSQLDefinitionStore((state) => state.reset)
+  const resetUserTableStore = useUserTableStore((state) => state.reset)
+
+
   // verificar que se tenga permiso de VIEW DEFINITION
   const handlePermission = async () => {
     setLoading(true)
@@ -36,6 +41,15 @@ export function ViewDefinitionErrorAlert() {
       resetUsertable()
     }
     setLoading(false)
+  }
+
+  // cerrar sesión
+  const handleCloseSession = () => {
+    logoutUser()
+    resetSQLDefinitionStore()
+    resetUserTableStore()
+    useSQLDefinitionStore.persist.clearStorage()
+    useUserTableStore.persist.clearStorage()
   }
 
   return (
@@ -57,6 +71,10 @@ export function ViewDefinitionErrorAlert() {
           <AlertDialogFooter>
             <Button variant="success" onClick={handlePermission}>
               Verificar permiso
+            </Button>
+
+            <Button variant="ghost" onClick={handleCloseSession}>
+              Cerrar sesión
             </Button>
           </AlertDialogFooter>
 

@@ -51,13 +51,17 @@ export class AuthService implements ForAuthenticating {
       const stmt = `
         SELECT 
           GETUTCDATE() AS date,
-          viewdefinition_permission = COALESCE((SELECT TOP 1 IIF(definition IS NULL, 0, 1) FROM sys.sql_modules), 0)
+          viewdefinition_permission = COALESCE((SELECT TOP 1 IIF(definition IS NULL, 0, 1) FROM sys.sql_modules), 0),
+          definition_counts = (SELECT COUNT(*) FROM sys.sql_modules)
       `
       const res = await request.query(stmt)
 
+      // si no existen SPs, Views por defecto asumimos que tiene permisos (lo cual no es necesariamente correcto)
+      const definitionCounts = res.recordset[0].definition_counts
+
       const data: Health = {
         date: format(res.recordset[0].date, 'DD-MM-YYYY HH:mm:ss'),
-        viewdefinition_permission: Boolean(res.recordset[0].viewdefinition_permission),
+        viewdefinition_permission: definitionCounts > 0 ? Boolean(res.recordset[0].viewdefinition_permission) : true,
       }
       return data
     } catch (error) {

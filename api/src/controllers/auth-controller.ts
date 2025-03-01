@@ -58,7 +58,7 @@ export class AuthController {
       if (!user) {
         await userService.registrarUsuario({
           cHashUsuarioUID: usernameHash,
-          cUsuario: credentials.username,
+          cUsuario: inputData.username,
           cServer: databaseDetails.server,
           cAliasServer: server,
         })
