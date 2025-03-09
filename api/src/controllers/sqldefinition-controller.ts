@@ -139,8 +139,7 @@ export class SQLDefinitionController {
       logService.registrarBusqueda({
         idUsuario: idUsuario ?? undefined,
         idTipoAccion: actionType,
-        // cDatabase: PREPROD_DBNAME,
-        cDatabase: `${PREPROD_DBNAME}_PROD`,
+        cDatabase: PREPROD_DBNAME,
         cSchema: aligmentObject.schema,
         cBusqueda: aligmentObject.name,
         lProduccion: aligmentObject.isAligmentObject,
