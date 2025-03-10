@@ -1,12 +1,11 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
 import { GetUserByIdUseCase } from '../../../aplication/get-user-by-id-use-case/get-user-by-id.use-case'
-import { UserNotFound } from '../../../domain/user-not-found'
 
 export class GetUserByIdController {
   constructor(private readonly getUserByIdUseCase: GetUserByIdUseCase) {}
 
-  async run(req: Request, res: Response) {
+  async run(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params
 
     try {
@@ -15,7 +14,7 @@ export class GetUserByIdController {
       console.log('GetUserByIdController -> return user ', user)
       return res.json(user)
     } catch (err) {
-      if (err instanceof UserNotFound) return res.json(err)
+      next(err)
       /*
       return res.status(404).json({
         correlationId: randomUUID(),
