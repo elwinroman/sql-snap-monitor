@@ -1,8 +1,8 @@
 import { randomUUID } from 'crypto'
 
 export interface PrimitiveUser {
-  id: string
-  hashUsernameUID: string
+  id?: number
+  hashUsernameUID: string //user_uuid
   user: string
   server: string
   aliasServer: string
@@ -13,10 +13,10 @@ export interface PrimitiveUser {
 export class User {
   constructor(private atributes: PrimitiveUser) {}
 
-  static create(createUser: { hashUsernameUID: string; user: string; server: string; aliasServer: string }): User {
+  static create(createUser: { user: string; server: string; aliasServer: string }): User {
     return new User({
-      id: randomUUID(),
-      hashUsernameUID: createUser.hashUsernameUID,
+      id: undefined,
+      hashUsernameUID: randomUUID(),
       user: createUser.user,
       server: createUser.server,
       aliasServer: createUser.aliasServer,
