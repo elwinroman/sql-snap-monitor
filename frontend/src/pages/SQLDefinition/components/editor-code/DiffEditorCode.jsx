@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/client'
 
 import { CopyClipboard } from '@/components/main/CopyClipboard'
 import { THEMES } from '@/constants'
-import { useAuthStore, useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { useAuthStore, useConfigStore, useDiffEditorStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
@@ -14,7 +14,7 @@ import { options } from './constants/editor-options'
 export function DiffEditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
   const renderSideBySide = useEditorStore((state) => state.renderSideBySide)
-  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
+  const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
   const code = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const object = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const { schema, name, permission, definition } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
@@ -26,6 +26,7 @@ export function DiffEditorCode() {
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
   const dbname = useAuthStore((state) => state.dbname)
+  const dbprodName = useAuthStore((state) => state.dbprodName)
 
   const formattedCode = hasRoles ? code + formatPermissionRoles(object.permission, object.schema, object.name) : code
   const aligmentCode = hasRoles ? definition + formatPermissionRoles(permission, schema, name) : definition
@@ -128,7 +129,7 @@ export function DiffEditorCode() {
   }, [onDiffEditor, aligmentCode, formattedCode, renderSideBySide])
 
   // Define la MARCA DE AGUA para usarse en CSS
-  document.documentElement.style.setProperty('--aligment-content', JSON.stringify('Aligment'))
+  document.documentElement.style.setProperty('--aligment-database-content', JSON.stringify(dbprodName))
   document.documentElement.style.setProperty('--current-database-content', JSON.stringify(dbname))
 
   const fullOptions = { ...options, renderWhitespace, renderSideBySide, fontSize }
@@ -139,7 +140,7 @@ export function DiffEditorCode() {
         beforeMount={handleEditorDidMount}
         language="sql"
         defaultValue="// some comment"
-        height={isMaximized ? '100vh' : '88vh'}
+        height={isMaximized ? '93vh' : '88vh'}
         theme={theme}
         original={loadingAligment ? 'Buscando información, esto puede tardar unos segundos...' : aligmentCode}
         modified={formattedCode}

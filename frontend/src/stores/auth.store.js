@@ -10,6 +10,7 @@ export const useAuthStore = create(
       isSessionExpired: false,
       username: null,
       dbname: null,
+      dbprodName: null,
       server: null,
       errorAuth: null,
       errorViewDefinition: null,
@@ -35,6 +36,7 @@ export const useAuthStore = create(
           set({ isAuthenticated: false })
           set({ username: null })
           set({ dbname: null })
+          set({ dbprodName: null })
           set({ server: null })
           return
         }
@@ -42,6 +44,7 @@ export const useAuthStore = create(
         set({ isAuthenticated: true })
         set({ username: credentials.username })
         set({ dbname: res.data.name })
+        set({ dbprodName: res.data.dbprod_name })
         set({ server: res.data.server })
         set({ errorAuth: null })
       },
@@ -52,6 +55,7 @@ export const useAuthStore = create(
         set({ isAuthenticated: false })
         set({ username: null })
         set({ dbname: null })
+        set({ dbprodName: null })
         set({ server: null })
         set({ errorAuth: null })
       },
@@ -79,6 +83,7 @@ export const useAuthStore = create(
         set({ isAuthenticated: false })
         set({ username: null })
         set({ dbname: null })
+        set({ dbprodName: null })
         set({ server: null })
         set({ errorAuth: null })
         set({ errorViewDefinition: null })

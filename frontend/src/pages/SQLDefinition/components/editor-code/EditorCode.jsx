@@ -47,7 +47,7 @@ export function EditorCode() {
         beforeMount={handleEditorDidMount}
         language="sql"
         defaultValue={defaultCode}
-        height={isMaximized ? '100vh' : '88vh'}
+        height={isMaximized ? '93vh' : '88vh'}
         theme={theme}
         value={formattedCode}
         options={{ ...fullOptions }}
