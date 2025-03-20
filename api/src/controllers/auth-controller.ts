@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { JWT_SECRET } from '@/config/enviroment'
 import { COMMON_ERROR_CODES, VALIDATION_ERROR } from '@/constants'
-import { Credentials, DatabaseDetails, MyCustomError } from '@/models'
+import { Credentials, CredentialsFromEnv_PREPROD, DatabaseDetails, MyCustomError } from '@/models'
 import { AuthService, LogService, UserService } from '@/services'
 import { generateHashForUniqueUID } from '@/utils'
 import cryptocode from '@/utils'
@@ -95,9 +95,14 @@ export class AuthController {
           // secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
           secure: false,
           sameSite: 'strict', // cookie no disponible para otros sitios
-          maxAge: 1000 * 60 * 60 * 48, // cookie expira en 1 hora
+          maxAge: 1000 * 60 * 60 * 24 * 7, // 7 días
         })
-        .json({ status: 'success', statusCode: 200, message: 'Autenticación correcta', data: databaseDetails })
+        .json({
+          status: 'success',
+          statusCode: 200,
+          message: 'Autenticación correcta',
+          data: { ...databaseDetails, dbprod_name: CredentialsFromEnv_PREPROD.dbname ?? 'Aligment' },
+        })
     } catch (err) {
       next(err)
     }
