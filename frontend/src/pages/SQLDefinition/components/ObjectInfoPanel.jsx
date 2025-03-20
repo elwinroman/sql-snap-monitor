@@ -1,8 +1,8 @@
 import { ObjectDetails } from '@/components/main/ObjectDetails'
-import { useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { useDiffEditorStore, useSQLDefinitionStore } from '@/stores'
 
 export function ObjectInfoPanel() {
-  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
+  const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
   const object = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const aligmentObject = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
 

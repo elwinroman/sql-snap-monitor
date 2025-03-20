@@ -2,12 +2,12 @@ import { DatabaseZap, Server } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants'
-import { useAuthStore, useEditorStore } from '@/stores'
+import { useAuthStore, useDiffEditorStore } from '@/stores'
 
 export function ServerDatabaseInfo() {
   const dbname = useAuthStore((state) => state.dbname)
   const server = useAuthStore((state) => state.server)
-  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
+  const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
 
   const currentLocation = useLocation()
 

@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 
 import { LoaderSlack } from '@/components/loader/loader-slack/LoaderSlack'
 import { Toaster } from '@/components/ui/sonner'
-import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { useConfigStore, useDiffEditorStore, useSQLDefinitionStore } from '@/stores'
 
 import { AligmentConectionError, DiffEditorCode, EditorCode, HeaderEditor, ObjectInfoPanel } from './components'
 
@@ -16,7 +16,7 @@ export function SQLDefinitionPage() {
   const errorAligment = useSQLDefinitionStore((state) => state.errorAligment)
   const updateErrorAligment = useSQLDefinitionStore((state) => state.updateErrorAligment)
 
-  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
+  const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
   const isMaximized = useConfigStore((state) => state.isMaximized)
 
   // Maneja los errores, muestra y limpia la notificación al buscar un objeto QSL

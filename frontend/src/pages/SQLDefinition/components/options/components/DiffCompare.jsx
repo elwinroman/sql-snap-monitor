@@ -1,11 +1,11 @@
 import { GitCompare, GitPullRequestClosed } from 'lucide-react'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { useEditorStore, useSQLDefinitionStore } from '@/stores'
+import { useDiffEditorStore, useSQLDefinitionStore } from '@/stores'
 
 export function DiffCompare() {
-  const onDiffEditor = useEditorStore((state) => state.onDiffEditor)
-  const updateDiffEditor = useEditorStore((state) => state.updateDiffEditor)
+  const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
+  const updateDiffEditor = useDiffEditorStore((state) => state.updateDiffEditor)
   const { id } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
   const { id: objectId } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const getSQLDefinitionAligmentObject = useSQLDefinitionStore((state) => state.getSQLDefinitionAligmentObject)

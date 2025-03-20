@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { AligmentObjectInitialState, ObjectInitialState, SQLDefinitionInitialState } from '@/models/object.model'
 import { getSQLDefinitionAligmentObject, getSQLDefinitionObject } from '@/services'
-import { useEditorStore } from '@/stores'
+import { useDiffEditorStore } from '@/stores'
 
 export const useSQLDefinitionStore = create(
   persist(
@@ -28,7 +28,7 @@ export const useSQLDefinitionStore = create(
 
       // obtiene el objeto de definición de pre-producción
       getSQLDefinitionAligmentObject: async () => {
-        const updateDiffEditor = useEditorStore.getState().updateDiffEditor
+        const updateDiffEditor = useDiffEditorStore.getState().updateDiffEditor
         const { schema, name } = get().SQLDefinitionObject
         set({ loadingAligment: true })
 
@@ -59,7 +59,7 @@ export const useSQLDefinitionStore = create(
 
       // obtener el objeto mediante su ID
       fetchSQLDefinition: async ({ id }) => {
-        const updateDiffEditor = useEditorStore.getState().updateDiffEditor
+        const updateDiffEditor = useDiffEditorStore.getState().updateDiffEditor
         set({ loading: true })
 
         const res = await getSQLDefinitionObject({ id })
