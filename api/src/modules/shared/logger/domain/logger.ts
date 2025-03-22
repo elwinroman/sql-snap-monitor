@@ -1,6 +1,4 @@
-export type Attributes = Record<string, unknown>
-
-export type Context = { attributes?: Attributes }
+export type Context = Record<string, unknown>
 
 export type Message = string
 

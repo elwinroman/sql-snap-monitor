@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto'
 import { NextFunction, Request, Response } from 'express'
 
+import { setLoggerContext } from '../../logger/domain/logger-context'
 const CORRELATION_ID_HEADER = 'X-Correlation-Id'
 
 /**
@@ -20,5 +21,6 @@ export function correlationIdMiddleware(req: Request, res: Response, next: NextF
   req.correlationId = correlationId
   res.set(CORRELATION_ID_HEADER, correlationId)
 
-  next()
+  // agrega el contexto de la petición al logger para usar en cualquier lugar
+  setLoggerContext({ correlationId: req.correlationId, method: req.method, url: req.url }, next)
 }

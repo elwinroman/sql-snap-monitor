@@ -11,7 +11,6 @@ export function handleError(err: unknown, req: Request, res: Response, _next: Ne
   let domainError: DomainError
   let invalidParams = undefined
 
-  logger.info('ERROR de algun tipo')
   // error de tipo validación (Zod)
   if (err instanceof ZodError) {
     invalidParams = err.errors
@@ -23,7 +22,7 @@ export function handleError(err: unknown, req: Request, res: Response, _next: Ne
   // valida si la excepción está mapeada
   const errorConfig = httpErrorMap[domainError.type]
   if (!errorConfig) {
-    console.error(`❌ Excepción no mapeada: ${domainError.type}`)
+    logger.warn('Excepción no mapeada')
     domainError = new InternalServerErrorException()
   }
 
@@ -31,8 +30,7 @@ export function handleError(err: unknown, req: Request, res: Response, _next: Ne
     status: 500, // fallback si InternalServerErrorException no está mapeado
     errorCode: 'UNKNOWN', // fallback si InternalServerErrorException no está mapeado
   }
-  // console.error(`🚨 ERROR: ${domainError.title} | Status: ${status} | Código: ${errorCode}`)
-  // console.error(domainError)
+  logger.error(domainError.name, { err })
 
   const errorApiResponse = {
     correlationId: req.correlationId,
