@@ -1,18 +1,18 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
 
 // import { LoggerContext } from './'
-export interface LoggerContext {
+export interface LoggerRequestContext {
   correlationId?: string
   method?: string
   url?: string
 }
 
-export const loggerContext = new AsyncLocalStorage<LoggerContext>()
+export const loggerRequestContext = new AsyncLocalStorage<LoggerRequestContext>()
 
-export function setLoggerContext(context: LoggerContext, callback: () => void) {
-  loggerContext.run(context, callback)
+export function setLoggerRequestContext(context: LoggerRequestContext, callback: () => void) {
+  loggerRequestContext.run(context, callback)
 }
 
-export function getLoggerContext(): LoggerContext | undefined {
-  return loggerContext.getStore()
+export function getLoggerRequestContext(): LoggerRequestContext | undefined {
+  return loggerRequestContext.getStore()
 }

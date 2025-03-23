@@ -5,8 +5,10 @@
 
 import crypto from 'node:crypto'
 
+import { logger } from '../../../logger/infrastructure/pino-instance'
+
 // import { PASS_PHRASE } from '@/config/enviroment'
-const PASS_PHRASE = 'clave_secreta'
+const PASS_PHRASE = 'AAED4554C235927C03BAD5BC313E81B0FBEB6FEC5BB60E682C70A7D5C8890B20'
 
 const passPhrase = PASS_PHRASE
 
@@ -83,8 +85,9 @@ class CryptoCode {
 
       return decrypted.toString('utf8')
     } catch (err: unknown) {
-      if (err instanceof Error) console.trace(`Error al desencriptar: ${err.message}`)
-      else console.error('Error desconocido al desencriptar')
+      // if (err instanceof Error) logger.error(`Error al desencriptar: ${err.message}`)
+      if (err instanceof Error) throw new Error(`Error al desencriptar: ${err.stack}`)
+      else logger.fatal('Error desconocido al desencriptar')
       return undefined
     }
   }

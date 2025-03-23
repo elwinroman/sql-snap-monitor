@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error'
+import { DomainError } from '../domain-error'
 
 export class ValidationException extends DomainError {
   readonly type = this.constructor.name

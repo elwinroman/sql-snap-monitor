@@ -1,4 +1,4 @@
-import { DomainError } from './domain-error'
+import { DomainError } from '../domain-error'
 
 export class DatabaseLoginException extends DomainError {
   readonly type = this.constructor.name

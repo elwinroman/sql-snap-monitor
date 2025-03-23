@@ -1,12 +1,12 @@
+import { Credential } from '@shared/core/domain/credential'
+import {
+  DatabaseGenericException,
+  DatabaseLoginException,
+  DatabaseRequestException,
+  DatabaseTimeoutException,
+} from '@shared/core/domain/exceptions'
+import cryptocode from '@shared/core/infrastructure/utils/cryptocode.util'
 import sql, { ConnectionPool } from 'mssql'
-
-import { Credential } from '../../domain/credential'
-import { DatabaseGenericException } from '../../domain/exceptions/database-generic.exception'
-import { DatabaseLoginException } from '../../domain/exceptions/database-login.exception'
-import { DatabaseRequestException } from '../../domain/exceptions/database-request.exception'
-import { DatabaseTimeoutException } from '../../domain/exceptions/database-timeout.exception'
-// import { Credentials } from '@/models'
-import cryptocode from '../utils/cryptocode.util'
 
 // Errores de MSSQL
 enum RequestErrorCode {
@@ -34,15 +34,6 @@ async function createPool(config: Credential): Promise<ConnectionPool> {
   const key = JSON.stringify(config)
   const existingPool = await getPool(key)
   if (existingPool) throw new Error('El pool ya existe')
-
-  console.table({
-    user: config.user,
-    password: config.password,
-  })
-  console.table({
-    user: cryptocode.decrypt(config.user),
-    password: cryptocode.decrypt(config.password),
-  })
 
   const newConfig = {
     user: cryptocode.decrypt(config.user),
@@ -90,7 +81,7 @@ async function getPool(name: string): Promise<ConnectionPool | null> {
  * @param config - Credenciales para la conexión.
  * @returns El pool de conexiones si ya existe o uno nuevo si no.
  */
-export async function connection(config: Credentials): Promise<ConnectionPool> {
+export async function connection(config: Credential): Promise<ConnectionPool> {
   const key = JSON.stringify(config)
 
   const pool = await getPool(key)

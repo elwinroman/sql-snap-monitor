@@ -1,9 +1,9 @@
 import express, { json } from 'express'
 
 import { PORT } from './enviroment'
-import { RouteNotFoundException } from './modules/shared/domain/exceptions/route-not-found.exception'
-import { correlationIdMiddleware } from './modules/shared/infrastructure/middlewares/correlation-id.middleware'
-import { handleError } from './modules/shared/infrastructure/middlewares/handle-error.middleware'
+import { RouteNotFoundException } from './modules/shared/core/domain/exceptions/route-not-found.exception'
+import { correlationIdMiddleware } from './modules/shared/core/infrastructure/middlewares/correlation-id.middleware'
+import { handleError } from './modules/shared/core/infrastructure/middlewares/handle-error.middleware'
 import { userRouter } from './modules/users/infrastructure/http-api/user-router'
 
 function bootstrap() {

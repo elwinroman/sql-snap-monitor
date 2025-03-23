@@ -1,10 +1,9 @@
+import { DomainError } from '@shared/core/domain/domain-error'
+import { InternalServerErrorException, ValidationException } from '@shared/core/domain/exceptions'
+import { logger } from '@shared/logger/infrastructure/pino-instance'
 import { NextFunction, Request, Response } from 'express'
 import { ZodError } from 'zod'
 
-import { DomainError } from '../../domain/exceptions/domain-error'
-import { InternalServerErrorException } from '../../domain/exceptions/internal-server-error.exception'
-import { ValidationException } from '../../domain/exceptions/validation.exception'
-import { logger } from '../../logger/infrastructure/pino-instance'
 import { httpErrorMap } from '../http/httpErrorMap'
 
 export function handleError(err: unknown, req: Request, res: Response, _next: NextFunction) {

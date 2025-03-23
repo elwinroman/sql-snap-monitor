@@ -15,7 +15,8 @@
     "declaration": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@shared/*": ["src/modules/shared/*"],
     },
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },

@@ -1,7 +1,7 @@
+import { setLoggerContext } from '@shared/logger/domain/logger-context'
 import { randomUUID } from 'crypto'
 import { NextFunction, Request, Response } from 'express'
 
-import { setLoggerContext } from '../../logger/domain/logger-context'
 const CORRELATION_ID_HEADER = 'X-Correlation-Id'
 
 /**
