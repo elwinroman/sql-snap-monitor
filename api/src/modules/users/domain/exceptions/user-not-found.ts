@@ -1,4 +1,4 @@
-import { DomainError } from '../../../shared/domain/exceptions/domain-error'
+import { DomainError } from '@shared/core/domain/domain-error'
 
 export class UserNotFoundException extends DomainError {
   readonly type = this.constructor.name

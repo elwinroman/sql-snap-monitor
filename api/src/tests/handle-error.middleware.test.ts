@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import { afterEach, describe, expect, test, vi } from 'vitest'
 
-import { DomainError } from '../modules/shared/domain/exceptions/domain-error'
-import { handleError } from '../modules/shared/infrastructure/middlewares/handle-error.middleware'
+import { DomainError } from '../modules/shared/core/domain/domain-error'
+import { handleError } from '../modules/shared/core/infrastructure/middlewares/handle-error.middleware'
 
 /*
 Test a implemenetar:

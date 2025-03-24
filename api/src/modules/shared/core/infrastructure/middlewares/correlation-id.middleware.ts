@@ -1,4 +1,4 @@
-import { setLoggerContext } from '@shared/logger/domain/logger-context'
+import { setLoggerRequestContext } from '@shared/logger/domain/logger-context'
 import { randomUUID } from 'crypto'
 import { NextFunction, Request, Response } from 'express'
 
@@ -22,5 +22,5 @@ export function correlationIdMiddleware(req: Request, res: Response, next: NextF
   res.set(CORRELATION_ID_HEADER, correlationId)
 
   // agrega el contexto de la petición al logger para usar en cualquier lugar
-  setLoggerContext({ correlationId: req.correlationId, method: req.method, url: req.url }, next)
+  setLoggerRequestContext({ correlationId: req.correlationId, method: req.method, url: req.url }, next)
 }

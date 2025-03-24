@@ -1,7 +1,7 @@
+import { Credential } from '@shared/core/domain/credential'
+import { connection } from '@shared/core/infrastructure/mssql/connection'
 import sql from 'mssql'
 
-import { Credential } from '../../shared/domain/credential'
-import { connection } from '../../shared/infrastructure/mssql/connection'
 import { PrimitiveUser, User } from '../domain/user'
 import { UserRepository } from '../domain/user-repository'
 
