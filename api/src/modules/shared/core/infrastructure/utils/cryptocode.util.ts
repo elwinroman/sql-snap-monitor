@@ -1,13 +1,15 @@
 /**
+ *
  * Encriptador/desencriptador basado en criptocode (python package)
  * https://github.com/gdavid7/cryptocode
+ *
  */
 
 import crypto from 'node:crypto'
 
-import { logger } from '../../../logger/infrastructure/pino-instance'
+import { DecryptionException } from '@shared/core/domain/exceptions'
 
-// import { PASS_PHRASE } from '@/config/enviroment'
+// import { PASS_PHRASE } from '@/enviroment'
 const PASS_PHRASE = 'AAED4554C235927C03BAD5BC313E81B0FBEB6FEC5BB60E682C70A7D5C8890B20'
 
 const passPhrase = PASS_PHRASE
@@ -85,10 +87,8 @@ class CryptoCode {
 
       return decrypted.toString('utf8')
     } catch (err: unknown) {
-      // if (err instanceof Error) logger.error(`Error al desencriptar: ${err.message}`)
-      if (err instanceof Error) throw new Error(`Error al desencriptar: ${err.stack}`)
-      else logger.fatal('Error desconocido al desencriptar')
-      return undefined
+      if (err instanceof Error) throw new DecryptionException()
+      else throw new Error('Error desconocido al desencriptar.')
     }
   }
 }

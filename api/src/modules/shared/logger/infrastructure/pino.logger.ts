@@ -13,12 +13,14 @@ export class PinoLogger implements Logger {
 
   constructor(dependencies: PinoLoggerDependencies) {
     this.logger = pino({
+      level: 'debug', // permite logs de nivel debug o superior para que se imprima en consola
       enabled: dependencies.isEnabled ?? true,
       // messageKey: 'message',
       transport: {
         target: 'pino-pretty',
         options: {
           messageKey: 'message',
+          colorize: true,
         },
       },
       messageKey: 'message',

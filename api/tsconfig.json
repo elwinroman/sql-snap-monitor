@@ -17,7 +17,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@shared/*": ["src/modules/shared/*"],
-      "@users/*": ["src/modules/users/*"]
+      "@auth-users/*": ["src/modules/auth-users/*"]
     },
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },

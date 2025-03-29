@@ -1,10 +1,10 @@
+import { userRouter } from '@auth-users/infrastructure/http-api/user-router'
+import { RouteNotFoundException } from '@shared/core/domain/exceptions/route-not-found.exception'
+import { correlationIdMiddleware } from '@shared/core/infrastructure/middlewares/correlation-id.middleware'
+import { handleError } from '@shared/core/infrastructure/middlewares/handle-error.middleware'
 import express, { json } from 'express'
 
 import { PORT } from './enviroment'
-import { RouteNotFoundException } from './modules/shared/core/domain/exceptions/route-not-found.exception'
-import { correlationIdMiddleware } from './modules/shared/core/infrastructure/middlewares/correlation-id.middleware'
-import { handleError } from './modules/shared/core/infrastructure/middlewares/handle-error.middleware'
-import { userRouter } from './modules/users/infrastructure/http-api/user-router'
 
 function bootstrap() {
   const app = express()
