@@ -8,6 +8,6 @@ export class DecryptionException extends DomainError {
   constructor() {
     super({ message: 'Error en la desencriptación.' })
     this.title = this.message
-    this.detail = 'Ha ocurrido un error en la desencriptación.'
+    this.detail = 'No se pudo completar la operación de desencriptación.'
   }
 }

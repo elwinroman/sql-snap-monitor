@@ -1,23 +1,18 @@
 import { DatabaseInfo } from '@auth-users/domain/database-info'
 import { DatabaseInfoRepository } from '@auth-users/domain/database-info-repository'
+import { DatabaseName, getDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/database/infrastructure/mssql'
 
 import { Credential } from '@/modules/shared/database/domain/credential'
-import { connection } from '@/modules/shared/repository/connection'
 
 export class MSSQLDatabaseInfoRepository implements DatabaseInfoRepository {
   private readonly credentials: Credential
 
-  constructor() {
-    this.credentials = {
-      host: 'DESKTOP-M41N',
-      database: 'SI_BDSqlSnapMonitor',
-      user: 'yz9hO83Q*qV9zbdnkdtJuWvwV4s+XBQ==*p98xaB83A92gmJVr1gAkIQ==*0bSQ+CYxdFjTs4PNZVQdXA==',
-      password: 'lTnCxA==*qiuFuItQK/Y5vfwAItAtqg==*XJpgFR+3Kvtg0A0UiVY9sA==*uPlKtg7CGlY7pudIVjviCg==',
-    }
+  constructor(private readonly msqlDatabaseConnection: MSSQLDatabaseConnection) {
+    this.credentials = getDatabaseCredentials(DatabaseName.APP)
   }
 
   async getInfo(): Promise<DatabaseInfo> {
-    const conn = await connection(this.credentials)
+    const conn = await this.msqlDatabaseConnection.connect(this.credentials)
     const request = conn.request()
 
     const stmt = `

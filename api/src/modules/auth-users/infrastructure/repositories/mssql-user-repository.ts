@@ -1,8 +1,6 @@
 import { PrimitiveUser, User } from '@auth-users/domain/user'
 import { UserRepository } from '@auth-users/domain/user-repository'
-import { DatabaseName } from '@shared/database/infrastructure/mssql/database.enum'
-import { getDatabaseCredentials } from '@shared/database/infrastructure/mssql/get-database-credentials'
-import { MSSQLDatabaseConnection } from '@shared/database/infrastructure/mssql/mssql-database-connection'
+import { DatabaseName, getDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/database/infrastructure/mssql'
 import sql from 'mssql'
 
 import { Credential } from '@/modules/shared/database/domain/credential'
@@ -23,7 +21,7 @@ export class MSSQLUserRepository implements UserRepository {
     const request = conn.request()
 
     const stmt = `
-      SELECT * FROM Usuario WHERE idUsuario = @idUsuario
+      SELECTs * FROM Usuario WHERE idUsuario = @idUsuario
     `
     request.input('idUsuario', sql.Int, id)
 

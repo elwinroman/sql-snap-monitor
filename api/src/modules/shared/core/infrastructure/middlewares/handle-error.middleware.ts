@@ -1,6 +1,6 @@
 import { DomainError } from '@shared/core/domain/domain-error'
 import { InternalServerErrorException, ValidationException } from '@shared/core/domain/exceptions'
-import { mapMSSQLError } from '@shared/database/infrastructure/mssql/map-mssql-error'
+import { mapMSSQLError } from '@shared/database/infrastructure/mssql'
 import { logger } from '@shared/logger/infrastructure/pino-instance'
 import { NextFunction, Request, Response } from 'express'
 import sql from 'mssql'

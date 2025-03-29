@@ -6,8 +6,9 @@ export class ForbiddenException extends DomainError {
   readonly detail: string
 
   constructor() {
-    super({ message: 'Forbidden' })
+    super({ message: 'Acceso prohibido.' })
     this.title = this.message
-    this.detail = 'No tienes permitido acceder a este recurso.'
+    this.detail =
+      'No tienes autorización para acceder a este recurso. Si crees que esto es un error, por favor contacta con el administrador.'
   }
 }

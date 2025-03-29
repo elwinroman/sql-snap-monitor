@@ -1,8 +1,6 @@
 import cryptocode from '@shared/core/infrastructure/utils/cryptocode.util'
 import { Credential } from '@shared/database/domain/credential'
 import { DatabaseConnection } from '@shared/database/domain/database-connection'
-import { DatabaseConnectionErrorException } from '@shared/database/domain/exceptions'
-import { logger } from '@shared/logger/infrastructure/pino-instance'
 import sql, { ConnectionPool } from 'mssql'
 
 /** Mapa de conexiones activas, donde la clave es una representación en cadena */

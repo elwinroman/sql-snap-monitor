@@ -6,8 +6,8 @@ export class RouteNotFoundException extends DomainError {
   readonly detail: string
 
   constructor() {
-    super({ message: 'Error en la ruta.' })
+    super({ message: 'Ruta no encontrada.' })
     this.title = this.message
-    this.detail = 'No se ha encontrado la ruta.'
+    this.detail = 'La ruta que intentó acceder no está disponible en el servidor. Por favor, verifique la URL y vuelva a intentarlo.'
   }
 }

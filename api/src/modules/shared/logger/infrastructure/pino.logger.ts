@@ -1,7 +1,6 @@
+import { Context, Logger, LoggerLevel, Message } from '@shared/logger/domain/logger'
+import { getLoggerRequestContext } from '@shared/logger/domain/logger-context'
 import pino from 'pino'
-
-import { Context, Logger, LoggerLevel, Message } from '../domain/logger'
-import { getLoggerRequestContext } from '../domain/logger-context'
 
 export interface PinoLoggerDependencies {
   isEnabled?: boolean

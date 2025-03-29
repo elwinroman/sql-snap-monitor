@@ -6,8 +6,8 @@ export class PermissionDenyException extends DomainError {
   readonly detail: string
 
   constructor() {
-    super({ message: 'PermissionDeny' })
+    super({ message: 'Permiso denegado.' })
     this.title = this.message
-    this.detail = 'No tienes permitido el acceso al sistema. Si crees que es un error, contacta con tu administrador.'
+    this.detail = 'El acceso al sistema ha sido denegado. Si consideras que esto es un error, por favor contacta con el administrador.'
   }
 }

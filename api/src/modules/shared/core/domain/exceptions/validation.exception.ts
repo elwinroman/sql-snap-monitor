@@ -6,8 +6,8 @@ export class ValidationException extends DomainError {
   readonly detail: string
 
   constructor() {
-    super({ message: 'Error en la validación' })
+    super({ message: 'Error en la validación de datos.' })
     this.title = this.message
-    this.detail = 'Ha ocurrido un error en la validación de los datos. Ingrese correctamente por favor'
+    this.detail = 'Los datos ingresados no son válidos. Por favor, revise los campos y vuelva a intentarlo.'
   }
 }

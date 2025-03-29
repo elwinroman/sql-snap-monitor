@@ -6,8 +6,8 @@ export class UnauthorizedException extends DomainError {
   readonly detail: string
 
   constructor() {
-    super({ message: 'Unauthorized' })
+    super({ message: 'Acceso no autorizado.' })
     this.title = this.message
-    this.detail = 'No estás autorizado para acceder a este recurso.'
+    this.detail = 'No tiene los permisos necesarios para acceder a este recurso. Verifica tu autenticación o contacta al administrador.'
   }
 }
