@@ -109,7 +109,9 @@ export const Columns = [
     cell: ({ row }) => {
       const { tipo } = row.original
       return (
-        <span className="w-fit rounded-sm bg-background-neutral px-1 py-0.5 text-center text-xs font-semibold text-secondary">{tipo}</span>
+        <span className="w-fit rounded-sm bg-background-neutral px-1 py-0.5 text-center text-xs font-semibold text-secondary whitespace-nowrap">
+          {tipo}
+        </span>
       )
     },
   },

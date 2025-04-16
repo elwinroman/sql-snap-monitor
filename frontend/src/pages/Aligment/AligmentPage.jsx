@@ -38,7 +38,7 @@ export function AligmentPage() {
         {/* Editor code */}
         <EditorCodeAligment />
 
-        <footer className="grid h-10 text-sm place-content-center text-secondary">
+        <footer className="grid h-8 text-sm place-content-center text-muted">
           <span>
             © 2025 <strong>Departamento de Aseguramiento de Calidad</strong>
           </span>

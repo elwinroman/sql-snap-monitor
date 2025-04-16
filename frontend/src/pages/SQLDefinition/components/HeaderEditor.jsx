@@ -9,21 +9,21 @@ export function HeaderEditor() {
   const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
-  const headerObjectName = object.name ? object.name : 'Definiciones SQL'
+  const headerObjectName = object.name || 'Definiciones SQL'
   const schemaName = object.name ? object.schema : ''
 
   return (
     <div className="flex flex-col justify-between px-6 py-4 gap-x-5 gap-y-4 sm:items-center md:flex-row">
-      {!onDiffEditor ? (
-        <div className="flex items-center gap-2">
-          {schemaName && (
-            <Badge variant="yellow" size="sm">
-              {schemaName}
-            </Badge>
-          )}
-          <h4 className="text-base font-medium text-primary">{headerObjectName}</h4>
-        </div>
-      ) : (
+      <div className="flex items-center gap-2">
+        {schemaName && (
+          <Badge variant="yellow" size="sm">
+            {schemaName}
+          </Badge>
+        )}
+        <h4 className={`font-medium text-amber-400 ${object.name ? 'text-sm' : 'text-base'}`}>{headerObjectName}</h4>
+      </div>
+
+      {onDiffEditor && (
         <h3 className="max-w-sm text-sm font-semibold text-primary sm:max-w-full">
           <span>Estas comparando con </span>
           <span className="font-bold text-green-500">PRE-PRODUCCIÓN</span>

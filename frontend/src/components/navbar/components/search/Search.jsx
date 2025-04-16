@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { TYPE_ACTION } from '@/constants'
 
 import { SearchResult } from './components/search-result/SearchResult'
 import { SearchTrigger } from './components/SearchTrigger'
@@ -36,7 +37,7 @@ export function Search() {
 
       {/* Dialog de búsqueda */}
       <Dialog open={open} onOpenChange={updateOpen}>
-        <DialogContent className="bg-background-paper shadow-custom-dialog flex h-auto max-h-[50%] min-h-[40%] flex-col gap-1 overflow-hidden p-0">
+        <DialogContent className="bg-background-paper shadow-custom-dialog flex h-[50%] flex-col gap-1 overflow-hidden p-0">
           <DialogHeader>
             <DialogDescription />
             <DialogTitle className="flex flex-col pt-3.5">
@@ -45,7 +46,7 @@ export function Search() {
               </span>
               <input
                 className="flex w-full h-10 px-4 font-semibold bg-transparent rounded-sm text-primary file:bg-transparent placeholder:font-normal placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-5"
-                placeholder="Busca tu objeto aquí"
+                placeholder={`${type.name === TYPE_ACTION.sqldefinition.name ? 'Busca un objeto SQL aquí' : 'Busca una tabla de usuario aquí'}`}
                 onInput={onInput}
                 spellCheck={false}
               />
