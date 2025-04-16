@@ -9,20 +9,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
+import { useAuthStore } from '@/stores'
+import { resetAllStores } from '@/utilities'
 
 export function LoginUsername() {
   const logoutUser = useAuthStore((state) => state.logoutUser)
   const username = useAuthStore((state) => state.username)
-  const resetSQLDefinitionStore = useSQLDefinitionStore((state) => state.reset)
-  const resetUserTableStore = useUserTableStore((state) => state.reset)
 
-  const closeSession = async (e) => {
-    await logoutUser()
-    await resetSQLDefinitionStore()
-    await resetUserTableStore()
-    await useSQLDefinitionStore.persist.clearStorage()
-    await useUserTableStore.persist.clearStorage()
+  const closeSession = () => {
+    logoutUser()
+    resetAllStores()
   }
 
   return (

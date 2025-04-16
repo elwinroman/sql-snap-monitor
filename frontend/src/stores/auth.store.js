@@ -79,7 +79,7 @@ export const useAuthStore = create(
       },
 
       // Clear auth store
-      clearAuthStore: () => {
+      reset: () => {
         set({ isAuthenticated: false })
         set({ username: null })
         set({ dbname: null })

@@ -36,6 +36,11 @@ export const useDiffEditorStore = create(
       onDiffEditor: false, //  activar o desactivar comparación de código
 
       updateDiffEditor: (state) => set({ onDiffEditor: state }),
+
+      // resetear valores a default
+      reset: () => {
+        set({ onDiffEditor: false })
+      },
     }),
     {
       name: 'diffEditor',

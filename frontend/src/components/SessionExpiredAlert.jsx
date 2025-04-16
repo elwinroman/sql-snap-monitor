@@ -10,21 +10,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { useAuthStore, useSQLDefinitionStore, useUserTableStore } from '@/stores'
+import { resetAllStores } from '@/utilities'
 
 export function SessionExpiredAlert() {
-  const clearAuthStore = useAuthStore((state) => state.clearAuthStore)
-  const resetSQLDefinitionStore = useSQLDefinitionStore((state) => state.reset)
-  const resetUsertTableStore = useUserTableStore((state) => state.reset)
-
   const navigate = useNavigate()
 
   const handleClick = () => {
-    clearAuthStore()
-    resetSQLDefinitionStore()
-    resetUsertTableStore()
-    useSQLDefinitionStore.persist.clearStorage()
-    useUserTableStore.persist.clearStorage()
+    resetAllStores()
     navigate('/login')
   }
 
