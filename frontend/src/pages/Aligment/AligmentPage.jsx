@@ -1,19 +1,38 @@
 import { Error500 } from '@/pages'
-import { useAuthStore } from '@/stores'
+import { useAligmentStore, useAuthStore } from '@/stores'
 
 import { EditorCodeAligment, HeaderEditor, MenuSidebar } from './components'
 
 export function AligmentPage() {
   const errorApiConection = useAuthStore((state) => state.errorApiConection)
+  const hideMenu = useAligmentStore((state) => state.hideMenu)
+
+  // tamaño del menu en pixeles
+  const sizeMenu = '350'
+
   if (errorApiConection) return <Error500 />
 
   return (
-    <section className="flex flex-row w-full h-screen">
-      <MenuSidebar className="hidden min-w-[200px] max-w-[350px] basis-[30%] flex-col bg-background sm:flex" />
+    <section className="relative flex w-full h-screen overflow-hidden">
+      {/* Sidebar con slide-in/out efecto */}
+      <aside
+        className={`
+          sm:block hidden
+          transition-all duration-300 ease-in-out
+          bg-background h-full
+          ${hideMenu ? 'w-0 opacity-0 overflow-hidden' : `w-[${sizeMenu}px] opacity-100`}
+        `}
+      >
+        <MenuSidebar className={`h-full w-[${sizeMenu}px] flex-col bg-background sm:flex`} />
+      </aside>
 
-      {/* overflow: hidden fixea bug de autorezise de monaco-editor */}
-      <main className="flex flex-col flex-auto w-auto overflow-hidden">
-        {/* Cabecera editor */}
+      {/* Main content */}
+      <main
+        className={`
+          flex flex-col flex-1 transition-all duration-300 ease-in-out
+          ${hideMenu ? 'w-full' : `w-[calc(100%-${sizeMenu}px)]`}
+        `}
+      >
         <HeaderEditor />
 
         {/* Editor code */}

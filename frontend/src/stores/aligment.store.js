@@ -15,6 +15,7 @@ export const useAligmentStore = create(
       object: { ...AligmentObjectInitialState },
       error: null,
       loading: null,
+      hideMenu: false, // oculta el sidebar
 
       // validation
       validate: true,
@@ -25,6 +26,7 @@ export const useAligmentStore = create(
       updateViewMode: ({ viewMode }) => set({ viewMode }),
       updateValidate: ({ state }) => set({ validate: state }),
       updateValidationError: ({ msg }) => set({ validationError: msg }),
+      updateHideMenu: ({ state }) => set({ hideMenu: state }),
 
       // Obtiene el objeto de definición
       getObject: async () => {
