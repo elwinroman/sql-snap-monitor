@@ -1,5 +1,6 @@
 import { DatabaseInfo } from '@auth-users/domain/database-info'
-import { DatabaseInfoRepository } from '@auth-users/domain/database-info-repository'
+
+import { DatabaseInfoRepository } from '@/modules/auth-users/domain/database-info.repository'
 
 export class GetDatabaseInfoUseCase {
   constructor(private readonly databaseInfoRepository: DatabaseInfoRepository) {}

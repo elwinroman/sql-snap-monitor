@@ -49,8 +49,6 @@ export function getStaticDatabaseCredentials(name: DatabaseName): Credential {
  */
 export async function getUserDatabaseCredentialsFromCache(): Promise<Credential> {
   const userId = getUserId()
-  if (!userId) throw new Error('ID de usuario no disponible en el contexto.')
-
   const cacheCredentials = await valkeyCacheRepository.get(`user:${userId}:credential`)
 
   if (!cacheCredentials) throw new Error(`Credenciales no encontradas para el usuario ${userId}.`)

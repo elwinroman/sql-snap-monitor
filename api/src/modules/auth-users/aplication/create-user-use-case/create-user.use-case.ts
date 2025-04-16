@@ -1,6 +1,7 @@
 import { PrimitiveUser } from '@auth-users/domain/user'
 import { User } from '@auth-users/domain/user'
-import { UserRepository } from '@auth-users/domain/user-repository'
+
+import { UserRepository } from '@/modules/auth-users/domain/user.repository'
 
 import { CreateUserDto } from './create-user.dto'
 

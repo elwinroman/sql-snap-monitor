@@ -10,6 +10,7 @@ import crypto from 'node:crypto'
 import { DecryptionException } from '@shared/core/domain/exceptions'
 
 import { PASS_PHRASE } from '@/enviroment'
+import { logger } from '@/modules/shared/logger/infrastructure/pino-instance'
 
 const passPhrase = PASS_PHRASE
 
@@ -58,6 +59,7 @@ class CryptoCode {
   }
 
   decrypt(encryptedString: string): string | undefined {
+    logger.debug(encryptedString)
     try {
       /** separa el string en partes */
       const [cipherTextB64, saltB64, nonceB64, tagB64] = encryptedString.split('*')

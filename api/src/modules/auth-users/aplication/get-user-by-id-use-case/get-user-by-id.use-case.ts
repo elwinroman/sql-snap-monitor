@@ -1,7 +1,8 @@
-import { UserNotFoundException } from '@auth-users/domain/exceptions/user-not-found.exception'
+import { UserNotFoundException } from '@/modules/users/domain/exceptions/user-not-found.exception'
 import { PrimitiveUser } from '@auth-users/domain/user'
-import { UserRepository } from '@auth-users/domain/user-repository'
 import { logger } from '@shared/logger/infrastructure/pino-instance'
+
+import { UserRepository } from '@/modules/auth-users/domain/user.repository'
 
 export class GetUserByIdUseCase {
   constructor(private readonly userRepository: UserRepository) {}

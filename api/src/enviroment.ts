@@ -27,20 +27,9 @@ const envSchema = z.object({
     .refine(urls => urls.every(url => z.string().url().safeParse(url).success), {
       message: 'Una o más URLs en ALLOWED_ORIGIN no son válidas',
     }),
-  JWT_SECRET: z
-    .string()
-    .min(1, 'JWT_SECRET no puede estar vacío')
-    .default(
-      '79e994b74e85f0d96c963b44287844feeee5edd04bd26cf354199f1843429cea72557a04945a4eb08cb5a548c64cc5c83172c5838bfc04711c1e414bdcf53fbd',
-    ),
-  SESSION_SECRET: z
-    .string()
-    .min(1, 'SESSION_SECRET no puede estar vacío')
-    .default('f8fc8dbaa5806006a7710d6cbd98dacba7d579de80e639e4705d42c7ac91ee56'),
-  PASS_PHRASE: z
-    .string()
-    .min(1, 'PASS_PHRASE no puede estar vacío')
-    .default('C0553C58301E2B9FC2D7D78ABB886B6CB923C55E0BAFAEEA5BB703D60104C24E'),
+  JWT_SECRET: z.string().min(1, 'JWT_SECRET no puede estar vacío').default('clave_secreta_jwt'),
+  SESSION_SECRET: z.string().min(1, 'SESSION_SECRET no puede estar vacío').default('clave_secreta_session'),
+  PASS_PHRASE: z.string().min(1, 'PASS_PHRASE no puede estar vacío').default('clave_secreta_encriptacion'),
 })
 
 const { data, error, success } = envSchema.safeParse(process.env)

@@ -1,14 +1,30 @@
 import { DatabaseInfo } from '@auth-users/domain/database-info'
-import { DatabaseInfoRepository } from '@auth-users/domain/database-info-repository'
-import { DatabaseName, getDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/database/infrastructure/mssql'
+import { getUserDatabaseCredentialsFromCache, MSSQLDatabaseConnection } from '@shared/database/infrastructure/mssql'
 
+import { DatabaseInfoRepository } from '@/modules/auth-users/domain/database-info.repository'
 import { Credential } from '@/modules/shared/database/domain/credential'
 
 export class MSSQLDatabaseInfoRepository implements DatabaseInfoRepository {
-  private readonly credentials: Credential
+  private constructor(
+    private readonly msqlDatabaseConnection: MSSQLDatabaseConnection,
+    private readonly credentials: Credential,
+  ) {}
 
-  constructor(private readonly msqlDatabaseConnection: MSSQLDatabaseConnection) {
-    this.credentials = getDatabaseCredentials(DatabaseName.APP)
+  /** Factory method, para asincronía */
+  static async create(): Promise<MSSQLDatabaseInfoRepository> {
+    const credentials = await getUserDatabaseCredentialsFromCache()
+    const connection = new MSSQLDatabaseConnection()
+    return new MSSQLDatabaseInfoRepository(connection, credentials)
+  }
+
+  async testConnection(): Promise<string> {
+    const conn = await this.msqlDatabaseConnection.connect(this.credentials)
+    const request = conn.request()
+
+    const stmt = 'SELECT GETDATE()'
+    const res = await request.query(stmt)
+
+    return res.recordset[0]
   }
 
   async getInfo(): Promise<DatabaseInfo> {
