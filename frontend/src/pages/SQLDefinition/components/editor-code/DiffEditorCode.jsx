@@ -114,14 +114,19 @@ export function DiffEditorCode() {
     // limpiar el observador y desmontar los componentes cuando el componente se desmonte
     return () => {
       isMounted.current = false
-      if (root.current) {
-        root.current.unmount()
-        root.current = null
-      }
-      if (root2.current) {
-        root2.current.unmount()
-        root2.current = null
-      }
+
+      // evita que el unmount se realice mientra React termina de renderizar, una vez termina el renderizado de React se desmonta (React no puede manejar dos desmontajes al mismo tiempo)
+      queueMicrotask(() => {
+        if (root.current) {
+          root.current.unmount()
+          root.current = null
+        }
+        if (root2.current) {
+          root2.current.unmount()
+          root2.current = null
+        }
+      })
+
       if (observer.current) {
         observer.current.disconnect()
       }
