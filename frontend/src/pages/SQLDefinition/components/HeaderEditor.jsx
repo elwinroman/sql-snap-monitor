@@ -15,10 +15,14 @@ export function HeaderEditor() {
   return (
     <div className="flex flex-col justify-between px-6 py-4 gap-x-5 gap-y-4 sm:items-center md:flex-row">
       {!onDiffEditor ? (
-        <h4 className="flex items-center gap-2">
-          <Badge variant="green">{schemaName}</Badge>
-          <span className="text-base font-medium text-primary">{headerObjectName}</span>
-        </h4>
+        <div className="flex items-center gap-2">
+          {schemaName && (
+            <Badge variant="yellow" size="sm">
+              {schemaName}
+            </Badge>
+          )}
+          <h4 className="text-base font-medium text-primary">{headerObjectName}</h4>
+        </div>
       ) : (
         <h3 className="max-w-sm text-sm font-semibold text-primary sm:max-w-full">
           <span>Estas comparando con </span>

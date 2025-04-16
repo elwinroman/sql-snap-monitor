@@ -35,7 +35,7 @@ export function MenuSidebar({ className }) {
           <div className="flex flex-col gap-3">
             <h4 className="text-sm font-bold text-primary">CONSULTA DE OBJETOS PARA ALINEACIÓN</h4>
 
-            <span className="text-sm text-balance text-primary">
+            <span className="text-sm text-balance text-secondary">
               Recupera los objetos alineados a <strong>pre-producción</strong> y dí adios a observaciones por desvío de ambientes
             </span>
           </div>

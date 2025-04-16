@@ -9,7 +9,7 @@ export const useEditorStore = create(
       fontSize: 13,
       renderWhitespace: 'none',
       renderSideBySide: true,
-      theme: 'dracula',
+      theme: 'oceanicnext',
 
       hasRoles: true, // ver roles y permisos al final del código
       // onDiffEditor: false, // activar o desactivar comparación de código
