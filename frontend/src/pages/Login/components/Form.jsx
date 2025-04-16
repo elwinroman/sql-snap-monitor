@@ -40,12 +40,12 @@ export function Form({ loading, setLoading }) {
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-0.5">
           <Label text="Server" />
-          <Input name="server" placeholder="Ingresa el nombre de tu servidor" />
+          <Input name="server" placeholder="Ingresa el nombre de tu servidor" defaultValue="10.5.5.81\pruebas" />
         </div>
 
         <div className="flex flex-col gap-0.5">
           <Label text="Database" />
-          <Input name="dbname" placeholder="Ingresa el nombre de tu BD" />
+          <Input name="dbname" placeholder="Ingresa el nombre de tu BD" defaultValue="SI_BDFinanciero" />
         </div>
 
         <div className="flex flex-col gap-0.5">
