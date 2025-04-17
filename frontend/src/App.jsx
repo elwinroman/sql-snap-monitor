@@ -1,6 +1,5 @@
 import './App.css'
 
-import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import { ServerDatabaseInfo } from '@/components/main/ServerDatabaseInfo'
@@ -11,9 +10,6 @@ import LayoutLanding from '@/layouts/LayoutLanding'
 import { AligmentPage, Error404, HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 
 function App() {
-  useEffect(() => {
-    document.documentElement.classList.add('dark')
-  }, [])
   return (
     <>
       {/* Página principal */}

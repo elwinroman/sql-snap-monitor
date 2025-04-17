@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants'
 
-import { AplicationLogo, Configuration, GithubRepo, LoginUsername, Search } from './components'
+import { AplicationLogo, Configuration, GithubRepo, LoginUsername, Search, ThemeToggle } from './components'
 import { SearchProvider } from './components/search/context/search'
 
 export function Navbar({ className }) {
@@ -30,6 +30,9 @@ export function Navbar({ className }) {
 
         {/* Icono configuración */}
         {/* <Configuration /> */}
+
+        {/* Theme toggle (dark/light) */}
+        <ThemeToggle />
 
         {/* Repo link */}
         <GithubRepo />

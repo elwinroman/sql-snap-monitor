@@ -1,0 +1,21 @@
+@tailwind utilities;
+
+input#toggle[type=checkbox]:checked + .wrapper {
+  @apply bg-baselayer;
+}
+
+input#toggle[type=checkbox]:checked + .wrapper label {
+  @apply bg-card;
+}
+
+input#toggle[type=checkbox]:checked + .wrapper label .circle {
+  @apply left-full bg-black translate-x-[-110%] translate-y-[-50%]
+}
+
+input#toggle[type=checkbox]:checked + .wrapper label .circle .isun {
+  @apply mt-[150%] opacity-0
+}
+
+input#toggle[type=checkbox]:checked + .wrapper label .circle .imoon {
+  @apply mt-0 opacity-100
+}
