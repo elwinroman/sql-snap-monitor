@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants'
 
-import { AplicationLogo, Configuration, GithubRepo, LoginUsername, Search, ThemeToggle } from './components'
+import { AplicationLogo, Configuration, GithubRepo, LoginUsername, NavbarMenu, Search, ThemeToggle } from './components'
 import { SearchProvider } from './components/search/context/search'
 
 export function Navbar({ className }) {
@@ -10,32 +10,33 @@ export function Navbar({ className }) {
 
   return (
     <header id="navbar" className={`w-full flex-[0_0_var(--navbar-height)] transition-all ${className}`}>
-      <ul className="flex flex-row items-center h-full py-6">
+      <ul className="flex flex-row items-center h-full gap-10 py-6">
         {/* Aplication logo */}
         <AplicationLogo />
 
-        {/* Espacio blanco */}
-        <div className="flex-grow"></div>
+        {/* Menu de navegación */}
+        <NavbarMenu className="flex-grow" />
 
-        {/* Input de búsqueda */}
-        {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && (
-          // <SearchInput key={currentLocation.pathname} />
-          <SearchProvider>
-            <Search />
-          </SearchProvider>
-        )}
+        <div className="flex flex-row items-center justify-center">
+          {/* Input de búsqueda */}
+          {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && (
+            <SearchProvider>
+              <Search />
+            </SearchProvider>
+          )}
 
-        {/* Usuario logueado o inicio de sesión */}
-        <LoginUsername />
+          {/* Usuario logueado o inicio de sesión */}
+          <LoginUsername />
 
-        {/* Icono configuración */}
-        {/* <Configuration /> */}
+          {/* Icono configuración */}
+          {/* <Configuration /> */}
 
-        {/* Theme toggle (dark/light) */}
-        <ThemeToggle />
+          {/* Theme toggle (dark/light) */}
+          <ThemeToggle />
 
-        {/* Repo link */}
-        <GithubRepo />
+          {/* Repo link */}
+          <GithubRepo />
+        </div>
       </ul>
     </header>
   )

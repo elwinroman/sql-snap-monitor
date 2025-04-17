@@ -3,7 +3,6 @@ import { useRef, useState } from 'react'
 
 import { Main } from '@/components/main/Main'
 import { Navbar } from '@/components/navbar/Navbar'
-import { NavbarMenu } from '@/components/navbar-menu/NavbarMenu'
 import { Footer } from '@/sections/footer'
 
 export default function Layout({ children }) {
@@ -34,7 +33,6 @@ export default function Layout({ children }) {
         <main className="flex flex-col w-full h-screen mx-auto">
           <div className="relative mb-6 bg-white dark:bg-inherit">
             <Navbar className="px-3 sm:px-4 md:px-5 lg:px-6" />
-            <NavbarMenu className="px-3 sm:px-4 md:px-5 lg:px-6" />
           </div>
 
           {/* Main content */}

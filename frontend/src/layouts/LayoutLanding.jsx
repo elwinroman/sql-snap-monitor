@@ -1,6 +1,6 @@
 import { Main } from '@/components/main/Main'
+import { NavbarMenu } from '@/components/navbar/components/NavbarMenu'
 import { Navbar } from '@/components/navbar/Navbar'
-import { NavbarMenu } from '@/components/navbar-menu/NavbarMenu'
 import { Footer } from '@/sections/footer'
 
 export default function LayoutLanding({ children }) {
