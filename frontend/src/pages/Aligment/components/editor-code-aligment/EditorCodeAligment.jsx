@@ -1,23 +1,12 @@
 import Editor from '@monaco-editor/react'
 
 import { CopyClipboard } from '@/components/main/CopyClipboard'
-import { THEMES } from '@/constants'
+import { EDITOR_BANNER, THEMES } from '@/constants'
 import { useAligmentStore, useEditorStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { SELECT_ACTION, VIEW_MODE } from '../../constants/select-actions'
 import { options } from './constants/editor-options'
-
-const defaultCode = String.raw`
-/****************************************************************************************/
-/*     ______  _____ _______ __   _ _    _ _______ __   _ _____ ______   _____    /     */
-/*     |_____]   |   |______ | \  |  \  /  |______ | \  |   |   |     \ |     |  /      */
-/*     |_____] __|__ |______ |  \_|   \/   |______ |  \_| __|__ |_____/ |_____| .       */
-/*                                                                                      */
-/*                                  REALIZA TU CONSULTA                                 */
-/*                                                                                      */
-/****************************************************************************************/    
-`
 
 export function EditorCodeAligment() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
@@ -31,7 +20,7 @@ export function EditorCodeAligment() {
   const { name, schema, permission, definition } = useAligmentStore((state) => state.object)
 
   const roles = formatPermissionRoles(permission, schema, name)
-  let code = defaultCode
+  let code = EDITOR_BANNER
 
   // muestra en el editor según la acción requerida
   if (error || (name && action === SELECT_ACTION.objeto)) {
@@ -67,7 +56,7 @@ export function EditorCodeAligment() {
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"
-        defaultValue={defaultCode}
+        defaultValue={EDITOR_BANNER}
         theme={theme}
         value={!loading ? code : 'Buscando información, esto puede tardar unos segundos...'}
         options={{ ...fullOptions }}

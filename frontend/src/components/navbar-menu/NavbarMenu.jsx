@@ -67,7 +67,7 @@ export function NavbarMenu({ className }) {
               onMouseLeave={handleMouseLeave}
             >
               <span
-                className={`text-nowrap font-['Geist_Sans'] text-sm transition-colors group-hover:text-primary dark:font-light ${currentLocation.pathname === menu.href ? 'text-primary' : 'text-muted'} `}
+                className={`text-nowrap font-['Geist_Sans'] text-sm transition-colors group-hover:text-primary dark:font-light ${currentLocation.pathname === menu.href ? 'text-primary' : 'dark:text-muted text-secondary'} `}
               >
                 {menu.title}
               </span>

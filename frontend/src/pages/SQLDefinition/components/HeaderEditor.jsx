@@ -16,11 +16,11 @@ export function HeaderEditor() {
     <div className="flex flex-col justify-between px-6 py-4 gap-x-5 gap-y-4 sm:items-center md:flex-row">
       <div className="flex items-center gap-2">
         {schemaName && (
-          <Badge variant="yellow" size="sm">
+          <Badge variant="red" size="sm">
             {schemaName}
           </Badge>
         )}
-        <h4 className={`font-medium text-amber-400 ${object.name ? 'text-sm' : 'text-base'}`}>{headerObjectName}</h4>
+        <h4 className={`font-semibold text-rose-600 dark:text-rose-500 ${object.name ? 'text-sm' : 'text-base'}`}>{headerObjectName}</h4>
       </div>
 
       {onDiffEditor && (

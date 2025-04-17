@@ -32,11 +32,15 @@ export default function Layout({ children }) {
       <div ref={pageRef} className="flex w-full overflow-y-auto App bg-baselayer scroll-smooth" onScroll={handleGetScrollPositionY}>
         {/* <Sidebar /> */}
         <main className="flex flex-col w-full h-screen mx-auto">
-          <div className="relative mb-6">
-            <Navbar className="px-4 sm:px-5 md:px-6 lg:px-7" />
-            <NavbarMenu className="px-4 sm:px-5 md:px-6 lg:px-7" />
+          <div className="relative mb-6 bg-white dark:bg-inherit">
+            <Navbar className="px-3 sm:px-4 md:px-5 lg:px-6" />
+            <NavbarMenu className="px-3 sm:px-4 md:px-5 lg:px-6" />
           </div>
-          <Main className="px-4 sm:px-5 md:px-6 lg:px-7">{children}</Main>
+
+          {/* Main content */}
+          <Main className="px-3 sm:px-4 md:px-5 lg:px-6">{children}</Main>
+
+          {/* Pie de pagina */}
           <Footer />
         </main>
       </div>

@@ -29,7 +29,7 @@ export function ObjectDetails({ object }) {
       {info.map((item) => (
         <li key={item.id} className="shadow-custom-card flex max-w-64 items-center justify-between gap-6 rounded-sm bg-card px-2.5 py-1.5">
           <div className="flex items-baseline gap-2">
-            <h6 className="text-xs font-semibold text-muted">{item.title}</h6>
+            <h6 className="text-xs font-semibold dark:text-muted text-secondary">{item.title}</h6>
             <p className="text-xs font-semibold text-primary">
               <span>{item.value} </span>
               {item.has_tag && <span className="text-xs text-amber-500">{item.tag}</span>}

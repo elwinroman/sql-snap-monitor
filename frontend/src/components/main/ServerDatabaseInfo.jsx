@@ -15,7 +15,7 @@ export function ServerDatabaseInfo() {
 
   return (
     <div className="flex flex-col items-baseline gap-2 sm:flex-row sm:gap-6">
-      <span className="text-xl text-primary">Explorando</span>
+      <span className="text-xl font-semibold dark:font-medium text-primary">Explorando</span>
 
       <div className="flex gap-4">
         <div className="flex items-start gap-1 flex-nowrap">

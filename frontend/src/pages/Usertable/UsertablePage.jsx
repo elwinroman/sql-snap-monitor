@@ -48,7 +48,9 @@ export function UsertablePage() {
               {schemaName}
             </Badge>
           )}
-          <h4 className={`text-amber-400 ${object.id ? 'text-sm' : 'text-base'}`}>{headerObjectName}</h4>
+          <h4 className={`text-amber-500 dark:text-amber-400 font-semibold dark:font-medium ${object.id ? 'text-sm' : 'text-base'}`}>
+            {headerObjectName}
+          </h4>
         </div>
 
         <div className="flex items-baseline justify-between gap-2 px-3 py-2 border border-dashed rounded-sm w-fit border-border">

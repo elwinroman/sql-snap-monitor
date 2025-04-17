@@ -1,22 +1,11 @@
 import Editor from '@monaco-editor/react'
 
 import { CopyClipboard } from '@/components/main/CopyClipboard'
-import { THEMES } from '@/constants'
+import { EDITOR_BANNER, THEMES } from '@/constants'
 import { useConfigStore, useEditorStore, useSQLDefinitionStore } from '@/stores'
 import { formatPermissionRoles } from '@/utilities'
 
 import { options } from './constants/editor-options'
-
-const defaultCode = String.raw`
-/****************************************************************************************/
-/*     ______  _____ _______ __   _ _    _ _______ __   _ _____ ______   _____    /     */
-/*     |_____]   |   |______ | \  |  \  /  |______ | \  |   |   |     \ |     |  /      */
-/*     |_____] __|__ |______ |  \_|   \/   |______ |  \_| __|__ |_____/ |_____| .       */
-/*                                                                                      */
-/*                                  REALIZA TU CONSULTA                                 */
-/*                                                                                      */
-/****************************************************************************************/    
-`
 
 export function EditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
@@ -46,7 +35,7 @@ export function EditorCode() {
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"
-        defaultValue={defaultCode}
+        defaultValue={EDITOR_BANNER}
         height={isMaximized ? '93vh' : '88vh'}
         theme={theme}
         value={formattedCode}
