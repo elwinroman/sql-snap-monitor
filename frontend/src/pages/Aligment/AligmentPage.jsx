@@ -7,9 +7,6 @@ export function AligmentPage() {
   const errorApiConection = useAuthStore((state) => state.errorApiConection)
   const hideMenu = useAligmentStore((state) => state.hideMenu)
 
-  // tamaño del menu en pixeles
-  const sizeMenu = '350'
-
   if (errorApiConection) return <Error500 />
 
   return (
@@ -20,17 +17,17 @@ export function AligmentPage() {
           sm:block hidden
           transition-all duration-300 ease-in-out
           bg-background h-full
-          ${hideMenu ? 'w-0 opacity-0 overflow-hidden' : `w-[${sizeMenu}px] opacity-100`}
+          ${hideMenu ? 'w-0 opacity-0 overflow-hidden' : `w-sidebar opacity-100`}
         `}
       >
-        <MenuSidebar className={`h-full w-[${sizeMenu}px] flex-col bg-background sm:flex`} />
+        <MenuSidebar className={`h-full w-sidebar flex-col bg-background sm:flex`} />
       </aside>
 
       {/* Main content */}
       <main
         className={`
           flex flex-col flex-1 transition-all duration-300 ease-in-out
-          ${hideMenu ? 'w-full' : `w-[calc(100%-${sizeMenu}px)]`}
+          ${hideMenu ? 'w-full' : 'w-contentArea'}
         `}
       >
         <HeaderEditor />

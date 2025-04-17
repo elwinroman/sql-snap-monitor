@@ -90,6 +90,11 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      width: {
+        // Sidebar size en AligmentPage
+        sidebar: '350px',
+        contentArea: 'calc(100% - 350px)',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
