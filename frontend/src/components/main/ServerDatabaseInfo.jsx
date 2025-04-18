@@ -15,20 +15,20 @@ export function ServerDatabaseInfo() {
 
   return (
     <div className="flex flex-col items-baseline gap-2 sm:flex-row sm:gap-6">
-      <span className="text-xl font-semibold dark:font-medium text-primary">Explorando</span>
+      <span className="text-primary text-xl font-semibold dark:font-medium">Explorando</span>
 
       <div className="flex gap-4">
-        <div className="flex items-start gap-1 flex-nowrap">
+        <div className="flex flex-nowrap items-start gap-1">
           <i className="text-secondary">
             <Server size={16} />
           </i>
-          <h1 className="text-sm font-bold text-secondary">{server}</h1>
+          <h1 className="text-secondary text-sm font-bold">{server}</h1>
         </div>
-        <div className="flex items-start gap-1 flex-nowrap">
+        <div className="flex flex-nowrap items-start gap-1">
           <i className="text-secondary">
             <DatabaseZap size={16} />
           </i>
-          <h1 className="text-sm font-bold text-secondary">{dbname}</h1>
+          <h1 className="text-secondary text-sm font-bold">{dbname}</h1>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ export function DeleteItem({ action, content, id }) {
     <TooltipProvider>
       <Tooltip delayDuration={100} disableHoverableContent={true}>
         <TooltipTrigger asChild>
-          <a onClick={deleteAction} className="px-1 py-1 rounded-sm transition-color hover:bg-background-paper">
+          <a onClick={deleteAction} className="transition-color hover:bg-background-paper rounded-sm px-1 py-1">
             <X size={16} className="text-secondary hover:text-primary" />
           </a>
         </TooltipTrigger>

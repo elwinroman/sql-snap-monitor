@@ -16,12 +16,12 @@ export function ThemeToggle() {
   return (
     <div className="px-2">
       <input type="checkbox" id="toggle" className="hidden" onChange={handleChange} checked={isDark} />
-      <div className="flex items-center justify-center bg-inherit wrapper">
-        <label className="relative w-10 h-5 border cursor-pointer inset-sha rounded-xl bg-action-hover" htmlFor="toggle">
+      <div className="wrapper flex items-center justify-center bg-inherit">
+        <label className="inset-sha bg-action-hover relative h-5 w-10 cursor-pointer rounded-xl border" htmlFor="toggle">
           {/* Circulo */}
-          <div className="circle absolute left-0 w-4 h-4 bg-white rounded-full top-[50%] translate-x-[10%] translate-y-[-50%] flex items-center justify-center transition-all duration-300">
-            <Sun size={12} strokeWidth={3} className="absolute mt-0 transition-all duration-300 opacity-100 isun text-amber-400" />
-            <Moon size={12} className="absolute mt-[-150%] imoon transition-all text-white opacity-0 duration-300" />
+          <div className="circle absolute top-[50%] left-0 flex h-4 w-4 translate-x-[10%] translate-y-[-50%] items-center justify-center rounded-full bg-white transition-all duration-300">
+            <Sun size={12} strokeWidth={3} className="isun absolute mt-0 text-amber-400 opacity-100 transition-all duration-300" />
+            <Moon size={12} className="imoon absolute mt-[-150%] text-white opacity-0 transition-all duration-300" />
           </div>
         </label>
       </div>

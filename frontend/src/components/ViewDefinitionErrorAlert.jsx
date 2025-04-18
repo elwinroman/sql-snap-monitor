@@ -25,7 +25,6 @@ export function ViewDefinitionErrorAlert() {
   const resetSQLDefinitionStore = useSQLDefinitionStore((state) => state.reset)
   const resetUserTableStore = useUserTableStore((state) => state.reset)
 
-
   // verificar que se tenga permiso de VIEW DEFINITION
   const handlePermission = async () => {
     setLoading(true)

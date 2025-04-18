@@ -29,7 +29,7 @@ export function SelectAction() {
       <label className="flex flex-col gap-2">
         <span className="text-sm font-semibold">Acción</span>
         <Select value={action} onValueChange={(value) => handleChange(value)}>
-          <SelectTrigger className="w-full h-10">
+          <SelectTrigger className="h-10 w-full">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

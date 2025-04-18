@@ -28,7 +28,7 @@ export function FavoriteItem({ content, data }) {
     <TooltipProvider>
       <Tooltip delayDuration={100} disableHoverableContent={true}>
         <TooltipTrigger asChild>
-          <a onClick={handleFavoriteAction} className="px-1 py-1 rounded-sm transition-color hover:bg-background-paper">
+          <a onClick={handleFavoriteAction} className="transition-color hover:bg-background-paper rounded-sm px-1 py-1">
             {data.lFavorito ? (
               <Star fill="#EAC612" stroke={0} size={16} className="text-secondary hover:text-primary" />
             ) : (

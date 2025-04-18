@@ -28,9 +28,9 @@ export default function Layout({ children }) {
 
   return (
     <>
-      <div ref={pageRef} className="flex w-full overflow-y-auto App bg-baselayer scroll-smooth" onScroll={handleGetScrollPositionY}>
+      <div ref={pageRef} className="App bg-baselayer flex w-full overflow-y-auto scroll-smooth" onScroll={handleGetScrollPositionY}>
         {/* <Sidebar /> */}
-        <main className="flex flex-col w-full h-screen mx-auto">
+        <main className="mx-auto flex h-screen w-full flex-col">
           <div className="relative mb-6 bg-white dark:bg-inherit">
             <Navbar className="px-3 sm:px-4 md:px-5 lg:px-6" />
           </div>
@@ -45,7 +45,7 @@ export default function Layout({ children }) {
 
       {/* Scroll to Top */}
       <button
-        className={`absolute z-50 grid text-white transition-all rounded-full w-9 h-9 right-10 bg-palette-primary-main bottom-10 place-content-center hover:bg-palette-primary-dark ${!showScrollBtn ? 'invisible opacity-0' : ''}`}
+        className={`bg-palette-primary-main hover:bg-palette-primary-dark absolute right-10 bottom-10 z-50 grid h-9 w-9 place-content-center rounded-full text-white transition-all ${!showScrollBtn ? 'invisible opacity-0' : ''}`}
         onClick={handleScrollToTop}
       >
         <ChevronUp size={20} />

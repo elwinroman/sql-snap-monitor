@@ -18,8 +18,8 @@ export function HeaderEditor() {
   }
 
   return (
-    <header className="flex flex-col justify-start px-4 py-3 gap-x-5 gap-y-2 bg-card sm:items-center lg:flex-row lg:justify-between">
-      <button className="px-1 py-1 rounded-sm hover:bg-background-neutral" onClick={handleHideMenu}>
+    <header className="bg-card flex flex-col justify-start gap-x-5 gap-y-2 px-4 py-3 sm:items-center lg:flex-row lg:justify-between">
+      <button className="hover:bg-background-neutral rounded-sm px-1 py-1" onClick={handleHideMenu}>
         <Menu size={17} />
       </button>
 
@@ -36,7 +36,7 @@ export function HeaderEditor() {
             <h4 className="text-sm font-semibold text-amber-400">{fullName}</h4>
           </div>
 
-          <span className="max-w-sm text-sm text-nowrap text-secondary sm:max-w-full"> (Actualizado al día de ayer)</span>
+          <span className="text-secondary max-w-sm text-sm text-nowrap sm:max-w-full"> (Actualizado al día de ayer)</span>
         </div>
       )}
 

@@ -52,7 +52,7 @@ export function EditorCodeAligment() {
   const fullOptions = { ...options, renderWhitespace, fontSize }
 
   return (
-    <div className="relative h-full group">
+    <div className="group relative h-full">
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"
@@ -64,7 +64,7 @@ export function EditorCodeAligment() {
       />
 
       {/* Copiar */}
-      <div className="absolute right-36 top-3">
+      <div className="absolute top-3 right-36">
         <CopyClipboard text={code} />
       </div>
     </div>

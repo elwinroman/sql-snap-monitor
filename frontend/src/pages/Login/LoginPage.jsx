@@ -13,7 +13,7 @@ export function LoginPage() {
   if (isAuthenticated) return <Navigate to="/" />
 
   return (
-    <section className="flex items-center w-full h-screen overflow-auto bg-background">
+    <section className="bg-background flex h-screen w-full items-center overflow-auto">
       {/* Sidebox  */}
       <SideBox />
 
@@ -21,11 +21,11 @@ export function LoginPage() {
         className={`relative m-auto flex w-[480px] flex-col gap-6 rounded-md px-10 py-10 ${loading ? 'pointer-events-none opacity-70' : ''}`}
       >
         {/* Loader */}
-        {loading && <LoaderSpinnerBot className="absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2 opacity-80" />}
+        {loading && <LoaderSpinnerBot className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80" />}
 
         <header className="flex flex-col items-center gap-3">
-          <h1 className="text-xl font-bold text-primary">Inicia sesión con tu cuenta</h1>
-          <p className="flex gap-1 text-sm text-secondary">
+          <h1 className="text-primary text-xl font-bold">Inicia sesión con tu cuenta</h1>
+          <p className="text-secondary flex gap-1 text-sm">
             <span>¿Solo buscas objetos de pre-producción?</span>
             <Link to="/aligment" className="text-palette-primary-main hover:underline">
               Empieza aquí

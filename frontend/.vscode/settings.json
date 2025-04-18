@@ -12,5 +12,5 @@
     "*.css": "tailwindcss"
   },
   "color-highlight.matchHslWithNoFunction": true,
-  "tailwindCSS.classFunctions": ["cva", "cx"]
+  "tailwindCSS.classFunctions": ["cva", "cx", "cn"]
 }
