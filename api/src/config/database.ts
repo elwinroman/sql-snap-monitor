@@ -1,8 +1,10 @@
 import sql, { ConnectionPool } from 'mssql'
 
-import { CONN_ERROR_CODES, ConnErrorCode } from '@/constants'
+import { CONN_ERROR_CODES, ConnErrorCode, MODE } from '@/constants'
 import { Credentials, MyCustomError } from '@/models'
 import cryptocode from '@/utils'
+
+import { NODE_ENV } from './enviroment'
 
 interface PoolStack {
   [key: string]: ConnectionPool
@@ -21,9 +23,12 @@ async function createPool(config: Credentials): Promise<ConnectionPool> {
   const existingPool = await getPool(key)
   if (existingPool) throw new Error('El pool ya existe')
 
+  const user = NODE_ENV === MODE.development ? config.username : cryptocode.decrypt(config.username)
+  const password = NODE_ENV === MODE.development ? config.password : cryptocode.decrypt(config.password)
+
   const newConfig = {
-    user: cryptocode.decrypt(config.username),
-    password: cryptocode.decrypt(config.password),
+    user: user,
+    password: password,
     database: config.dbname,
     server: config.server,
     pool: {

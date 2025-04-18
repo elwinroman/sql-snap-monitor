@@ -3,44 +3,34 @@ import 'dotenv/config'
 import { z } from 'zod'
 
 const envSchema = z.object({
-  PREPROD_DBSERVER: z.string({ message: 'PREPROD_DBSERVER es obligatorio' }).min(1, 'PREPROD_DBSERVER no puede estar vacío'),
-  PREPROD_DBNAME: z.string({ message: 'PREPROD_DBNAME es obligatorio' }).min(1, 'PREPROD_DBNAME no puede estar vacío'),
-  PREPROD_DBUSERNAME: z.string({ message: 'PREPROD_DBUSERNAME es obligatorio' }).min(1, 'PREPRODDB_USERNAME no puede estar vacío'),
-  PREPROD_DBPASSWORD: z.string({ message: 'PREPROD_DBPASSWORD es obligatorio' }).min(1, 'PREPRODDB_PASSWORD no puede estar vacío'),
+  PREPROD_DBSERVER: z.string().min(1),
+  PREPROD_DBNAME: z.string().min(1),
+  PREPROD_DBUSERNAME: z.string().min(1),
+  PREPROD_DBPASSWORD: z.string().min(1),
 
-  DBSERVER: z.string({ message: 'DBSERVER es obligatorio' }).min(1, 'DBSERVER no puede estar vacío'),
-  DBNAME: z.string({ message: 'DBNAME es obligatorio' }).min(1, 'DBNAME no puede estar vacío'),
-  DBUSERNAME: z.string({ message: 'DBUSERNAME es obligatorio' }).min(1, 'DBUSERNAME no puede estar vacío'),
-  DBPASSWORD: z.string({ message: 'PREPROD_DBSERVER es obligatorio' }).min(1, 'DBPASSWORD no puede estar vacío'),
+  DBSERVER: z.string().min(1),
+  DBNAME: z.string().min(1),
+  DBUSERNAME: z.string().min(1),
+  DBPASSWORD: z.string().min(1),
 
   PORT: z
     .string()
-    .min(1, 'PORT no puede estar vacío')
+    .min(1)
     .default('3000')
     .transform(val => Number(val))
-    .pipe(z.number({ message: 'PORT debe ser un número' })),
+    .pipe(z.number()),
   ALLOWED_ORIGINS: z
     .string()
     .optional()
-    .default('http://localhost:5173')
+    .default('http://192.168.1.68')
     .transform(val => val.split(',').map(url => url.trim()))
     .refine(urls => urls.every(url => z.string().url().safeParse(url).success), {
       message: 'Una o más URLs en ALLOWED_ORIGIN no son válidas',
     }),
-  JWT_SECRET: z
-    .string()
-    .min(1, 'JWT_SECRET no puede estar vacío')
-    .default(
-      '79e994b74e85f0d96c963b44287844feeee5edd04bd26cf354199f1843429cea72557a04945a4eb08cb5a548c64cc5c83172c5838bfc04711c1e414bdcf53fbd',
-    ),
-  SESSION_SECRET: z
-    .string()
-    .min(1, 'SESSION_SECRET no puede estar vacío')
-    .default('f8fc8dbaa5806006a7710d6cbd98dacba7d579de80e639e4705d42c7ac91ee56'),
-  PASS_PHRASE: z
-    .string()
-    .min(1, 'PASS_PHRASE no puede estar vacío')
-    .default('C0553C58301E2B9FC2D7D78ABB886B6CB923C55E0BAFAEEA5BB703D60104C24E'),
+  JWT_SECRET: z.string().min(1).default('your-jwt-secret-key'),
+  SESSION_SECRET: z.string().min(1).default('your-session-secret-key'),
+  PASS_PHRASE: z.string().min(1).default('your-pass-phrase-key'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).optional().default('development'),
 })
 
 const { data, error, success } = envSchema.safeParse(process.env)
@@ -66,4 +56,5 @@ export const {
   JWT_SECRET,
   SESSION_SECRET,
   PASS_PHRASE,
+  NODE_ENV,
 } = data

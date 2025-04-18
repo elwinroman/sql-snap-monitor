@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import { z } from 'zod'
 
-import { JWT_SECRET } from '@/config/enviroment'
-import { COMMON_ERROR_CODES, VALIDATION_ERROR } from '@/constants'
+import { JWT_SECRET, NODE_ENV } from '@/config/enviroment'
+import { COMMON_ERROR_CODES, MODE, VALIDATION_ERROR } from '@/constants'
 import { Credentials, CredentialsFromEnv_PREPROD, DatabaseDetails, MyCustomError } from '@/models'
 import { AuthService, LogService, UserService } from '@/services'
 import { generateHashForUniqueUID } from '@/utils'
@@ -42,8 +42,8 @@ export class AuthController {
       const credentials = {
         server: inputData.server,
         dbname: inputData.dbname,
-        username: cryptocode.encrypt(inputData.username),
-        password: cryptocode.encrypt(inputData.password),
+        username: NODE_ENV === MODE.development ? inputData.username : cryptocode.encrypt(inputData.username),
+        password: NODE_ENV === MODE.development ? inputData.password : cryptocode.encrypt(inputData.password),
       }
 
       const authService = new AuthService(credentials)
