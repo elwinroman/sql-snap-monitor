@@ -41,11 +41,11 @@ export function Search() {
           <DialogHeader>
             <DialogDescription />
             <DialogTitle className="flex flex-col pt-3.5">
-              <span className="bg-background-neutral mx-3.5 w-fit rounded-sm px-1.5 py-0.5 text-xs font-bold text-secondary">
+              <span className="bg-background-neutral text-secondary mx-3.5 w-fit rounded-sm px-1.5 py-0.5 text-xs font-bold">
                 {type.name}
               </span>
               <input
-                className="flex w-full h-10 px-4 font-semibold bg-transparent rounded-sm text-primary file:bg-transparent placeholder:font-normal placeholder:text-muted focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-5"
+                className="text-primary placeholder:text-muted flex h-10 w-full rounded-sm bg-transparent px-4 font-semibold file:bg-transparent placeholder:font-normal focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-5"
                 placeholder={`${type.name === TYPE_ACTION.sqldefinition.name ? 'Busca un objeto SQL aquí' : 'Busca una tabla de usuario aquí'}`}
                 onInput={onInput}
                 spellCheck={false}
@@ -54,7 +54,7 @@ export function Search() {
           </DialogHeader>
 
           {/* Separador */}
-          <div className="h-px -mx-1 bg-border"></div>
+          <div className="bg-border -mx-1 h-px"></div>
 
           {/* Body card */}
           <SearchResult />

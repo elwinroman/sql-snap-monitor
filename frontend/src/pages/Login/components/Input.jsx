@@ -6,7 +6,7 @@ export function Input({ name, type = 'text', placeholder, defaultValue }) {
       type={type}
       name={name}
       id={uuidv4()}
-      className="h-10 w-full rounded-sm border border-gray-500/20 bg-transparent px-3 text-sm outline-none transition-colors duration-300 placeholder:text-[14px] placeholder:text-muted placeholder:opacity-60 focus:border-transparent focus:outline-offset-0 focus:outline-white"
+      className="placeholder:text-muted h-10 w-full rounded-sm border border-gray-500/20 bg-transparent px-3 text-sm outline-hidden transition-colors duration-300 placeholder:text-[14px] placeholder:opacity-60 focus:border-transparent focus:outline-offset-0 focus:outline-white"
       placeholder={placeholder}
       defaultValue={defaultValue}
       required

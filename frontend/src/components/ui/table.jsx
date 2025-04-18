@@ -20,14 +20,14 @@ const TableBody = forwardRef(({ className, ...props }, ref) => (
 TableBody.displayName = 'TableBody'
 
 const TableFooter = forwardRef(({ className, ...props }, ref) => (
-  <tfoot ref={ref} className={cn('bg-muted/50 border-t font-medium [&>tr]:last:border-b-0', className)} {...props} />
+  <tfoot ref={ref} className={cn('bg-muted/50 border-t font-medium last:[&>tr]:border-b-0', className)} {...props} />
 ))
 TableFooter.displayName = 'TableFooter'
 
 const TableRow = forwardRef(({ className, ...props }, ref) => (
   <tr
     ref={ref}
-    className={cn('hover:bg-action-hover data-[state=selected]:bg-action-hover border-b border-border transition-colors', className)}
+    className={cn('hover:bg-action-hover data-[state=selected]:bg-action-hover border-border border-b transition-colors', className)}
     {...props}
   />
 ))
@@ -37,7 +37,7 @@ const TableHead = forwardRef(({ className, ...props }, ref) => (
   <th
     ref={ref}
     className={cn(
-      'h-12 bg-background-neutral pl-4 text-left align-middle font-semibold text-secondary [&:has([role=checkbox])]:pr-0',
+      'bg-background-neutral text-secondary h-12 pl-4 text-left align-middle font-semibold [&:has([role=checkbox])]:pr-0',
       className,
     )}
     {...props}
@@ -51,7 +51,7 @@ const TableCell = forwardRef(({ className, ...props }, ref) => (
 TableCell.displayName = 'TableCell'
 
 const TableCaption = forwardRef(({ className, ...props }, ref) => (
-  <caption ref={ref} className={cn('mt-4 text-sm text-muted-foreground', className)} {...props} />
+  <caption ref={ref} className={cn('text-muted-foreground mt-4 text-sm', className)} {...props} />
 ))
 TableCaption.displayName = 'TableCaption'
 

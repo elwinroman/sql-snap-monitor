@@ -23,11 +23,11 @@ export function PasswordInput({ name }) {
         type={visible ? 'text' : 'password'}
         name={name}
         ref={inputRef}
-        className="h-10 w-full rounded-sm border border-gray-500/20 bg-transparent px-3 text-sm outline-none transition-colors duration-300 placeholder:text-[14px] placeholder:text-muted placeholder:opacity-60 focus:border-transparent focus:outline-offset-0 focus:outline-white"
+        className="placeholder:text-muted h-10 w-full rounded-sm border border-gray-500/20 bg-transparent px-3 text-sm outline-hidden transition-colors duration-300 placeholder:text-[14px] placeholder:opacity-60 focus:border-transparent focus:outline-offset-0 focus:outline-white"
         placeholder="Ingresa tu contraseña"
         required
       />
-      <i className="absolute cursor-pointer user-select-none right-3 top-3 text-slate-300" onClick={handleClick} autoComplete="off">
+      <i className="user-select-none absolute top-3 right-3 cursor-pointer text-slate-300" onClick={handleClick} autoComplete="off">
         {visible ? <Eye size={16} /> : <EyeOff size={16} />}
       </i>
     </div>

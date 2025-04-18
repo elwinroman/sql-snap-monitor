@@ -55,19 +55,19 @@ export function NavbarMenu({ className }) {
     <div className={`${className}`}>
       <ul
         ref={menuContainer}
-        className="flex flex-nowrap overflow-x-auto overflow-y-hidden pb-1.5 justify-center"
+        className="flex flex-nowrap justify-center overflow-x-auto overflow-y-hidden pb-1.5"
         style={{ scrollbarColor: 'transparent', scrollBehavior: 'smooth' }}
       >
         {menuList.map((menu) => (
           <li key={menu.id}>
             <NavLink
-              className=" group relative z-10 inline-block rounded-sm px-3 py-1.5 transition-colors before:absolute before:left-0 before:top-[40px] before:w-full before:content-['']"
+              className="group relative z-10 inline-block rounded-sm px-3 py-1.5 transition-colors before:absolute before:top-[40px] before:left-0 before:w-full before:content-['']"
               to={menu.href}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
               <span
-                className={`text-nowrap font-['Geist_Sans'] text-sm transition-colors group-hover:text-primary dark:font-light ${currentLocation.pathname === menu.href ? 'text-rose-500 font-medium' : 'dark:text-muted text-secondary'} `}
+                className={`group-hover:text-primary font-['Geist_Sans'] text-sm text-nowrap transition-colors dark:font-light ${currentLocation.pathname === menu.href ? 'font-medium text-rose-500' : 'dark:text-muted text-secondary'} `}
               >
                 {menu.title}
               </span>
@@ -79,7 +79,7 @@ export function NavbarMenu({ className }) {
       {/*  Hover menú dinámico (Similar a vercel) */}
       <div
         ref={menuBackdrop}
-        className={`bg-action-hover pointer-events-none fixed left-0 top-0 h-[var(--height)] w-[var(--width)] translate-x-[var(--left)] translate-y-[var(--top)] rounded-sm opacity-0 backdrop-blur-lg transition-all duration-200 ease-in-out`}
+        className={`bg-action-hover pointer-events-none fixed top-0 left-0 h-[var(--height)] w-[var(--width)] translate-x-[var(--left)] translate-y-[var(--top)] rounded-sm opacity-0 backdrop-blur-lg transition-all duration-200 ease-in-out`}
       ></div>
     </div>
   )

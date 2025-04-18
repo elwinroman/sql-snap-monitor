@@ -37,7 +37,7 @@ export default defineConfig([
           singleQuote: true,
           trailingComma: 'all',
           bracketSpacing: true,
-          arrowParens: 'avoid',
+          arrowParens: 'always',
           endOfLine: 'auto',
           embeddedLanguageFormatting: 'off',
         },

@@ -6,7 +6,7 @@ export function SearchResult() {
 
   return (
     <>
-      <div className="flex-grow py-2 overflow-x-hidden overflow-y-auto">
+      <div className="grow overflow-x-hidden overflow-y-auto py-2">
         {/* Búsqueda */}
         {suggestions.length > 0 && <SuggestionResult />}
 

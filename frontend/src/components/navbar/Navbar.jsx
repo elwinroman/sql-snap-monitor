@@ -10,12 +10,12 @@ export function Navbar({ className }) {
 
   return (
     <header id="navbar" className={`w-full flex-[0_0_var(--navbar-height)] transition-all ${className}`}>
-      <ul className="flex flex-row items-center h-full gap-10 py-6">
+      <ul className="flex h-full flex-row items-center gap-10 py-6">
         {/* Aplication logo */}
         <AplicationLogo />
 
         {/* Menu de navegación */}
-        <NavbarMenu className="flex-grow" />
+        <NavbarMenu className="grow" />
 
         <div className="flex flex-row items-center justify-center">
           {/* Input de búsqueda */}
