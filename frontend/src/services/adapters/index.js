@@ -1,1 +1,1 @@
-export * from './object.adapater'
+export * from './object.adapter'
