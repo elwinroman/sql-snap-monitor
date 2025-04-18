@@ -31,11 +31,11 @@ export function DiffCompare() {
           onClick={handleClick}
           disabled={!objectId}
         >
-          <div className="flex items-center justify-center gap-1 flex-nowrap">
+          <div className="flex flex-nowrap items-center justify-center gap-1">
             <i className="text-white">
               <GitCompare size={14} />
             </i>
-            <span className={`text-nowrap pt-[2px] text-xs font-semibold text-white transition duration-700`}>
+            <span className={`pt-[2px] text-xs font-semibold text-nowrap text-white transition duration-700`}>
               {onDiffEditor ? 'Mostrar solo local' : 'Comparar'}
             </span>
           </div>

@@ -7,8 +7,8 @@ export function Error500() {
   }
 
   return (
-    <section className="grid w-screen h-screen place-content-center">
-      <article className="w-full max-w-[448px] flex flex-col text-center items-center gap-16">
+    <section className="grid h-screen w-screen place-content-center">
+      <article className="flex w-full max-w-[448px] flex-col items-center gap-16 text-center">
         <div className="flex flex-col items-center gap-4">
           <h3 className="font-['Barlow'] text-3xl">Internal server error 500</h3>
           <p className="text-secondary">Se ha producido un error, vuelva a intentarlo más tarde.</p>

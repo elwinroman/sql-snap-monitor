@@ -11,14 +11,14 @@ export function Options() {
   return (
     <div className="transition duration-200">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 sm:justify-end sm:gap-x-5 sm:gap-y-4">
-        <div className="flex items-center gap-2 flex-nowrap">
+        <div className="flex flex-nowrap items-center gap-2">
           <ThemeEditor />
           <FontSize />
           <PermissionRol />
           <IndentationWhitespace />
         </div>
 
-        <div className="flex items-center gap-1 flex-nowrap">
+        <div className="flex flex-nowrap items-center gap-1">
           <SideBySide />
           <DiffCompare />
         </div>

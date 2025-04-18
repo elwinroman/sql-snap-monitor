@@ -13,7 +13,7 @@ export function HeaderEditor() {
   const schemaName = object.name ? object.schemaName : ''
 
   return (
-    <div className="flex flex-col justify-between px-6 py-4 gap-x-5 gap-y-4 sm:items-center md:flex-row">
+    <div className="flex flex-col justify-between gap-x-5 gap-y-4 px-6 py-4 sm:items-center md:flex-row">
       <div className="flex items-center gap-2">
         {schemaName && (
           <Badge variant="red" size="sm">
@@ -24,7 +24,7 @@ export function HeaderEditor() {
       </div>
 
       {onDiffEditor && (
-        <h3 className="max-w-sm text-sm font-semibold text-primary sm:max-w-full">
+        <h3 className="text-primary max-w-sm text-sm font-semibold sm:max-w-full">
           <span>Estas comparando con </span>
           <span className="font-bold text-green-500">PRE-PRODUCCIÓN</span>
           <span className="text-secondary"> (Actualizado al día de ayer)</span>

@@ -41,20 +41,20 @@ export function UsertablePage() {
     <>
       {object.id && <ObjectDetails object={object} />}
 
-      <div className="flex flex-col gap-2 px-6 py-6 rounded-md bg-card shadow-custom-card">
+      <div className="bg-card shadow-custom-card flex flex-col gap-2 rounded-md px-6 py-6">
         <div className="flex items-center gap-2 pb-2">
           {schemaName && (
             <Badge variant="yellow" size="sm">
               {schemaName}
             </Badge>
           )}
-          <h4 className={`text-amber-500 dark:text-amber-400 font-semibold dark:font-medium ${object.id ? 'text-sm' : 'text-base'}`}>
+          <h4 className={`font-semibold text-amber-500 dark:font-medium dark:text-amber-400 ${object.id ? 'text-sm' : 'text-base'}`}>
             {headerObjectName}
           </h4>
         </div>
 
-        <div className="flex items-baseline justify-between gap-2 px-3 py-2 border border-dashed rounded-sm w-fit border-border">
-          <div className="flex flex-col gap-2 text-sm text-secondary">
+        <div className="border-border flex w-fit items-baseline justify-between gap-2 rounded-sm border border-dashed px-3 py-2">
+          <div className="text-secondary flex flex-col gap-2 text-sm">
             {tableDescription.length > 0 ? (
               tableDescription.map((item, index) => <span key={index}>{item.propertyValue} </span>)
             ) : (
@@ -65,7 +65,7 @@ export function UsertablePage() {
           {tableDescription.length > 1 && (
             <Popover>
               <PopoverTrigger>
-                <i className="grid place-items-center rounded-sm p-1.5 text-red-400 transition-colors hover:bg-action-hover">
+                <i className="hover:bg-action-hover grid place-items-center rounded-sm p-1.5 text-red-400 transition-colors">
                   <MessageCircleWarning size={14} />
                 </i>
               </PopoverTrigger>

@@ -24,7 +24,7 @@ export const Columns = [
       }
 
       return (
-        <button className="flex items-center w-full gap-2" onClick={handleNumberSort}>
+        <button className="flex w-full items-center gap-2" onClick={handleNumberSort}>
           <span>Nro</span>
           {{
             asc: <ArrowDown01 size={14} className="text-secondary" />,
@@ -46,7 +46,7 @@ export const Columns = [
     },
     header: ({ column }) => {
       return (
-        <button className="flex items-center w-full gap-2" onClick={column.getToggleSortingHandler()}>
+        <button className="flex w-full items-center gap-2" onClick={column.getToggleSortingHandler()}>
           <span>Nombre columna</span>
           {{
             asc: <ArrowDownAZ size={14} className="text-secondary" />,
@@ -97,7 +97,7 @@ export const Columns = [
     size: 50,
     header: ({ column }) => {
       return (
-        <button className="flex items-center w-full gap-2" onClick={column.getToggleSortingHandler()}>
+        <button className="flex w-full items-center gap-2" onClick={column.getToggleSortingHandler()}>
           <span>Tipo</span>
           {{
             asc: <ArrowDownAZ size={14} className="text-primary" />,
@@ -109,7 +109,7 @@ export const Columns = [
     cell: ({ row }) => {
       const { tipo } = row.original
       return (
-        <span className="w-fit rounded-sm bg-background-neutral px-1 py-0.5 text-center text-xs font-semibold text-secondary whitespace-nowrap">
+        <span className="bg-background-neutral text-secondary w-fit rounded-sm px-1 py-0.5 text-center text-xs font-semibold whitespace-nowrap">
           {tipo}
         </span>
       )
@@ -158,7 +158,7 @@ export const Columns = [
       const { descripcion } = row.original
       return (
         <div className="flex items-baseline justify-between gap-2">
-          <div className="flex flex-col gap-2 text-primary">
+          <div className="text-primary flex flex-col gap-2">
             {descripcion.length > 0 ? (
               descripcion.map((item) => <span key={uuidv4()}>{item} </span>)
             ) : (
@@ -169,7 +169,7 @@ export const Columns = [
           {descripcion.length > 1 && (
             <Popover>
               <PopoverTrigger>
-                <i className="grid place-items-center rounded-sm p-1.5 text-red-400 transition-colors hover:bg-action-hover">
+                <i className="hover:bg-action-hover grid place-items-center rounded-sm p-1.5 text-red-400 transition-colors">
                   <MessageCircleWarning size={14} />
                 </i>
               </PopoverTrigger>

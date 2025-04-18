@@ -31,7 +31,7 @@ export function EditorCode() {
   const fullOptions = { ...options, renderWhitespace, fontSize }
 
   return (
-    <div className="relative group">
+    <div className="group relative">
       <Editor
         beforeMount={handleEditorDidMount}
         language="sql"
@@ -44,7 +44,7 @@ export function EditorCode() {
       />
 
       {/* Butón de copiar */}
-      <div className="absolute right-36 top-3">
+      <div className="absolute top-3 right-36">
         <CopyClipboard text={formattedCode} />
       </div>
     </div>

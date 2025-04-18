@@ -29,7 +29,7 @@ export function PermissionRol() {
       <Tooltip delayDuration={100}>
         <TooltipTrigger asChild>
           {permission.length === 0 ? (
-            <button className="px-2 rounded-sm h-7">
+            <button className="h-7 rounded-sm px-2">
               <i className="text-red-400">
                 <ShieldAlert size={14} />
               </i>

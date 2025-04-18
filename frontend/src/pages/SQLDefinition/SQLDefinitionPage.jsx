@@ -42,7 +42,7 @@ export function SQLDefinitionPage() {
       <ObjectInfoPanel />
 
       <div
-        className={`shadow-custom-card overflow-hidden rounded-md bg-card pb-4 ${isMaximized ? 'fixed left-0 top-0 z-50 h-screen w-screen' : ''}`}
+        className={`shadow-custom-card bg-card overflow-hidden rounded-md pb-4 ${isMaximized ? 'fixed top-0 left-0 z-50 h-screen w-screen' : ''}`}
       >
         {/* Si no existe conexión con el servidor de alineación (mensaje de error) */}
         {errorAligment && errorAligment.statusCode !== 404 && <AligmentConectionError />}

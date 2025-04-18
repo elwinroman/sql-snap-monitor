@@ -49,7 +49,7 @@ export function DataTable({ headerColumns }) {
   })
 
   return (
-    <div className="border rounded-md">
+    <div className="rounded-md border">
       {/* <div className="flex items-center py-4">
         <input
           placeholder="Filter emails..."
