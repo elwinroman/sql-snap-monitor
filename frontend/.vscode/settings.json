@@ -10,5 +10,7 @@
   ],
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "color-highlight.matchHslWithNoFunction": true,
+  "tailwindCSS.classFunctions": ["cva", "cx"]
 }
