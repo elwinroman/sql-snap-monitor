@@ -21,7 +21,7 @@ COPY .swcrc /app
 COPY src /app/src
 
 # Ejecutar el comando de construcción
-RUN pnpm run build
+RUN pnpm run build:prod
 
 # Eliminar las dependencias de desarrollo si es necesario
 RUN pnpm prune --prod

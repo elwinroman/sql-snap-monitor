@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "npm run validate-typescript && npm run build:clean && npm run generate-dist",
+    "build:prod": "cross-env NODE_ENV=production npm run build",
     "start": "node ./dist/index.js",
     "dev": "nodemon",
     "build:clean": "rimraf dist; exit 0",
@@ -14,7 +15,7 @@
     "coverage": "vitest run --coverage",
     "generate-dist": "swc ./src -d dist --strip-leading-paths"
   },
-  "author": "",
+  "author": "Elwin Roman",
   "license": "ISC",
   "dependencies": {
     "@formkit/tempo": "0.1.2",
@@ -41,6 +42,7 @@
     "@types/mssql": "9.1.5",
     "@types/node": "22.10.10",
     "@vitest/coverage-v8": "2.0.3",
+    "cross-env": "^7.0.3",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.2.1",
