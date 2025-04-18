@@ -29,10 +29,10 @@ export const useSQLDefinitionStore = create(
       // obtiene el objeto de definición de pre-producción
       getSQLDefinitionAligmentObject: async () => {
         const updateDiffEditor = useDiffEditorStore.getState().updateDiffEditor
-        const { schema, name } = get().SQLDefinitionObject
+        const { schemaName, name } = get().SQLDefinitionObject
         set({ loadingAligment: true })
 
-        const res = await getSQLDefinitionAligmentObject({ name, schemaName: schema, useCredentials: true, isComparisonMode: true })
+        const res = await getSQLDefinitionAligmentObject({ name, schemaName, useCredentials: true, isComparisonMode: true })
 
         // error
         if (res.status === 'error') {
@@ -82,17 +82,7 @@ export const useSQLDefinitionStore = create(
         updateDiffEditor(false)
         set({ SQLDefinitionAligmentObject: { ...AligmentObjectInitialState } })
         set({
-          SQLDefinitionObject: {
-            id: res.data.id,
-            name: res.data.name,
-            type: res.data.type,
-            typeDesc: res.data.typeDesc,
-            schema: res.data.schema,
-            schemaId: res.data.schemaId,
-            createDate: res.data.createDate,
-            modifyDate: res.data.modifyDate,
-            permission: res.data.permission,
-          },
+          SQLDefinitionObject: { ...res.data },
         })
         set({ ...AligmentObjectInitialState })
         set({ SQLDefinitionCode: res.data.definition })

@@ -4,7 +4,7 @@ export const ObjectInitialState = {
   type: null,
   typeDesc: null,
   schemaId: null,
-  schema: null,
+  schemaName: null,
   createDate: null,
   modifyDate: null,
   permission: [],

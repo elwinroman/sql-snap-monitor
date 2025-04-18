@@ -10,7 +10,7 @@ export function HeaderEditor() {
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
   const headerObjectName = object.name || 'Definiciones SQL'
-  const schemaName = object.name ? object.schema : ''
+  const schemaName = object.name ? object.schemaName : ''
 
   return (
     <div className="flex flex-col justify-between px-6 py-4 gap-x-5 gap-y-4 sm:items-center md:flex-row">

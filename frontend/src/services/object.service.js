@@ -1,4 +1,5 @@
 import { API_URL } from '@/enviroment/enviroment'
+import { getSQLDefinitionByIdAdapter } from '@/services/adapters'
 
 /**
  * Busca un objeto que tenga una definición SQL por su nombre
@@ -37,7 +38,7 @@ export async function getSQLDefinitionObject({ id }) {
     })
     const res = await response.json()
 
-    return res
+    return getSQLDefinitionByIdAdapter(res)
   } catch (error) {
     throw new Error(error)
   }

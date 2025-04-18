@@ -9,7 +9,7 @@ import { options } from './constants/editor-options'
 
 export function EditorCode() {
   const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
-  const { schema, name, permission } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
+  const { schemaName, name, permission } = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const code = useSQLDefinitionStore((state) => state.SQLDefinitionCode)
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const fontSize = useEditorStore((state) => state.fontSize)
@@ -17,7 +17,7 @@ export function EditorCode() {
   const isMaximized = useConfigStore((state) => state.isMaximized)
 
   let formattedCode = null
-  if (code) formattedCode = hasRoles ? code + formatPermissionRoles(permission, schema, name) : code
+  if (code) formattedCode = hasRoles ? code + formatPermissionRoles(permission, schemaName, name) : code
 
   // cargar themes de monaco
   const handleEditorDidMount = (monaco) => {

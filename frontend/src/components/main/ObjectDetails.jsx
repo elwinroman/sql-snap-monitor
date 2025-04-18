@@ -3,7 +3,7 @@ export function ObjectDetails({ object }) {
     {
       id: 1,
       title: 'schema:',
-      value: object.schema ?? '',
+      value: object.schemaName ?? '',
     },
     {
       id: 2,
