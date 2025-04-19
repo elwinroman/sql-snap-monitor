@@ -1,6 +1,8 @@
 import { Eye, EyeOff } from 'lucide-react'
 import { useRef, useState } from 'react'
 
+import { Input } from '@/components/ui/input'
+
 export function PasswordInput({ name }) {
   const [visible, setVisible] = useState(false)
   const inputRef = useRef()
@@ -19,15 +21,8 @@ export function PasswordInput({ name }) {
 
   return (
     <div className="relative">
-      <input
-        type={visible ? 'text' : 'password'}
-        name={name}
-        ref={inputRef}
-        className="placeholder:text-muted h-10 w-full rounded-sm border border-gray-500/20 bg-transparent px-3 text-sm outline-hidden transition-colors duration-300 placeholder:text-[14px] placeholder:opacity-60 focus:border-transparent focus:outline-offset-0 focus:outline-white"
-        placeholder="Ingresa tu contraseña"
-        required
-      />
-      <i className="user-select-none absolute top-3 right-3 cursor-pointer text-slate-300" onClick={handleClick} autoComplete="off">
+      <Input type={visible ? 'text' : 'password'} name={name} ref={inputRef} placeholder="Ingresa tu contraseña" required />
+      <i className="user-select-none text-secondary absolute top-3 right-3 cursor-pointer" onClick={handleClick} autoComplete="off">
         {visible ? <Eye size={16} /> : <EyeOff size={16} />}
       </i>
     </div>

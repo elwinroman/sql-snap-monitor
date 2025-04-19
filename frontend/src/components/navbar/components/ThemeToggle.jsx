@@ -1,5 +1,3 @@
-import './theme-toggle.style.css'
-
 import { Moon, Sun } from 'lucide-react'
 
 import { useConfigStore } from '@/stores'

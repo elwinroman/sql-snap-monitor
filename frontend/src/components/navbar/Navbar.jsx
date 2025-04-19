@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom'
 
 import { ROUTES } from '@/constants'
 
-import { AplicationLogo, Configuration, GithubRepo, LoginUsername, NavbarMenu, Search, ThemeToggle } from './components'
+import { AplicationLogo, GithubRepo, LoginUsername, NavbarMenu, Search, ThemeToggle } from './components'
 import { SearchProvider } from './components/search/context/search'
 
 export function Navbar({ className }) {
@@ -10,14 +10,14 @@ export function Navbar({ className }) {
 
   return (
     <header id="navbar" className={`w-full flex-[0_0_var(--navbar-height)] transition-all ${className}`}>
-      <ul className="flex h-full flex-row items-center gap-10 py-6">
+      <ul className="flex h-full flex-col items-center justify-between gap-3 py-6 sm:flex-row sm:flex-wrap">
         {/* Aplication logo */}
-        <AplicationLogo />
+        <AplicationLogo classname="flex-[1_1_0]" />
 
         {/* Menu de navegación */}
-        <NavbarMenu className="grow" />
+        <NavbarMenu className="w-full sm:w-auto" />
 
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex flex-[1_1_0] flex-row items-center justify-end">
           {/* Input de búsqueda */}
           {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && (
             <SearchProvider>
@@ -27,9 +27,6 @@ export function Navbar({ className }) {
 
           {/* Usuario logueado o inicio de sesión */}
           <LoginUsername />
-
-          {/* Icono configuración */}
-          {/* <Configuration /> */}
 
           {/* Theme toggle (dark/light) */}
           <ThemeToggle />

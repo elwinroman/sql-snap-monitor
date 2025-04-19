@@ -55,7 +55,7 @@ export function NavbarMenu({ className }) {
     <div className={`${className}`}>
       <ul
         ref={menuContainer}
-        className="flex flex-nowrap justify-center overflow-x-auto overflow-y-hidden pb-1.5"
+        className="flex flex-nowrap justify-between overflow-x-auto sm:justify-center"
         style={{ scrollbarColor: 'transparent', scrollBehavior: 'smooth' }}
       >
         {menuList.map((menu) => (
