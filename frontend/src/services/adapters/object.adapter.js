@@ -10,7 +10,7 @@ export function getSQLDefinitionByIdAdapter(response) {
       schemaId: response.data.schemaId,
       schemaName: response.data.schema,
       createDate: response.data.createDate,
-      modifyDate: response.data.createDate.modifyDate,
+      modifyDate: response.data.modifyDate,
       definition: response.data.definition,
       permission: response.data.permission,
       isAligmentObject: response.data.isAligmentObject,

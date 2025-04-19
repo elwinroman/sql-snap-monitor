@@ -14,7 +14,7 @@ export function SearchTrigger({ reset, updateOpen }) {
     >
       <SearchIcon size={16} />
       <kbd className="bg-card text-muted-foreground pointer-events-none inline-flex h-5 items-center gap-1 rounded border px-1.5 font-mono font-medium opacity-100 select-none">
-        <span className="text-[10px]">⌘</span>
+        <span className="mt-0.5 text-base">⌘</span>
         <span className="text-sm">J</span>
       </kbd>
     </button>

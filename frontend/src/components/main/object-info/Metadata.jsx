@@ -1,0 +1,36 @@
+import { Calendar, Clock, User } from 'lucide-react'
+
+export function Metadata({ object }) {
+  return (
+    <>
+      {/* Detalles */}
+      <div className="flex flex-col gap-1 text-sm">
+        <div className="flex items-center space-x-2">
+          <User className="text-muted-foreground h-4 w-4" />
+          <span className="text-muted-foreground">Tipo:</span>
+          <span>{object.type}</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <User className="text-muted-foreground h-4 w-4" />
+          <span className="text-muted-foreground">Descripción original:</span>
+          <span>{object.typeDesc}</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Calendar className="text-muted-foreground h-4 w-4" />
+          <span className="text-muted-foreground">Creado:</span>
+          <span>{object.createDate}</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <User className="text-muted-foreground h-4 w-4" />
+          <span className="text-muted-foreground">Creado por:</span>
+          <span>Admin</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Clock className="text-muted-foreground h-4 w-4" />
+          <span className="text-muted-foreground">Última modificación:</span>
+          <span>{object.modifyDate}</span>
+        </div>
+      </div>
+    </>
+  )
+}

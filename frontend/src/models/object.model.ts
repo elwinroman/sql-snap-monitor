@@ -1,4 +1,29 @@
-export const ObjectInitialState = {
+export interface Permission {
+  stateDesc: string
+  permissionName: string
+  name: string // rol_name
+}
+
+export type PermissionRecord = Permission[]
+
+export interface IObjectSQLDefinition {
+  id: number | null
+  name: string | null
+  type: string | null
+  typeDesc: string | null
+  schemaId: number | null
+  schemaName: string | null
+  createDate: Date | null
+  modifyDate: Date | null
+  permission: Permission | []
+}
+
+export type IObjectSqlDefinitionAligment = Omit<IObjectSQLDefinition, 'schemaName'> & {
+  schema: string | null
+  definition: string | null
+}
+
+export const ObjectInitialState: IObjectSQLDefinition = {
   id: null,
   name: null,
   type: null,
@@ -10,7 +35,7 @@ export const ObjectInitialState = {
   permission: [],
 }
 
-export const AligmentObjectInitialState = {
+export const AligmentObjectInitialState: IObjectSqlDefinitionAligment = {
   id: null,
   name: null,
   type: null,
@@ -33,16 +58,4 @@ export const UserTableInitialState = {
   userTableExtendedPropertieList: [],
   userTableIndexList: [],
   userTableForeignKeyList: [],
-}
-
-export interface ObjectSQLDefinition {
-  id: number
-  name: string
-  type: string
-  typeDesc: string
-  schemaId: number
-  schemaName: string
-  createDate: Date
-  modifyDate: Date
-  // permission?: any[] // Uncommented and made optional for consistency
 }
