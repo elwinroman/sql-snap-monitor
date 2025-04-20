@@ -2,6 +2,7 @@ import { FontSize } from '@/components/editor-option/FontSize'
 import { IndentationWhitespace } from '@/components/editor-option/IndentationWhitespace'
 import { ThemeEditor } from '@/components/editor-option/ThemeEditor'
 
+import { CloseDiffEditor } from './CloseDiffEditor'
 import { SideBySide } from './SideBySide'
 
 export function DiffEditorOptions() {
@@ -16,6 +17,10 @@ export function DiffEditorOptions() {
 
         <div className="flex flex-nowrap items-center gap-1">
           <SideBySide />
+        </div>
+
+        <div className="flex flex-nowrap items-center gap-1">
+          <CloseDiffEditor />
         </div>
       </div>
     </div>

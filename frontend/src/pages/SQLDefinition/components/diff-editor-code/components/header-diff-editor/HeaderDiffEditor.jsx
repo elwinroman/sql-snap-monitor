@@ -12,7 +12,7 @@ export function HeaderDiffEditor() {
   const schemaName = object.name ? object.schemaName : ''
 
   return (
-    <div className="flex flex-col justify-between gap-x-5 gap-y-4 px-6 py-4 sm:items-center md:flex-row">
+    <div className="bg-card flex flex-col justify-between gap-x-5 gap-y-4 px-6 py-4 sm:items-center md:flex-row">
       <div className="flex items-center gap-2">
         {schemaName && (
           <Badge variant="red" size="sm">

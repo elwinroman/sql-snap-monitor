@@ -1,14 +1,11 @@
 import { Rows2 } from 'lucide-react'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { useDiffEditorStore, useEditorStore } from '@/stores'
+import { useEditorStore } from '@/stores'
 
 export function SideBySide() {
-  const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
   const renderSideBySide = useEditorStore((state) => state.renderSideBySide)
   const updateRenderSideBySide = useEditorStore((state) => state.updateRenderSideBySide)
-
-  if (!onDiffEditor) return null
 
   const handleClick = (e) => {
     e.preventDefault()

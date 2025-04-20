@@ -9,7 +9,7 @@ export function Navbar({ className }) {
   const currentLocation = useLocation()
 
   return (
-    <header id="navbar" className={`w-full flex-[0_0_var(--navbar-height)] transition-all ${className}`}>
+    <header id="navbar" className={`w-full flex-[0_0_var(--navbar-height)] shadow transition-all dark:shadow-none ${className}`}>
       <ul className="flex h-full flex-col items-center justify-between gap-3 py-6 sm:flex-row sm:flex-wrap">
         {/* Aplication logo */}
         <AplicationLogo classname="flex-[1_1_0]" />

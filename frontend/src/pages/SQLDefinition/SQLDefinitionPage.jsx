@@ -67,6 +67,8 @@ export function SQLDefinitionPage() {
               </div>
             </TabsTrigger>
           </TabsList>
+
+          {/* Comparador de código (renderiza el trigger como parte de los Tabs) */}
           <DiffCompare />
         </div>
         <TabsContent value="account">

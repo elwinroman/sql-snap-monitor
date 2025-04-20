@@ -45,7 +45,7 @@ export default function Layout({ children }) {
 
       {/* Scroll to Top */}
       <button
-        className={`bg-palette-primary-main hover:bg-palette-primary-dark absolute right-10 bottom-10 z-50 grid h-9 w-9 place-content-center rounded-full text-white transition-all ${!showScrollBtn ? 'invisible opacity-0' : ''}`}
+        className={`bg-palette-primary-main hover:bg-palette-primary-dark absolute right-10 bottom-10 z-10 grid h-9 w-9 place-content-center rounded-full text-white transition-all ${!showScrollBtn ? 'invisible opacity-0' : ''}`}
         onClick={handleScrollToTop}
       >
         <ChevronUp size={20} />

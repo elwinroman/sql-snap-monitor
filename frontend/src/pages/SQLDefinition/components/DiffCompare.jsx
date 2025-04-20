@@ -1,12 +1,17 @@
 import { GitCompare, GitPullRequestClosed } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 
-import { Dialog, DialogContentFull, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { ROUTES } from '@/constants'
 import { useDiffEditorStore, useSQLDefinitionStore } from '@/stores'
 
 import { DiffEditorCode } from './diff-editor-code/DiffEditorCode'
 
 export function DiffCompare({ classname }) {
+  // solo disponible para la ruta de definicón SQL
+  const currentLocation = useLocation()
+  if (currentLocation.pathname !== ROUTES.SQL_DEFINITION) return
+
   const onDiffEditor = useDiffEditorStore((state) => state.onDiffEditor)
   const updateDiffEditor = useDiffEditorStore((state) => state.updateDiffEditor)
   const { id } = useSQLDefinitionStore((state) => state.SQLDefinitionAligmentObject)
@@ -22,17 +27,17 @@ export function DiffCompare({ classname }) {
     // buscar el objeto de alineación solo una vez
     if (id === null) getSQLDefinitionAligmentObject()
 
-    updateDiffEditor(!onDiffEditor)
+    updateDiffEditor(true)
   }
 
   return (
     <div className={classname}>
       {hasAligmentObject ? (
-        <Dialog>
-          <DialogTrigger
-            onClick={handleClick}
+        <>
+          <button
             className={`${loadingAligment ? 'cursor-not-allowed' : ''} h-7 w-auto rounded-sm border border-zinc-400/30 bg-pink-700 px-2 transition duration-200 hover:bg-pink-600`}
             disabled={!objectId}
+            onClick={handleClick}
           >
             <div className="flex flex-nowrap items-center justify-center gap-1">
               <i className="text-white">
@@ -40,16 +45,11 @@ export function DiffCompare({ classname }) {
               </i>
               <span className={`pt-[2px] text-xs font-semibold text-nowrap text-white transition duration-700`}>Comparar</span>
             </div>
-          </DialogTrigger>
-          <DialogContentFull>
-            <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
-              <DialogDescription>
-                <DiffEditorCode />
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContentFull>
-        </Dialog>
+          </button>
+
+          {/* Editor integrado */}
+          {onDiffEditor && <DiffEditorCode />}
+        </>
       ) : (
         <TooltipProvider>
           <Tooltip delayDuration={100}>
