@@ -67,9 +67,6 @@ export class Server {
 
     this.app.listen(this.port, network.gethost, () => {
       if (process.env.NODE_ENV !== 'production') network.printNetworks()
-
-      console.log('lA VARIABLE NODE_ENV despues de Zod es: ', NODE_ENV)
-      console.log('NODE_ENV:', process.env.NODE_ENV)
     })
   }
 }

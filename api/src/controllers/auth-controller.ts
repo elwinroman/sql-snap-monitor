@@ -101,7 +101,7 @@ export class AuthController {
           status: 'success',
           statusCode: 200,
           message: 'Autenticación correcta',
-          data: { ...databaseDetails, dbprod_name: CredentialsFromEnv_PREPROD.dbname ?? 'Aligment' },
+          data: { ...databaseDetails, aliasServer: server, dbprod_name: CredentialsFromEnv_PREPROD.dbname ?? 'Aligment' },
         })
     } catch (err) {
       next(err)
