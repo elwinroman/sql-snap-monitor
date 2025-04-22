@@ -1,27 +1,28 @@
-import { DatabaseZap, Server } from 'lucide-react'
+import { ChevronRight, DatabaseZap, Server } from 'lucide-react'
 
 import { useAuthStore } from '@/stores'
 
 export function ServerDatabaseInfo() {
-  const dbname = useAuthStore((state) => state.dbname)
-  const server = useAuthStore((state) => state.server)
+  const dbName = useAuthStore((state) => state.dbName)
+  const serverName = useAuthStore((state) => state.serverName)
 
   return (
-    <div className="font-fira flex flex-col items-baseline justify-end gap-2 pb-1 sm:flex-row sm:gap-6">
-      <span className="text-primary text-base font-medium dark:font-normal">Explorando</span>
+    <div className="flex flex-col items-baseline justify-end gap-2 sm:flex-row sm:gap-4">
+      <span className="text-primary text-base font-medium select-none dark:font-normal">Explorando</span>
 
-      <div className="flex gap-4">
-        <div className="flex flex-nowrap items-start gap-1">
+      <div className="flex items-baseline gap-2">
+        <div className="flex flex-nowrap items-center gap-1">
           <i className="text-secondary">
-            <Server size={16} />
+            <Server size={14} />
           </i>
-          <h1 className="text-secondary text-sm font-bold">{server}</h1>
+          <span className="text-secondary text-sm font-medium">{serverName}</span>
         </div>
-        <div className="flex flex-nowrap items-start gap-1">
+        <ChevronRight size={14} className="text-secondary" />
+        <div className="flex flex-nowrap items-center gap-1">
           <i className="text-secondary">
-            <DatabaseZap size={16} />
+            <DatabaseZap size={14} />
           </i>
-          <h1 className="text-secondary text-sm font-bold">{dbname}</h1>
+          <span className="text-secondary text-sm font-medium">{dbName}</span>
         </div>
       </div>
     </div>

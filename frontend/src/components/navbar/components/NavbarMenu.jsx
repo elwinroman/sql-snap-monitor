@@ -61,13 +61,13 @@ export function NavbarMenu({ className }) {
         {menuList.map((menu) => (
           <li key={menu.id}>
             <NavLink
-              className="group relative z-10 inline-block rounded-sm px-3 py-1.5 transition-colors before:absolute before:top-[40px] before:left-0 before:w-full before:content-['']"
+              className="group relative z-10 inline-block rounded-sm px-4 py-1.5 transition-colors before:absolute before:top-[40px] before:left-0 before:w-full before:content-['']"
               to={menu.href}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
               <span
-                className={`group-hover:text-primary font-['Geist_Sans'] text-sm text-nowrap transition-colors dark:font-light ${currentLocation.pathname === menu.href ? 'font-medium text-rose-500' : 'dark:text-muted text-secondary'} `}
+                className={`font-['Geist_Sans'] text-sm text-nowrap transition-colors ${currentLocation.pathname === menu.href ? 'font-medium text-amber-500 dark:text-amber-400' : 'text-muted group-hover:text-amber-500 dark:group-hover:text-amber-400'} `}
               >
                 {menu.title}
               </span>

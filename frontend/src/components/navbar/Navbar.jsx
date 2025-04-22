@@ -17,7 +17,7 @@ export function Navbar({ className }) {
         {/* Menu de navegación */}
         <NavbarMenu className="w-full sm:w-auto" />
 
-        <div className="flex flex-[1_1_0] flex-row items-center justify-end">
+        <div className="flex flex-[1_1_0] flex-row items-center justify-end gap-2">
           {/* Input de búsqueda */}
           {(currentLocation.pathname === ROUTES.SQL_DEFINITION || currentLocation.pathname === ROUTES.USERTABLE) && (
             <SearchProvider>

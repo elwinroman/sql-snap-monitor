@@ -1,3 +1,4 @@
+// deprecated
 export function ObjectDetails({ object }) {
   const info = [
     {
