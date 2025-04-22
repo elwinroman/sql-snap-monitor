@@ -12,7 +12,7 @@ const InputWithIcon = forwardRef(({ className, type, endIcon, handleClick, isFoc
       <input
         type={type}
         className={cn(
-          `bg-background placeholder:text-muted flex h-10 w-full rounded-sm border px-4 py-2 text-sm file:border-0 file:bg-transparent file:text-base file:font-medium focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-5 ${isFocus ? 'border-amber-400' : 'border-gray-500/20'}`,
+          `bg-background placeholder:text-muted flex h-10 w-full rounded-sm border px-4 py-2 text-sm file:border-0 file:bg-transparent file:text-base file:font-medium focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-5 ${isFocus ? 'border-2 border-amber-500 dark:border-amber-400' : 'border-gray-500/20'}`,
           endIcon ? 'pr-11' : '',
           className,
         )}

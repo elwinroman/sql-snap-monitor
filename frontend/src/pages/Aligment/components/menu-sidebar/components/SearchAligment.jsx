@@ -23,7 +23,8 @@ export function SearchAligment() {
 
   // Maneja los eventos de teclado
   const handleKeyup = (e) => {
-    search === '' ? setHasInput(false) : setHasInput(true)
+    if (search === '') setHasInput(false)
+    else setHasInput(true)
 
     // evento ENTER
     if (e.key === 'Enter') {
@@ -52,8 +53,8 @@ export function SearchAligment() {
 
   return (
     <div>
-      <label className="flex flex-col gap-2">
-        <span className="text-sm">Objeto</span>
+      <label className="flex flex-col gap-1">
+        <span className="text-sm font-medium">Objeto</span>
         <InputWithIcon
           ref={inputRef}
           size="default"

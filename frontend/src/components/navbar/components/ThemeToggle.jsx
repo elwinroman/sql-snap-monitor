@@ -12,7 +12,7 @@ export function ThemeToggle() {
   }
 
   return (
-    <div className="px-2">
+    <div className="">
       <input type="checkbox" id="toggle" className="hidden" onChange={handleChange} checked={isDark} />
       <div className="wrapper flex items-center justify-center bg-inherit">
         <label className="inset-sha bg-action-hover relative h-5 w-10 cursor-pointer rounded-xl border" htmlFor="toggle">

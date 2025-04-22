@@ -1,7 +1,7 @@
 import { ArrowBigLeft, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
-import { LoginUsername } from '@/components/navbar/components'
+import { LoginUsername, ThemeToggle } from '@/components/navbar/components'
 import { Checkbox } from '@/components/ui/checkbox'
 import { APP_NAME } from '@/constants'
 import { useAuthStore } from '@/stores'
@@ -25,7 +25,10 @@ export function MenuSidebar({ className }) {
             <span className="text-sm">Regresar</span>
           </button>
         ) : (
-          <span className="text-primary font-bold">{APP_NAME}</span>
+          <div className="flex w-full items-center justify-between">
+            <span className="text-primary font-bold">{APP_NAME}</span>
+            <ThemeToggle />
+          </div>
         )}
       </header>
 
@@ -46,10 +49,10 @@ export function MenuSidebar({ className }) {
 
             {/* Radio options */}
             <ViewModeRadio />
-          </div>
 
-          {/* Input */}
-          <SearchAligment />
+            {/* Input */}
+            <SearchAligment />
+          </div>
 
           {/* Términos y condiciones */}
           <div>

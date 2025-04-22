@@ -9,11 +9,11 @@ const actions = [
     name: 'Recuperar objeto',
     value: SELECT_ACTION.objeto,
   },
-  {
-    id: 2,
-    name: 'Recuperar campos (atributos)',
-    value: SELECT_ACTION.campos,
-  },
+  // {
+  //   id: 2,
+  //   name: 'Recuperar campos (atributos)',
+  //   value: SELECT_ACTION.campos,
+  // },
 ]
 
 export function SelectAction() {
@@ -26,7 +26,7 @@ export function SelectAction() {
 
   return (
     <div>
-      <label className="flex flex-col gap-2">
+      <label className="flex flex-col gap-1">
         <span className="text-sm font-semibold">Acción</span>
         <Select value={action} onValueChange={(value) => handleChange(value)}>
           <SelectTrigger className="h-10 w-full">
