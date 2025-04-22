@@ -9,9 +9,10 @@ export const useAuthStore = create(
       isAuthenticated: false,
       isSessionExpired: false,
       username: null,
-      dbname: null,
+      dbName: null,
       dbprodName: null,
-      server: null,
+      serverName: null,
+      aliasServerName: null,
       errorAuth: null,
       errorViewDefinition: null,
       errorApiConection: false, // API connection error (505)
@@ -35,17 +36,17 @@ export const useAuthStore = create(
           set({ errorAuth: res })
           set({ isAuthenticated: false })
           set({ username: null })
-          set({ dbname: null })
+          set({ dbName: null })
           set({ dbprodName: null })
-          set({ server: null })
+          set({ serverName: null })
           return
         }
 
         set({ isAuthenticated: true })
         set({ username: credentials.username })
-        set({ dbname: res.data.name })
-        set({ dbprodName: res.data.dbprod_name })
-        set({ server: res.data.server })
+        set({ dbName: res.data.dbName })
+        set({ dbprodName: res.data.dbprodName })
+        set({ serverName: res.data.aliasServerName.toLowerCase() })
         set({ errorAuth: null })
       },
 
@@ -54,9 +55,9 @@ export const useAuthStore = create(
         await logout()
         set({ isAuthenticated: false })
         set({ username: null })
-        set({ dbname: null })
+        set({ dbName: null })
         set({ dbprodName: null })
-        set({ server: null })
+        set({ serverName: null })
         set({ errorAuth: null })
       },
 
@@ -75,6 +76,7 @@ export const useAuthStore = create(
           else set({ errorViewDefinition: null })
         } catch (err) {
           set({ errorApiConection: true })
+          console.err(err)
         }
       },
 
@@ -82,9 +84,9 @@ export const useAuthStore = create(
       reset: () => {
         set({ isAuthenticated: false })
         set({ username: null })
-        set({ dbname: null })
+        set({ dbName: null })
         set({ dbprodName: null })
-        set({ server: null })
+        set({ serverName: null })
         set({ errorAuth: null })
         set({ errorViewDefinition: null })
         set({ isSessionExpired: false })

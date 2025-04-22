@@ -13,6 +13,7 @@ import { AligmentConectionError, DiffCompare } from './components'
 import { EditorCode } from './components/editor-code/EditorCode'
 
 export function SQLDefinitionPage() {
+  const object = useSQLDefinitionStore((state) => state.SQLDefinitionObject)
   const error = useSQLDefinitionStore((state) => state.SQLDefinitionError)
   const updateError = useSQLDefinitionStore((state) => state.updateSQLDefinitionError)
 
@@ -45,33 +46,30 @@ export function SQLDefinitionPage() {
     <>
       <Card>
         {/* Información general del objeto */}
-        <GeneralInfo />
-
-        {/* Información del objeto (metadata, etc) */}
-        {/* <ObjectInfoPanel /> */}
+        <GeneralInfo title="Definición SQL" object={object} />
       </Card>
 
-      <Tabs defaultValue="account" className="relative w-full">
+      <Tabs defaultValue="script-tab" className="relative w-full">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <TabsList>
-            <TabsTrigger value="account">
+            <TabsTrigger value="script-tab">
               <div className="flex flex-nowrap items-center gap-1">
                 <Code size={14} />
                 <span>Script</span>
               </div>
             </TabsTrigger>
-            <TabsTrigger value="password">
+            {/* <TabsTrigger value="dependencies">
               <div className="flex flex-nowrap items-center gap-1">
                 <Code size={14} />
-                <span>Script</span>
+                <span>Dependencies</span>
               </div>
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
 
           {/* Comparador de código (renderiza el trigger como parte de los Tabs) */}
           <DiffCompare />
         </div>
-        <TabsContent value="account">
+        <TabsContent value="script-tab">
           {/* <Card> */}
           <div
             className={`shadow-custom-card bg-card overflow-hidden rounded-md pb-4 ${isMaximized ? 'fixed top-0 left-0 z-50 h-screen w-screen' : ''}`}
@@ -84,7 +82,7 @@ export function SQLDefinitionPage() {
           </div>
           {/* </Card> */}
         </TabsContent>
-        <TabsContent value="password">Change your password here.</TabsContent>
+        {/* <TabsContent value="dependencies">Componente en construcción.</TabsContent> */}
       </Tabs>
 
       <Toaster position="top-center" />

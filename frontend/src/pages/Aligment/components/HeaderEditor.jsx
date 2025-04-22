@@ -33,7 +33,7 @@ export function HeaderEditor() {
                 {schema}
               </Badge>
             )}
-            <h4 className="text-sm font-semibold text-amber-400">{fullName}</h4>
+            <h4 className="text-sm font-semibold text-amber-500 dark:text-amber-400">{fullName}</h4>
           </div>
 
           <span className="text-secondary max-w-sm text-sm text-nowrap sm:max-w-full"> (Actualizado al día de ayer)</span>

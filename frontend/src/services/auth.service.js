@@ -1,5 +1,7 @@
 import { API_URL } from '@/enviroment/enviroment'
 
+import { getDetailsAdapter } from './adapters/details.adapter'
+
 /**
  * Función para autenticar a un usuario
  *
@@ -19,7 +21,7 @@ export async function login({ credentials }) {
     })
 
     const res = await response.json()
-    return res
+    return getDetailsAdapter(res)
   } catch (err) {
     throw new Error(err)
   }

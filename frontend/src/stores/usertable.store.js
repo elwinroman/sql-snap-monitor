@@ -6,7 +6,7 @@ import { getUserTable } from '@/services'
 
 export const useUserTableStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       loading: false,
       userTableError: null,
       updateUsertableError: ({ state }) => {
@@ -46,7 +46,7 @@ export const useUserTableStore = create(
             name: res.data.name,
             type: res.data.type,
             typeDesc: res.data.typeDesc,
-            schema: res.data.schema,
+            schemaName: res.data.schema,
             createDate: res.data.createDate,
             modifyDate: res.data.modifyDate,
           },

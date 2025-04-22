@@ -10,7 +10,8 @@ export const useConfigStore = create(
       updateDark: (state) => {
         const html = document.documentElement
 
-        state ? html.classList.add('dark') : html.classList.remove('dark')
+        if (state) html.classList.add('dark')
+        else html.classList.remove('dark')
 
         set({ isDark: state })
       },
@@ -20,7 +21,8 @@ export const useConfigStore = create(
         const isDark = get().isDark
         const html = document.documentElement
 
-        isDark ? html.classList.add('dark') : html.classList.remove('dark')
+        if (isDark) html.classList.add('dark')
+        else html.classList.remove('dark')
       },
     }),
     {

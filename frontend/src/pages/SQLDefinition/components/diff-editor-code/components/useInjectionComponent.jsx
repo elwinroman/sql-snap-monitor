@@ -3,9 +3,12 @@ import { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom/client'
 
 import { CopyClipboard } from '@/components/main/CopyClipboard'
+import { useAuthStore } from '@/stores'
 
 /** Este hook inyecta y actualiza dinámicamente los componentes en Monaco Diff Editor */
 export function useInjectionComponent({ aligmentCode, formattedCode, renderSideBySide }) {
+  const dbprodName = useAuthStore((state) => state.dbprodName)
+  const dbName = useAuthStore((state) => state.dbName)
   const rootOriginal = useRef(null)
   const rootModified = useRef(null)
 
@@ -70,7 +73,7 @@ export function useInjectionComponent({ aligmentCode, formattedCode, renderSideB
             <HardDrive size={14} />
             <p>
               <span className="pr-1">Pre-producción:</span>
-              <span>SI_BDFinanciero</span>
+              <span>{dbprodName}</span>
             </p>
           </div>
         )}
@@ -87,7 +90,7 @@ export function useInjectionComponent({ aligmentCode, formattedCode, renderSideB
             <HardDrive size={14} />
             <p>
               <span className="pr-1">Pruebas:</span>
-              <span>SI_BDPruebasInternas9</span>
+              <span>{dbName}</span>
             </p>
           </div>
         )}

@@ -36,7 +36,7 @@ export function MonacoEditorCode() {
         beforeMount={handleEditorDidMount}
         language="sql"
         defaultValue={EDITOR_BANNER}
-        height={isMaximized ? '93.70vh' : '88vh'}
+        height={!code ? '23vh' : isMaximized ? '93.70vh' : '88vh'}
         theme={theme}
         value={formattedCode}
         options={{ ...fullOptions }}

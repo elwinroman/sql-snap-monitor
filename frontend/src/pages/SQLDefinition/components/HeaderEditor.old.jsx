@@ -20,7 +20,7 @@ export function HeaderEditor() {
             {schemaName}
           </Badge>
         )}
-        <h4 className={`font-semibold text-rose-600 dark:text-rose-500 ${object.name ? 'text-sm' : 'text-base'}`}>{headerObjectName}</h4>
+        <h4 className={`text-primary font-semibold ${object.name ? 'text-sm' : 'text-base'}`}>{headerObjectName}</h4>
       </div>
 
       {onDiffEditor && (

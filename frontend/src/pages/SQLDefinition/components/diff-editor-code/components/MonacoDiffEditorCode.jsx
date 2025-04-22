@@ -21,7 +21,7 @@ export function MonacoDiffEditorCode() {
   const hasRoles = useEditorStore((state) => state.hasRoles)
   const loadingAligment = useSQLDefinitionStore((state) => state.loadingAligment)
 
-  const dbname = useAuthStore((state) => state.dbname)
+  const dbName = useAuthStore((state) => state.dbName)
   const dbprodName = useAuthStore((state) => state.dbprodName)
 
   const formattedCode = hasRoles ? code + formatPermissionRoles(object.permission, object.schema, object.name) : code
@@ -45,7 +45,7 @@ export function MonacoDiffEditorCode() {
 
   // Define la MARCA DE AGUA para usarse en CSS
   document.documentElement.style.setProperty('--aligment-database-content', JSON.stringify(dbprodName))
-  document.documentElement.style.setProperty('--current-database-content', JSON.stringify(dbname))
+  document.documentElement.style.setProperty('--current-database-content', JSON.stringify(dbName))
 
   const fullOptions = { ...options, renderWhitespace, renderSideBySide, fontSize }
 
