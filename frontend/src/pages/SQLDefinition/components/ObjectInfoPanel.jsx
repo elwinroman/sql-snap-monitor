@@ -1,3 +1,4 @@
+// redefine
 import { ObjectDetails } from '@/components/main/ObjectDetails'
 import { useDiffEditorStore, useSQLDefinitionStore } from '@/stores'
 

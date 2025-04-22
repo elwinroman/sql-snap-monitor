@@ -24,7 +24,7 @@ export function MonacoDiffEditorCode() {
   const dbName = useAuthStore((state) => state.dbName)
   const dbprodName = useAuthStore((state) => state.dbprodName)
 
-  const formattedCode = hasRoles ? code + formatPermissionRoles(object.permission, object.schema, object.name) : code
+  const formattedCode = hasRoles ? code + formatPermissionRoles(object.permission, object.schemaName, object.name) : code
   const aligmentCode = hasRoles ? definition + formatPermissionRoles(permission, schema, name) : definition
 
   // cargar themes de monaco
