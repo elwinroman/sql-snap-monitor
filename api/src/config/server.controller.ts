@@ -1,3 +1,4 @@
+import { correlationIdMiddleware } from '@shared/infrastructure/middlewares/correlation-id.middlware'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json, Router } from 'express'
@@ -53,6 +54,7 @@ export class Server {
         },
       }),
     )
+    this.app.use(correlationIdMiddleware)
     this.app.use(json())
     this.app.use(cookieParser())
     this.app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
