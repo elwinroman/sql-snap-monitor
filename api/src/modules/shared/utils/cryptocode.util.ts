@@ -9,7 +9,7 @@ import crypto from 'node:crypto'
 
 // import { DecryptionException } from '@shared/domain/exceptions'
 import { PASS_PHRASE } from '@/config/enviroment'
-import { logger } from '@/modules/shared/infrastructure/pino-instance'
+import { logger } from '@/modules/shared/infrastructure/logger/pino-instance'
 
 const passPhrase = PASS_PHRASE
 

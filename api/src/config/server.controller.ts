@@ -1,10 +1,11 @@
-import { correlationIdMiddleware } from '@shared/infrastructure/middlewares/correlation-id.middlware'
+import { handleErrorMiddleware } from '@shared/infrastructure/middlewares/handle-error.middleware'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json, Router } from 'express'
 import session from 'express-session'
 
 import { handleError, routeNotFound, verifyToken } from '@/middlewares'
+import { correlationIdMiddleware } from '@/modules/shared/infrastructure/middlewares/correlation-id.middleware'
 
 import { NODE_ENV, SESSION_SECRET } from './enviroment'
 import { NetworkController } from './network.controller'
@@ -63,7 +64,8 @@ export class Server {
     this.app.use(this.routes)
     this.app.use(routeNotFound)
 
-    this.app.use(handleError)
+    // this.app.use(handleError)
+    this.app.use(handleErrorMiddleware)
 
     const network = new NetworkController(this.port)
 
