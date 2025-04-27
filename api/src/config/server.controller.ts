@@ -4,7 +4,7 @@ import cors from 'cors'
 import express, { json, Router } from 'express'
 import session from 'express-session'
 
-import { handleError, routeNotFound, verifyToken } from '@/middlewares'
+import { routeNotFound, verifyToken } from '@/middlewares'
 import { correlationIdMiddleware } from '@/modules/shared/infrastructure/middlewares/correlation-id.middleware'
 
 import { NODE_ENV, SESSION_SECRET } from './enviroment'

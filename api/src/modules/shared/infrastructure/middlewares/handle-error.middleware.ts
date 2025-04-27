@@ -44,6 +44,8 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
 
     // otro tipo de errores
     default:
+      if (err instanceof Error) logger.debug(err.name, { err })
+      else logger.debug('Error inesperado: ', { err })
       mappedError = new InternalServerErrorException()
       logger.error(mappedError.name, { mappedError })
       break
