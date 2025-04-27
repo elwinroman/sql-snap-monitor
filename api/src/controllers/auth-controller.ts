@@ -1,5 +1,7 @@
+import { InvalidCredentialsException } from '@auth/domain/invalid-credentials.exception'
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
+import sql from 'mssql'
 import { z } from 'zod'
 
 import { JWT_SECRET, NODE_ENV } from '@/config/enviroment'
@@ -104,6 +106,8 @@ export class AuthController {
           data: { ...databaseDetails, aliasServer: server, dbprod_name: CredentialsFromEnv_PREPROD.dbname ?? 'Aligment' },
         })
     } catch (err) {
+      // caso especial, si no se loguea a la base de datos, devolver error de login
+      if (err instanceof sql.ConnectionError) return next(new InvalidCredentialsException())
       next(err)
     }
   }

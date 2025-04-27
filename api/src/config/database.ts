@@ -42,32 +42,32 @@ async function createPool(config: Credentials): Promise<ConnectionPool> {
     },
   }
 
-  try {
-    pools[key] = await new sql.ConnectionPool(newConfig).connect()
-    return pools[key]
-  } catch (error) {
-    if (!(error instanceof sql.ConnectionError)) throw error
+  // try {
+  pools[key] = await new sql.ConnectionPool(newConfig).connect()
+  return pools[key]
+  // } catch (error) {
+  //   if (!(error instanceof sql.ConnectionError)) throw error
 
-    const originalError = {
-      code: error.code,
-      number: undefined,
-      message: error.message,
-    }
+  //   const originalError = {
+  //     code: error.code,
+  //     number: undefined,
+  //     message: error.message,
+  //   }
 
-    if (error.code === ConnErrorCode.ELOGIN) throw new MyCustomError({ ...CONN_ERROR_CODES.elogin, originalError })
-    if (error.code === ConnErrorCode.ETIMEOUT) throw new MyCustomError({ ...CONN_ERROR_CODES.etimeout, originalError })
-    if (error.code === ConnErrorCode.ESOCKET) throw new MyCustomError({ ...CONN_ERROR_CODES.esocket, originalError })
-    if (error.code === ConnErrorCode.EALREADYCONNECTED) throw new MyCustomError({ ...CONN_ERROR_CODES.ealreadyconnected, originalError })
-    if (error.code === ConnErrorCode.EALREADYCONNECTING) throw new MyCustomError({ ...CONN_ERROR_CODES.ealreadyconnecting, originalError })
-    if (error.code === ConnErrorCode.EINSTLOOKUP) throw new MyCustomError({ ...CONN_ERROR_CODES.einstlookup, originalError })
+  //   if (error.code === ConnErrorCode.ELOGIN) throw new MyCustomError({ ...CONN_ERROR_CODES.elogin, originalError })
+  //   if (error.code === ConnErrorCode.ETIMEOUT) throw new MyCustomError({ ...CONN_ERROR_CODES.etimeout, originalError })
+  //   if (error.code === ConnErrorCode.ESOCKET) throw new MyCustomError({ ...CONN_ERROR_CODES.esocket, originalError })
+  //   if (error.code === ConnErrorCode.EALREADYCONNECTED) throw new MyCustomError({ ...CONN_ERROR_CODES.ealreadyconnected, originalError })
+  //   if (error.code === ConnErrorCode.EALREADYCONNECTING) throw new MyCustomError({ ...CONN_ERROR_CODES.ealreadyconnecting, originalError })
+  //   if (error.code === ConnErrorCode.EINSTLOOKUP) throw new MyCustomError({ ...CONN_ERROR_CODES.einstlookup, originalError })
 
-    throw new MyCustomError({
-      status: 'error',
-      statusCode: 400,
-      message: 'Error desconocido en la conexión a la base de datos',
-      originalError,
-    })
-  }
+  //   throw new MyCustomError({
+  //     status: 'error',
+  //     statusCode: 400,
+  //     message: 'Error desconocido en la conexión a la base de datos',
+  //     originalError,
+  //   })
+  // }
 }
 
 /**

@@ -17,8 +17,7 @@ export class AuthService implements ForAuthenticating {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
-    try {
-      const stmt = `
+    const stmt = `
         SELECT
           name,
           cmptlevel,
@@ -27,46 +26,37 @@ export class AuthService implements ForAuthenticating {
         FROM sys.sysdatabases
         WHERE dbid = DB_ID()
       `
-      const res = await request.query(stmt)
+    const res = await request.query(stmt)
 
-      const data: DatabaseDetails = {
-        name: res.recordset[0].name,
-        compatibility: res.recordset[0].cmptlevel,
-        description: res.recordset[0].value,
-        server: res.recordset[0].server_name,
-      }
-
-      return data
-    } catch (error) {
-      if (!(error instanceof sql.RequestError)) throw error
-      throwRequestError(error)
+    const data: DatabaseDetails = {
+      name: res.recordset[0].name,
+      compatibility: res.recordset[0].cmptlevel,
+      description: res.recordset[0].value,
+      server: res.recordset[0].server_name,
     }
+
+    return data
   }
 
   async checkLogin(): Promise<Health | undefined> {
     const conn = await connection(this.credentials)
     const request = conn.request()
 
-    try {
-      const stmt = `
+    const stmt = `
         SELECT 
           GETUTCDATE() AS date,
           viewdefinition_permission = COALESCE((SELECT TOP 1 IIF(definition IS NULL, 0, 1) FROM sys.sql_modules), 0),
           definition_counts = (SELECT COUNT(*) FROM sys.sql_modules)
       `
-      const res = await request.query(stmt)
+    const res = await request.query(stmt)
 
-      // si no existen SPs, Views por defecto asumimos que tiene permisos (lo cual no es necesariamente correcto)
-      const definitionCounts = res.recordset[0].definition_counts
+    // si no existen SPs, Views por defecto asumimos que tiene permisos (lo cual no es necesariamente correcto)
+    const definitionCounts = res.recordset[0].definition_counts
 
-      const data: Health = {
-        date: format(res.recordset[0].date, 'DD-MM-YYYY HH:mm:ss'),
-        viewdefinition_permission: definitionCounts > 0 ? Boolean(res.recordset[0].viewdefinition_permission) : true,
-      }
-      return data
-    } catch (error) {
-      if (!(error instanceof sql.RequestError)) throw error
-      throwRequestError(error)
+    const data: Health = {
+      date: format(res.recordset[0].date, 'DD-MM-YYYY HH:mm:ss'),
+      viewdefinition_permission: definitionCounts > 0 ? Boolean(res.recordset[0].viewdefinition_permission) : true,
     }
+    return data
   }
 }
