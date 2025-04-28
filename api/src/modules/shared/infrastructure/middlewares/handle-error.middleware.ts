@@ -7,9 +7,18 @@ import { NextFunction, Request, Response } from 'express'
 import sql from 'mssql'
 import { ZodError } from 'zod'
 
+import { MyCustomError } from '@/models'
+
 export function handleErrorMiddleware(err: unknown, req: Request, res: Response, _next: NextFunction) {
   let mappedError: DomainError
   let invalidParams = undefined
+
+  // soporte VERSION anterior (se eliminará completaco la migración)
+  if (err instanceof MyCustomError) {
+    logger.error(err.name, { err })
+    const { status, statusCode, message, originalError } = err
+    return res.status(statusCode).json({ status, statusCode, message, originalError })
+  }
 
   /** Manejo de errores por tipo */
   switch (true) {
@@ -75,7 +84,7 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     },
   }
 
-  // Soporte VERSION anterior, cuando se adapte en el frontend eliminar
+  // soporte VERSION anterior (se eliminará completaco la migración)
   const legacyErrorApiResponse = {
     status: 'error',
     statusCode: status,

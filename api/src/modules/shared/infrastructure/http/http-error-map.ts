@@ -1,4 +1,7 @@
 export const httpErrorMap: Record<string, { status: number; errorCode: number }> = {
+  // Auth
+  InvalidCredentialsException: { status: 404, errorCode: 10009 },
+
   // Users
   UserNotFoundException: { status: 404, errorCode: 10001 },
   UserAlreadyExistsError: { status: 400, errorCode: 10002 },

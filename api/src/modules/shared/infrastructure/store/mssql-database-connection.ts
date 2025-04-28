@@ -1,9 +1,9 @@
-import { Credential } from '@shared/domain/credential'
 import cryptocode from '@shared/utils/cryptocode.util'
 import sql, { ConnectionPool } from 'mssql'
 
 import { NODE_ENV } from '@/config/enviroment'
 import { MODE } from '@/constants'
+import { StoreUserSchema } from '@/modules/shared/domain/store'
 
 /** Mapa de conexiones activas, donde la clave es una representación en cadena */
 interface PoolStack {
@@ -18,7 +18,7 @@ export class MSSQLDatabaseConnection {
    * @param config Credenciales de conexión.
    * @returns Pool de conexión.
    */
-  async connect(config: Credential): Promise<ConnectionPool> {
+  async connect(config: StoreUserSchema): Promise<ConnectionPool> {
     const key = JSON.stringify(config)
     if (this.pools[key]) return this.pools[key]
 
@@ -31,7 +31,7 @@ export class MSSQLDatabaseConnection {
    * @param key - Clave única del pool.
    * @returns ConnectionPool conectado.
    */
-  private async createPool(config: Credential, key: string): Promise<ConnectionPool> {
+  private async createPool(config: StoreUserSchema, key: string): Promise<ConnectionPool> {
     const user = NODE_ENV === MODE.development ? config.user : cryptocode.decrypt(config.user)
     const password = NODE_ENV === MODE.development ? config.password : cryptocode.decrypt(config.password)
 
