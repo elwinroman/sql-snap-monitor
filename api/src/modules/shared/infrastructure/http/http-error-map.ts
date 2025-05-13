@@ -1,17 +1,23 @@
 export const httpErrorMap: Record<string, { status: number; errorCode: number }> = {
-  // Auth
-  InvalidCredentialsException: { status: 404, errorCode: 10009 },
-
-  // Users
-  UserNotFoundException: { status: 404, errorCode: 10001 },
-  UserAlreadyExistsError: { status: 400, errorCode: 10002 },
-  InternalServerErrorException: { status: 500, errorCode: 10003 },
-  PermissionDenyException: { status: 502, errorCode: 10005 },
-
   // Commons
-  ValidationException: { status: 404, errorCode: 10006 },
-  RouteNotFoundException: { status: 404, errorCode: 10007 },
+  ValidationException: { status: 404, errorCode: 1000 },
+  RouteNotFoundException: { status: 404, errorCode: 1001 },
+  SessionExpiredException: { status: 403, errorCode: 1002 },
 
   // Cryptocode
-  DecryptionException: { status: 504, errorCode: 10008 },
+  DecryptionException: { status: 504, errorCode: 1050 },
+
+  // Auth
+  InvalidCredentialsException: { status: 404, errorCode: 2000 },
+  UserAlreadyAuthenticatedException: { status: 404, errorCode: 2001 },
+  UnauthorizedException: { status: 401, errorCode: 2002 },
+
+  // Users
+  UserNotFoundException: { status: 404, errorCode: 3000 },
+  UserAlreadyExistsError: { status: 400, errorCode: 3001 },
+  InternalServerErrorException: { status: 500, errorCode: 3002 },
+  PermissionDenyException: { status: 502, errorCode: 3003 },
+
+  // FinLog
+  FinLogNotFoundException: { status: 404, errorCode: 4000 },
 }
