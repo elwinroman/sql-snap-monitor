@@ -1,5 +1,5 @@
-import { InvalidCredentialsException } from '@auth/domain/invalid-credentials.exception'
-import { ForControlAuthenticatingPort } from '@auth/ports/drivers/for-control-authenticating.port'
+import { InvalidCredentialsException } from '@auth/domain/exceptions/invalid-credentials.exception'
+import { ForControlAuthenticatingPort } from '@auth/domain/ports/drivers/for-control-authenticating.port'
 import { NextFunction, Request, Response } from 'express'
 import sql from 'mssql'
 
@@ -12,9 +12,19 @@ export class LoginController {
     const { user, host, database, password } = req.body
     try {
       const validateData: LoginUserHttpDto = LoginUserSchema.parse({ host, database, user, password })
+
       const result = await this.controlAuthenticatorService.login(validateData)
 
-      return res.json({ correlationId: req.correlationId, data: result })
+      return res
+        .status(200)
+        .cookie('access_token', result.token.accessToken, {
+          httpOnly: true, // cookie solo accesible por el servidor
+          // secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
+          secure: false,
+          sameSite: 'strict', // cookie no disponible para otros sitios
+          maxAge: 1000 * 60 * 60 * 24 * 14, // 14 días
+        })
+        .json({ correlationId: req.correlationId, data: result })
     } catch (err) {
       // caso especial, si no se loguea a la base de datos, devolver error de login
       if (err instanceof sql.ConnectionError) return next(new InvalidCredentialsException())

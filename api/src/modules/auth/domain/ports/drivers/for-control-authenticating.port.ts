@@ -1,5 +1,5 @@
 import { LoginDto } from '@auth/application/use-cases/login/login.dto'
-import { AuthenticatedUser } from '@auth/domain/user'
+import { AuthenticatedUser } from '@auth/domain/schemas/auth-user'
 
 export interface ForControlAuthenticatingPort {
   login(user: LoginDto): Promise<AuthenticatedUser>

@@ -1,5 +1,5 @@
-import { AuthenticatedUser } from '@auth/domain/user'
-import { ForControlAuthenticatingPort } from '@auth/ports/drivers/for-control-authenticating.port'
+import { ForControlAuthenticatingPort } from '@auth/domain/ports/drivers/for-control-authenticating.port'
+import { AuthenticatedUser } from '@auth/domain/schemas/auth-user'
 
 import { LoginDto } from './use-cases/login/login.dto'
 import { LoginUseCase } from './use-cases/login/login.use-case'

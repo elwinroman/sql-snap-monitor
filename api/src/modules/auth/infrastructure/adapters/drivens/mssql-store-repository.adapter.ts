@@ -1,13 +1,12 @@
-import { PermissionStoreSchema, StoreInfoSchema } from '@auth/domain/store'
-import { ForStoreRepositoryPort } from '@auth/ports/drivens/for-store-repository.port'
+import { ForStoreRepositoryPort } from '@auth/domain/ports/drivens/for-store-repository.port'
+import { PermissionStore, StoreInfo } from '@auth/domain/schemas/store'
 import { StoreUserSchema } from '@shared/domain/store'
-
-import { MSSQLDatabaseConnection } from '@/modules/shared/infrastructure/store'
+import { MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 
 export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
 
-  async getDetails(user: StoreUserSchema): Promise<StoreInfoSchema> {
+  async getDetails(user: StoreUserSchema): Promise<StoreInfo> {
     const conn = await this.connection.connect(user)
     const request = conn.request()
 
@@ -22,7 +21,7 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
     `
     const res = await request.query(stmt)
 
-    const data: StoreInfoSchema = {
+    const data: StoreInfo = {
       name: res.recordset[0].name,
       compatibility: res.recordset[0].cmptlevel,
       description: res.recordset[0].value,
@@ -32,7 +31,7 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
     return data
   }
 
-  async getPermission(user: StoreUserSchema): Promise<PermissionStoreSchema> {
+  async getPermission(user: StoreUserSchema): Promise<PermissionStore> {
     const conn = await this.connection.connect(user)
     const request = conn.request()
 
@@ -47,7 +46,7 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
     // si no existen SPs, views: por defecto asumimos que tiene permisos (lo cual no es necesariamente correcto)
     const definitionCounts = res.recordset[0].definition_counts
 
-    const data: PermissionStoreSchema = {
+    const data: PermissionStore = {
       date: res.recordset[0].date,
       viewdefinitionPermission: definitionCounts > 0 ? Boolean(res.recordset[0].viewdefinition_permission) : true,
     }

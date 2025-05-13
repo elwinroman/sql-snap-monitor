@@ -2,7 +2,7 @@
  * Representa la información básica de una base de datos, incluyendo su nombre,
  * compatibilidad, descripción y detalles sobre el servidor en el que está alojada.
  */
-export interface StoreInfoSchema {
+export interface StoreInfo {
   /** Nombre de la base de datos. */
   name: string
 
@@ -19,7 +19,7 @@ export interface StoreInfoSchema {
 /**
  * Representa la información relacionada con los permisos de un usuario en el sistema.
  */
-export interface PermissionStoreSchema {
+export interface PermissionStore {
   /** Fecha que obtiene del repositorio (base de datos). */
   date: Date
 
