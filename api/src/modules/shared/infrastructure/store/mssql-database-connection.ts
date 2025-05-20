@@ -1,5 +1,5 @@
 import { InvalidCredentialsException } from '@auth/domain/exceptions'
-import cryptocode from '@shared/utils/cryptocode.util'
+import cryptocode from '@shared/infrastructure/utils/cryptocode.util'
 import sql, { ConnectionPool } from 'mssql'
 
 import { NODE_ENV } from '@/config/enviroment'

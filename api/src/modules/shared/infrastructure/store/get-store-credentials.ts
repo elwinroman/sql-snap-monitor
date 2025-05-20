@@ -1,4 +1,5 @@
-import CryptoCode from '@shared/utils/cryptocode.util'
+import { StoreUserSchema } from '@shared/domain/store'
+import CryptoCode from '@shared/infrastructure/utils/cryptocode.util'
 
 import {
   DBNAME,
@@ -16,7 +17,6 @@ import {
   PREPROD_DBUSERNAME,
 } from '@/config/enviroment'
 import { MODE } from '@/constants'
-import { StoreUserSchema } from '@/modules/shared/domain/store'
 
 import { DatabaseName } from './database.enum'
 import { UserType, UserTypeEnum } from './mssql-database-connection'

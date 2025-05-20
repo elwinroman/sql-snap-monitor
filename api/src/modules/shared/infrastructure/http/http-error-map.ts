@@ -4,13 +4,11 @@ export const httpErrorMap: Record<string, { status: number; errorCode: number }>
   RouteNotFoundException: { status: 404, errorCode: 1001 },
   SessionExpiredException: { status: 403, errorCode: 1002 },
 
-  // Cryptocode
-  DecryptionException: { status: 504, errorCode: 1050 },
-
   // Auth
   InvalidCredentialsException: { status: 404, errorCode: 2000 },
   UserAlreadyAuthenticatedException: { status: 404, errorCode: 2001 },
   UnauthorizedException: { status: 401, errorCode: 2002 },
+  TokenExpiredException: { status: 404, errorCode: 2003 },
 
   // Users
   UserNotFoundException: { status: 404, errorCode: 3000 },
