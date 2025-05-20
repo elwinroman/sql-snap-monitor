@@ -1,4 +1,4 @@
-import { ForUserRepositoryPort } from '@auth/domain/ports/drivens/for-user-repository.port'
+import { ForUserRepositoryPort } from '@auth/domain/ports/drivens'
 import { PrimitiveUser, RepoUser, User } from '@auth/domain/schemas/user'
 import { DatabaseName, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 import { getStaticDatabaseCredentials } from '@shared/infrastructure/store/get-store-credentials'
@@ -6,10 +6,10 @@ import sql from 'mssql'
 
 export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
-  private credential = getStaticDatabaseCredentials(DatabaseName.APP)
+  private db = getStaticDatabaseCredentials(DatabaseName.APP)
 
   async getOrCreate(user: PrimitiveUser): Promise<RepoUser | null> {
-    const conn = await this.connection.connect(this.credential)
+    const conn = await this.connection.connect(this.db.credentials, this.db.type)
     const request = conn.request()
 
     const stmt = `
@@ -44,6 +44,32 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
 
     if (res.recordset && res.recordset.length === 1) {
       const userData = res.recordset[0]
+
+      return User.create({
+        id: userData.idUsuario,
+        hashId: userData.cHashUsuarioUID,
+        user: userData.cUsuario,
+        host: userData.cServer,
+        aliasHost: userData.cAliasServer,
+        createdAt: userData.dFechaRegistro,
+        isActive: userData.lVigente,
+      }).toRepoUser()
+    }
+
+    return null
+  }
+
+  async getById(id: number): Promise<RepoUser | null> {
+    const conn = await this.connection.connect(this.db.credentials, this.db.type)
+    const request = conn.request()
+
+    const stmt = 'SELECT * FROM dbo.Usuario WHERE idUsuario = @id'
+    request.input('id', sql.Int, id)
+    const res = await request.query(stmt)
+
+    if (res.recordset && res.recordset.length === 1) {
+      const userData = res.recordset[0]
+
       return User.create({
         id: userData.idUsuario,
         hashId: userData.cHashUsuarioUID,

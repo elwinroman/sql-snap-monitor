@@ -13,6 +13,11 @@ const envSchema = z.object({
   DBUSERNAME: z.string().min(1),
   DBPASSWORD: z.string().min(1),
 
+  FINLOG_DBSERVER: z.string().min(1),
+  FINLOG_DBNAME: z.string().min(1),
+  FINLOG_DBUSERNAME: z.string().min(1),
+  FINLOG_DBPASSWORD: z.string().min(1),
+
   PORT: z
     .string()
     .min(1)
@@ -47,10 +52,17 @@ export const {
   PREPROD_DBNAME,
   PREPROD_DBUSERNAME,
   PREPROD_DBPASSWORD,
+
   DBSERVER,
   DBNAME,
   DBUSERNAME,
   DBPASSWORD,
+
+  FINLOG_DBSERVER,
+  FINLOG_DBNAME,
+  FINLOG_DBUSERNAME,
+  FINLOG_DBPASSWORD,
+
   PORT,
   ALLOWED_ORIGINS,
   JWT_SECRET,

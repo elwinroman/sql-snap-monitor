@@ -17,7 +17,8 @@
     "paths": {
       "@/*": ["src/*"],
       "@shared/*": ["src/modules/shared/*"],
-      "@auth/*": ["src/modules/auth/*"]
+      "@auth/*": ["src/modules/auth/*"],
+      "@finlog/*": ["src/modules/fin-log/*"]
     },
     "typeRoots": ["./src/types", "./node_modules/@types"],
   },

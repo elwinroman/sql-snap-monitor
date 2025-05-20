@@ -1,3 +1,4 @@
+import { InvalidCredentialsException } from '@auth/domain/exceptions'
 import cryptocode from '@shared/utils/cryptocode.util'
 import sql, { ConnectionPool } from 'mssql'
 
@@ -10,6 +11,15 @@ interface PoolStack {
   [key: string]: ConnectionPool
 }
 
+/** Enum para el tipo de usuario que hace la consulta (externo o interno) */
+export enum UserTypeEnum {
+  Internal = 'internal',
+  External = 'external',
+}
+
+/** Tipo que deriva de los valores del enum UserType */
+export type UserType = UserTypeEnum
+
 export class MSSQLDatabaseConnection {
   private pools: PoolStack = {} // Almacena múltiples conexiones
 
@@ -18,11 +28,11 @@ export class MSSQLDatabaseConnection {
    * @param config Credenciales de conexión.
    * @returns Pool de conexión.
    */
-  async connect(config: StoreUserSchema): Promise<ConnectionPool> {
+  async connect(config: StoreUserSchema, userType: UserType): Promise<ConnectionPool> {
     const key = JSON.stringify(config)
     if (this.pools[key]) return this.pools[key]
 
-    return this.createPool(config, key)
+    return this.createPool(config, key, userType)
   }
 
   /**
@@ -31,7 +41,7 @@ export class MSSQLDatabaseConnection {
    * @param key - Clave única del pool.
    * @returns ConnectionPool conectado.
    */
-  private async createPool(config: StoreUserSchema, key: string): Promise<ConnectionPool> {
+  private async createPool(config: StoreUserSchema, key: string, userType: UserType): Promise<ConnectionPool> {
     const user = NODE_ENV === MODE.development ? config.user : cryptocode.decrypt(config.user)
     const password = NODE_ENV === MODE.development ? config.password : cryptocode.decrypt(config.password)
 
@@ -51,7 +61,14 @@ export class MSSQLDatabaseConnection {
       },
     }
 
-    this.pools[key] = await new sql.ConnectionPool(newConfig).connect()
-    return this.pools[key]
+    try {
+      this.pools[key] = await new sql.ConnectionPool(newConfig).connect()
+      return this.pools[key]
+    } catch (err) {
+      // Caso especial, si el usuario sql es el que usa el sistema significa que su login es invalido o que ha cambiado de contraseña
+      if (err instanceof sql.ConnectionError && userType === UserTypeEnum.External) throw new InvalidCredentialsException()
+
+      throw err
+    }
   }
 }

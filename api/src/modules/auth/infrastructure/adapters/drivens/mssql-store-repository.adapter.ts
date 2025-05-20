@@ -1,13 +1,14 @@
-import { ForStoreRepositoryPort } from '@auth/domain/ports/drivens/for-store-repository.port'
+import { ForStoreRepositoryPort } from '@auth/domain/ports/drivens'
 import { PermissionStore, StoreInfo } from '@auth/domain/schemas/store'
 import { StoreUserSchema } from '@shared/domain/store'
 import { MSSQLDatabaseConnection } from '@shared/infrastructure/store'
+import { UserTypeEnum } from '@shared/infrastructure/store'
 
 export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
 
   async getDetails(user: StoreUserSchema): Promise<StoreInfo> {
-    const conn = await this.connection.connect(user)
+    const conn = await this.connection.connect(user, UserTypeEnum.External)
     const request = conn.request()
 
     const stmt = `
@@ -32,7 +33,7 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
   }
 
   async getPermission(user: StoreUserSchema): Promise<PermissionStore> {
-    const conn = await this.connection.connect(user)
+    const conn = await this.connection.connect(user, UserTypeEnum.External)
     const request = conn.request()
 
     const stmt = `
