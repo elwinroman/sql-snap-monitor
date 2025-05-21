@@ -17,7 +17,7 @@ export interface PrimitiveUser {
   role: UserRole
   host: string
   aliasHost: string
-  createdAt: Date
+  createdAt: string | Date
   isActive: boolean
 }
 
@@ -36,7 +36,7 @@ export class User {
     role?: UserRole
     host: string
     aliasHost: string
-    createdAt?: Date
+    createdAt?: string | Date
     isActive?: boolean
   }): User {
     return new User({
@@ -46,7 +46,7 @@ export class User {
       role: createUser.role ?? UserRoleList.ANALIST,
       host: createUser.host,
       aliasHost: createUser.aliasHost,
-      createdAt: createUser.createdAt ?? new Date(),
+      createdAt: createUser.createdAt ?? new Date().toISOString(),
       isActive: createUser.isActive ?? true,
     })
   }

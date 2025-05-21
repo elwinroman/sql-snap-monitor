@@ -6,7 +6,7 @@ export interface AuthenticatedUser {
   // role: UserRole
   token: {
     accessToken: string
-    // refreshToken: string
+    refreshToken: string
   }
   aliasHost: string
   storeDetails: StoreInfo & PermissionStore
