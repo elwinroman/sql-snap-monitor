@@ -2,23 +2,45 @@ import { CacheConnectionErrorException } from '@shared/domain/exceptions/cache/c
 import { logger } from '@shared/infrastructure/logger/pino-instance'
 import Valkey from 'iovalkey'
 
+let retryCount = 0
+const maxRetries = 100 // maximos intentos de reconexión
+const logRetryThreshold = 3 // primeros 3 intentos se registra el log
+const logEveryN = 10 // registra cada 10 intentos
+
 export const valkeyClient = new Valkey({
   port: 6379,
   host: '192.168.1.68',
   password: 'P@ssword123',
+  retryStrategy(_times: number) {
+    retryCount++
+
+    const shouldLog = retryCount <= logRetryThreshold || retryCount % logEveryN === 0
+    if (shouldLog) logger.warn(`Reintentando conexión a ioValkey (intento #${retryCount})`)
+
+    // detener después de X reintentos
+    if (retryCount > maxRetries) {
+      logger.error(`Máximo de reintentos (${maxRetries}) alcanzado`)
+      process.exit(1) // detiene reconexión
+    }
+
+    return Math.min(retryCount * 100, 100)
+  },
 })
 
 /** Eventos */
 valkeyClient.on('connect', () => {
-  logger.debug('Conectando a ioValkey')
+  logger.debug('Conectado a ioValkey')
 })
 
 valkeyClient.on('error', (err: unknown) => {
-  const error = new CacheConnectionErrorException()
+  if (retryCount < 1) {
+    const error = new CacheConnectionErrorException()
 
-  logger.debug(CacheConnectionErrorException.name, { err })
-  logger.info(CacheConnectionErrorException.name, { err: error })
-  console.error('❌ Error en la conexión a la cache')
+    logger.debug(CacheConnectionErrorException.name, { err })
+    logger.info(CacheConnectionErrorException.name, { err: error })
+  }
+})
 
-  process.exit(1)
+valkeyClient.on('end', () => {
+  logger.error('La conexión a ioValkey fue cerrada permanentemente')
 })

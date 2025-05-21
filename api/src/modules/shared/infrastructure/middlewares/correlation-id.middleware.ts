@@ -21,6 +21,8 @@ export function correlationIdMiddleware(req: Request, res: Response, next: NextF
   req.correlationId = correlationId
   res.set(CORRELATION_ID_HEADER, correlationId)
 
-  /** agrega el contexto de la petición al logger para usar en cualquier lugar */
-  setLoggerRequestContext({ correlationId: req.correlationId, method: req.method, url: req.url }, next)
+  const userAgent = req.headers['user-agent']
+
+  /** agrega contextos de la petición al logger para usar en cualquier lugar */
+  setLoggerRequestContext({ correlationId: req.correlationId, method: req.method, url: req.url, userAgent }, next)
 }
