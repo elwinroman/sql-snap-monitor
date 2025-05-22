@@ -1,53 +1,95 @@
-import { UserAlreadyAuthenticatedException } from '@auth/domain/exceptions/user-already-authenticated.exception'
-import { ForTokenManagementPort, NewTokens, TokenPayload } from '@auth/domain/ports/drivens/for-token-management.port'
+import { randomUUID } from 'node:crypto'
+
+import { TokenExpiredException } from '@auth/domain/exceptions'
+import {
+  AccessTokenDecoded,
+  AccessTokenPayload,
+  ForTokenManagementPort,
+  RefreshTokenDecoded,
+  RefreshTokenPayload,
+  TokenTypeEnum,
+} from '@auth/domain/ports/drivens/for-token-management.port'
 import { UnauthorizedException } from '@shared/domain/exceptions'
-import { ValkeyCacheRepository } from '@shared/infrastructure/cache/valkey-cache-repository'
-import { Request } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
 import { JWT_SECRET } from '@/config/enviroment'
 
 export class JwtTokenManagerAdapter implements ForTokenManagementPort {
-  createTokens(payload: TokenPayload): NewTokens {
-    const accessToken = jwt.sign({ ...payload }, JWT_SECRET, { expiresIn: '14d' }) // 14 dias
-    // const refreshToken = jwt.sign({ ...payload }, JWT_SECRET, { expiresIn: '30d' })
+  createAccessToken(id: number): string {
+    const accessTokenPaylod: AccessTokenPayload = {
+      user_id: id,
+      role: 'rol no definido',
+      type: TokenTypeEnum.Access,
+      jti: randomUUID(),
+    }
 
-    return { accessToken }
+    const accessToken = jwt.sign({ ...accessTokenPaylod }, JWT_SECRET, { expiresIn: '15m' }) // 15 minutos
+    return accessToken
   }
 
-  async verifyToken(req: Request): Promise<void> {
-    const token = req.cookies.access_token
-    if (!token) throw new UnauthorizedException()
+  createRefreshToken(id: number): string {
+    const refreshTokenPayload: RefreshTokenPayload = {
+      user_id: id,
+      type: TokenTypeEnum.Refresh,
+      jti: randomUUID(),
+    }
 
-    const cache = new ValkeyCacheRepository()
+    const refreshToken = jwt.sign({ ...refreshTokenPayload }, JWT_SECRET, { expiresIn: '30d' }) // 30 días
+    return refreshToken
+  }
 
+  verifyAccessToken(accessToken: string): AccessTokenDecoded {
     try {
-      jwt.verify(token, JWT_SECRET)
-    } catch (err: unknown) {
-      // si ha expirado el token, elimina las datos de la cache
-      if (err instanceof jwt.TokenExpiredError) {
-        const decoded = jwt.decode(token) as JwtPayload
+      const decoded = jwt.verify(accessToken, JWT_SECRET) as JwtPayload
+      const currentTime = Math.floor(Date.now() / 1000)
 
-        if (decoded.userId) {
-          await cache.delete(`credentials:${decoded.userId}`)
-          await cache.delete(`session_active:${decoded.userId}`)
-        }
+      if (!decoded || !decoded.jti || !decoded.exp) throw new Error('Error en la decodificación del access token')
+
+      // tiempo de expiración que le queda en segundos
+      const expirationCountdown: number = decoded.exp - currentTime
+
+      return {
+        user_id: decoded.user_id,
+        role: decoded.role,
+        type: decoded.type,
+        jti: decoded.jti,
+        expirationCountdown,
       }
+    } catch (err: unknown) {
+      // si ha expirado el token
+      if (err instanceof jwt.TokenExpiredError) throw new TokenExpiredException(TokenTypeEnum.Access)
 
       throw new UnauthorizedException()
     }
   }
 
-  async throwIfUserAlreadyAuthenticated(req: Request): Promise<void> {
-    await this.verifyToken(req)
-    // si no lanza excepción, es porque ya hay un token válido
-    throw new UserAlreadyAuthenticatedException()
+  verifyRefreshToken(refreshToken: string): RefreshTokenDecoded {
+    try {
+      const decoded = jwt.verify(refreshToken, JWT_SECRET) as JwtPayload
+      const currentTime = Math.floor(Date.now() / 1000)
+
+      if (!decoded || !decoded.jti || !decoded.exp) throw new Error('Error en la decodificación del refresh token')
+
+      // tiempo de expiración que le queda en segundos
+      const expirationCountdown: number = decoded.exp - currentTime
+
+      return {
+        user_id: decoded.user_id,
+        type: decoded.type,
+        jti: decoded.jti,
+        expirationCountdown,
+      }
+    } catch (err) {
+      // si ha expirado el token
+      if (err instanceof jwt.TokenExpiredError) throw new TokenExpiredException(TokenTypeEnum.Refresh)
+
+      throw new UnauthorizedException()
+    }
   }
 
-  getBearerToken(req: Request): string | null {
-    const authHeader = req.headers.authorization
-    if (authHeader?.startsWith('Bearer ')) return authHeader.split(' ')[1]
-
-    return null
+  // todo: creo que no es necesario esta función, refactorizar
+  checkIfUserIsAlreadyAuthenticated(accessToken: string): boolean {
+    this.verifyAccessToken(accessToken)
+    return true
   }
 }
