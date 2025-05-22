@@ -7,8 +7,8 @@ import { UserTypeEnum } from '@shared/infrastructure/store'
 export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
 
-  async getDetails(user: StoreUserSchema): Promise<StoreInfo> {
-    const conn = await this.connection.connect(user, UserTypeEnum.External)
+  async getDetails(credential: StoreUserSchema): Promise<StoreInfo> {
+    const conn = await this.connection.connect(credential, UserTypeEnum.External)
     const request = conn.request()
 
     const stmt = `
@@ -32,8 +32,8 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
     return data
   }
 
-  async getPermission(user: StoreUserSchema): Promise<PermissionStore> {
-    const conn = await this.connection.connect(user, UserTypeEnum.External)
+  async getPermission(credential: StoreUserSchema): Promise<PermissionStore> {
+    const conn = await this.connection.connect(credential, UserTypeEnum.External)
     const request = conn.request()
 
     const stmt = `
