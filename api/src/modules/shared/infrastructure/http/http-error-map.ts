@@ -9,6 +9,7 @@ export const httpErrorMap: Record<string, { status: number; errorCode: number }>
   UserAlreadyAuthenticatedException: { status: 404, errorCode: 2001 },
   UnauthorizedException: { status: 401, errorCode: 2002 },
   TokenExpiredException: { status: 404, errorCode: 2003 },
+  NotProvidedTokenException: { status: 404, errorCode: 2004 },
 
   // Users
   UserNotFoundException: { status: 404, errorCode: 3000 },

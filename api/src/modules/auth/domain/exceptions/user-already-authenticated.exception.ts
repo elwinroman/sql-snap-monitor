@@ -8,7 +8,6 @@ export class UserAlreadyAuthenticatedException extends DomainError {
   constructor() {
     super({ message: 'Sesión activa' })
     this.title = this.message
-    this.detail =
-      'Ya existe una sesión activa con tu cuenta. Para continuar, por favor cierra la sesión actual antes de volver a iniciar sesión.'
+    this.detail = 'Ya existe una sesión activa con tu cuenta.'
   }
 }

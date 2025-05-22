@@ -8,6 +8,6 @@ export class UnauthorizedException extends DomainError {
   constructor() {
     super({ message: 'Acceso no autorizado' })
     this.title = this.message
-    this.detail = 'No se proporcionó un token válido. Por favor, inicia sesión para continuar.'
+    this.detail = 'No tienes los permisos necesarios para acceder a este recurso. Por favor, inicia sesión para continuar.'
   }
 }
