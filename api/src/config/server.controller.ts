@@ -1,3 +1,5 @@
+import '@shared/infrastructure/sentry/instruments'
+
 import { handleErrorMiddleware } from '@shared/infrastructure/middlewares/handle-error.middleware'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -59,7 +61,7 @@ export class Server {
     this.app.use(json())
     this.app.use(cookieParser())
     this.app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
-    this.app.use(verifyToken)
+    // this.app.use(verifyToken)
 
     this.app.use(this.routes)
     this.app.use(routeNotFound)

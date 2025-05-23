@@ -35,6 +35,7 @@ const envSchema = z.object({
   JWT_SECRET: z.string().min(1).default('your-jwt-secret-key'),
   SESSION_SECRET: z.string().min(1).default('your-session-secret-key'),
   PASS_PHRASE: z.string().min(1).default('your-pass-phrase-key'),
+  SENTRY_DNS: z.string().url(),
   NODE_ENV: z.enum(['development', 'production', 'test']).optional().default('development'),
 })
 
@@ -68,5 +69,6 @@ export const {
   JWT_SECRET,
   SESSION_SECRET,
   PASS_PHRASE,
+  SENTRY_DNS,
   NODE_ENV,
 } = data

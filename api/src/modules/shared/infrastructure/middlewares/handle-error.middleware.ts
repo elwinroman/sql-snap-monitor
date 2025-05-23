@@ -1,5 +1,5 @@
 import { DomainError } from '@shared/domain/domain-error'
-import { InternalServerErrorException, ValidationException } from '@shared/domain/exceptions'
+import { DecryptionException, InternalServerErrorException, ValidationException } from '@shared/domain/exceptions'
 import { httpErrorMap } from '@shared/infrastructure/http/http-error-map'
 import { logger } from '@shared/infrastructure/logger/pino-instance'
 import { mapMSSQLError } from '@shared/infrastructure/store/map-mssql-error'
@@ -9,13 +9,15 @@ import { ZodError } from 'zod'
 
 import { MyCustomError } from '@/models'
 
+import { reportErrorToSentry } from '../sentry/sentryScopeError'
+
 export function handleErrorMiddleware(err: unknown, req: Request, res: Response, _next: NextFunction) {
   let mappedError: DomainError
   let invalidParams = undefined
 
   // soporte VERSION anterior (se eliminará completaco la migración)
   if (err instanceof MyCustomError) {
-    logger.error(err.name, { err })
+    logger.info(err.name, { err })
     const { status, statusCode, message, originalError } = err
     return res.status(statusCode).json({ status, statusCode, message, originalError })
   }
@@ -26,7 +28,7 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     case err instanceof ZodError:
       invalidParams = err.errors
       mappedError = new ValidationException()
-      logger.error(mappedError.name, { mappedError })
+      logger.info(mappedError.name, { err: mappedError })
       break
 
     // errores de node-mssql package
@@ -34,6 +36,7 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     case err instanceof sql.RequestError:
     case err instanceof sql.PreparedStatementError:
     case err instanceof sql.TransactionError:
+      reportErrorToSentry(err, req)
       // impresión en consola del error detallado
       logger.debug(err.name, { err })
 
@@ -48,15 +51,25 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     // errores de dominio
     case err instanceof DomainError:
       mappedError = err
-      logger.error(mappedError.name, { err })
+
+      if (err instanceof DecryptionException) {
+        reportErrorToSentry(err, req)
+        logger.error(mappedError.name, { err: mappedError })
+      } else logger.info(mappedError.name, { err: mappedError })
       break
 
     // otro tipo de errores
     default:
-      if (err instanceof Error) logger.debug(err.name, { err })
-      else logger.debug('Error inesperado: ', { err })
+      if (err instanceof Error) {
+        reportErrorToSentry(err, req)
+        logger.error(err.name, { err })
+      } else {
+        reportErrorToSentry(err, req)
+        logger.error('UnknownError', { err })
+      }
+
       mappedError = new InternalServerErrorException()
-      logger.error(mappedError.name, { mappedError })
+      logger.info(mappedError.name, { err: mappedError })
       break
   }
 
