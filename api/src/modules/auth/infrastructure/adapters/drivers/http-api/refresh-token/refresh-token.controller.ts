@@ -1,4 +1,4 @@
-import { NotProvidedTokenException } from '@auth/domain/exceptions'
+import { NotProvidedTokenException } from '@auth/application/exceptions'
 import { TokenTypeEnum } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
 import { NextFunction, Request, Response } from 'express'

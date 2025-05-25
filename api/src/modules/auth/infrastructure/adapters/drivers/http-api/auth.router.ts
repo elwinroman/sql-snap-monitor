@@ -1,9 +1,8 @@
-import { UserAlreadyAuthenticatedException } from '@auth/domain/exceptions'
+import { UserAlreadyAuthenticatedException } from '@auth/application/exceptions'
 import { JwtTokenManagerAdapter } from '@auth/infrastructure/adapters/drivens'
 import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares/verify-token.middleware'
+import { extractBearerToken } from '@shared/infrastructure/utils/extract-bearer-token.util'
 import { NextFunction, Request, Response, Router } from 'express'
-
-import { extractBearerToken } from '@/modules/shared/infrastructure/utils/extract-bearer-token.util'
 
 import { checkSessionController, loginController, logoutController, refreshTokenController } from './composition-root'
 
@@ -16,10 +15,8 @@ export function authRouter() {
 
     try {
       // si no existe el accessToken, es un inicio de sesión nuevo, pero si existe no debería permitir loguearse
-      if (accessToken && tokenManager.checkIfUserIsAlreadyAuthenticated(accessToken)) {
-        console.log('UserAlreadyAuthenticatedException should be throwed')
-        throw new UserAlreadyAuthenticatedException()
-      }
+      if (accessToken && tokenManager.checkIfUserIsAlreadyAuthenticated(accessToken)) throw new UserAlreadyAuthenticatedException()
+
       // controlador
       await loginController.run(req, res, next)
     } catch (err) {

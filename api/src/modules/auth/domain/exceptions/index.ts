@@ -1,5 +1,2 @@
 export * from './invalid-credentials.exception'
-export * from './not-provided-token.exception'
 export * from './permission-deny.exceptions'
-export * from './token-expired.exception'
-export * from './user-already-authenticated.exception'
