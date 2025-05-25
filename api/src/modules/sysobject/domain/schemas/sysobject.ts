@@ -1,0 +1,66 @@
+/**
+ * Representa un objeto definido dentro de una base de datos SQL,
+ * como una vista, procedimiento almacenado, función o similar.
+ * Incluye metadatos relevantes como esquema, tipo, fechas y definición del objeto.
+ * NOTA: El objeto USERTABLE, se está manejando por separado
+ */
+export interface SysObject {
+  /** Identificador único del objeto dentro del sistema. */
+  id: number
+
+  /** Nombre del objeto (ej. nombre de una vista, función o SP). */
+  name: string
+
+  /** Tipo del objeto (por ejemplo: 'VIEW', 'FUNCTION', 'PROCEDURE'). */
+  type: string
+
+  /** Descripción detallada o extendida del tipo (por ejemplo: 'SQL_SCALAR_FUNCTION'). */
+  typeDesc: string
+
+  /** Identificador del esquema en la base de datos. */
+  schemaId: number
+
+  /** Nombre del esquema al que pertenece el objeto (ej. 'dbo', 'public'). */
+  schemaName: string
+
+  /** Fecha de creación del objeto en la base de datos. */
+  createDate: Date | string
+
+  /** Fecha de última modificación del objeto. */
+  modifyDate: Date | string
+
+  /** Definición del objeto en formato SQL (código fuente). */
+  definition: string
+
+  /** Indica si el objeto está marcado como parte del sistema de alineamiento. */
+  // isAligmentObject: boolean
+}
+
+/**
+ * Enum de tipos de objetos SQL utilizados en el sistema.
+ *
+ * Las claves representan el tipo semántico, mientras que los valores son los identificadores cortos
+ * utilizados en la base de datos o como filtros.
+ *
+ * Valores:
+ * - 'P'  → Procedimiento almacenado (`SQL_STORED_PROCEDURE`)
+ * - 'FN' → Función escalar (`SQL_SCALAR_FUNCTION`)
+ * - 'TR' → Trigger (`SQL_TRIGGER`)
+ * - 'TF' → Función con valor de tabla (`SQL_TABLE_VALUED_FUNCTION`)
+ * - 'V'  → Vista (`VIEW`)
+ * - 'U'  → Tabla de usuario (`USER_TABLE`)
+ * - 'ALL' → Todos los tipos de objeto.
+ * - 'ALL_EXCEPT_USERTABLE' → Todos los tipos excepto `USER_TABLE`.
+ */
+export const TypeSysObjectEnum = {
+  SQL_STORED_PROCEDURE: 'P',
+  SQL_SCALAR_FUNCTION: 'FN',
+  SQL_TRIGGER: 'TR',
+  SQL_TABLE_VALUED_FUNCTION: 'TF',
+  VIEW: 'V',
+  USER_TABLE: 'U',
+  ALL: 'ALL',
+  ALL_EXCEPT_USERTABLE: 'ALL_EXCEPT_USERTABLE',
+} as const
+
+export type TypeSysObject = (typeof TypeSysObjectEnum)[keyof typeof TypeSysObjectEnum]
