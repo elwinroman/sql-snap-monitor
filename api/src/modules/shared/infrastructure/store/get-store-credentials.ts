@@ -18,6 +18,7 @@ import {
 } from '@/config/enviroment'
 import { MODE } from '@/constants'
 
+import { ValkeyCacheRepository } from '../cache/valkey-cache-repository'
 import { DatabaseName } from './database.enum'
 import { UserType, UserTypeEnum } from './mssql-database-connection'
 
@@ -51,4 +52,20 @@ export function getStaticDatabaseCredentials(name: DatabaseName): { credentials:
   if (!(name in STATIC_CREDENTIALS)) throw new Error(`Nombre de base de datos no estática: ${name}`)
 
   return { credentials: STATIC_CREDENTIALS[name], type: UserTypeEnum.Internal }
+}
+
+export async function getCacheDatabaseCredentials(userId: number): Promise<{ credentials: StoreUserSchema; type: UserType }> {
+  const key = `auth:credentials:${userId}`
+
+  const cacheRepository = new ValkeyCacheRepository()
+  const cachedCredentials = await cacheRepository.get(key)
+
+  if (!cachedCredentials) throw new Error(`Credentiales no encontradas en la caché para el usuario con id "${userId}"`)
+
+  const credentials = JSON.parse(cachedCredentials)
+
+  return {
+    credentials,
+    type: UserTypeEnum.External,
+  }
 }

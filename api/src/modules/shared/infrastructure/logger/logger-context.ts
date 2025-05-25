@@ -19,7 +19,7 @@ export interface LoggerRequestContext {
 }
 
 /** Almacenamiento local asíncrono para manejar el contexto de la solicitud del logger. */
-export const loggerRequestContext = new AsyncLocalStorage<LoggerRequestContext>()
+const loggerRequestContext = new AsyncLocalStorage<LoggerRequestContext>()
 
 /**
  * Establece el contexto de la solicitud para el logger y ejecuta un callback dentro de ese contexto.
@@ -27,11 +27,12 @@ export const loggerRequestContext = new AsyncLocalStorage<LoggerRequestContext>(
  * @param newContext - Parte del contexto a agregar o actualizar.
  * @param callback - La función que se ejecutará dentro del contexto establecido.
  */
-export function setLoggerRequestContext(newContext: Partial<LoggerRequestContext>, callback: () => void): void {
+// export function setLoggerRequestContext(newContext: Partial<LoggerRequestContext>, callback: () => void): void {
+export function setLoggerRequestContext(newContext: Partial<LoggerRequestContext>): void {
   const currentContext = loggerRequestContext.getStore() || {}
   const mergedContext = { ...currentContext, ...newContext }
 
-  loggerRequestContext.run(mergedContext, callback)
+  loggerRequestContext.enterWith(mergedContext)
 }
 
 /**
