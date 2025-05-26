@@ -1,5 +1,4 @@
 import { StoreUserSchema } from '@shared/domain/store'
-import CryptoCode from '@shared/infrastructure/utils/cryptocode.util'
 
 import {
   DBNAME,
@@ -10,13 +9,11 @@ import {
   FINLOG_DBPASSWORD,
   FINLOG_DBSERVER,
   FINLOG_DBUSERNAME,
-  NODE_ENV,
   PREPROD_DBNAME,
   PREPROD_DBPASSWORD,
   PREPROD_DBSERVER,
   PREPROD_DBUSERNAME,
 } from '@/config/enviroment'
-import { MODE } from '@/constants'
 
 import { ValkeyCacheRepository } from '../cache/valkey-cache-repository'
 import { DatabaseName } from './database.enum'
@@ -27,20 +24,20 @@ const STATIC_CREDENTIALS: Record<DatabaseName.PREPROD | DatabaseName.APP | Datab
   [DatabaseName.PREPROD]: {
     host: PREPROD_DBSERVER,
     database: PREPROD_DBNAME,
-    user: NODE_ENV === MODE.development ? PREPROD_DBUSERNAME : CryptoCode.encrypt(PREPROD_DBUSERNAME),
-    password: NODE_ENV === MODE.development ? PREPROD_DBPASSWORD : CryptoCode.encrypt(PREPROD_DBPASSWORD),
+    user: PREPROD_DBUSERNAME,
+    password: PREPROD_DBPASSWORD,
   },
   [DatabaseName.APP]: {
     host: DBSERVER,
     database: DBNAME,
-    user: NODE_ENV === MODE.development ? DBUSERNAME : CryptoCode.encrypt(DBUSERNAME),
-    password: NODE_ENV === MODE.development ? DBPASSWORD : CryptoCode.encrypt(DBPASSWORD),
+    user: DBUSERNAME,
+    password: DBPASSWORD,
   },
   [DatabaseName.LOG]: {
     host: FINLOG_DBSERVER,
     database: FINLOG_DBNAME,
-    user: NODE_ENV === MODE.development ? FINLOG_DBUSERNAME : CryptoCode.encrypt(FINLOG_DBUSERNAME),
-    password: NODE_ENV === MODE.development ? FINLOG_DBPASSWORD : CryptoCode.encrypt(FINLOG_DBPASSWORD),
+    user: FINLOG_DBUSERNAME,
+    password: FINLOG_DBPASSWORD,
   },
 }
 

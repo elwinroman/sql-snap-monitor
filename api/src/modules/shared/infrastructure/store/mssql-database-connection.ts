@@ -1,10 +1,10 @@
 import { InvalidCredentialsException } from '@auth/domain/exceptions'
-import cryptocode from '@shared/infrastructure/utils/cryptocode.util'
+import { StoreUserSchema } from '@shared/domain/store'
+import CryptoCode from '@shared/infrastructure/utils/cryptocode.util'
 import sql, { ConnectionPool } from 'mssql'
 
 import { NODE_ENV } from '@/config/enviroment'
 import { MODE } from '@/constants'
-import { StoreUserSchema } from '@/modules/shared/domain/store'
 
 /** Mapa de conexiones activas, donde la clave es una representación en cadena */
 interface PoolStack {
@@ -42,8 +42,8 @@ export class MSSQLDatabaseConnection {
    * @returns ConnectionPool conectado.
    */
   private async createPool(config: StoreUserSchema, key: string, userType: UserType): Promise<ConnectionPool> {
-    const user = NODE_ENV === MODE.development ? config.user : cryptocode.decrypt(config.user)
-    const password = NODE_ENV === MODE.development ? config.password : cryptocode.decrypt(config.password)
+    const user = NODE_ENV === MODE.development ? config.user : CryptoCode.decrypt(config.user)
+    const password = NODE_ENV === MODE.development ? config.password : CryptoCode.decrypt(config.password)
 
     const newConfig = {
       user: user,
