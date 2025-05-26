@@ -1,10 +1,10 @@
-import { DomainError } from '@shared/domain/domain-error'
 import {
   DatabaseConnectionErrorException,
   DatabasePreparedStatementErrorException,
   DatabaseRequestErrorException,
   DatabaseTransactionErrorException,
-} from '@shared/domain/exceptions'
+} from '@shared/infrastructure/exceptions'
+import { InfrastructureError } from '@shared/infrastructure/infrastructure-error.exception'
 import sql from 'mssql'
 
 /**
@@ -15,14 +15,14 @@ import sql from 'mssql'
  */
 export function mapMSSQLError(
   err: sql.RequestError | sql.PreparedStatementError | sql.TransactionError | sql.ConnectionError,
-): DomainError {
-  const errorMap: { [key: string]: new (code: string, message: string) => DomainError } = {
+): InfrastructureError {
+  const errorMap: { [key: string]: new (code: string, message: string) => InfrastructureError } = {
     ConnectionError: DatabaseConnectionErrorException,
     RequestError: DatabaseRequestErrorException,
     PreparedStatementError: DatabasePreparedStatementErrorException,
     TransactionError: DatabaseTransactionErrorException,
   }
 
-  const errorClass = errorMap[err.constructor.name] || DomainError
+  const errorClass = errorMap[err.constructor.name] || InfrastructureError
   return new errorClass(err.code, err.message)
 }

@@ -1,4 +1,4 @@
-import { CacheConnectionErrorException } from '@shared/domain/exceptions/cache/cache-connection-error.exception'
+import { CacheConnectionErrorException } from '@shared/infrastructure/exceptions'
 import { logger } from '@shared/infrastructure/logger/pino-instance'
 import Valkey from 'iovalkey'
 
@@ -32,12 +32,12 @@ valkeyClient.on('connect', () => {
   logger.debug('Conectado a ioValkey')
 })
 
-valkeyClient.on('error', (err: unknown) => {
+valkeyClient.on('error', (err: Error) => {
   if (retryCount < 1) {
-    const error = new CacheConnectionErrorException()
+    const error = new CacheConnectionErrorException(err.message)
 
     logger.debug(CacheConnectionErrorException.name, { err })
-    logger.info(CacheConnectionErrorException.name, { err: error })
+    logger.warn(CacheConnectionErrorException.name, { err: error })
   }
 })
 
