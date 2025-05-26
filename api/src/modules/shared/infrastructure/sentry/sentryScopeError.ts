@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/node'
-import { DomainError } from '@shared/domain/domain-error'
 import { Request } from 'express'
+
+import { InfrastructureError } from '../infrastructure-error.exception'
 
 export function reportErrorToSentry(err: unknown, req: Request) {
   Sentry.withScope(scope => {
@@ -29,7 +30,7 @@ export function reportErrorToSentry(err: unknown, req: Request) {
     // Inyecta el correlationId como trace id para que se muestre como Trace ID en Sentry
     scope.setContext('trace_id', { id: correlationId })
 
-    if (err instanceof DomainError) scope.setExtra('descripcion', err.detail)
+    if (err instanceof InfrastructureError) scope.setExtra('descripcion', err.detail)
 
     Sentry.captureException(err)
   })
