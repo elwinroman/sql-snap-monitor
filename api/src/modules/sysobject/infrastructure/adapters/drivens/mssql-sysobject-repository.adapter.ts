@@ -145,12 +145,4 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
 
     return data
   }
-
-  // async getSysObject(id: number): Promise<SysObject> {
-  // code
-  // }
-
-  // async getSysObjectFromPreprod(name: string, schema: string): Promise<SysObject> {
-  // code
-  // }
 }

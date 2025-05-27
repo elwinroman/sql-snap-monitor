@@ -2,7 +2,7 @@
  * Representa un objeto definido dentro de una base de datos SQL,
  * como una vista, procedimiento almacenado, función o similar.
  * Incluye metadatos relevantes como esquema, tipo, fechas y definición del objeto.
- * NOTA: El objeto USERTABLE, se está manejando por separado
+ * NOTA: Es excluyente para el objeto tipo USER_TABLE
  */
 export interface SysObject {
   /** Identificador único del objeto dentro del sistema. */

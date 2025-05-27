@@ -6,12 +6,10 @@ type SearchSysObject = Pick<SysObject, 'id' | 'name' | 'schemaName' | 'typeDesc'
 /**
  * Puerto del repositorio de SysObject de tipo driven (secondary) que define las operaciones de acceso a datos del dominio.
  *
- * Esta interfaz abstrae la lógica de persistencia y se implementa típicamente por un adaptador
- * que accede a una base de datos o a una fuente externa.
  */
 export interface ForSysObjectRepositoryPort {
   /**
-   * Obtiene un objeto del sistema (`SysObject`) por su identificador único.
+   * Obtiene un objeto del sistema (`SysObject`) por su identificador único. No incluye el objeto de tipo USER_TABLE
    *
    * @param id - Identificador del objeto.
    * @returns Una promesa que resuelve con el objeto si existe, o `null` si no se encuentra.
@@ -34,5 +32,4 @@ export interface ForSysObjectRepositoryPort {
    * @returns Una promesa que resuelve con una lista de objetos coincidentes.
    */
   findByNameAndType(name: string, type: string): Promise<SearchSysObject[]>
-  // getByNameAndSchemaFromPreprod(name: string, type: string): Promise<SysObject | null>
 }
