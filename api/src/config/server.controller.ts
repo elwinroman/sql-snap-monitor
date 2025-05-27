@@ -1,13 +1,10 @@
 import '@shared/infrastructure/sentry/instruments'
 
-import { handleErrorMiddleware } from '@shared/infrastructure/middlewares/handle-error.middleware'
+import { correlationIdMiddleware, handleErrorMiddleware, routeNotFoundMiddleware } from '@shared/infrastructure/middlewares'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json, Router } from 'express'
 import session from 'express-session'
-
-import { routeNotFound, verifyToken } from '@/middlewares'
-import { correlationIdMiddleware } from '@/modules/shared/infrastructure/middlewares/correlation-id.middleware'
 
 import { NODE_ENV, SESSION_SECRET } from './enviroment'
 import { NetworkController } from './network.controller'
@@ -61,12 +58,9 @@ export class Server {
     this.app.use(json())
     this.app.use(cookieParser())
     this.app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
-    // this.app.use(verifyToken)
 
     this.app.use(this.routes)
-    this.app.use(routeNotFound)
-
-    // this.app.use(handleError)
+    this.app.use(routeNotFoundMiddleware)
     this.app.use(handleErrorMiddleware)
 
     const network = new NetworkController(this.port)

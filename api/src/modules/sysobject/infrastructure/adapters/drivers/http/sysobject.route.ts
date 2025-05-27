@@ -1,4 +1,4 @@
-import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares/verify-token.middleware'
+import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
 import { Router } from 'express'
 
 import { getSysObjectController, searchSuggestionsController } from './composition-root'

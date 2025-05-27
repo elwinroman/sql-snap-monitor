@@ -1,6 +1,6 @@
 import { UserAlreadyAuthenticatedException } from '@auth/application/exceptions'
 import { JwtTokenManagerAdapter } from '@auth/infrastructure/adapters/drivens'
-import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares/verify-token.middleware'
+import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
 import { extractBearerToken } from '@shared/infrastructure/utils/extract-bearer-token.util'
 import { NextFunction, Request, Response, Router } from 'express'
 
