@@ -1,6 +1,6 @@
 import { authenticatorProxyAdapter } from '@auth/infrastructure/adapters/drivers/proxies/composition-root'
 import { setAuthContext } from '@auth/infrastructure/auth-context'
-import { UnauthorizedException } from '@shared/domain/exceptions'
+import { UnauthorizedException } from '@shared/application/exceptions'
 import { setLoggerRequestContext } from '@shared/infrastructure/logger/logger-context'
 import { extractBearerToken } from '@shared/infrastructure/utils/extract-bearer-token.util'
 import { NextFunction, Request, Response } from 'express'

@@ -1,5 +1,5 @@
 import { AccessTokenDecoded, ForTokenBlacklistPort, ForTokenManagementPort } from '@auth/domain/ports/drivens'
-import { UnauthorizedException } from '@shared/domain/exceptions'
+import { ForbiddenException } from '@shared/application/exceptions'
 import { Logger } from '@shared/domain/logger'
 
 export class VerifyTokenUseCase {
@@ -16,7 +16,7 @@ export class VerifyTokenUseCase {
     const isRevoked = await this.blacklist.isBlacklisted(decoded.jti)
     if (isRevoked) {
       this.logger.warn(`Se está intentando usar un token revocado. TYPE: ${decoded.type} JTI: ${decoded.jti}`)
-      throw new UnauthorizedException()
+      throw new ForbiddenException()
     }
 
     return decoded

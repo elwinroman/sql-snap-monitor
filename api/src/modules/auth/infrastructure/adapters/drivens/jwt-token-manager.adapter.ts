@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 
-import { TokenExpiredException } from '@auth/domain/exceptions'
+import { TokenExpiredException } from '@auth/application/exceptions'
 import {
   AccessTokenDecoded,
   AccessTokenPayload,
@@ -9,7 +9,7 @@ import {
   RefreshTokenPayload,
   TokenTypeEnum,
 } from '@auth/domain/ports/drivens/for-token-management.port'
-import { UnauthorizedException } from '@shared/domain/exceptions'
+import { UnauthorizedException } from '@shared/application/exceptions'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
 import { JWT_SECRET } from '@/config/enviroment'

@@ -6,8 +6,8 @@ export class InternalServerErrorException extends DomainError {
   readonly detail: string
 
   constructor() {
-    super({ message: 'Error interno del sistema.' })
-    this.title = this.message
+    super({ message: '[INTERNAL] Error interno del sistema' })
+    this.title = 'Error interno del sistema'
     this.detail = 'Ha ocurrido un error inesperado. Intente nuevamente más tarde o contacte con soporte si el problema persiste.'
   }
 }
