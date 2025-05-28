@@ -1,5 +1,6 @@
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
 import { SysObject } from '@sysobject/domain/schemas/sysobject'
+import { Usertable } from '@sysobject/domain/schemas/usertable'
 
 export type SearchSysObject = Pick<SysObject, 'id' | 'name' | 'schemaName' | 'typeDesc'>
 
@@ -27,5 +28,11 @@ export interface ForSysObjectRetrievalPort {
    */
   searchSuggestions(name: string, type: string): Promise<SearchSysObject[]>
 
-  // getSysObjectFromPreprod(name: string, schema: string): Promise<SysObject>
+  /**
+   * Recupera una tabla de usuario por su ID.
+   *
+   * @param id - Identificador único de la tabla de usuario.
+   * @returns Una promesa que resuelve con la tabla de usuario correspondiente.
+   */
+  getSysUsertable(id: number): Promise<Usertable>
 }

@@ -22,14 +22,6 @@ export interface ForSysUsertableRepositoryPort {
   getColumnsById(id: number): Promise<Column[]>
 
   /**
-   * Obtiene las propiedades extendidas de las columnas de una tabla por su identificador.
-   *
-   * @param id - ID de la tabla.
-   * @returns Una promesa que resuelve con la lista de propiedades extendidas de columnas.
-   */
-  getExtendedPropertiesById(id: number): Promise<ExtendedProperty[]>
-
-  /**
    * Obtiene los índices definidos sobre una tabla por su identificador.
    *
    * @param id - ID de la tabla.
@@ -52,4 +44,28 @@ export interface ForSysUsertableRepositoryPort {
    * @returns Una promesa que resuelve con la lista de propiedades extendidas de la tabla.
    */
   getUsertableExtendedPropertieById(id: number): Promise<ExtendedProperty[]>
+}
+
+/**
+ * Representa una fila de la consulta a sys.columns en MSSQL.
+ */
+export interface RawColumn {
+  column_id: number
+  name: string
+  type_name: string
+  max_length: number
+  precision: number
+  scale: number
+  is_nullable: boolean
+  is_identity: boolean
+  default_definition: string | null
+}
+
+/**
+ * Representa una fila de propiedades extendidas de columnas en MSSQL (sys.extended_properties).
+ */
+export interface RawExtendedProperty {
+  column_id: number
+  value: string
+  name: string
 }

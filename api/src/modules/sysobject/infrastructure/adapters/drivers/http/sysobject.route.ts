@@ -1,7 +1,7 @@
 import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
 import { Router } from 'express'
 
-import { getSysObjectController, searchSuggestionsController } from './composition-root'
+import { getSysObjectController, getSysUsertableController, searchSuggestionsController } from './composition-root'
 
 export function sysObjectRouter() {
   const router = Router()
@@ -10,6 +10,7 @@ export function sysObjectRouter() {
 
   router.get('/:id', verifyTokenMiddleware, getSysObjectController.run.bind(getSysObjectController))
 
+  router.get('/usertable/:id', verifyTokenMiddleware, getSysUsertableController.run.bind(getSysUsertableController))
   // router.get('/preprod', getSysObjectFromPreprod.run.bind(getSysObjectFromPreprod))
 
   return router
