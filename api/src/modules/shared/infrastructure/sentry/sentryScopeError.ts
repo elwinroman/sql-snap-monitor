@@ -8,7 +8,7 @@ export function reportErrorToSentry(err: unknown) {
   Sentry.withScope(scope => {
     const context = getLoggerRequestContext()
 
-    if (!context) throw new Error('Error al obtener contexto, no existe un contexto.')
+    if (!context) throw new Error('No hay contexto activo para logger. Usa el middleware inicial para crear uno.')
 
     // Datos del request manuales (sin sensibles)
     const requestData = {

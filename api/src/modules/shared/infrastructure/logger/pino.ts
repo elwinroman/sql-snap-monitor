@@ -1,7 +1,7 @@
 import { Context, Logger, LoggerLevel, Message } from '@shared/domain/logger'
 import pino from 'pino'
 
-import { getLoggerRequestContext } from './logger-context'
+import { getLoggerRequestContext, LoggerRequestContext } from './logger-context'
 
 export interface PinoLoggerDependencies {
   isEnabled?: boolean
@@ -47,11 +47,13 @@ export class PinoLogger implements Logger {
   }
 
   private call(level: pino.Level, message: Message, context?: Context) {
-    const storeRequestContext = getLoggerRequestContext()
+    const loggerContext = getLoggerRequestContext() as LoggerRequestContext | undefined
+
+    const { request: _request, ...logContext } = loggerContext ?? {}
 
     const loggerMessage = {
       message,
-      ...(storeRequestContext || {}), // agrega atributos del store (de request)
+      ...(logContext || {}), // agrega atributos del store (de request)
       ...(context || {}), // agregar atributos del contexto manual (por parámetro)
     }
     this.logger[level](loggerMessage)
