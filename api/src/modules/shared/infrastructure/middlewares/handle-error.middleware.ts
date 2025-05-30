@@ -1,16 +1,16 @@
 import { ApplicationError } from '@shared/application/application-error'
-import { SafeInternalErrorException, ValidationException } from '@shared/application/exceptions'
+import { SafeInternalServerErrorException, ValidationException } from '@shared/application/exceptions'
 import { DomainError } from '@shared/domain/domain-error'
 import { httpErrorMap } from '@shared/infrastructure/http/http-error-map'
 import { InfrastructureError } from '@shared/infrastructure/infrastructure-error.exception'
 import { logger } from '@shared/infrastructure/logger/pino-instance'
 import { mapMSSQLError } from '@shared/infrastructure/store/map-mssql-error'
 import { NextFunction, Request, Response } from 'express'
-import sql from 'mssql'
 import { ZodError } from 'zod'
 
 import { MyCustomError } from '@/models'
 
+import { DatabaseError } from '../exceptions'
 import { reportErrorToSentry } from '../sentry/sentryScopeError'
 import { formatZodErrors } from '../utils/format-zod-errors.util'
 
@@ -37,19 +37,14 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
       break
     }
     // errores de node-mssql package
-    case err instanceof sql.ConnectionError:
-    case err instanceof sql.RequestError:
-    case err instanceof sql.PreparedStatementError:
-    case err instanceof sql.TransactionError:
-      reportErrorToSentry(err, req)
-      // impresión en consola del error detallado
-      logger.debug(err.name, { err })
+    case err instanceof DatabaseError:
+      reportErrorToSentry(err)
 
-      mappedError = mapMSSQLError(err)
+      mappedError = mapMSSQLError(err.originalError)
       logger.error(mappedError.name, { err: mappedError })
 
       // reemplaza el error específico con un error genérico para el cliente
-      mappedError = new SafeInternalErrorException()
+      mappedError = new SafeInternalServerErrorException()
       break
 
     // errores de dominio o aplicación
@@ -61,22 +56,22 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     // errores de infraestructura
     case err instanceof InfrastructureError:
       mappedError = err
-      reportErrorToSentry(mappedError, req)
+      reportErrorToSentry(mappedError)
       logger.error(mappedError.name, { err: mappedError })
 
-      mappedError = new SafeInternalErrorException()
+      mappedError = new SafeInternalServerErrorException()
       break
     // otro tipo de errores
     default:
       if (err instanceof Error) {
-        reportErrorToSentry(err, req)
+        reportErrorToSentry(err)
         logger.error(err.name, { err })
       } else {
-        reportErrorToSentry(err, req)
+        reportErrorToSentry(err)
         logger.error('UnknownError', { err })
       }
 
-      mappedError = new SafeInternalErrorException()
+      mappedError = new SafeInternalServerErrorException()
       break
   }
 
@@ -84,12 +79,12 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
   const errorConfig = httpErrorMap[mappedError.type]
   if (!errorConfig) {
     logger.warn(`Excepción no mapeada => ${mappedError.type}`)
-    mappedError = new SafeInternalErrorException()
+    mappedError = new SafeInternalServerErrorException()
   }
 
   const { status, errorCode } = httpErrorMap[mappedError.type] || {
-    status: 500, // fallback si InternalServerErrorException no está mapeado
-    errorCode: 'UNKNOWN', // fallback si InternalServerErrorException no está mapeado
+    status: 500, // fallback si SafeInternalServerErrorException no está mapeado
+    errorCode: 'UNKNOWN', // fallback si SafeInternalServerErrorException no está mapeado
   }
 
   const errorApiResponse = {

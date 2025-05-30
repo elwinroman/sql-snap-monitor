@@ -1,6 +1,6 @@
 import { ApplicationError } from '../application-error'
 
-export class SafeInternalErrorException extends ApplicationError {
+export class SafeInternalServerErrorException extends ApplicationError {
   readonly type = this.constructor.name
   readonly title: string
   readonly detail: string

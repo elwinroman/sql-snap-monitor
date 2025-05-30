@@ -27,6 +27,7 @@ export class MSSQLDatabaseConnection {
    * Obtiene una conexión de la base de datos. Si no existe, la crea.
    * @param config Credenciales de conexión.
    * @returns Pool de conexión.
+   * TODO: Implementar MSSQLQueryRunner, para capturar los errores sin usar try, catch en las querys
    */
   async connect(config: StoreUserSchema, userType: UserType): Promise<ConnectionPool> {
     const key = JSON.stringify(config)

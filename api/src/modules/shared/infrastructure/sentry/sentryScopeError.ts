@@ -1,20 +1,25 @@
 import * as Sentry from '@sentry/node'
-import { Request } from 'express'
 
+import { DatabaseError } from '../exceptions'
 import { InfrastructureError } from '../infrastructure-error.exception'
+import { getLoggerRequestContext } from '../logger/logger-context'
 
-export function reportErrorToSentry(err: unknown, req: Request) {
+export function reportErrorToSentry(err: unknown) {
   Sentry.withScope(scope => {
+    const context = getLoggerRequestContext()
+
+    if (!context) throw new Error('Error al obtener contexto, no existe un contexto.')
+
     // Datos del request manuales (sin sensibles)
     const requestData = {
-      method: req.method,
-      url: req.originalUrl,
-      query: req.query,
+      method: context.method,
+      url: context.url,
+      query: context.request?.query,
       headers: {
-        'user-agent': req.headers['user-agent'] ?? 'N/A',
-        host: req.headers['host'] ?? 'N/A',
+        'user-agent': context?.request?.headers['user-agent'] ?? 'N/A',
+        host: context.request?.headers['host'] ?? 'N/A',
       },
-      data: req.body ? sanitizeRequestBody(req.body) : undefined,
+      data: context.request?.body ? sanitizeRequestBody(context.request.body) : undefined,
     }
 
     scope.addEventProcessor(event => {
@@ -23,13 +28,33 @@ export function reportErrorToSentry(err: unknown, req: Request) {
     })
 
     // Establece correlationId como tag y como trace id
-    const correlationId = req.correlationId || 'N/A'
+    const correlationId = context?.correlationId || 'N/A'
 
-    scope.setTag('correlationId', correlationId)
-    scope.setTransactionName(req.originalUrl)
-    // Inyecta el correlationId como trace id para que se muestre como Trace ID en Sentry
-    scope.setContext('trace_id', { id: correlationId })
+    scope.setTag('correlation_id', correlationId)
+    scope.setTransactionName(context.url)
 
+    // Contexto del usuario
+    scope.setUser({
+      id: context.userId,
+    })
+
+    // Contexto con más detalle
+    scope.setContext('Detalle Usuario', {
+      id: context.userId,
+      rol: context.role,
+      jti: context.jti,
+    })
+
+    if (err instanceof DatabaseError) {
+      const proxyError = new Error(err.message)
+      proxyError.name = err.originalError.name // cambia el nombre del error por el original
+      proxyError.stack = err.stack
+
+      // contexto del error original
+      scope.setContext('Original Error', { ...err.originalError })
+
+      return Sentry.captureException(proxyError)
+    }
     if (err instanceof InfrastructureError) scope.setExtra('descripcion', err.detail)
 
     Sentry.captureException(err)
