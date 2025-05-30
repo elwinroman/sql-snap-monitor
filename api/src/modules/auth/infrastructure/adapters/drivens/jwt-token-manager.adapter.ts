@@ -15,9 +15,10 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 import { JWT_SECRET } from '@/config/enviroment'
 
 export class JwtTokenManagerAdapter implements ForTokenManagementPort {
-  createAccessToken(id: number): string {
+  createAccessToken(id: number, username: string): string {
     const accessTokenPaylod: AccessTokenPayload = {
       user_id: id,
+      username,
       role: 'rol no definido',
       type: TokenTypeEnum.Access,
       jti: randomUUID(),
@@ -27,9 +28,10 @@ export class JwtTokenManagerAdapter implements ForTokenManagementPort {
     return accessToken
   }
 
-  createRefreshToken(id: number): string {
+  createRefreshToken(id: number, username: string): string {
     const refreshTokenPayload: RefreshTokenPayload = {
       user_id: id,
+      username,
       type: TokenTypeEnum.Refresh,
       jti: randomUUID(),
     }
@@ -50,6 +52,7 @@ export class JwtTokenManagerAdapter implements ForTokenManagementPort {
 
       return {
         user_id: decoded.user_id,
+        username: decoded.username,
         role: decoded.role,
         type: decoded.type,
         jti: decoded.jti,
@@ -75,6 +78,7 @@ export class JwtTokenManagerAdapter implements ForTokenManagementPort {
 
       return {
         user_id: decoded.user_id,
+        username: decoded.username,
         type: decoded.type,
         jti: decoded.jti,
         expirationCountdown,

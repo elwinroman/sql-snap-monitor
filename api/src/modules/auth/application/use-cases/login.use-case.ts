@@ -35,7 +35,8 @@ export class LoginUseCase {
       aliasHost: sqlUser.host,
     })
 
-    const repoUser = await this.userRepository.getOrCreate(user.toValue())
+    // se pasa los datos del usuario y el nombre de la base de datos
+    const repoUser = await this.userRepository.getOrCreate(user.toValue(), details.name)
 
     // cuando el usuario no se puedo crear
     if (!repoUser) throw new Error('Error al obtener y/o crear el usuario')
@@ -44,8 +45,8 @@ export class LoginUseCase {
     if (repoUser.isActive === false) throw new PermissionDenyException()
 
     // genera el token y las credenciales las guarda en cache (el tiempo se actualiza con la última sesión)
-    const accessToken = this.tokenManager.createAccessToken(repoUser.id)
-    const refreshToken = this.tokenManager.createRefreshToken(repoUser.id)
+    const accessToken = this.tokenManager.createAccessToken(repoUser.id, repoUser.user)
+    const refreshToken = this.tokenManager.createRefreshToken(repoUser.id, repoUser.user)
     await this.cacheRepository.set(`auth:credentials:${repoUser.id}`, JSON.stringify(credential), 2592000) // 30 días
 
     return {
