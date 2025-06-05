@@ -10,8 +10,8 @@ export class GetSysObjectController {
     const { id } = req.params
 
     try {
-      const validateData: GetSysObjectHttpDto = GetSysObjectParamsSchema.parse({ id })
-      const result = await this.sysObjectService.getSysObject(validateData.id)
+      const getSysObjectDto: GetSysObjectHttpDto = GetSysObjectParamsSchema.parse({ id })
+      const result = await this.sysObjectService.getSysObject(getSysObjectDto.id)
 
       return res.status(200).json({ correlationId: req.correlationId, data: result })
     } catch (err) {

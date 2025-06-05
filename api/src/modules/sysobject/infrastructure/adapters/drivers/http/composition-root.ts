@@ -1,4 +1,5 @@
 import { authenticatorProxyAdapter } from '@auth/infrastructure/adapters/drivers/proxies/composition-root'
+import { getAuthContext } from '@auth/infrastructure/auth-context'
 import { DatabaseName, getStaticDatabaseCredentials } from '@shared/infrastructure/store'
 import { SysObjectService } from '@sysobject/application/sysobject.service'
 import { GetProdSysObjectUseCase } from '@sysobject/application/use-cases/get-prod-sysobject.use-case'
@@ -27,11 +28,12 @@ const compositionMock = () => {
   const logRepository = new MssqlLogRepositoryAdapter()
 
   // USE CASES
-  const getSysObjectUseCase = new GetSysObjectUseCase(sysObjectRepository)
+  const registerSearchLogUseCase = new RegisterSearchLogUseCase(logRepository)
+
+  const getSysObjectUseCase = new GetSysObjectUseCase(sysObjectRepository, registerSearchLogUseCase, getAuthContext) // se pasa el contexto para el registro de LOGs de búsqueda
   const searchSuggestionsUseCase = new SearchSuggestionsUseCase(sysObjectRepository)
   const getSysUsertableUseCase = new GetSysUsertableUseCase(sysUsertableRepository)
 
-  const registerSearchLogUseCase = new RegisterSearchLogUseCase(logRepository)
   const getProdSysObjectUseCase = new GetProdSysObjectUseCase(
     prodSysObjectRepository,
     registerSearchLogUseCase,
