@@ -35,4 +35,15 @@ export interface ForSysObjectRetrievalPort {
    * @returns Una promesa que resuelve con la tabla de usuario correspondiente.
    */
   getSysUsertable(id: number): Promise<Usertable>
+
+  /**
+   * Recupera un objeto del sistema desde el entorno de producción, incluyendo los roles con permisos sobre él.
+   *
+   * @param name - Nombre del objeto a recuperar.
+   * @param schema - Nombre del esquema al que pertenece el objeto.
+   * @param actionType - Tipo de acción realizado (recuperación por comparación, recuperación por búsqueda normal)
+   * @param idUser - ID del usuario que realiza la operación. Utilizado para registro de LOGs.
+   * @returns Una promesa que resuelve con el objeto y sus permisos asociados.
+   */
+  getProdSysObject(name: string, schema: string, actionType: number, idUser?: number): Promise<SysObject & { permission: PermissionRol[] }>
 }
