@@ -10,8 +10,8 @@ export class GetSysUsertableController {
     const { id } = req.params
 
     try {
-      const validateDate: GetSysUsertableHttpDto = GetSysUsertableParamsSchema.parse({ id })
-      const result = await this.sysObjectService.getSysUsertable(validateDate.id)
+      const validateData: GetSysUsertableHttpDto = GetSysUsertableParamsSchema.parse({ id })
+      const result = await this.sysObjectService.getSysUsertable(validateData.id)
 
       return res.status(200).json({ correlationId: req.correlationId, data: result })
     } catch (err) {

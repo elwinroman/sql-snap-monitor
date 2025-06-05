@@ -11,7 +11,7 @@ export interface SysObject {
   /** Nombre del objeto (ej. nombre de una vista, función o SP). */
   name: string
 
-  /** Tipo del objeto (por ejemplo: 'VIEW', 'FUNCTION', 'PROCEDURE'). */
+  /** Tipo del objeto (por ejemplo: 'V', 'FN', 'SP'). */
   type: string
 
   /** Descripción detallada o extendida del tipo (por ejemplo: 'SQL_SCALAR_FUNCTION'). */

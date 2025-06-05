@@ -10,8 +10,8 @@ export class SearchSuggestionsController {
     const { name, type } = req.query
 
     try {
-      const validateDate: SearchSuggestionHttpDto = SearchSuggestionQuerySchema.parse({ name, type })
-      const result = await this.sysObjectService.searchSuggestions(validateDate.name, validateDate.type)
+      const validateData: SearchSuggestionHttpDto = SearchSuggestionQuerySchema.parse({ name, type })
+      const result = await this.sysObjectService.searchSuggestions(validateData.name, validateData.type)
 
       return res.status(200).json({ correlationId: req.correlationId, data: result })
     } catch (err) {
