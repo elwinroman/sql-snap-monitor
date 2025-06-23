@@ -1,7 +1,6 @@
-import { getAuthContext } from '@auth/infrastructure/auth-context'
 import { format } from '@formkit/tempo'
-import { StoreUserSchema } from '@shared/domain/store'
-import { getCacheDatabaseCredentials, MSSQLDatabaseConnection, UserType } from '@shared/infrastructure/store'
+import { MSSQLDatabaseConnection } from '@shared/infrastructure/store'
+import { buildStoreAuthContext } from '@shared/infrastructure/utils/build-store-auth-context.util'
 import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-error.util'
 import { ForSysObjectRepositoryPort } from '@sysobject/domain/ports/drivens/for-sysobject-repository.port'
 import { SearchSysObject } from '@sysobject/domain/ports/drivers/for-sysobject-retrieval.port'
@@ -13,23 +12,9 @@ import { SysObject, TypeSysObject, TypeSysObjectEnum } from '@/modules/sysobject
 export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
 
-  /**
-   * Obtiene las credenciales de la base de datos del usuario actual desde el contexto de autenticación y la caché.
-   *
-   * @throws {Error} Cuando no se puede recuperar el contexto de autenticación.
-   * @returns {Promise<{ credentials: StoreUserSchema; type: UserType }>} Un objeto que contiene las credenciales del usuario y el tipo de usuario (External por defecto).
-   */
-  private async fetchUserDbCredentials(): Promise<{ credentials: StoreUserSchema; type: UserType }> {
-    const authContext = getAuthContext()
-    if (!authContext) throw new Error('Error en la recuperación del contexto de autenticación')
-    const cachedCredentials = await getCacheDatabaseCredentials(authContext.userId)
-
-    return cachedCredentials
-  }
-
   async getById(id: number): Promise<SysObject | null> {
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {
@@ -76,8 +61,8 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
   }
 
   async getRolesById(id: number): Promise<PermissionRol[]> {
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {
@@ -118,8 +103,8 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
       andTypeDesc = `AND type IN('P','FN','TR','TF','V','U')` // incluye USER_TABLE
     else andTypeDesc = `AND type = '${type}'`
 
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {

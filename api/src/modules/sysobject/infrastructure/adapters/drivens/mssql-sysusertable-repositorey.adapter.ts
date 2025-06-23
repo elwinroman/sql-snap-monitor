@@ -1,7 +1,6 @@
-import { getAuthContext } from '@auth/infrastructure/auth-context'
 import { format } from '@formkit/tempo'
-import { StoreUserSchema } from '@shared/domain/store'
-import { getCacheDatabaseCredentials, MSSQLDatabaseConnection, UserType } from '@shared/infrastructure/store'
+import { MSSQLDatabaseConnection } from '@shared/infrastructure/store'
+import { buildStoreAuthContext } from '@shared/infrastructure/utils/build-store-auth-context.util'
 import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-error.util'
 import {
   ForSysUsertableRepositoryPort,
@@ -15,23 +14,9 @@ import sql from 'mssql'
 export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
 
-  /**
-   * Obtiene las credenciales de la base de datos del usuario actual desde el contexto de autenticación y la caché.
-   *
-   * @throws {Error} Cuando no se puede recuperar el contexto de autenticación.
-   * @returns {Promise<{ credentials: StoreUserSchema; type: UserType }>} Un objeto que contiene las credenciales del usuario y el tipo de usuario (External por defecto).
-   */
-  private async fetchUserDbCredentials(): Promise<{ credentials: StoreUserSchema; type: UserType }> {
-    const authContext = getAuthContext()
-    if (!authContext) throw new Error('Error en la recuperación del contexto de autenticación')
-    const cachedCredentials = await getCacheDatabaseCredentials(authContext.userId)
-
-    return cachedCredentials
-  }
-
   async getById(id: number): Promise<UsertableSysObject | null> {
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {
@@ -74,8 +59,8 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
   }
 
   async getColumnsById(id: number): Promise<Column[]> {
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {
@@ -147,8 +132,8 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
   }
 
   async getForeignKeysById(id: number): Promise<ForeignKey[]> {
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {
@@ -188,8 +173,8 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
   }
 
   async getIndexesById(id: number): Promise<Index[]> {
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {
@@ -226,8 +211,8 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
   }
 
   async getUsertableExtendedPropertieById(id: number): Promise<ExtendedProperty[]> {
-    const dbUser = await this.fetchUserDbCredentials()
-    const conn = await this.connection.connect(dbUser.credentials, dbUser.type)
+    const { store } = await buildStoreAuthContext()
+    const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
 
     try {

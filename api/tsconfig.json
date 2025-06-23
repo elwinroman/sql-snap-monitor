@@ -18,7 +18,9 @@
       "@/*": ["src/*"],
       "@shared/*": ["src/modules/shared/*"],
       "@auth/*": ["src/modules/auth/*"],
-      "@finlog/*": ["src/modules/fin-log/*"]
+      "@finlog/*": ["src/modules/fin-log/*"],
+      "@sysobject/*": ["src/modules/sysobject/*"],
+      "@busqueda-reciente/*": ["src/modules/busqueda-reciente/*"]
     },
     "typeRoots": ["./src/types", "./node_modules/@types"],
   },
