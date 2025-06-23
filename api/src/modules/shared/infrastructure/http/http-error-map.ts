@@ -18,6 +18,9 @@ export const httpErrorMap: Record<string, { status: number; errorCode: number }>
   SysObjectNotFoundException: { status: 404, errorCode: 3000 },
   ProdSysObjectNotFoundException: { status: 404, errorCode: 3001 },
 
+  // Busqueda Reciente
+  BusquedaRecienteNotFoundException: { status: 404, errorCode: 4000 },
+
   // FinLog
   FinLogNotFoundException: { status: 404, errorCode: 4000 },
 }
