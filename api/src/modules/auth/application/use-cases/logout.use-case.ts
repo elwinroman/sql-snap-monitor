@@ -7,9 +7,9 @@ export class LogoutUseCase {
     private readonly tokenManager: ForTokenManagementPort,
   ) {}
 
-  async execute(dto: NewTokens): Promise<{ message: string }> {
-    const decodedAccessToken = this.tokenManager.verifyAccessToken(dto.accessToken)
-    const decodedRefreshToken = this.tokenManager.verifyRefreshToken(dto.refreshToken)
+  async execute(tokens: NewTokens): Promise<{ message: string }> {
+    const decodedAccessToken = this.tokenManager.verifyAccessToken(tokens.accessToken)
+    const decodedRefreshToken = this.tokenManager.verifyRefreshToken(tokens.refreshToken)
 
     // todo: ¿verificar que los tokens estén en la blacklist?
 

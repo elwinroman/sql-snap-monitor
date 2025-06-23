@@ -6,8 +6,8 @@ import { NewTokens } from '../drivens/for-token-management.port'
 
 export interface ForHttpAuthenticatingPort {
   login(sqlUser: StoreUserSchema): Promise<AuthenticatedUser>
-  logout(dto: NewTokens): Promise<{ message: string }>
-  refreshToken(dto: string): Promise<{ accessToken: string }>
-  checkSession(id: number): Promise<StoreInfo>
+  logout(tokens: NewTokens): Promise<{ message: string }>
+  refreshToken(refreshToken: string): Promise<{ accessToken: string }>
+  checkSession(credentials: StoreUserSchema): Promise<StoreInfo>
   health(): void
 }

@@ -38,7 +38,7 @@ export class LoginUseCase {
     // se pasa los datos del usuario y el nombre de la base de datos
     const repoUser = await this.userRepository.getOrCreate(user.toValue(), details.name)
 
-    // cuando el usuario no se puedo crear
+    // cuando el usuario no se pudo crear
     if (!repoUser) throw new Error('Error al obtener y/o crear el usuario')
 
     // denegar acceso a la aplicación a un usuario desactivado

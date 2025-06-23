@@ -17,7 +17,6 @@ import { RefreshTokenController } from './refresh-token/refresh-token.controller
 /*************************************
  * Inyección de dependencias API-REST
  *************************************/
-
 const compositionMock = () => {
   // DRIVENS
   const storeRepositoty = new MssqlStoreRepositoryAdapter() // repositorio
@@ -29,14 +28,14 @@ const compositionMock = () => {
   // USE CASES
   const loginUseCase = new LoginUseCase(userRepository, storeRepositoty, cacheRepository, jwtTokenManager)
   const logoutUseCase = new LogoutUseCase(cacheRepository, jwtTokenManager)
-  const refreshTokenUseCase = new RefreshTokenUseCase(jwtTokenManager, blacklist, logger)
-  const checkSessionUseCase = new CheckSessionUseCase(storeRepositoty, cacheRepository)
+  const refreshTokenUseCase = new RefreshTokenUseCase(jwtTokenManager, cacheRepository, blacklist, logger)
+  const checkSessionUseCase = new CheckSessionUseCase(storeRepositoty)
 
   // SERVICE ORCHESTRATOR
   const controlAuthenticatorService = new HttpAuthenticatorService(loginUseCase, logoutUseCase, refreshTokenUseCase, checkSessionUseCase)
 
   // CONTROLLERS
-  const loginController = new LoginController(controlAuthenticatorService)
+  const loginController = new LoginController(controlAuthenticatorService, jwtTokenManager)
   const logoutController = new LogoutController(controlAuthenticatorService)
   const refreshTokenController = new RefreshTokenController(controlAuthenticatorService)
   const checkSessionController = new CheckSessionController(controlAuthenticatorService)

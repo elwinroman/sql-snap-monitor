@@ -1,11 +1,11 @@
 import { AccessTokenDecoded } from '../domain/ports/drivens/for-token-management.port'
 import { ForProxyAuthenticatingPort } from '../domain/ports/drivers/for-proxy-authenticating.port'
-import { VerifyTokenUseCase } from './use-cases'
+import { VerifyAccessTokenUseCase } from './use-cases'
 
 export class ProxyAuthenticatorService implements ForProxyAuthenticatingPort {
-  constructor(private readonly verifyTokenUC: VerifyTokenUseCase) {}
+  constructor(private readonly verifyAccessTokenUC: VerifyAccessTokenUseCase) {}
 
-  async verifyToken(token: string): Promise<AccessTokenDecoded> {
-    return this.verifyTokenUC.execute(token)
+  async verifyAccessToken(token: string): Promise<AccessTokenDecoded> {
+    return this.verifyAccessTokenUC.execute(token)
   }
 }

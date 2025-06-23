@@ -18,16 +18,16 @@ export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
     return this.loginUC.execute(sqlUser)
   }
 
-  async logout(dto: NewTokens): Promise<{ message: string }> {
-    return this.logoutUC.execute(dto)
+  async logout(tokens: NewTokens): Promise<{ message: string }> {
+    return this.logoutUC.execute(tokens)
   }
 
-  async refreshToken(dto: string): Promise<{ accessToken: string }> {
-    return this.refreshTokenUC.execute(dto)
+  async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
+    return this.refreshTokenUC.execute(refreshToken)
   }
 
-  async checkSession(id: number): Promise<StoreInfo> {
-    return this.checkSessionUC.execute(id)
+  async checkSession(credentials: StoreUserSchema): Promise<StoreInfo> {
+    return this.checkSessionUC.execute(credentials)
   }
 
   health(): void {

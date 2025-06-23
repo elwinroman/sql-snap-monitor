@@ -1,5 +1,5 @@
 import { ProxyAuthenticatorService } from '@auth/application/proxy-authenticator.service'
-import { VerifyTokenUseCase } from '@auth/application/use-cases'
+import { VerifyAccessTokenUseCase } from '@auth/application/use-cases'
 import { JwtTokenManagerAdapter, TokenBlacklistCacheAdapter } from '@auth/infrastructure/adapters/drivens'
 import { ValkeyCacheRepository } from '@shared/infrastructure/cache/valkey-cache-repository'
 import { logger } from '@shared/infrastructure/logger/pino-instance'
@@ -9,7 +9,6 @@ import { AuthenticatorProxyAdapter } from './authenticator-proxy-adapter'
 /**********************************
  * Inyección de dependencias PROXY
  **********************************/
-
 const compositionMock = () => {
   // DRIVENS
   const tokenManager = new JwtTokenManagerAdapter()
@@ -17,12 +16,12 @@ const compositionMock = () => {
   const blacklist = new TokenBlacklistCacheAdapter(cacheRepository)
 
   // USE CASES
-  const verifyTokenUC = new VerifyTokenUseCase(tokenManager, blacklist, logger)
+  const verifyAccessTokenUC = new VerifyAccessTokenUseCase(tokenManager, cacheRepository, blacklist, logger)
 
   // SERVICE ORCHESTRATOR
-  const authenticatorService = new ProxyAuthenticatorService(verifyTokenUC)
+  const authenticatorService = new ProxyAuthenticatorService(verifyAccessTokenUC)
 
-  // ADAPTER
+  // PROXY ADAPTER
   const authenticatorProxyAdapter = new AuthenticatorProxyAdapter(authenticatorService)
 
   return {

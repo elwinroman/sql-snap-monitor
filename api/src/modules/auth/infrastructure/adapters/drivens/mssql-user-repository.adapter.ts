@@ -27,11 +27,15 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
             ) AS source
         ON target.cHashUsuarioUID = source.hashId
         WHEN MATCHED THEN
+            --============================================================
             -- Si el registro existe, devuelve el registro existente
+            --============================================================
             UPDATE SET 
                 target.cHashUsuarioUID = target.cHashUsuarioUID  -- No hay cambios reales
         WHEN NOT MATCHED THEN
+            --============================================================
             -- Si no existe, realiza la inserción
+            --============================================================
             INSERT (cHashUsuarioUID, cUsuario, cServer, cAliasServer, dFechaRegistro, lVigente)
             VALUES (source.hashId, source.usuario, source.server, source.aliasServer, source.fechaRegistro, source.vigente)
         OUTPUT INSERTED.idUsuario, INSERTED.cHashUsuarioUID, INSERTED.cUsuario, 

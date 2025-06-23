@@ -4,7 +4,7 @@ import { ForProxyAuthenticatingPort } from '@auth/domain/ports/drivers/for-proxy
 export class AuthenticatorProxyAdapter {
   constructor(private readonly authenticatorService: ForProxyAuthenticatingPort) {}
 
-  async verifyToken(token: string): Promise<AccessTokenDecoded> {
-    return await this.authenticatorService.verifyToken(token)
+  async verifyAccessToken(token: string): Promise<AccessTokenDecoded> {
+    return await this.authenticatorService.verifyAccessToken(token)
   }
 }

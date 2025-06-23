@@ -23,10 +23,10 @@ export interface SysObject {
   /** Nombre del esquema al que pertenece el objeto (ej. 'dbo', 'public'). */
   schemaName: string
 
-  /** Fecha de creación del objeto en la base de datos. */
+  /** Fecha de creación del objeto en la base de datos (UTC). */
   createDate: Date | string
 
-  /** Fecha de última modificación del objeto. */
+  /** Fecha de última modificación del objeto (UTC). */
   modifyDate: Date | string
 
   /** Definición del objeto en formato SQL (código fuente). */
