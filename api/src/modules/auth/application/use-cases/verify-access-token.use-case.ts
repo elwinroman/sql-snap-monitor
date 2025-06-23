@@ -1,11 +1,11 @@
-import { ForTokenBlacklistPort, ForTokenManagementPort } from '@auth/domain/ports/drivens'
+import { AccessTokenDecoded, ForTokenBlacklistPort, ForTokenManagementPort } from '@auth/domain/ports/drivens'
 import { ForbiddenException } from '@shared/application/exceptions'
 import { CacheRepository } from '@shared/domain/cache-repository'
 import { Logger } from '@shared/domain/logger'
 import { CacheCredentialNotFoundException } from '@shared/infrastructure/exceptions/cache/cache-credential-not-found.exception'
 import { getCacheDatabaseCredentials } from '@shared/infrastructure/store'
 
-export class RefreshTokenUseCase {
+export class VerifyAccessTokenUseCase {
   constructor(
     private readonly tokenManager: ForTokenManagementPort,
     private readonly cacheRepository: CacheRepository,
@@ -13,10 +13,10 @@ export class RefreshTokenUseCase {
     private readonly logger: Logger,
   ) {}
 
-  async execute(refreshToken: string): Promise<{ accessToken: string }> {
-    const decoded = this.tokenManager.verifyRefreshToken(refreshToken)
+  async execute(token: string): Promise<AccessTokenDecoded> {
+    const decoded = this.tokenManager.verifyAccessToken(token)
 
-    // comprobar que el refresh token no esté en la blacklist
+    // comprobar que el access token no esté en la blacklist
     const isRevoked = await this.blacklist.isBlacklisted(decoded.jti)
     if (isRevoked) {
       this.logger.warn(`Se está intentando usar un token revocado. TYPE: ${decoded.type} JTI: ${decoded.jti}`)
@@ -26,8 +26,10 @@ export class RefreshTokenUseCase {
     // intenta recuperar las credenciales del usuario desde la caché.
     // si no existen, es probable que la caché haya sido limpiada (e.g., reinicio de infraestructura, eliminación accidental, etc.).
     const cacheCredentials = await getCacheDatabaseCredentials(decoded.user_id)
+
     if (!cacheCredentials) {
-      // invalida el refresh token para proteger el sistema de envío de errores ya que no se encuentra la credencial asociada en la caché
+      // invalida el access token para proteger el sistema de envío de errores ya que no se encuentra la credencial asociada en la caché
+      console.log('no se encontró en la cache, invalidando token...')
       await this.cacheRepository.set(
         `blacklist:${decoded.jti}`,
         JSON.stringify({ type: decoded.type, jti: decoded.jti, user_id: decoded.user_id }),
@@ -37,8 +39,6 @@ export class RefreshTokenUseCase {
       throw new CacheCredentialNotFoundException(decoded.user_id)
     }
 
-    const accessToken = this.tokenManager.createAccessToken(decoded.user_id, decoded.username)
-
-    return { accessToken }
+    return decoded
   }
 }

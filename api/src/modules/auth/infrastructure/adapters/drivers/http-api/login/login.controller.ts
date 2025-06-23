@@ -1,19 +1,29 @@
+import { UserAlreadyAuthenticatedException } from '@auth/application/exceptions'
 import { TokenTypeEnum } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
+import { JwtTokenManagerAdapter } from '@auth/infrastructure/adapters/drivens'
+import { extractBearerToken } from '@shared/infrastructure/utils/extract-bearer-token.util'
 import { NextFunction, Request, Response } from 'express'
 
 import { LoginUserHttpDto, LoginUserSchema } from './login.http-dto'
 
 export class LoginController {
-  constructor(private readonly authenticatorService: ForHttpAuthenticatingPort) {}
+  constructor(
+    private readonly authenticatorService: ForHttpAuthenticatingPort,
+    private readonly tokenManager: JwtTokenManagerAdapter,
+  ) {}
 
   async run(req: Request, res: Response, next: NextFunction) {
     const { user, host, database, password } = req.body
+    const accessToken = extractBearerToken(req.headers.authorization)
 
     try {
-      const validateData: LoginUserHttpDto = LoginUserSchema.parse({ host, database, user, password })
+      const dto: LoginUserHttpDto = LoginUserSchema.parse({ host, database, user, password })
 
-      const result = await this.authenticatorService.login(validateData)
+      // si no existe el accessToken, es un inicio de sesión nuevo, pero si existe no debería permitir loguearse
+      if (accessToken && this.tokenManager.checkIfUserIsAlreadyAuthenticated(accessToken)) throw new UserAlreadyAuthenticatedException()
+
+      const result = await this.authenticatorService.login(dto)
 
       return res
         .status(200)

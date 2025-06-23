@@ -51,13 +51,14 @@ export function getStaticDatabaseCredentials(name: DatabaseName): { credentials:
   return { credentials: STATIC_CREDENTIALS[name], type: UserTypeEnum.Internal }
 }
 
-export async function getCacheDatabaseCredentials(userId: number): Promise<{ credentials: StoreUserSchema; type: UserType }> {
+export async function getCacheDatabaseCredentials(userId: number): Promise<{ credentials: StoreUserSchema; type: UserType } | null> {
   const key = `auth:credentials:${userId}`
 
   const cacheRepository = new ValkeyCacheRepository()
   const cachedCredentials = await cacheRepository.get(key)
 
-  if (!cachedCredentials) throw new Error(`Credentiales no encontradas en la caché para el usuario con id "${userId}"`)
+  // si no existe la credencial en la caché
+  if (!cachedCredentials) return null
 
   const credentials = JSON.parse(cachedCredentials)
 
