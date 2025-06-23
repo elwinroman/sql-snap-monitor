@@ -10,6 +10,7 @@ export interface SearchLog {
   database: string
   schema: string
   search: string
+  type: string
   isProduction: boolean
   createdAt: Date | string
 }

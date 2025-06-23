@@ -1,7 +1,8 @@
-import { AuthContext } from '@auth/infrastructure/auth-context' //TODO: mover la interface al dominio
-import { getCacheDatabaseCredentials } from '@shared/infrastructure/store'
+import { TIPO_ACCION } from '@sysobject/application/constants/action-type.constant'
 import { SysObjectNotFoundException } from '@sysobject/domain/exceptions/sysobject-not-found.exception'
+import { ForProxyBusquedaRecienteRegistrationPort } from '@sysobject/domain/ports/drivens/for-proxy-busqueda-reciente-registration.port'
 import { ForSysObjectRepositoryPort } from '@sysobject/domain/ports/drivens/for-sysobject-repository.port'
+import { LogObjectContext } from '@sysobject/domain/schemas/log-object-context'
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
 import { SysObject } from '@sysobject/domain/schemas/sysobject'
 
@@ -11,29 +12,37 @@ export class GetSysObjectUseCase {
   constructor(
     private readonly sysObjectRepository: ForSysObjectRepositoryPort,
     private readonly registerSearchLogUC: RegisterSearchLogUseCase,
-    private readonly getAuthContext: () => AuthContext | undefined,
+    private readonly registerBusquedaRecienteProxy: ForProxyBusquedaRecienteRegistrationPort,
   ) {}
 
-  async execute(id: number): Promise<SysObject & { permission: PermissionRol[] }> {
+  async execute(id: number, log: LogObjectContext): Promise<SysObject & { permission: PermissionRol[] }> {
     const sysObject = await this.sysObjectRepository.getById(id)
     const roles = await this.sysObjectRepository.getRolesById(id)
 
     if (!sysObject) throw new SysObjectNotFoundException(id)
 
-    // Guarda LOG de búsqueda con los detalles de la búsqueda realizada por el usuario.
-    const context = this.getAuthContext()
-    if (!context) throw new Error('Error en la recuperación del contexto de autenticación')
-    const cacheCredentials = await getCacheDatabaseCredentials(context.userId)
+    const currentDate = new Date()
 
     await this.registerSearchLogUC.execute({
-      idUser: context.userId,
-      actionType: 1, // acción de tipo búsqueda - //TODO: Cuidado: Magic String
-      database: cacheCredentials.credentials.database,
+      idUser: log.idUser,
+      actionType: TIPO_ACCION.BusquedaRegular,
+      database: log.databaseName,
       schema: sysObject.schemaName,
       search: sysObject.name,
-      // type: sysObject.type,
+      type: sysObject.type,
       isProduction: false,
-      createdAt: new Date(),
+      createdAt: currentDate,
+    })
+
+    // Cada vez que se realiza una búsqueda también guarda el timestamp como búsqueda reciente
+    await this.registerBusquedaRecienteProxy.send({
+      idUser: log.idUser,
+      database: log.databaseName,
+      schema: sysObject.schemaName,
+      objectName: sysObject.name,
+      type: sysObject.type,
+      dateSearch: currentDate,
+      isActive: true,
     })
 
     return { ...sysObject, permission: roles }

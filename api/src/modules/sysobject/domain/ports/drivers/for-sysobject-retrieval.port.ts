@@ -1,3 +1,4 @@
+import { LogObjectContext, LogProdObjectContext } from '@sysobject/domain/schemas/log-object-context'
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
 import { SysObject } from '@sysobject/domain/schemas/sysobject'
 import { Usertable } from '@sysobject/domain/schemas/usertable'
@@ -17,7 +18,7 @@ export interface ForSysObjectRetrievalPort {
    * @param id - Identificador único del objeto.
    * @returns Una promesa que resuelve con el objeto y sus permisos asociados.
    */
-  getSysObject(id: number): Promise<SysObject & { permission: PermissionRol[] }>
+  getSysObject(id: number, log: LogObjectContext): Promise<SysObject & { permission: PermissionRol[] }>
 
   /**
    * Realiza una búsqueda de sugerencias de objetos del sistema, basada en el nombre parcial y tipo.
@@ -34,7 +35,7 @@ export interface ForSysObjectRetrievalPort {
    * @param id - Identificador único de la tabla de usuario.
    * @returns Una promesa que resuelve con la tabla de usuario correspondiente.
    */
-  getSysUsertable(id: number): Promise<Usertable>
+  getSysUsertable(id: number, log: LogObjectContext): Promise<Usertable>
 
   /**
    * Recupera un objeto del sistema desde el entorno de producción, incluyendo los roles con permisos sobre él.
@@ -42,8 +43,13 @@ export interface ForSysObjectRetrievalPort {
    * @param name - Nombre del objeto a recuperar.
    * @param schema - Nombre del esquema al que pertenece el objeto.
    * @param actionType - Tipo de acción realizado (recuperación por comparación, recuperación por búsqueda normal)
-   * @param idUser - ID del usuario que realiza la operación. Utilizado para registro de LOGs.
+   * @param log - Log de contexto para el registro de trazabilidad.
    * @returns Una promesa que resuelve con el objeto y sus permisos asociados.
    */
-  getProdSysObject(name: string, schema: string, actionType: number, idUser?: number): Promise<SysObject & { permission: PermissionRol[] }>
+  getProdSysObject(
+    name: string,
+    schema: string,
+    actionType: number,
+    log: LogProdObjectContext,
+  ): Promise<SysObject & { permission: PermissionRol[] }>
 }

@@ -13,16 +13,17 @@ export class MssqlLogRepositoryAdapter implements ForLogRepositoryPort {
 
     try {
       const stmt = `
-        INSERT INTO dbo.LogBusqueda (idUsuario, idTipoAccion, cDatabase, cSchema, cBusqueda, lProduccion, dFechaBusqueda)
-        VALUES (@idUser, @actionType, @database, @schema, @search, @isProduction, @createdAt)
+        INSERT INTO dbo.LogBusqueda (idUsuario, idTipoAccion, cDatabase, cSchema, cBusqueda, cType, lProduccion, dFechaBusqueda)
+        VALUES (@idUser, @actionType, @database, @schema, @search, @type, @isProduction, @createdAt)
       `
       request.input('idUser', sql.Int, logSearch.idUser)
       request.input('actionType', sql.Int, logSearch.actionType)
       request.input('database', sql.VarChar(64), logSearch.database)
       request.input('schema', sql.VarChar(64), logSearch.schema)
       request.input('search', sql.VarChar(128), logSearch.search)
+      request.input('type', sql.Char(2), logSearch.type)
       request.input('isProduction', sql.Bit, logSearch.isProduction)
-      request.input('createdAt', sql.Bit, logSearch.createdAt)
+      request.input('createdAt', sql.DateTime, logSearch.createdAt)
 
       const res = await request.query(stmt)
 

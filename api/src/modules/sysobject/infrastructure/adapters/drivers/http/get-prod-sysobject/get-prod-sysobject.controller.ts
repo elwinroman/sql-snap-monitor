@@ -1,6 +1,8 @@
 import { ForProxyAuthenticatingPort } from '@auth/domain/ports/drivers/for-proxy-authenticating.port'
+import { DatabaseName, getStaticDatabaseCredentials } from '@shared/infrastructure/store'
 import { extractBearerToken } from '@shared/infrastructure/utils/extract-bearer-token.util'
 import { SysObjectService } from '@sysobject/application/sysobject.service'
+import { LogProdObjectContext } from '@sysobject/domain/schemas/log-object-context'
 import { NextFunction, Request, Response } from 'express'
 
 import { GetProdSysObjectHttpDto, GetProdSysObjectParamsSchema } from './get-prod-sysobject.http-dto'
@@ -15,22 +17,23 @@ export class GetProdSysObjectController {
     const { name, schema, actionType } = req.query
 
     try {
-      const getProdSysObjectDto: GetProdSysObjectHttpDto = GetProdSysObjectParamsSchema.parse({ name, schema, actionType })
+      const dto: GetProdSysObjectHttpDto = GetProdSysObjectParamsSchema.parse({ name, schema, actionType })
 
-      // obtiene le idUsuario desde el accessToken, si no existe se envía indefinido para el registro de logs
-      let idUser
+      // obtiene le idUsuario desde el accessToken, si no existe significa que es una consulta anónima
+      let idUser = null
       const accessToken = extractBearerToken(req.headers.authorization)
+      // si existe el token, se válida el token
       if (accessToken) {
-        const decodedToken = await this.authenticatorProxyAdapter.verifyToken(accessToken)
+        const decodedToken = await this.authenticatorProxyAdapter.verifyAccessToken(accessToken)
         idUser = decodedToken.user_id
       }
 
-      const result = await this.sysObjectService.getProdSysObject(
-        getProdSysObjectDto.name,
-        getProdSysObjectDto.schema,
-        getProdSysObjectDto.actionType,
+      const log: LogProdObjectContext = {
+        databaseName: getStaticDatabaseCredentials(DatabaseName.PREPROD).credentials.database, // nombre de la BD de pre-producción
         idUser,
-      )
+      }
+
+      const result = await this.sysObjectService.getProdSysObject(dto.name, dto.schema, dto.actionType, log)
 
       return res.status(200).json({ correlationId: req.correlationId, data: result })
     } catch (err) {
