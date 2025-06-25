@@ -5,9 +5,8 @@ import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-err
 import { ForSysObjectRepositoryPort } from '@sysobject/domain/ports/drivens/for-sysobject-repository.port'
 import { SearchSysObject } from '@sysobject/domain/ports/drivers/for-sysobject-retrieval.port'
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
+import { SysObject } from '@sysobject/domain/schemas/sysobject'
 import sql from 'mssql'
-
-import { SysObject, TypeSysObject, TypeSysObjectEnum } from '@/modules/sysobject/domain/schemas/sysobject'
 
 export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
@@ -94,15 +93,7 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
     }
   }
 
-  async findByNameAndType(name: string, type: TypeSysObject): Promise<SearchSysObject[]> {
-    // búsqueda según el tipo de objeto
-    let andTypeDesc = ''
-    if (type === TypeSysObjectEnum.ALL_EXCEPT_USERTABLE)
-      andTypeDesc = `AND type IN('P','FN','TR','TF','V')` // excluye USER_TABLE
-    else if (type === TypeSysObjectEnum.ALL)
-      andTypeDesc = `AND type IN('P','FN','TR','TF','V','U')` // incluye USER_TABLE
-    else andTypeDesc = `AND type = '${type}'`
-
+  async findByNameAndType(name: string, type: string): Promise<SearchSysObject[]> {
     const { store } = await buildStoreAuthContext()
     const conn = await this.connection.connect(store.credentials, store.type)
     const request = conn.request()
@@ -120,7 +111,7 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
             ELSE 3
           END AS peso
         FROM sys.objects
-        WHERE name LIKE CONCAT('%', @name, '%') ${andTypeDesc}
+        WHERE name LIKE CONCAT('%', @name, '%') AND type IN(${type})
         ORDER BY peso,name
       `
 
