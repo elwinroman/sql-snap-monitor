@@ -22,7 +22,8 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
             @type       AS type           , @dateSearch AS fechaBusqueda,
             @isActive   AS vigente
         ) AS source
-        ON target.cDatabase         = source.databaseName 
+        ON target.idUsuario         = source.idUsuario
+          AND target.cDatabase      = source.databaseName 
           AND target.cSchema        = source.schemaName 
           AND target.cNombreObjeto  = source.objectName
         WHEN MATCHED THEN
