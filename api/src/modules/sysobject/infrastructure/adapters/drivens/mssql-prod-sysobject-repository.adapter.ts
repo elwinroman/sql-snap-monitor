@@ -1,6 +1,6 @@
 import { format } from '@formkit/tempo'
 import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
-import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-error.util'
+import { wrapDatabaseError } from '@shared/infrastructure/utils'
 import { ForProdSysObjectRepositoryPort } from '@sysobject/domain/ports/drivens/for-prod-sysobject-repository.port'
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
 import { SysObject } from '@sysobject/domain/schemas/sysobject'

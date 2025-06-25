@@ -2,7 +2,7 @@ import { ForUserRepositoryPort, LogAccessInput } from '@auth/domain/ports/driven
 import { PrimitiveUser, RepoUser, User } from '@auth/domain/schemas/user'
 import { DatabaseName, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 import { getStaticDatabaseCredentials } from '@shared/infrastructure/store/get-store-credentials'
-import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-error.util'
+import { wrapDatabaseError } from '@shared/infrastructure/utils'
 import sql from 'mssql'
 
 export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {

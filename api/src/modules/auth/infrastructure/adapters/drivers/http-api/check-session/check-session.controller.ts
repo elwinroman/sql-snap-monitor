@@ -1,8 +1,7 @@
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
-import { buildStoreAuthContext } from '@shared/infrastructure/utils/build-store-auth-context.util'
+import { StoreUserSchema } from '@shared/domain/store'
+import { buildStoreAuthContext } from '@shared/infrastructure/utils'
 import { NextFunction, Request, Response } from 'express'
-
-import { StoreUserSchema } from '@/modules/shared/domain/store'
 
 export class CheckSessionController {
   constructor(private readonly authenticatorService: ForHttpAuthenticatingPort) {}

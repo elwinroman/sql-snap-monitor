@@ -1,6 +1,6 @@
 import { ForProxyAuthenticatingPort } from '@auth/domain/ports/drivers/for-proxy-authenticating.port'
 import { DatabaseName, getStaticDatabaseCredentials } from '@shared/infrastructure/store'
-import { extractBearerToken } from '@shared/infrastructure/utils/extract-bearer-token.util'
+import { extractBearerToken } from '@shared/infrastructure/utils'
 import { SysObjectService } from '@sysobject/application/sysobject.service'
 import { LogProdObjectContext } from '@sysobject/domain/schemas/log-object-context'
 import { NextFunction, Request, Response } from 'express'

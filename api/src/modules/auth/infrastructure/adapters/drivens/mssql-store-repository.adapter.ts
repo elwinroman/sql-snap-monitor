@@ -3,7 +3,7 @@ import { PermissionStore, StoreInfo } from '@auth/domain/schemas/store'
 import { StoreUserSchema } from '@shared/domain/store'
 import { MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 import { UserTypeEnum } from '@shared/infrastructure/store'
-import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-error.util'
+import { wrapDatabaseError } from '@shared/infrastructure/utils'
 
 export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
   private connection = new MSSQLDatabaseConnection()

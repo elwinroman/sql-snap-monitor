@@ -6,7 +6,7 @@ import {
   Meta,
 } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
-import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-error.util'
+import { wrapDatabaseError } from '@shared/infrastructure/utils'
 import sql from 'mssql'
 
 export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecienteRepositoryPort {

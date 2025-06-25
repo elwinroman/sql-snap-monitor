@@ -2,7 +2,7 @@ import { authenticatorProxyAdapter } from '@auth/infrastructure/adapters/drivers
 import { setAuthContext } from '@auth/infrastructure/auth-context'
 import { UnauthorizedException } from '@shared/application/exceptions'
 import { setLoggerRequestContext } from '@shared/infrastructure/logger/logger-context'
-import { extractBearerToken } from '@shared/infrastructure/utils/extract-bearer-token.util'
+import { extractBearerToken } from '@shared/infrastructure/utils'
 import { NextFunction, Request, Response } from 'express'
 
 /** Middleware que verifica la validez del token de acceso, que actúa como middleware intermediario. */

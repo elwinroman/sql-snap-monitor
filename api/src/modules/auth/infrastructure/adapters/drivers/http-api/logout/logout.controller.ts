@@ -1,9 +1,8 @@
 import { NotProvidedTokenException } from '@auth/application/exceptions'
 import { TokenTypeEnum } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
+import { extractBearerToken } from '@shared/infrastructure/utils'
 import { NextFunction, Request, Response } from 'express'
-
-import { extractBearerToken } from '@/modules/shared/infrastructure/utils/extract-bearer-token.util'
 
 export class LogoutController {
   constructor(private readonly authenticatorService: ForHttpAuthenticatingPort) {}

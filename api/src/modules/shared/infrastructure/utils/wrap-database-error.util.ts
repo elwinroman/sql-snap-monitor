@@ -12,6 +12,7 @@ function isMSSQLError(err: unknown): err is sql.RequestError | sql.PreparedState
 /**
  * Envuelve el error original en DatabaseError SOLO si es un error de MSSQL.
  * Si no lo es, lanza una excepción explicativa.
+ * Sirve para el trace del error de database
  */
 export function wrapDatabaseError(err: unknown): DatabaseError {
   if (isMSSQLError(err)) {

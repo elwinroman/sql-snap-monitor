@@ -1,6 +1,6 @@
 import { ForHttpManagingBusquedaRecientePort } from '@busqueda-reciente/domain/ports/drivers/for-http-managing-busqueda-reciente.port'
 import { BusquedaRecienteFilter } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
-import { buildStoreAuthContext } from '@shared/infrastructure/utils/build-store-auth-context.util'
+import { buildStoreAuthContext } from '@shared/infrastructure/utils'
 import { TypeSysObject } from '@sysobject/domain/schemas/sysobject'
 import { NextFunction, Request, Response } from 'express'
 
