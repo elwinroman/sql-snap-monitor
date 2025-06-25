@@ -1,7 +1,7 @@
 import { ForSysObjectRetrievalPort, SearchSysObject } from '@sysobject/domain/ports/drivers/for-sysobject-retrieval.port'
 import { LogObjectContext, LogProdObjectContext } from '@sysobject/domain/schemas/log-object-context'
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
-import { SysObject } from '@sysobject/domain/schemas/sysobject'
+import { SysObject, TypeSysObject } from '@sysobject/domain/schemas/sysobject'
 import { Usertable } from '@sysobject/domain/schemas/usertable'
 
 import { GetProdSysObjectUseCase } from './use-cases/get-prod-sysobject.use-case'
@@ -20,7 +20,7 @@ export class SysObjectService implements ForSysObjectRetrievalPort {
     return this.getSysObjectUC.execute(id, log)
   }
 
-  async searchSuggestions(name: string, type: string): Promise<SearchSysObject[]> {
+  async searchSuggestions(name: string, type: TypeSysObject): Promise<SearchSysObject[]> {
     return this.searchSuggestionsUC.execute(name, type)
   }
 

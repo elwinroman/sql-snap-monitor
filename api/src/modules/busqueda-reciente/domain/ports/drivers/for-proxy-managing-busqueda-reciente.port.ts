@@ -1,4 +1,4 @@
-import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente-input'
+import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 
 /**
  * Puerto de proxy para la gestión de búsquedas recientes.

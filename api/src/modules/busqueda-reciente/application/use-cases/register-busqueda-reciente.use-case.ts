@@ -1,5 +1,5 @@
 import { ForBusquedaRecienteRepositoryPort } from '@busqueda-reciente/domain/ports/drivens/for-busqueda-reciente-repository.port'
-import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente-input'
+import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 
 export class RegisterBusquedaRecienteUseCase {
   constructor(private readonly busquedaRecienteRepository: ForBusquedaRecienteRepositoryPort) {}

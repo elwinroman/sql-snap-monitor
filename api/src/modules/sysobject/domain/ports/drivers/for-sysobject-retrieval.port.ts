@@ -1,6 +1,6 @@
 import { LogObjectContext, LogProdObjectContext } from '@sysobject/domain/schemas/log-object-context'
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
-import { SysObject } from '@sysobject/domain/schemas/sysobject'
+import { SysObject, TypeSysObject } from '@sysobject/domain/schemas/sysobject'
 import { Usertable } from '@sysobject/domain/schemas/usertable'
 
 export type SearchSysObject = Pick<SysObject, 'id' | 'name' | 'schemaName' | 'typeDesc'>
@@ -27,7 +27,7 @@ export interface ForSysObjectRetrievalPort {
    * @param type - Tipo de objeto (por ejemplo, 'P', 'FN', 'V', etc.).
    * @returns Una promesa que resuelve con una lista de objetos que coinciden con el criterio.
    */
-  searchSuggestions(name: string, type: string): Promise<SearchSysObject[]>
+  searchSuggestions(name: string, type: TypeSysObject): Promise<SearchSysObject[]>
 
   /**
    * Recupera una tabla de usuario por su ID.
