@@ -1,5 +1,10 @@
 import { ForBusquedaRecienteRepositoryPort } from '@busqueda-reciente/domain/ports/drivens/for-busqueda-reciente-repository.port'
-import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente-input'
+import {
+  BusquedaRecienteFilterRepo,
+  BusquedaRecienteInput,
+  BusquedaRecienteRepoResponse,
+  Meta,
+} from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 import { wrapDatabaseError } from '@shared/infrastructure/utils/ensure-mssql-error.util'
 import sql from 'mssql'
@@ -77,6 +82,76 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
       if (res && res.rowsAffected[0] === 1) return true // deshabilitado correctamente
 
       return false // no se ha encontrado el ID de búsqueda reciente para deshabilitar
+    } catch (err) {
+      throw wrapDatabaseError(err)
+    }
+  }
+
+  async findMany(filter: BusquedaRecienteFilterRepo, limit: number): Promise<{ data: BusquedaRecienteRepoResponse[]; meta: Meta }> {
+    const conn = await this.connection.connect(this.db.credentials, this.db.type)
+    const request = conn.request()
+
+    try {
+      const stmt = `
+        ;WITH BusquedasRecientesCTE AS (
+          SELECT 
+            idBusquedaReciente,
+            cSchema,
+            cNombreObjeto,
+            dFecha
+          FROM dbo.BusquedaReciente
+          WHERE idUsuario = @idUser
+            AND cType     IN (${filter.type})
+            AND cDatabase = @database
+            AND lVigente  = 1
+        ),
+        TotalRegistrosCTE AS (
+            SELECT COUNT(*) AS nTotal FROM BusquedasRecientesCTE
+        )
+        SELECT TOP (@limit)
+          A.idBusquedaReciente,
+          A.cSchema,
+          A.cNombreObjeto,
+          A.dFecha,
+          lFavorito = IIF(B.idFavorito IS NULL, 0, 1),
+          C.nTotal
+        FROM BusquedasRecientesCTE A
+        --=============================================
+        -- Si la búsqueda reciente es un favorito
+        --=============================================
+        LEFT JOIN dbo.Favorito B 
+          ON B.idUsuario      = @idUser
+          AND B.cType         IN (${filter.type})
+          AND B.cDatabase     = @database
+          AND B.cSchema       = A.cSchema
+          AND B.cNombreObjeto = A.cNombreObjeto
+          AND B.lVigente      = 1
+        CROSS JOIN TotalRegistrosCTE C
+        ORDER BY A.dFecha DESC
+      `
+      request.input('idUser', sql.Int, filter.idUser)
+      request.input('database', sql.VarChar(64), filter.database)
+      request.input('limit', sql.Int, limit)
+
+      const res = await request.query(stmt)
+
+      const data =
+        res.recordset.map((obj): BusquedaRecienteRepoResponse => {
+          return {
+            id: obj.idBusquedaReciente,
+            schema: obj.cSchema,
+            objectName: obj.cNombreObjeto,
+            dateSearch: obj.dFecha,
+            isFavorite: Boolean(obj.lFavorito),
+          }
+        }) ?? []
+
+      const meta = {
+        total: res.recordset[0].nTotal ?? 0,
+        limit,
+      }
+
+      return { data, meta }
     } catch (err) {
       throw wrapDatabaseError(err)
     }

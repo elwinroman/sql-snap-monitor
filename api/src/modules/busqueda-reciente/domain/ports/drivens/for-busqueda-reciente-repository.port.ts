@@ -1,4 +1,11 @@
-import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente-input'
+import {
+  BusquedaRecienteFilterRepo,
+  BusquedaRecienteInput,
+  BusquedaRecienteRepoResponse,
+  Meta,
+} from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+
+export type BusquedaRecienteRecovery = Pick<BusquedaRecienteInput, 'idUser' | 'database' | 'type'>
 
 /**
  * Puerto (interfaz) para el repositorio de búsquedas recientes.
@@ -18,4 +25,13 @@ export interface ForBusquedaRecienteRepositoryPort {
    * @returns `true` si se eliminó correctamente, `false` si no existía.
    */
   deleteById(id: number): Promise<boolean>
+
+  /**
+   * Recupera múltiples búsquedas recientes según un filtro y un límite.
+   *
+   * @param filter - Criterios de búsqueda, como ID de usuario, base de datos y tipo.
+   * @param limit - Número máximo de resultados a retornar.
+   * @returns Un objeto con el array de búsquedas recientes y metainformación de paginación.
+   */
+  findMany(filter: BusquedaRecienteFilterRepo, limit: number): Promise<{ data: BusquedaRecienteRepoResponse[]; meta: Meta }>
 }
