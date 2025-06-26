@@ -1,5 +1,6 @@
 import { ForHttpManagingBusquedaRecientePort } from '@busqueda-reciente/domain/ports/drivers/for-http-managing-busqueda-reciente.port'
-import { BusquedaRecienteFilter, BusquedaRecienteResponse, Meta } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { BusquedaRecienteFilter, BusquedaRecienteResponse } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { Meta } from '@shared/domain/schemas/meta'
 
 import { GetAllBusquedasRecientesUseCase } from './use-cases'
 import { DeleteBusquedaRecienteUseCase } from './use-cases/delete-busqueda-reciente.use-case'

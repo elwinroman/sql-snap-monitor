@@ -1,6 +1,7 @@
 import { ForBusquedaRecienteRepositoryPort } from '@busqueda-reciente/domain/ports/drivens/for-busqueda-reciente-repository.port'
 import { ForSysObjectRepositoryPort } from '@busqueda-reciente/domain/ports/drivens/for-sysobject-repository.port'
-import { BusquedaRecienteFilter, BusquedaRecienteResponse, Meta } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { BusquedaRecienteFilter, BusquedaRecienteResponse } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { Meta } from '@shared/domain/schemas/meta'
 import { parseSqlObjectTypeCondition } from '@shared/infrastructure/utils'
 
 export class GetAllBusquedasRecientesUseCase {

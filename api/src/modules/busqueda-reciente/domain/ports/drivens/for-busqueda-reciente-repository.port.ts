@@ -2,10 +2,8 @@ import {
   BusquedaRecienteFilterRepo,
   BusquedaRecienteInput,
   BusquedaRecienteRepoResponse,
-  Meta,
 } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
-
-export type BusquedaRecienteRecovery = Pick<BusquedaRecienteInput, 'idUser' | 'database' | 'type'>
+import { Meta } from '@shared/domain/schemas/meta'
 
 /**
  * Puerto (interfaz) para el repositorio de búsquedas recientes.

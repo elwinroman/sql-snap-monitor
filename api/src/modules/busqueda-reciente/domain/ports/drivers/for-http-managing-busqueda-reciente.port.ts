@@ -1,4 +1,5 @@
-import { BusquedaRecienteFilterRepo, BusquedaRecienteResponse, Meta } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { BusquedaRecienteFilterRepo, BusquedaRecienteResponse } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { Meta } from '@shared/domain/schemas/meta'
 
 /**
  * Puerto HTTP para gestionar búsquedas recientes desde la API.

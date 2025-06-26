@@ -3,8 +3,8 @@ import {
   BusquedaRecienteFilterRepo,
   BusquedaRecienteInput,
   BusquedaRecienteRepoResponse,
-  Meta,
 } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { Meta } from '@shared/domain/schemas/meta'
 import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 import { wrapDatabaseError } from '@shared/infrastructure/utils'
 import sql from 'mssql'
