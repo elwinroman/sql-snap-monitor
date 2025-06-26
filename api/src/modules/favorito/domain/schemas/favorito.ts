@@ -39,7 +39,9 @@ export interface Favorito {
  * Datos requeridos para registrar un nuevo favorito.
  * Excluye el identificador interno (`id`) y el `objectId`, que puede inferirse.
  */
-export type FavoritoInput = Omit<Favorito, 'id' | 'objectId'>
+export type FavoritoInput = Omit<Favorito, 'id' | 'objectId' | 'date' | 'isActive'>
+
+export type FavoritoRepoInput = Omit<Favorito, 'id' | 'objectId'>
 
 /**
  * Criterios de filtrado para recuperar favoritos desde la capa de aplicación.
@@ -56,10 +58,9 @@ export type FavoritoFilter = Pick<Favorito, 'idUser' | 'database'> & {
 export type FavoritoFilterRepo = Pick<Favorito, 'idUser' | 'database' | 'type'>
 
 /**
- * Representa una entrada de favorito devuelta por el repositorio,
- * con información básica y una bandera que indica si está marcado como favorito.
+ * Representa una entrada de favorito devuelta por el repositorio
  */
-export type FavoritoRepoResponse = Pick<Favorito, 'id' | 'schema' | 'objectName' | 'date'>
+export type FavoritoRepoResponse = Pick<Favorito, 'id' | 'schema' | 'objectName' | 'date' | 'type'>
 
 /**
  * Respuesta extendida para recuperación de favoritos,

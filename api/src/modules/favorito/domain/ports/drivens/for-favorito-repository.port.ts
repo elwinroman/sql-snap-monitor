@@ -1,4 +1,4 @@
-import { FavoritoFilterRepo, FavoritoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
+import { FavoritoFilterRepo, FavoritoRepoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
 import { Meta } from '@shared/domain/schemas/meta'
 
 /**
@@ -9,19 +9,23 @@ import { Meta } from '@shared/domain/schemas/meta'
 export interface ForFavoritoRepositoryPort {
   /**
    * Crea un nuevo favorito o actualiza uno existente si ya fue registrado previamente
-   * por el mismo usuario y con las mismas propiedades clave (por ejemplo, database + objectName).
+   * por el mismo usuario y con las mismas propiedades clave
+   * (usuario + base de datos + esquema + nombre de objeto).
    *
-   * @param favoritoInput - Datos del favorito a registrar o actualizar.
-   * @returns `true` si la operación fue exitosa, `false` en caso contrario.
+   * @param favoritoRepoInput - Datos del favorito a registrar o actualizar.
+   * @returns Un objeto con los datos persistidos y la acción realizada (`INSERT` o `UPDATE`),
+   *          o `null` si no se realizó ningún cambio.
    */
-  createOrUpdate(favoritoInput: FavoritoInput): Promise<boolean>
+  createOrUpdate(favoritoRepoInput: FavoritoRepoInput): Promise<{ data: FavoritoRepoResponse; action: 'INSERT' | 'UPDATE' } | null>
 
   /**
    * Recupera una lista paginada de favoritos según los criterios de búsqueda.
    *
    * @param filter - Filtros a aplicar (usuario, base de datos, tipo de objeto, etc.).
    * @param limit - Cantidad máxima de resultados a retornar.
-   * @returns Un objeto con los resultados (`data`) y metainformación (`meta`).
+   * @returns Un objeto que contiene:
+   *          - `data`: lista de favoritos encontrados.
+   *          - `meta`: metainformación como total de registros o página actual.
    */
   findMany(filter: FavoritoFilterRepo, limit: number): Promise<{ data: FavoritoRepoResponse[]; meta: Meta }>
 
@@ -29,7 +33,7 @@ export interface ForFavoritoRepositoryPort {
    * Elimina un favorito identificado por su ID único.
    *
    * @param id - Identificador del favorito a eliminar.
-   * @returns `true` si la eliminación fue exitosa, `false` si no se encontró o falló.
+   * @returns `true` si se eliminó exitosamente, `false` si no se encontró o falló la eliminación.
    */
   deleteById(id: number): Promise<boolean>
 }

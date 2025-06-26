@@ -64,3 +64,10 @@ export const TypeSysObjectEnum = {
 } as const
 
 export type TypeSysObject = (typeof TypeSysObjectEnum)[keyof typeof TypeSysObjectEnum]
+
+// obtiene solo los valores válidos (sin 'ALL' ni 'ALL_EXCEPT_USERTABLE')
+export const ValidTypeSysObjectValues: TypeSysObject[] = Object.values(TypeSysObjectEnum).filter(
+  v => v !== 'ALL' && v !== 'ALL_EXCEPT_USERTABLE',
+) as TypeSysObject[]
+
+export type ValidTypeSysObject = Exclude<TypeSysObject, 'ALL' | 'ALL_EXCEPT_USERTABLE'>

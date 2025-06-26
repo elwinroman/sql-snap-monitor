@@ -62,8 +62,3 @@ export type BusquedaRecienteRepoResponse = Pick<BusquedaReciente, 'id' | 'schema
 export type BusquedaRecienteResponse = BusquedaRecienteRepoResponse & {
   objectId: number
 }
-
-export interface Meta {
-  total: number
-  limit: number
-}
