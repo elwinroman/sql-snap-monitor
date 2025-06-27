@@ -1,5 +1,5 @@
 import { ForProxyManagingBusquedaRecientePort } from '@busqueda-reciente/domain/ports/drivers/for-proxy-managing-busqueda-reciente.port'
-import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente-input'
+import { BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 
 export class RegisterBusquedaRecienteProxy {
   constructor(private readonly service: ForProxyManagingBusquedaRecientePort) {}

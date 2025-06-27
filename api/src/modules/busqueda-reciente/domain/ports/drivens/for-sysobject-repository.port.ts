@@ -1,3 +1,5 @@
+// TODO: Adaptar mediante proxy en el módulo sysobject
+
 /**
  * Representa un objeto del sistema en SQL Server, como una tabla, vista, procedimiento, etc.
  * Incluye el esquema y el nombre del objeto dentro del módulo BusquedaReciente
@@ -6,8 +8,6 @@ export interface SysObject {
   schema: string
   name: string
 }
-
-// TODO: Talvez adaptar mediante proxy del módulo sysobject
 
 /**
  * Puerto del repositorio de SysObject de tipo driven (secundario).

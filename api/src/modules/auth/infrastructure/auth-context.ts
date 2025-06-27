@@ -1,8 +1,6 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
 
-export interface AuthContext {
-  userId: number
-}
+import { AuthContext } from '@auth/domain/schemas/auth-context'
 
 const authContextStorage = new AsyncLocalStorage<AuthContext>()
 
