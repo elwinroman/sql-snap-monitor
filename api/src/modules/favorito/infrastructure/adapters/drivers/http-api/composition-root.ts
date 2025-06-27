@@ -5,6 +5,7 @@ import { RegisterFavoritoUseCase } from '@favorito/application/use-cases/registe
 import { MSSQLFavoritoRepositoryAdapter } from '@favorito/infrastructure/adapters/drivens/mssql-favorito-repository.adapter'
 import { MSSQLSysObjectRepositoryAdapter } from '@favorito/infrastructure/adapters/drivens/mssql-sysobject-repository.adapter'
 
+import { DeleteFavoritoController } from './controllers/delete-favorito/delete-favorito.controller'
 import { GetAllFavoritosController } from './controllers/get-all-favoritos/get-all-favoritos.controller'
 import { RegisterFavoritoController } from './controllers/register-favorito/register-favorito.controller'
 
@@ -27,8 +28,9 @@ const compositionRoot = () => {
   // CONTROLLERS
   const registerFavoritoController = new RegisterFavoritoController(service)
   const getAllFavoritosController = new GetAllFavoritosController(service)
+  const deleteFavoritoController = new DeleteFavoritoController(service)
 
-  return { registerFavoritoController, getAllFavoritosController }
+  return { registerFavoritoController, getAllFavoritosController, deleteFavoritoController }
 }
 
-export const { registerFavoritoController, getAllFavoritosController } = compositionRoot()
+export const { registerFavoritoController, getAllFavoritosController, deleteFavoritoController } = compositionRoot()

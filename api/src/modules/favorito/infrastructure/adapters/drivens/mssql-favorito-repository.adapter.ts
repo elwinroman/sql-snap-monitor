@@ -136,6 +136,23 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
   }
 
   async deleteById(id: number): Promise<boolean> {
-    return true
+    const conn = await this.connection.connect(this.db.credentials, this.db.type)
+    const request = conn.request()
+
+    try {
+      const stmt = `
+        UPDATE Favorito SET lVigente = 0 
+        WHERE idFavorito = @id AND lVigente = 1
+      `
+      request.input('id', sql.Int, id)
+
+      const res = await request.query(stmt)
+
+      if (res && res.rowsAffected[0] === 1) return true // deshabilitado correctamente
+
+      return false // no se ha encontrado el ID de búsqueda reciente para deshabilitar
+    } catch (err) {
+      throw wrapDatabaseError(err)
+    }
   }
 }
