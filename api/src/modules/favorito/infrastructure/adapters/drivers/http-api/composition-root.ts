@@ -3,7 +3,9 @@ import { DeleteFavoritoUseCase } from '@favorito/application/use-cases/delete-fa
 import { GetAllFavoritosUseCase } from '@favorito/application/use-cases/get-all-favorito.use-case'
 import { RegisterFavoritoUseCase } from '@favorito/application/use-cases/register-favorito.use-case'
 import { MSSQLFavoritoRepositoryAdapter } from '@favorito/infrastructure/adapters/drivens/mssql-favorito-repository.adapter'
+import { MSSQLSysObjectRepositoryAdapter } from '@favorito/infrastructure/adapters/drivens/mssql-sysobject-repository.adapter'
 
+import { GetAllFavoritosController } from './controllers/get-all-favoritos/get-all-favoritos.controller'
 import { RegisterFavoritoController } from './controllers/register-favorito/register-favorito.controller'
 
 /*************************************
@@ -12,10 +14,11 @@ import { RegisterFavoritoController } from './controllers/register-favorito/regi
 const compositionRoot = () => {
   // DRIVENS
   const repository = new MSSQLFavoritoRepositoryAdapter() // repositorio de favorito
+  const sysobjectRepository = new MSSQLSysObjectRepositoryAdapter()
 
   // USE CASES
   const registerFavoritoUC = new RegisterFavoritoUseCase(repository)
-  const getAllFavoritosUC = new GetAllFavoritosUseCase(repository)
+  const getAllFavoritosUC = new GetAllFavoritosUseCase(repository, sysobjectRepository)
   const deleteFavoritoUC = new DeleteFavoritoUseCase(repository)
 
   // SERVICE ORCHESTRATOR
@@ -23,8 +26,9 @@ const compositionRoot = () => {
 
   // CONTROLLERS
   const registerFavoritoController = new RegisterFavoritoController(service)
+  const getAllFavoritosController = new GetAllFavoritosController(service)
 
-  return { registerFavoritoController }
+  return { registerFavoritoController, getAllFavoritosController }
 }
 
-export const { registerFavoritoController } = compositionRoot()
+export const { registerFavoritoController, getAllFavoritosController } = compositionRoot()

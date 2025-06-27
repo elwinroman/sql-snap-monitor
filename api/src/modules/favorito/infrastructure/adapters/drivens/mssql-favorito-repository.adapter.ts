@@ -75,12 +75,63 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
   }
 
   async findMany(filter: FavoritoFilterRepo, limit: number): Promise<{ data: FavoritoRepoResponse[]; meta: Meta }> {
-    return {
-      data: [],
-      meta: {
-        total: 0,
-        limit: 0,
-      },
+    const conn = await this.connection.connect(this.db.credentials, this.db.type)
+    const request = conn.request()
+
+    try {
+      const stmt = `
+        ;WITH FavoritosCTE AS (
+          SELECT 
+            idFavorito,
+            cSchema,
+            cNombreObjeto,
+            cType,
+            dFecha
+          FROM dbo.Favorito
+          WHERE idUsuario = @idUser
+            AND cType     IN (${filter.type})
+            AND cDatabase = @database
+            AND lVigente  = 1
+        ),
+        TotalRegistrosCTE AS (
+            SELECT COUNT(*) AS nTotal FROM FavoritosCTE
+        )
+        SELECT TOP (@limit)
+          A.idFavorito,
+          A.cSchema,
+          A.cNombreObjeto,
+          A.cType,
+          A.dFecha,
+          C.nTotal
+        FROM FavoritosCTE A
+        CROSS JOIN TotalRegistrosCTE C
+        ORDER BY A.dFecha DESC
+      `
+      request.input('idUser', sql.Int, filter.idUser)
+      request.input('database', sql.VarChar(64), filter.database)
+      request.input('limit', sql.Int, limit)
+
+      const res = await request.query(stmt)
+
+      const data =
+        res.recordset.map((row): FavoritoRepoResponse => {
+          return {
+            id: row.idFavorito,
+            schema: row.cSchema,
+            objectName: row.cNombreObjeto,
+            type: row.cType,
+            date: row.dFecha,
+          }
+        }) ?? []
+
+      const meta = {
+        total: res.recordset[0].nTotal ?? 0,
+        limit,
+      }
+
+      return { data, meta }
+    } catch (err) {
+      throw wrapDatabaseError(err)
     }
   }
 
