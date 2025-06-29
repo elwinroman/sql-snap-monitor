@@ -47,7 +47,17 @@ export class LoginUseCase {
     // genera el token y las credenciales las guarda en cache (el tiempo se actualiza con la última sesión)
     const accessToken = this.tokenManager.createAccessToken(repoUser.id, repoUser.user)
     const refreshToken = this.tokenManager.createRefreshToken(repoUser.id, repoUser.user)
-    await this.cacheRepository.set(`auth:credentials:${repoUser.id}`, JSON.stringify(credential), 2592000) // 30 días
+
+    await this.cacheRepository.set(
+      `auth:credentials:${repoUser.id}`,
+      JSON.stringify({
+        host: credential.host,
+        database: details.name,
+        user: credential.user,
+        password: credential.password,
+      }),
+      2592000, // 30 días
+    )
 
     return {
       id: repoUser.id,
