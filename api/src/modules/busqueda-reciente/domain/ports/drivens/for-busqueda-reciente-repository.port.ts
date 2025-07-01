@@ -1,4 +1,5 @@
 import {
+  BusquedaReciente,
   BusquedaRecienteFilterRepo,
   BusquedaRecienteInput,
   BusquedaRecienteRepoResponse,
@@ -32,4 +33,12 @@ export interface ForBusquedaRecienteRepositoryPort {
    * @returns Un objeto con el array de búsquedas recientes y metainformación de paginación.
    */
   findMany(filter: BusquedaRecienteFilterRepo, limit: number): Promise<{ data: BusquedaRecienteRepoResponse[]; meta: Meta }>
+
+  /**
+   * Recupera una búsqueda reciente por su ID.
+   *
+   * @param id - ID de la búsqueda reciente a recuperar.
+   * @returns Un objeto `BusquedaReciente` si se encuentra, o `null` si no existe.
+   */
+  getById(id: number): Promise<BusquedaReciente | null>
 }

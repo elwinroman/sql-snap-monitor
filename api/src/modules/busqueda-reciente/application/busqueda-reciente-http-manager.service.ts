@@ -1,5 +1,5 @@
 import { ForHttpManagingBusquedaRecientePort } from '@busqueda-reciente/domain/ports/drivers/for-http-managing-busqueda-reciente.port'
-import { BusquedaRecienteFilter, BusquedaRecienteResponse } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { BusquedaRecienteFilter, BusquedaRecienteResponse, Context } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 import { Meta } from '@shared/domain/schemas/meta'
 
 import { GetAllBusquedasRecientesUseCase } from './use-cases'
@@ -15,9 +15,7 @@ export class BusquedaRecienteHttpManagerService implements ForHttpManagingBusque
     return this.getAllBusquedasRecientesUC.execute(filter, limit)
   }
 
-  async deleteBusquedaReciente(id: number): Promise<string> {
-    const status = await this.deleteBusquedaRecienteUC.execute(id)
-
-    return status
+  async deleteBusquedaReciente(id: number, context: Context): Promise<string> {
+    return this.deleteBusquedaRecienteUC.execute(id, context)
   }
 }

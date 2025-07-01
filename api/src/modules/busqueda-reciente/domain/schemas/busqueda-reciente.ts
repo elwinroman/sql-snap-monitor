@@ -16,9 +16,6 @@ export interface BusquedaReciente {
   /** Esquema dentro de la base de datos */
   schema: string
 
-  /** ID del objeto buscado (sysobject) */
-  objectId: number
-
   /** Nombre del objeto buscado (tabla, vista, procedimiento, etc.) */
   objectName: string
 
@@ -35,7 +32,8 @@ export interface BusquedaReciente {
 /**
  * Datos de entrada para registrar una búsqueda reciente.
  */
-export type BusquedaRecienteInput = Omit<BusquedaReciente, 'id' | 'objectId'>
+// export type BusquedaRecienteInput = Omit<BusquedaReciente, 'id' | 'objectId'>
+export type BusquedaRecienteInput = Omit<BusquedaReciente, 'id'>
 
 /**
  * Filtro de búsqueda para la recuperación de Búsquedas Recientes.
@@ -62,3 +60,9 @@ export type BusquedaRecienteRepoResponse = Pick<BusquedaReciente, 'id' | 'schema
 export type BusquedaRecienteResponse = BusquedaRecienteRepoResponse & {
   objectId: number
 }
+
+/**
+ * Contexto de ejecución para operaciones relacionadas con búsquedas recientes.
+ * Contiene información mínima necesaria para identificar al usuario y la base de datos donde se ejecuta la operación.
+ */
+export type Context = Pick<BusquedaReciente, 'idUser' | 'database'>

@@ -1,4 +1,4 @@
-import { BusquedaRecienteFilterRepo, BusquedaRecienteResponse } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { BusquedaRecienteFilterRepo, BusquedaRecienteResponse, Context } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 import { Meta } from '@shared/domain/schemas/meta'
 
 /**
@@ -18,8 +18,10 @@ export interface ForHttpManagingBusquedaRecientePort {
 
   /**
    * Elimina una búsqueda reciente por su ID.
+   *
    * @param id - ID de la búsqueda reciente a eliminar.
-   * @returns Mensaje de confirmación o estado como string.
+   * @param context - Contexto de ejecución que incluye el ID del usuario y la base de datos.
+   * @returns Una promesa que resuelve a un string con un mensaje de confirmación o estado.
    */
-  deleteBusquedaReciente(id: number): Promise<string>
+  deleteBusquedaReciente(id: number, context: Context): Promise<string>
 }

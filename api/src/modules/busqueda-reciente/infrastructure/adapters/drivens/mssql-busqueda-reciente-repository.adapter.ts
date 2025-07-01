@@ -1,5 +1,6 @@
 import { ForBusquedaRecienteRepositoryPort } from '@busqueda-reciente/domain/ports/drivens/for-busqueda-reciente-repository.port'
 import {
+  BusquedaReciente,
   BusquedaRecienteFilterRepo,
   BusquedaRecienteInput,
   BusquedaRecienteRepoResponse,
@@ -81,7 +82,7 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
 
       if (res && res.rowsAffected[0] === 1) return true // deshabilitado correctamente
 
-      return false // no se ha encontrado el ID de búsqueda reciente para deshabilitar
+      return false // no se ha encontrado el ID de búsqueda reciente para deshabilitar o ya está deshabilitado
     } catch (err) {
       throw wrapDatabaseError(err)
     }
@@ -135,6 +136,7 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
 
       const res = await request.query(stmt)
 
+      // adapter
       const data =
         res.recordset.map((obj): BusquedaRecienteRepoResponse => {
           return {
@@ -152,6 +154,40 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
       }
 
       return { data, meta }
+    } catch (err) {
+      throw wrapDatabaseError(err)
+    }
+  }
+
+  async getById(id: number): Promise<BusquedaReciente | null> {
+    const conn = await this.connection.connect(this.db.credentials, this.db.type)
+    const request = conn.request()
+
+    try {
+      const stmt = `
+        SELECT * FROM dbo.BusquedaReciente 
+        WHERE idBusquedaReciente = @id
+      `
+      request.input('id', sql.Int, id)
+
+      const res = await request.query(stmt)
+
+      // no se encontró
+      if (res && res.rowsAffected[0] === 0) return null
+
+      // adapter
+      const data: BusquedaReciente = {
+        id: res.recordset[0].idBusquedaReciente,
+        idUser: res.recordset[0].idUsuario,
+        database: res.recordset[0].cDatabase,
+        schema: res.recordset[0].cSchema,
+        objectName: res.recordset[0].cNombreObjeto,
+        dateSearch: res.recordset[0].dFecha,
+        type: res.recordset[0].cType,
+        isActive: res.recordset[0].lVigente,
+      }
+
+      return data
     } catch (err) {
       throw wrapDatabaseError(err)
     }
