@@ -21,6 +21,9 @@ export const httpErrorMap: Record<string, { status: number; errorCode: number }>
   // Busqueda Reciente
   BusquedaRecienteNotFoundException: { status: 404, errorCode: 4000 },
 
+  // Favorito
+  FavoritoNotFoundException: { status: 404, errorCode: 4001 },
+
   // FinLog
   FinLogNotFoundException: { status: 404, errorCode: 4000 },
 }

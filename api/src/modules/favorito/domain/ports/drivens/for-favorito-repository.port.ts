@@ -1,4 +1,4 @@
-import { FavoritoFilterRepo, FavoritoRepoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
+import { Favorito, FavoritoFilterRepo, FavoritoRepoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
 import { Meta } from '@shared/domain/schemas/meta'
 
 /**
@@ -36,4 +36,12 @@ export interface ForFavoritoRepositoryPort {
    * @returns `true` si se eliminó exitosamente, `false` si no se encontró o falló la eliminación.
    */
   deleteById(id: number): Promise<boolean>
+
+  /**
+   * Recupera un favorito por su ID.
+   *
+   * @param id - ID del favorito a recuperar.
+   * @returns Un objeto `Favorito` si se encuentra, o `null` si no existe.
+   */
+  getById(id: number): Promise<Favorito | null>
 }

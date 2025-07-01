@@ -10,7 +10,7 @@ export class RegisterFavoritoController {
   constructor(private readonly service: ForFavoritoManagingPort) {}
 
   async run(req: Request, res: Response, next: NextFunction) {
-    const { schema, objectName, type } = req.params
+    const { schema, objectName, type } = req.body
 
     try {
       const dto: RegisterFavoritoParams = RegisterFavoritoParamsSchema.parse({ schema, objectName, type })

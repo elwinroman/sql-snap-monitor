@@ -16,9 +16,6 @@ export interface Favorito {
   /** Nombre del esquema dentro de la base de datos */
   schema: string
 
-  /** Identificador del objeto referenciado (por ejemplo, tabla, vista, procedimiento, etc.) */
-  objectId: number
-
   /** Nombre del objeto referenciado */
   objectName: string
 
@@ -39,9 +36,9 @@ export interface Favorito {
  * Datos requeridos para registrar un nuevo favorito.
  * Excluye el identificador interno (`id`) y el `objectId`, que puede inferirse.
  */
-export type FavoritoInput = Omit<Favorito, 'id' | 'objectId' | 'date' | 'isActive'>
+export type FavoritoInput = Omit<Favorito, 'id' | 'date' | 'isActive'>
 
-export type FavoritoRepoInput = Omit<Favorito, 'id' | 'objectId'>
+export type FavoritoRepoInput = Omit<Favorito, 'id'>
 
 /**
  * Criterios de filtrado para recuperar favoritos desde la capa de aplicación.
@@ -70,3 +67,9 @@ export type FavoritoResponse = FavoritoRepoResponse & {
   /** Identificador del objeto */
   objectId: number
 }
+
+/**
+ * Contexto de ejecución para operaciones relacionadas con búsquedas recientes.
+ * Contiene información mínima necesaria para identificar al usuario y la base de datos donde se ejecuta la operación.
+ */
+export type Context = Pick<Favorito, 'idUser' | 'database'>

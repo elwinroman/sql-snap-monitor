@@ -1,5 +1,5 @@
 import { ForFavoritoManagingPort } from '@favorito/domain/ports/drivers/for-favorito-managing.port'
-import { FavoritoFilter, FavoritoInput, FavoritoRepoResponse, FavoritoResponse } from '@favorito/domain/schemas/favorito'
+import { Context, FavoritoFilter, FavoritoInput, FavoritoRepoResponse, FavoritoResponse } from '@favorito/domain/schemas/favorito'
 import { Meta } from '@shared/domain/schemas/meta'
 
 import { DeleteFavoritoUseCase } from './use-cases/delete-favorito.use-case'
@@ -23,9 +23,7 @@ export class FavoritoManagerService implements ForFavoritoManagingPort {
     return this.getAllFavoritosUC.execute(filter, limit)
   }
 
-  async deleteFavorito(id: number): Promise<string> {
-    const status = await this.deleteFavoritoUC.execute(id)
-
-    return status
+  async deleteFavorito(id: number, context: Context): Promise<string> {
+    return this.deleteFavoritoUC.execute(id, context)
   }
 }
