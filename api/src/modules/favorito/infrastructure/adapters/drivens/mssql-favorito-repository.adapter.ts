@@ -1,5 +1,5 @@
 import { ForFavoritoRepositoryPort } from '@favorito/domain/ports/drivens/for-favorito-repository.port'
-import { Favorito, FavoritoFilterRepo, FavoritoRepoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
+import { Criteria, Favorito, FavoritoFilterRepo, FavoritoRepoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
 import { Meta } from '@shared/domain/schemas/meta'
 import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 import { wrapDatabaseError } from '@shared/infrastructure/utils'
@@ -66,7 +66,7 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
         date: res.recordset[0].dFecha,
       }
 
-      const action = res.recordset[0].action
+      const action = res.recordset[0].accion
 
       return { data, action }
     } catch (err) {
@@ -185,6 +185,37 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
       }
 
       return data
+    } catch (err) {
+      throw wrapDatabaseError(err)
+    }
+  }
+
+  async existsByCriteria(criteria: Criteria): Promise<boolean> {
+    const conn = await this.connection.connect(this.db.credentials, this.db.type)
+    const request = conn.request()
+
+    try {
+      const stmt = `
+        SELECT TOP 1 idFavorito 
+        FROM dbo.Favorito 
+        WHERE idUsuario     = @idUser
+          AND cDatabase     = @database
+          AND cSchema       = @schema
+          AND cNombreObjeto = @objectName
+          AND lVigente      = 1
+      `
+      request.input('idUser', sql.Int, criteria.idUser)
+      request.input('database', sql.VarChar(64), criteria.database)
+      request.input('schema', sql.VarChar(64), criteria.schema)
+      request.input('objectName', sql.VarChar(128), criteria.objectName)
+
+      const res = await request.query(stmt)
+
+      // no existe el favorito
+      if (res && res.rowsAffected[0] === 0) return false
+
+      // existe el favorito
+      return true
     } catch (err) {
       throw wrapDatabaseError(err)
     }

@@ -1,3 +1,4 @@
+import { FavoritoAlreadyExistsException } from '@favorito/domain/exceptions/favorito-already-exists.exception'
 import { ForFavoritoRepositoryPort } from '@favorito/domain/ports/drivens/for-favorito-repository.port'
 import { FavoritoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
 
@@ -5,6 +6,17 @@ export class RegisterFavoritoUseCase {
   constructor(private readonly repository: ForFavoritoRepositoryPort) {}
 
   async execute(favoritoInput: FavoritoInput): Promise<{ data: FavoritoRepoResponse; action: 'INSERT' | 'UPDATE'; message: string }> {
+    const criteria = {
+      idUser: favoritoInput.idUser,
+      database: favoritoInput.database,
+      schema: favoritoInput.schema,
+      objectName: favoritoInput.objectName,
+    }
+
+    const existFavorito = await this.repository.existsByCriteria(criteria)
+
+    if (existFavorito) throw new FavoritoAlreadyExistsException(criteria)
+
     const newFavorito = await this.repository.createOrUpdate({
       ...favoritoInput,
       date: new Date(), // fecha actual

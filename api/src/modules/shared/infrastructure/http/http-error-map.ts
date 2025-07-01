@@ -23,6 +23,7 @@ export const httpErrorMap: Record<string, { status: number; errorCode: number }>
 
   // Favorito
   FavoritoNotFoundException: { status: 404, errorCode: 4001 },
+  FavoritoAlreadyExistsException: { status: 409, errorCode: 4002 }, // 409: Conflict
 
   // FinLog
   FinLogNotFoundException: { status: 404, errorCode: 4000 },

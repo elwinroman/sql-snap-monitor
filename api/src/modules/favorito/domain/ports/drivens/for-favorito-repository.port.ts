@@ -1,4 +1,4 @@
-import { Favorito, FavoritoFilterRepo, FavoritoRepoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
+import { Criteria, Favorito, FavoritoFilterRepo, FavoritoRepoInput, FavoritoRepoResponse } from '@favorito/domain/schemas/favorito'
 import { Meta } from '@shared/domain/schemas/meta'
 
 /**
@@ -44,4 +44,14 @@ export interface ForFavoritoRepositoryPort {
    * @returns Un objeto `Favorito` si se encuentra, o `null` si no existe.
    */
   getById(id: number): Promise<Favorito | null>
+
+  /**
+   * Verifica si existe un favorito que coincida con los criterios proporcionados.
+   *
+   * @param criteria - Criterios de búsqueda que incluyen propiedades clave como:
+   *                   `idUser`, `database`, `schema` y `objectName`.
+   * @returns `true` si existe al menos un favorito que coincida con los criterios;
+   *          `false` en caso contrario.
+   */
+  existsByCriteria(criteria: Criteria): Promise<boolean>
 }

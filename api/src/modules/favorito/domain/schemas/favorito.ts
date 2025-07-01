@@ -73,3 +73,10 @@ export type FavoritoResponse = FavoritoRepoResponse & {
  * Contiene información mínima necesaria para identificar al usuario y la base de datos donde se ejecuta la operación.
  */
 export type Context = Pick<Favorito, 'idUser' | 'database'>
+
+/**
+ * Criterios mínimos para verificar la existencia de un favorito.
+ * Se basa en los atributos clave que definen la unicidad de un favorito:
+ * usuario, base de datos, esquema y nombre del objeto.
+ */
+export type Criteria = Pick<Favorito, 'idUser' | 'database' | 'schema' | 'objectName'>
