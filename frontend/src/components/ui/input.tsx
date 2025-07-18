@@ -1,4 +1,4 @@
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { forwardRef } from 'react'
 
 import { cn } from '@/lib/utils'
@@ -16,7 +16,7 @@ const inputVariants = cva(
         success: 'border-green-500 text-green-700 placeholder:text-green-400 focus-visible:ring-green-500',
       },
       size: {
-        xs: 'h-9 text-xs py-1',
+        xs: 'h-9 text-sm py-1',
         sm: 'h-10 text-sm py-1.5',
         md: 'h-11 text-md py-2',
       },
@@ -28,8 +28,10 @@ const inputVariants = cva(
   },
 )
 
-// Componente Input en JSX
-const Input = forwardRef(({ className, type = 'text', variant, size, ...props }, ref) => {
+type InputProps = React.InputHTMLAttributes<HTMLInputElement> & VariantProps<typeof inputVariants>
+
+// Componente Input
+const Input = forwardRef<HTMLInputElement, InputProps>(({ className, type = 'text', variant, size, ...props }, ref) => {
   return <input type={type} ref={ref} className={cn(inputVariants({ variant, size }), className)} {...props} />
 })
 

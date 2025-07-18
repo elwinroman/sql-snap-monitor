@@ -1,5 +1,0 @@
-export * from './Form'
-export * from './Input'
-export * from './Label'
-export * from './PasswordInput'
-export * from './SideBox'
