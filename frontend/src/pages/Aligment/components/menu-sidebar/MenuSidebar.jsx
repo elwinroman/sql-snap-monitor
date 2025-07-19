@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { LoginUsername, ThemeToggle } from '@/components/navbar/components'
 import { Checkbox } from '@/components/ui/checkbox'
 import { APP_NAME } from '@/constants'
-import { useAuthStore } from '@/stores'
+import { useAuthStore } from '@/zustand/auth.store'
 
 import { ButtonGroup, SearchAligment, SelectAction, ViewModeRadio } from './components'
 

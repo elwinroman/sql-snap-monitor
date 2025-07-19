@@ -3,7 +3,6 @@ import { APP_NAME } from '@/constants'
 import { InfoSqlDefinition } from './components/InfoSqlDefinition'
 
 export function HomePage() {
-  console.log('Loading HOMEPAGE')
   return (
     <>
       <section className="my-auto grid h-[88vh] w-full place-content-center gap-10 py-10">

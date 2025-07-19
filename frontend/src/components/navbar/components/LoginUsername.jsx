@@ -9,16 +9,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuthStore } from '@/stores'
-import { resetAllStores } from '@/utilities'
+// import { resetAllStores } from '@/utilities'
+// import { useAuthStore } from '@/stores'
+import { useAuthStore } from '@/zustand/auth.store'
 
 export function LoginUsername() {
-  const logoutUser = useAuthStore((state) => state.logoutUser)
+  const clearSession = useAuthStore((state) => state.clearSession)
   const username = useAuthStore((state) => state.username)
 
   const closeSession = () => {
-    logoutUser()
-    resetAllStores()
+    clearSession()
+    useAuthStore.persist.clearStorage()
+    // resetAllStores()
   }
 
   return (
