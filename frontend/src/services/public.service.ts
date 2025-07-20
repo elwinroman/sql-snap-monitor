@@ -1,5 +1,3 @@
-import { AxiosResponse } from 'axios'
-
 import api from '@/interceptors/auth-token.interceptor'
 import { AxiosCall, Credential } from '@/models'
 import { AuthenticatedUserApiResponse, CheckSessionApiResponse } from '@/models/api'
@@ -23,7 +21,7 @@ export const loginService = (credential: Credential): AxiosCall<AuthenticatedUse
       signal: controller.signal,
       withCredentials: true,
     })
-    .then((response: AxiosResponse<AuthenticatedUserApiResponse>) => {
+    .then((response) => {
       return {
         ...response,
         data: createAuthenticatedUserAdapter(response.data),
@@ -59,7 +57,7 @@ export const checkSessionService = (): AxiosCall<CheckSessionResponse> => {
     .get<CheckSessionApiResponse>('/auth/check-session', {
       signal: controller.signal,
     })
-    .then((response: AxiosResponse<CheckSessionApiResponse>) => {
+    .then((response) => {
       return {
         ...response,
         data: checkSessionAdapter(response.data),

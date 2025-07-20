@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
 import { AuthContext } from '@/models'
-import { BearAuthState } from '@/models/auth'
+import { BearAuthState } from '@/models/zustand'
 
 const initialState = {
   authContext: null,
@@ -23,17 +23,9 @@ export const useAuthStore = create<BearAuthState>()(
           })
         },
 
-        clearSession: (): void => {
-          set({ ...initialState })
-        },
-
-        updateToken: (token: string): void => {
-          set({ token: token })
-        },
-
-        updateErrorApiConnection: (state: boolean): void => {
-          set({ errorApiConnection: state })
-        },
+        clearSession: (): void => set({ ...initialState }),
+        updateToken: (token: string): void => set({ token: token }),
+        updateErrorApiConnection: (state: boolean): void => set({ errorApiConnection: state }),
       }),
       {
         name: 'is-authenticated',

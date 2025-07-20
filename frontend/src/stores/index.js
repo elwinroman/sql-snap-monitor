@@ -1,4 +1,3 @@
-export * from './aligment.store'
 export * from './config.store'
 export * from './editor-option.store'
 export * from './sqldefinition.store'
