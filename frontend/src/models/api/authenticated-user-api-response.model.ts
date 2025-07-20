@@ -4,10 +4,6 @@ export interface AuthenticatedUserApiResponse {
     id: number
     user: string
     aliasHost: string
-    token: {
-      accessToken: string
-      refreshToken: string
-    }
     storeDetails: {
       name: string
       compatibility: number
@@ -16,5 +12,6 @@ export interface AuthenticatedUserApiResponse {
       date: Date | string
       viewDefinitionPermission: boolean
     }
+    accessToken: string
   }
 }

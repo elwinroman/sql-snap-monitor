@@ -13,9 +13,15 @@ import './global.css'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 
-import App from './App.jsx'
+import App from './App'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// Crea root y renderiza la app
+const rootElement = document.getElementById('root')
+if (!rootElement) throw new Error('No se encontró el elemento con id "root"')
+
+const root = ReactDOM.createRoot(rootElement as HTMLElement)
+
+root.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,

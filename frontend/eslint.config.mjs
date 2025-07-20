@@ -11,7 +11,7 @@ import tseslint from 'typescript-eslint'
 export default defineConfig([
   js.configs.recommended,
   eslintPluginPrettierRecommended,
-  { ignores: ['dist/', 'eslint.config.mjs'] },
+  { ignores: ['dist/', 'eslint.config.mjs', 'node_modules/'] },
   {
     files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
     languageOptions: {

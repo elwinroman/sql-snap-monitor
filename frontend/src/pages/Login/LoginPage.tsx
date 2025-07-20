@@ -1,7 +1,7 @@
 import { Link, Navigate } from 'react-router-dom'
 
-import { LoaderSpinnerBot } from '@/components/loader/loader-spinner-bot/LoaderSpinnerBot'
-import { useAuthStore } from '@/zustand/auth.store'
+import { LoaderSpinnerBot } from '@/components/loader'
+import { useAuthStore } from '@/zustand'
 
 import { Form, SideBox } from './components'
 import { useLoginContext } from './hooks/useLoginContext'

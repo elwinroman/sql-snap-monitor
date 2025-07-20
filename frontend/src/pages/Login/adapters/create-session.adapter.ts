@@ -1,12 +1,12 @@
-import { AuthenticatedUserApiResponse } from '@/models/api/authenticated-user-api-response.model'
+import { AuthenticatedUser } from '@/models/auth/authenticated-user.model'
 import { AuthContext } from '@/models/auth-context.model'
 
-export const createSessionAdapter = (authenticatedUser: AuthenticatedUserApiResponse): AuthContext => {
+export const createSessionAdapter = (authenticatedUser: AuthenticatedUser): AuthContext => {
   return {
-    database: authenticatedUser.data.storeDetails.name,
-    server: authenticatedUser.data.storeDetails.server,
-    username: authenticatedUser.data.user,
+    database: authenticatedUser.databaseInfo.name,
+    server: authenticatedUser.databaseInfo.server,
+    username: authenticatedUser.username,
     prodDatabase: 'SI_FinFinanciero',
-    serverAliasName: authenticatedUser.data.aliasHost,
+    originalServer: authenticatedUser.originalServer,
   }
 }

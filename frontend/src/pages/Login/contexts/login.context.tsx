@@ -1,6 +1,6 @@
 import { createContext, ReactNode } from 'react'
 
-import { Credential } from '@/models/credential.model'
+import { Credential } from '@/models'
 
 import { useLogin } from '../hooks/useLogin'
 

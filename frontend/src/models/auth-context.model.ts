@@ -1,7 +1,7 @@
 export interface AuthContext {
+  username: string
   database: string
   server: string
-  username: string
+  originalServer: string
   prodDatabase: string
-  serverAliasName: string
 }

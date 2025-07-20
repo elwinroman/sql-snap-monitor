@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { Input as InputGen } from '@/components/ui/input'
+import { Input as InputGen } from '@/components/ui'
 
 export function Input({
   name,

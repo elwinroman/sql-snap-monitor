@@ -1,7 +1,7 @@
 import { Eye, EyeOff } from 'lucide-react'
 import { useRef, useState } from 'react'
 
-import { Input } from '@/components/ui/input'
+import { Input } from '@/components/ui'
 
 export function PasswordInput({ name }: { name: string }) {
   const [visible, setVisible] = useState(false)

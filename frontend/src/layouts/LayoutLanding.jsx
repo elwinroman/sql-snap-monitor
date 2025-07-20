@@ -2,7 +2,7 @@ import { Main } from '@/components/main/Main'
 import { Navbar } from '@/components/navbar/Navbar'
 import { Footer } from '@/sections/footer'
 
-export default function LayoutLanding({ children }) {
+export function LayoutLanding({ children }) {
   return (
     <div className="App bg-baselayer flex w-full overflow-y-auto">
       {/* <Sidebar /> */}

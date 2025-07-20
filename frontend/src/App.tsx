@@ -2,12 +2,15 @@ import './App.css'
 
 import { Route, Routes } from 'react-router-dom'
 
-import { ServerDatabaseInfo } from '@/components/main/ServerDatabaseInfo'
-import { ProtectedLayout } from '@/components/ProtectedLayout'
 import { ROUTES } from '@/constants'
-import Layout from '@/layouts/Layout'
-import LayoutLanding from '@/layouts/LayoutLanding'
-import { AligmentPage, Error404, HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
+// import Layout from '@/layouts/Layout'
+// import { ServerDatabaseInfo } from '@/components/main/ServerDatabaseInfo'
+import { LayoutLanding, ProtectedLayout } from '@/layouts'
+import { LoginPage } from '@/pages'
+// import { AligmentPage, Error404, HomePage, IssuesPage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
+import { AligmentPage, Error404, HomePage } from '@/pages'
+
+import { LoginProvider } from './pages/Login/contexts/login.context'
 
 function App() {
   return (
@@ -26,7 +29,7 @@ function App() {
         />
 
         {/* Página definiciones SQL */}
-        <Route
+        {/* <Route
           path={ROUTES.SQL_DEFINITION}
           element={
             <ProtectedLayout>
@@ -36,10 +39,10 @@ function App() {
               </Layout>
             </ProtectedLayout>
           }
-        />
+        /> */}
 
         {/* Página Tabla de usuario */}
-        <Route
+        {/* <Route
           path={ROUTES.USERTABLE}
           element={
             <ProtectedLayout>
@@ -49,10 +52,29 @@ function App() {
               </Layout>
             </ProtectedLayout>
           }
-        />
+        /> */}
+
+        {/* Página Tabla de usuario */}
+        {/* <Route
+          path={ROUTES.ISSUES}
+          element={
+            <ProtectedLayout>
+              <Layout noMargin={true}>
+                <IssuesPage />
+              </Layout>
+            </ProtectedLayout>
+          }
+        /> */}
 
         {/* Login */}
-        <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+        <Route
+          path={ROUTES.LOGIN}
+          element={
+            <LoginProvider>
+              <LoginPage />
+            </LoginProvider>
+          }
+        />
 
         {/* Página de aligment */}
         <Route path={ROUTES.ALIGMENT} element={<AligmentPage />} />
