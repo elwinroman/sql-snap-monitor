@@ -5,7 +5,7 @@ import { Main } from '@/components/main/Main'
 import { Navbar } from '@/components/navbar/Navbar'
 import { Footer } from '@/sections/footer'
 
-export default function Layout({ children }) {
+export default function Layout({ children, noMargin = false }) {
   const pageRef = useRef(null)
   const scrollPos = useRef(0)
   const [showScrollBtn, setShowScrollBtn] = useState(false)
@@ -36,7 +36,7 @@ export default function Layout({ children }) {
           </div>
 
           {/* Main content */}
-          <Main className="px-3 sm:px-4 md:px-5 lg:px-6">{children}</Main>
+          <Main className={`${!noMargin ? 'px-3 sm:px-4 md:px-5 lg:px-6' : ''}`}>{children}</Main>
 
           {/* Pie de pagina */}
           <Footer />

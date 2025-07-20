@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { safeParse } from 'valibot'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui'
 import { AlertCircle as AlertCircleIcon } from '@/icons/alert-circle'
 
 import { useLoginContext } from '../hooks/useLoginContext'
@@ -14,6 +14,8 @@ export function Form() {
 
   const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setFormErrors(null) // limpia errores antes de la validación
+
     const data = new FormData(e.currentTarget)
     const rawData = Object.fromEntries(data)
 
@@ -40,7 +42,7 @@ export function Form() {
     try {
       await login(credentials)
     } catch (err) {
-      console.error('Error al hacer login: ', err)
+      console.error('Error al intentar iniciar sesión: ', err)
     }
   }
 
