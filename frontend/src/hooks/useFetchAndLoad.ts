@@ -1,8 +1,8 @@
 import { AxiosResponse, isAxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 
-import { AxiosCall } from '@/models/axio-call.model'
-import { useAuthStore } from '@/zustand/auth.store'
+import { AxiosCall } from '@/models'
+import { useAuthStore } from '@/zustand'
 
 /**
  * Hook personalizado para manejar llamadas HTTP con Axios
@@ -47,7 +47,8 @@ const useFetchAndLoad = <T = unknown>() => {
             detail: errorDetail,
           })
         } else {
-          updateErrorApiConnection(true) // error de conección
+          updateErrorApiConnection(true) // error de conexión
+
           setError({
             title: 'Error de red',
             detail: 'No se pudo conectar al servidor o el servidor no está disponible.',
@@ -68,6 +69,7 @@ const useFetchAndLoad = <T = unknown>() => {
 
   const cancelEndpoint = () => {
     setLoading(false)
+    setError(null)
     if (controller) controller.abort() // cancela la solicitud pendiente
   }
 

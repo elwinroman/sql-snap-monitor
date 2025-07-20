@@ -1,10 +1,14 @@
-import axios from 'axios'
+import { AxiosResponse } from 'axios'
 
-import { AuthenticatedUserApiResponse } from '@/models/api/authenticated-user-api-response.model'
-import { Credential } from '@/models/credential.model'
-import { loadAbort } from '@/utilities/load-abort-axios.util'
+import api from '@/interceptors/auth-token.interceptor'
+import { AxiosCall, Credential } from '@/models'
+import { AuthenticatedUserApiResponse, CheckSessionApiResponse } from '@/models/api'
+import { AuthenticatedUser } from '@/models/auth'
+import { loadAbort } from '@/utilities'
 
-export const loginService = (credential: Credential) => {
+import { checkSessionAdapter, CheckSessionResponse, createAuthenticatedUserAdapter } from './adapters'
+
+export const loginService = (credential: Credential): AxiosCall<AuthenticatedUser> => {
   const controller = loadAbort()
 
   const adapterCredential = {
@@ -14,16 +18,56 @@ export const loginService = (credential: Credential) => {
     password: credential.password,
   }
 
-  return {
-    call: axios.post<AuthenticatedUserApiResponse>('http://192.168.1.68:3000/api/v1/auth/login', adapterCredential, {
+  const adapterCall = api
+    .post<AuthenticatedUserApiResponse>('/auth/login', adapterCredential, {
       signal: controller.signal,
-    }),
+      withCredentials: true,
+    })
+    .then((response: AxiosResponse<AuthenticatedUserApiResponse>) => {
+      return {
+        ...response,
+        data: createAuthenticatedUserAdapter(response.data),
+      }
+    })
+
+  return {
+    call: adapterCall,
     controller,
   }
 }
 
-// export const logoutService = async () => {
-//   const controller = loadAbort()
-//   const response = await axios.post('https://', { signal: controller.signal })
-//   return response
-// }
+export const logoutService = (): AxiosCall<void> => {
+  const controller = loadAbort()
+
+  return {
+    call: api.post(
+      '/auth/logout',
+      {}, // body vacío
+      {
+        signal: controller.signal,
+        withCredentials: true, // true: para enviar la cookie en el payload
+      },
+    ),
+    controller,
+  }
+}
+
+export const checkSessionService = (): AxiosCall<CheckSessionResponse> => {
+  const controller = loadAbort()
+
+  const adapterCall = api
+    .get<CheckSessionApiResponse>('/auth/check-session', {
+      signal: controller.signal,
+    })
+    .then((response: AxiosResponse<CheckSessionApiResponse>) => {
+      return {
+        ...response,
+        data: checkSessionAdapter(response.data),
+      }
+    })
+
+  return {
+    call: adapterCall,
+    controller,
+  }
+}

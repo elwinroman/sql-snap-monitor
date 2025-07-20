@@ -1,44 +1,52 @@
 import { create } from 'zustand'
 import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 
-import { AuthContext } from '@/models/auth-context.model'
+import { AuthContext } from '@/models'
+import { BearAuthState } from '@/models/auth'
 
 const initialState = {
   authContext: null,
-  accessToken: null,
+  token: null,
   errorApiConnection: false,
 }
 
-export const useAuthStore = create<any>()(
+export const useAuthStore = create<BearAuthState>()(
   devtools(
     persist(
       (set) => ({
         ...initialState,
 
-        createSession: (payload: AuthContext, token: string) => {
+        createSession: (payload: AuthContext, token: string): void => {
           set({
             authContext: payload,
-            accessToken: token,
+            token: token,
           })
         },
 
-        clearSession: () => {
+        clearSession: (): void => {
           set({ ...initialState })
         },
 
-        updateErrorApiConnection: (state: boolean) => {
+        updateToken: (token: string): void => {
+          set({ token: token })
+        },
+
+        updateErrorApiConnection: (state: boolean): void => {
           set({ errorApiConnection: state })
         },
       }),
       {
         name: 'is-authenticated',
         storage: createJSONStorage(() => localStorage),
-
-        partialize: (state) => {
-          const { errorApiConnection, ...persisted } = state
-          return persisted
-        },
+        partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['errorApiConnection'].includes(key))),
       },
     ),
   ),
 )
+
+// authStore selector
+export const getAccessToken = () => useAuthStore.getState().token
+export const setAccessToken = (token: string) => {
+  useAuthStore.getState().updateToken(token)
+}
+export const getClearSession = () => useAuthStore.getState().clearSession()
