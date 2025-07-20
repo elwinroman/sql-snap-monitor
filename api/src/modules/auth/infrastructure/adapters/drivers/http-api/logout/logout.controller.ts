@@ -13,7 +13,7 @@ export class LogoutController {
 
     try {
       // para desloguearse, se debe enviar ambos tokens, si no se valida no se podrá agregar en la blacklist los tokens que no han expirado
-      if (!accessToken || !refreshToken) throw new NotProvidedTokenException(`${TokenTypeEnum.Access} y/o ${TokenTypeEnum.Refresh}`)
+      if (!accessToken || !refreshToken) throw new NotProvidedTokenException(`${TokenTypeEnum.Access} y ${TokenTypeEnum.Refresh}`)
 
       const result = await this.authenticatorService.logout({
         accessToken,

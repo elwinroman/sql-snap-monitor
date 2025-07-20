@@ -1,6 +1,6 @@
 import '@shared/infrastructure/sentry/instruments'
 
-import { correlationIdMiddleware, handleErrorMiddleware, routeNotFoundMiddleware } from '@shared/infrastructure/middlewares'
+import { handleErrorMiddleware, loggerContextMiddleware, routeNotFoundMiddleware } from '@shared/infrastructure/middlewares'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { json, Router } from 'express'
@@ -54,7 +54,7 @@ export class Server {
         },
       }),
     )
-    this.app.use(correlationIdMiddleware)
+    this.app.use(loggerContextMiddleware)
     this.app.use(json())
     this.app.use(cookieParser())
     this.app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))

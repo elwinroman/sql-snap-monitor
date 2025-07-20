@@ -8,7 +8,6 @@ export class InvalidCredentialsException extends DomainError {
   constructor() {
     super({ message: '[AUTH] Credenciales inválidas' })
     this.title = 'Autenticación fallida'
-    this.detail =
-      'No se pudo conectar al servidor con las credenciales proporcionadas. Verifique el usuario, la contraseña, el host y/o la base de datos.'
+    this.detail = 'No se pudo conectar con el servidor. Verifique sus credenciales.'
   }
 }

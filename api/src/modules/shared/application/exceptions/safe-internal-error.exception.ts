@@ -8,6 +8,6 @@ export class SafeInternalServerErrorException extends ApplicationError {
   constructor() {
     super({ message: '[INTERNAL_SAFE] Error interno encapsulado' })
     this.title = 'Error interno del sistema'
-    this.detail = 'Ha ocurrido un error inesperado. Intente nuevamente más tarde o contacte con soporte si el problema persiste.'
+    this.detail = 'Ha ocurrido un error inesperado.'
   }
 }

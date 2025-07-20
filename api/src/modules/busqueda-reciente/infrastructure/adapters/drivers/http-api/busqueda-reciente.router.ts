@@ -7,7 +7,6 @@ export function busquedaRecienteRouter() {
   const router = Router()
 
   router.get('/', verifyTokenMiddleware, getAllBusquedaRecienteController.run.bind(getAllBusquedaRecienteController))
-
   router.delete('/:id', verifyTokenMiddleware, deleteBusquedaRecienteController.run.bind(deleteBusquedaRecienteController))
 
   return router

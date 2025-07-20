@@ -1,4 +1,4 @@
-import { InvalidCredentialsException } from '@auth/domain/invalid-credentials.exception'
+import { InvalidCredentialsException } from '@auth/domain/exceptions/invalid-credentials.exception'
 import { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import sql from 'mssql'

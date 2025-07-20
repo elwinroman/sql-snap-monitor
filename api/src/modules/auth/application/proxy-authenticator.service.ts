@@ -1,5 +1,6 @@
-import { AccessTokenDecoded } from '../domain/ports/drivens/for-token-management.port'
-import { ForProxyAuthenticatingPort } from '../domain/ports/drivers/for-proxy-authenticating.port'
+import { AccessTokenDecoded } from '@auth/domain/ports/drivens/for-token-management.port'
+import { ForProxyAuthenticatingPort } from '@auth/domain/ports/drivers/for-proxy-authenticating.port'
+
 import { VerifyAccessTokenUseCase } from './use-cases'
 
 export class ProxyAuthenticatorService implements ForProxyAuthenticatingPort {
