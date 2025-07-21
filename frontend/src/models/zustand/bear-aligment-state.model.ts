@@ -18,7 +18,9 @@ export interface BearAligmentState {
   hideMenu: boolean
 
   /** Objeto SQL cargado en el contexto de alineación. Si no hay ninguno cargado, es `null`. */
-  object: FullSysObject | null
+  sysobject: FullSysObject | null
+
+  createSysObject: (sysobject: FullSysObject | null) => void
 
   /** Establece un nuevo modo de visualización para el objeto. */
   updateViewMode: (mode: ViewMode) => void
