@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { SYS_OBJECT_TYPES } from '@/constants'
+import { TypeSysObjects } from '@/constants'
 import { CloudCodeIcon, CloudIdsIcon, DatabaseMigrationIcon, DataLossIcon } from '@/icons'
 
 type Props = {
@@ -9,6 +9,11 @@ type Props = {
 }
 
 export function InfoSqlDefinition({ className }: { className: string }) {
+  const typeSysObjectsArray = Object.entries(TypeSysObjects).map(([, value]) => ({
+    type: value.type,
+    description: value.description,
+  }))
+
   return (
     <section>
       <div className={`${className} grid grid-cols-12 grid-rows-2 gap-4`}>
@@ -36,12 +41,12 @@ export function InfoSqlDefinition({ className }: { className: string }) {
           <CardTitle>Tipos de objetos soportados</CardTitle>
           <CardDescription>Las definiciones SQL admiten una variedad de objetos</CardDescription>
           <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-4 gap-y-2">
-            {SYS_OBJECT_TYPES.map((type) => (
-              <div key={type.type} className="flex items-center gap-2">
+            {typeSysObjectsArray.map((typeSysObject) => (
+              <div key={typeSysObject.type} className="flex items-center gap-2">
                 <span className="grid min-h-7 min-w-7 place-content-center rounded-sm bg-slate-300 text-sm font-semibold dark:bg-zinc-950">
-                  {type.type}
+                  {typeSysObject.type}
                 </span>
-                <span className="text-secondary text-[0.84rem]">{type.description}</span>
+                <span className="text-secondary text-[0.84rem]">{typeSysObject.description}</span>
               </div>
             ))}
           </div>

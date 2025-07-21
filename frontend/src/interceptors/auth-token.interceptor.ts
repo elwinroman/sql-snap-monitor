@@ -37,10 +37,10 @@ api.interceptors.response.use(
 
         const newToken = response.data.data.accessToken
 
-        console.log('refresh-token: ', response)
+        // setea el nuevo token
         setAccessToken(newToken)
 
-        // Asegurarse que headers está definido
+        // asegurarse que headers esté definido
         if (!originalRequest.headers) originalRequest.headers = {}
 
         originalRequest.headers['Authorization'] = `Bearer ${newToken}`

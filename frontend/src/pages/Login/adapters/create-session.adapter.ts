@@ -1,5 +1,5 @@
-import { AuthenticatedUser } from '@/models/auth/authenticated-user.model'
-import { AuthContext } from '@/models/auth-context.model'
+import { AuthContext } from '@/models'
+import { AuthenticatedUser } from '@/models/auth'
 
 export const createSessionAdapter = (authenticatedUser: AuthenticatedUser): AuthContext => {
   return {
