@@ -1,6 +1,6 @@
 import { Link, Navigate } from 'react-router-dom'
 
-import { LoaderSpinnerBot } from '@/components/loader'
+import { SpinnerBotLoader } from '@/components/loader'
 import { useAuthStore } from '@/zustand'
 
 import { Form, SideBox } from './components'
@@ -21,7 +21,7 @@ export function LoginPage() {
         className={`relative m-auto flex w-[480px] flex-col gap-6 rounded-md px-10 py-10 ${loading ? 'pointer-events-none opacity-70' : ''}`}
       >
         {/* Loader */}
-        {loading && <LoaderSpinnerBot className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80" />}
+        {loading && <SpinnerBotLoader className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-80" size={28} />}
 
         <header className="flex flex-col items-center gap-3">
           <h1 className="text-primary text-xl font-bold">Inicia sesión con tu cuenta</h1>
