@@ -1,3 +1,3 @@
 export * from './ButtonGroup'
 export * from './SearchAligment'
-export * from './ViewModeRadio'
+export * from './ViewModeSelect'

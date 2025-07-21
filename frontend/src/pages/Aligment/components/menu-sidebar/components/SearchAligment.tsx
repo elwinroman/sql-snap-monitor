@@ -1,0 +1,60 @@
+import { X } from 'lucide-react'
+import { useRef, useState } from 'react'
+
+import { InputWithIcon } from '@/components/ui'
+import { useSearchContext } from '@/pages/Aligment/hooks/useSearchContext'
+
+export function SearchAligment() {
+  const [isFocus, setFocus] = useState<boolean>(false)
+  const [hasInput, setHasInput] = useState<boolean>(false)
+
+  const { search, updateSearch, errorValidation, getObject, loading } = useSearchContext()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Maneja los eventos de teclado
+  const handleKeyup = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (search === '') setHasInput(false)
+    else setHasInput(true)
+
+    // evento ENTER
+    if (!loading && e.key === 'Enter') await getObject()
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateSearch(e.target.value)
+  }
+
+  // Maneja el evento click en el icono borrar
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+
+    setHasInput(false)
+    updateSearch('')
+    inputRef.current?.focus()
+  }
+
+  const icon = hasInput ? <X size={22} /> : undefined
+
+  return (
+    <div>
+      <label className="flex flex-col gap-1">
+        <span className="text-sm font-medium">Objeto</span>
+        <InputWithIcon
+          ref={inputRef}
+          value={search}
+          endIcon={icon}
+          placeholder="Search"
+          onChange={handleChange}
+          onKeyUp={handleKeyup}
+          onFocus={() => setFocus(true)}
+          onBlur={() => setFocus(false)}
+          handleClick={handleClick}
+          isFocus={isFocus}
+          spellCheck="false"
+          title="Borrar"
+        />
+      </label>
+      {errorValidation && <span className="text-xs text-rose-500">{errorValidation}</span>}
+    </div>
+  )
+}
