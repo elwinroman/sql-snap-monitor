@@ -1,4 +1,4 @@
-import { FullSysObject, ViewMode } from '../sysobject'
+import { FullSysObject, ViewMode } from '@/models/sysobject'
 
 /**
  * Estado global del módulo de alineación de objetos SQL, gestionado por Zustand.

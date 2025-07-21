@@ -1,9 +1,9 @@
+import { useSearchContext } from '@aligment/hooks/useSearchContext'
+import { useAligmentStore } from '@aligment/zustand/aligment.store'
 import { MouseEvent } from 'react'
 
 import { Button } from '@/components/ui'
 import { TypeViews } from '@/models/sysobject'
-import { useSearchContext } from '@/pages/Aligment/hooks/useSearchContext'
-import { useAligmentStore } from '@/zustand'
 
 export function ButtonGroup() {
   const createSysObject = useAligmentStore((state) => state.createSysObject)

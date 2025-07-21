@@ -1,6 +1,5 @@
+import { SearchContext } from '@aligment/contexts/searchContext'
 import { useContext } from 'react'
-
-import { SearchContext } from '../contexts/searchContext'
 
 export const useSearchContext = () => {
   const context = useContext(SearchContext)

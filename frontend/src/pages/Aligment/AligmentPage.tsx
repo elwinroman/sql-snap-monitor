@@ -3,10 +3,11 @@ import { toast } from 'sonner'
 
 import { Toaster } from '@/components/ui'
 import { Error500 } from '@/pages'
-import { useAligmentStore, useAuthStore } from '@/zustand'
+import { useAuthStore } from '@/zustand'
 
 import { EditorCodeAligment, HeaderEditor, MenuSidebar } from './components'
 import { useSearchContext } from './hooks/useSearchContext'
+import { useAligmentStore } from './zustand/aligment.store'
 
 export function AligmentPage() {
   const errorApiConnection = useAuthStore((state) => state.errorApiConnection)

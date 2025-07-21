@@ -1,3 +1,4 @@
+import { useSearchContext } from '@aligment/hooks/useSearchContext'
 import { ArrowBigLeft, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -8,7 +9,6 @@ import { AppRoutes } from '@/constants'
 import { APP_NAME } from '@/enviroment/enviroment'
 import { useAuthStore } from '@/zustand'
 
-import { useSearchContext } from '../../hooks/useSearchContext'
 import { ButtonGroup, SearchAligment, ViewModeSelect } from './components'
 
 interface Props {

@@ -1,7 +1,7 @@
+import { useAligmentStore } from '@aligment/zustand/aligment.store'
 import { Menu } from 'lucide-react'
 
 import { Badge } from '@/components/ui'
-import { useAligmentStore } from '@/zustand'
 
 import { EditorAligmentOption } from './EditorAligmentOption'
 

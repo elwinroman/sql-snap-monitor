@@ -1,7 +1,8 @@
+import { useAligmentStore } from '@aligment/zustand/aligment.store'
+
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
 import { TypeViewsList } from '@/constants'
 import { ViewMode } from '@/models/sysobject'
-import { useAligmentStore } from '@/zustand'
 
 export function ViewModeSelect() {
   const viewMode = useAligmentStore((state) => state.viewMode)

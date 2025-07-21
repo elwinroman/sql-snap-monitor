@@ -1,8 +1,8 @@
+import { useSearchContext } from '@aligment/hooks/useSearchContext'
 import { X } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 import { InputWithIcon } from '@/components/ui'
-import { useSearchContext } from '@/pages/Aligment/hooks/useSearchContext'
 
 export function SearchAligment() {
   const [isFocus, setFocus] = useState<boolean>(false)

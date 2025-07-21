@@ -1,8 +1,8 @@
+import { BearAligmentState } from '@aligment/models/bear-aligment-state.model'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { FullSysObject, TypeViews, ViewMode } from '@/models/sysobject'
-import { BearAligmentState } from '@/models/zustand'
 
 const initialState: Pick<BearAligmentState, 'viewMode' | 'hideMenu' | 'sysobject'> = {
   viewMode: TypeViews.FullView,
@@ -23,7 +23,7 @@ export const useAligmentStore = create<BearAligmentState>()(
       },
     }),
     {
-      name: 'aligment', // nombre del storage
+      name: 'app.aligment.session', // nombre del storage
       storage: createJSONStorage(() => sessionStorage),
     },
   ),

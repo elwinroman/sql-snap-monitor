@@ -1,3 +1,4 @@
+import { useAligmentStore } from '@aligment/zustand/aligment.store'
 import { useState } from 'react'
 import * as v from 'valibot'
 import { safeParse } from 'valibot'
@@ -6,7 +7,6 @@ import { createSysObjectStoreAdapter } from '@/adapters'
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
 import { FullSysObject } from '@/models/sysobject'
 import { getProdSysObjectService } from '@/services'
-import { useAligmentStore } from '@/zustand'
 
 export interface ObjectMockModel {
   id: number

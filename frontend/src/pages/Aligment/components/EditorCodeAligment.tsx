@@ -1,14 +1,15 @@
+import { useSearchContext } from '@aligment/hooks/useSearchContext'
+import { useAligmentStore } from '@aligment/zustand/aligment.store'
 import Editor from '@monaco-editor/react'
 import { Monaco } from '@monaco-editor/react'
 
-import { CopyClipboard } from '@/components/main/CopyClipboard'
+import { CopyClipboard } from '@/components/CopyClipboard'
+import { CircleLoader } from '@/components/loader'
 import { BaseMonacoEditorOptions, MonacoThemes } from '@/constants'
 import { EDITOR_BANNER } from '@/enviroment/enviroment'
 import { TypeViews } from '@/models/sysobject'
 import { ensureBuiltinTheme, formatPermissionRoles } from '@/utilities'
-import { useAligmentStore, useEditorOptionsStore } from '@/zustand'
-
-import { useSearchContext } from '../hooks/useSearchContext'
+import { useEditorOptionsStore } from '@/zustand'
 
 export function EditorCodeAligment() {
   const renderWhitespace = useEditorOptionsStore((state) => state.renderWhitespace)
@@ -63,7 +64,7 @@ export function EditorCodeAligment() {
         theme={theme}
         value={!loading ? code : 'Buscando información, esto puede tardar unos segundos...'}
         options={{ ...fullOptions }}
-        loading={<div>Cargando...</div>}
+        loading={<CircleLoader visible={true} color="white" />}
       />
 
       {/* Copiar */}
