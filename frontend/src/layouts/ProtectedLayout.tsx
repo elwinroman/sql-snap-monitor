@@ -3,11 +3,11 @@ import { OctagonAlert } from 'lucide-react'
 import { ReactNode, useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
+import { CheckSessionResponse } from '@/adapters'
 import { SessionExpiredAlert } from '@/components/SessionExpiredAlert'
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
 import { Error500 } from '@/pages'
 import { checkSessionService } from '@/services'
-import { CheckSessionResponse } from '@/services/adapters'
 import { useAuthStore } from '@/zustand'
 
 export function ProtectedLayout({ children }: { children: ReactNode }) {

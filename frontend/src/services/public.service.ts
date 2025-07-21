@@ -1,10 +1,9 @@
+import { checkSessionAdapter, CheckSessionResponse, createAuthenticatedUserAdapter } from '@/adapters'
 import api from '@/interceptors/auth-token.interceptor'
 import { AxiosCall, Credential } from '@/models'
 import { AuthenticatedUserApiResponse, CheckSessionApiResponse } from '@/models/api'
 import { AuthenticatedUser } from '@/models/auth'
 import { loadAbort } from '@/utilities'
-
-import { checkSessionAdapter, CheckSessionResponse, createAuthenticatedUserAdapter } from './adapters'
 
 export const loginService = (credential: Credential): AxiosCall<AuthenticatedUser> => {
   const controller = loadAbort()

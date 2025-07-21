@@ -12,7 +12,6 @@ export const createAuthenticatedUserAdapter = (apiResponse: AuthenticatedUserApi
       description: apiResponse.data.storeDetails.description,
       name: apiResponse.data.storeDetails.name,
       server: apiResponse.data.storeDetails.server,
-      date: apiResponse.data.storeDetails.date,
     },
   }
 }

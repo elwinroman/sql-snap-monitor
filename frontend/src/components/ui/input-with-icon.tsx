@@ -1,6 +1,6 @@
 import { cloneElement, forwardRef, MouseEventHandler, ReactElement } from 'react'
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { cn } from '@/lib/utils'
 
 interface InputWithIconProps extends React.InputHTMLAttributes<HTMLInputElement> {
