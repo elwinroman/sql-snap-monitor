@@ -4,7 +4,7 @@ import { createJSONStorage, devtools, persist } from 'zustand/middleware'
 import { AuthContext } from '@/models'
 import { BearAuthState } from '@/models/zustand'
 
-const initialState = {
+const initialState: Pick<BearAuthState, 'authContext' | 'token' | 'errorApiConnection'> = {
   authContext: null,
   token: null,
   errorApiConnection: false,

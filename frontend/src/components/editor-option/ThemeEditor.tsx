@@ -1,30 +1,27 @@
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { THEMES } from '@/constants'
-import { useEditorStore } from '@/stores'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui'
+import { MonacoThemes } from '@/constants'
+import { IMonacoTheme } from '@/models'
+import { useEditorOptionsStore } from '@/zustand'
 
 export function ThemeEditor() {
-  const updateTheme = useEditorStore((state) => state.updateTheme)
-  const theme = useEditorStore((state) => state.theme)
+  const updateTheme = useEditorOptionsStore((state) => state.updateTheme)
+  const theme = useEditorOptionsStore((state) => state.theme)
 
-  const myThemes = THEMES.sort((a, b) => {
-    if (a.name > b.name) return 1
-    if (a.name < b.name) return -1
-    return 0
-  })
+  const myThemes = Object.entries(MonacoThemes).sort(([, a], [, b]) => a.name.localeCompare(b.name))
 
-  const handleChange = (value: string) => updateTheme(value)
+  const handleChange = (value: IMonacoTheme) => updateTheme(value)
 
   return (
-    <Select value={theme} onValueChange={(value) => handleChange(value)}>
+    <Select value={theme} onValueChange={(value) => handleChange(value as IMonacoTheme)}>
       <SelectTrigger className="h-7 w-[140px] py-2">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel className="text-muted">Editor theme</SelectLabel>
-          {myThemes.map((themeItem) => (
-            <SelectItem key={themeItem.tag} value={themeItem.tag}>
-              {themeItem.name}
+          {myThemes.map((theme) => (
+            <SelectItem key={theme[0]} value={theme[0]}>
+              {theme[1].name}
             </SelectItem>
           ))}
         </SelectGroup>

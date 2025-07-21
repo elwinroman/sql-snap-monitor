@@ -1,20 +1,20 @@
 import { IndentIncrease } from 'lucide-react'
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
-import { useEditorStore } from '@/stores'
+import { useEditorOptionsStore } from '@/zustand'
 
-// monaco editor option
+// whitespace options
 const RenderWhitespaceOption = {
   All: 'all',
   None: 'none',
   Boundary: 'boundary',
   Selection: 'selection',
   Trailing: 'trailing',
-}
+} as const
 
 export function IndentationWhitespace() {
-  const renderWhitespace = useEditorStore((state) => state.renderWhitespace)
-  const updateRenderWhitespace = useEditorStore((state) => state.updateRenderWhitespace)
+  const renderWhitespace = useEditorOptionsStore((state) => state.renderWhitespace)
+  const updateRenderWhitespace = useEditorOptionsStore((state) => state.updateRenderWhitespace)
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()

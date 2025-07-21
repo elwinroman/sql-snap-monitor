@@ -1,10 +1,10 @@
 import { AArrowDown, AArrowUp } from 'lucide-react'
 
-import { useEditorStore } from '@/stores'
+import { useEditorOptionsStore } from '@/zustand'
 
 export function FontSize() {
-  const fontSize = useEditorStore((state) => state.fontSize)
-  const updateFontSize = useEditorStore((state) => state.updateFontSize)
+  const fontSize = useEditorOptionsStore((state) => state.fontSize)
+  const updateFontSize = useEditorOptionsStore((state) => state.updateFontSize)
 
   const handleClickUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
