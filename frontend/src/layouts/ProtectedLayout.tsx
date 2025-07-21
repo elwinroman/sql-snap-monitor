@@ -1,6 +1,6 @@
 import { isAxiosError } from 'axios'
 import { OctagonAlert } from 'lucide-react'
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { CheckSessionResponse } from '@/adapters'
@@ -10,7 +10,7 @@ import { Error500 } from '@/pages'
 import { checkSessionService } from '@/services'
 import { useAuthStore } from '@/zustand'
 
-export function ProtectedLayout({ children }: { children: ReactNode }) {
+export function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const authContext = useAuthStore((state) => state.authContext)
   const errorApiConnection = useAuthStore((state) => state.errorApiConnection)
   const { error, callEndpoint } = useFetchAndLoad<CheckSessionResponse>()
@@ -64,7 +64,7 @@ export function ProtectedLayout({ children }: { children: ReactNode }) {
 }
 
 interface Props {
-  children: ReactNode
+  children: React.ReactNode
   className?: string
 }
 const ErrorBanner = ({ children, className = '' }: Props) => (

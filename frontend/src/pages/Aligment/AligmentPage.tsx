@@ -30,7 +30,7 @@ export function AligmentPage() {
     <section className="relative flex h-screen w-full overflow-hidden">
       {/* Sidebar con slide-in/out efecto */}
       <aside
-        className={`bg-background hidden h-full transition-all duration-300 ease-in-out sm:block ${hideMenu ? 'w-0 overflow-hidden opacity-0' : `w-sidebar opacity-100`} `}
+        className={`bg-background relative hidden h-full transition-all duration-300 ease-in-out sm:block ${hideMenu ? 'w-0 overflow-hidden opacity-0' : `w-sidebar opacity-100`} `}
       >
         <MenuSidebar className={`w-sidebar bg-background h-full flex-col sm:flex`} />
       </aside>
@@ -42,7 +42,7 @@ export function AligmentPage() {
         {/* Editor code */}
         <EditorCodeAligment />
 
-        <footer className="text-muted grid h-8 place-content-center text-sm">
+        <footer className="text-muted grid place-content-center py-2.5 text-sm">
           <span>
             © 2025 <strong>Departamento de Aseguramiento de Calidad</strong>
           </span>

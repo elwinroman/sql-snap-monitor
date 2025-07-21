@@ -13,7 +13,7 @@ const buttonVariants = cva(
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        ghost: 'hover:bg-action-hover hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         // customizado
         disabled: 'bg-action-disabled text-disabled',
@@ -23,6 +23,7 @@ const buttonVariants = cva(
         variant02: 'bg-[#F1AF35] text-white hover:bg-[#F1AF35]/90',
       },
       size: {
+        xs: 'h-6 px-4 py-1',
         default: 'h-10 px-4 py-2',
         sm: 'h-9 rounded-sm px-3',
         lg: 'h-11 rounded-sm px-8',

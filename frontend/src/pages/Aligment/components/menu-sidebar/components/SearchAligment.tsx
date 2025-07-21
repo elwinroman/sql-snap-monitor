@@ -1,5 +1,5 @@
 import { useSearchContext } from '@aligment/hooks'
-import { X } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 import { InputWithIcon } from '@/components/ui'
@@ -37,11 +37,12 @@ export function SearchAligment() {
 
   return (
     <div>
-      <label className="flex flex-col gap-1">
+      <label className="flex flex-col gap-1.5">
         <span className="text-sm font-medium">Objeto</span>
         <InputWithIcon
           ref={inputRef}
           value={search}
+          startIcon={<Search size={22} className="text-muted" />}
           endIcon={icon}
           placeholder="Search"
           onChange={handleChange}

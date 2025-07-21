@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 interface InputWithIconProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string
   type?: string
+  startIcon?: ReactElement<{ className?: string }>
   endIcon?: ReactElement<{ className?: string }>
   handleClick?: MouseEventHandler<HTMLButtonElement>
   isFocus?: boolean
@@ -13,17 +14,17 @@ interface InputWithIconProps extends React.InputHTMLAttributes<HTMLInputElement>
 }
 
 const InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(
-  ({ className, type = 'text', endIcon, handleClick, isFocus, title, disabled, ...props }, ref) => {
+  ({ className, type = 'text', startIcon, endIcon, handleClick, isFocus, title, disabled, ...props }, ref) => {
+    const StartIcon = startIcon
     const EndIcon = endIcon
 
     return (
-      <div className="relative w-full">
+      <div className="bg-palette-grey-500/8 hover:bg-palette-grey-500/16 focus:bg-palette-grey-500/16 relative flex h-10 w-full items-center gap-2 rounded-sm px-3 py-2 transition-colors">
+        {StartIcon && <>{cloneElement(StartIcon, { className: cn(' h-[18px] w-[18px]', StartIcon.props.className ?? '') })}</>}
         <input
           type={type}
           className={cn(
-            `bg-background placeholder:text-muted flex h-10 w-full rounded-sm border px-4 py-2 text-sm file:border-0 file:bg-transparent file:text-base file:font-medium focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-5 ${
-              isFocus ? 'border-2 border-amber-500 dark:border-amber-400' : 'border-gray-500/20'
-            }`,
+            `placeholder:text-muted flex w-full text-sm focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-5`,
             endIcon ? 'pr-11' : '',
             className,
           )}

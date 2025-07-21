@@ -1,10 +1,10 @@
 import { useSearchContext } from '@aligment/hooks'
-import { ArrowBigLeft, User } from 'lucide-react'
+import { SquareArrowLeft, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { CircleLoader } from '@/components/loader'
 import { LoginUsername, ThemeToggle } from '@/components/navbar/components'
-import { Checkbox } from '@/components/ui'
+import { Button, Checkbox } from '@/components/ui'
 import { AppRoutes } from '@/constants'
 import { APP_NAME } from '@/enviroment/enviroment'
 import { useAppStore, useAuthStore } from '@/zustand'
@@ -25,14 +25,13 @@ export function MenuSidebar({ className = '' }: Props) {
   const redirectLogin = () => navigate(AppRoutes.Login)
 
   return (
-    <nav className={`${className} mix-colored-background overflow-x-hidden overflow-y-auto shadow-xl`}>
-      <header className="border-border flex h-[53px] min-h-[53px] items-center border-b px-6">
+    <nav className={`border-border border-r shadow-xl ${className}`}>
+      <header className="flex items-center px-6 py-3">
         {authContext ? (
-          <button className="hover:bg-action-hover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={backNavigation}>
-            <ArrowBigLeft size={18} />
-
-            <span className="text-sm">Regresar</span>
-          </button>
+          <Button variant={'ghost'} size="sm" className="flex items-center gap-2" onClick={backNavigation}>
+            <SquareArrowLeft size={16} />
+            <span className="underline">Atras</span>
+          </Button>
         ) : (
           <div className="flex w-full items-center justify-between">
             <span className="text-primary font-bold">{APP_NAME}</span>
@@ -41,18 +40,21 @@ export function MenuSidebar({ className = '' }: Props) {
         )}
       </header>
 
-      <div className="grow px-4 py-8 md:px-6">
+      <div className="grow overflow-x-hidden overflow-y-auto px-4 py-6 md:px-6">
         <div className="flex flex-col gap-6">
           {/* Texto */}
           <div className="flex flex-col gap-3">
-            <h4 className="text-primary text-sm font-bold">CONSULTA DE OBJETOS PARA ALINEACIÓN</h4>
+            <h4 className="text-primary/90 text-sm font-bold">CONSULTA DE OBJETOS PARA ALINEACIÓN</h4>
 
-            <span className="text-secondary text-sm text-balance">
-              Recupera los objetos alineados a <strong>pre-producción</strong> y dí adios a observaciones por desvío de ambientes
-            </span>
+            <p className="text-secondary text-sm text-pretty">
+              <span>Recupera los objetos alineados a </span>
+              <strong>pre-producción </strong>
+              <span>y dí adios a observaciones por desvío de ambientes </span>
+              <span className="text-palette-primary-main">(Actualizado al día de ayer)</span>
+            </p>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {/* Radio options */}
             <ViewModeSelect />
 
@@ -78,9 +80,12 @@ export function MenuSidebar({ className = '' }: Props) {
             </div>
           )}
         </div>
+
+        {/* objeto copia */}
+        <div className="h-14 min-h-14 w-full bg-none"></div>
       </div>
 
-      <footer className="flex h-20 min-h-14 items-center px-6">
+      <footer className="bg-background/85 absolute bottom-0 flex h-14 min-h-14 w-[calc(100%-20px)] items-center px-6 backdrop-blur-sm">
         {!authContext ? (
           <button className="hover:bg-action-hover flex h-10 items-center gap-2 rounded-sm px-2 transition-colors" onClick={redirectLogin}>
             <User size={18} />

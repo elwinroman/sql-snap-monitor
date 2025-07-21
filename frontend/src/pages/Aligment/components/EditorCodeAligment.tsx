@@ -45,7 +45,7 @@ export function EditorCodeAligment() {
   if (error) code = error.detail
 
   // cargar temas (estilos) de monaco
-  const handleEditorDidMount = (monaco: Monaco) => {
+  const handleBeforeMount = (monaco: Monaco) => {
     for (const [keyTheme, valueTheme] of Object.entries(MonacoThemes)) {
       monaco.editor.defineTheme(keyTheme, {
         ...valueTheme.json,
@@ -57,9 +57,10 @@ export function EditorCodeAligment() {
   const fullOptions = { ...BaseMonacoEditorOptions, renderWhitespace, fontSize }
 
   return (
-    <div className="group relative h-full">
+    // `overflow-auto h-full` soluciona el error de debordamiento
+    <div className="group relative h-full overflow-auto">
       <Editor
-        beforeMount={handleEditorDidMount}
+        beforeMount={handleBeforeMount}
         language={sysobject ? 'sql' : 'shell'}
         defaultValue={EDITOR_BANNER}
         theme={theme}
