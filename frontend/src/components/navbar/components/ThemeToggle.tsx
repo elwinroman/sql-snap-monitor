@@ -1,10 +1,10 @@
 import { Moon, Sun } from 'lucide-react'
 
-import { useConfigStore } from '@/stores'
+import { useAppStore } from '@/zustand'
 
 export function ThemeToggle() {
-  const isDark = useConfigStore((state) => state.isDark)
-  const updateDark = useConfigStore((state) => state.updateDark)
+  const isDark = useAppStore((state) => state.isDark)
+  const updateDark = useAppStore((state) => state.updateDark)
 
   // cambia el estado del theme toggle
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => updateDark(e.target.checked)

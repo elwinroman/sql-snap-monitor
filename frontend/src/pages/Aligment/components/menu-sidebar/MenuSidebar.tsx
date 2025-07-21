@@ -1,4 +1,4 @@
-import { useSearchContext } from '@aligment/hooks/useSearchContext'
+import { useSearchContext } from '@aligment/hooks'
 import { ArrowBigLeft, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -7,7 +7,7 @@ import { LoginUsername, ThemeToggle } from '@/components/navbar/components'
 import { Checkbox } from '@/components/ui'
 import { AppRoutes } from '@/constants'
 import { APP_NAME } from '@/enviroment/enviroment'
-import { useAuthStore } from '@/zustand'
+import { useAppStore, useAuthStore } from '@/zustand'
 
 import { ButtonGroup, SearchAligment, ViewModeSelect } from './components'
 
@@ -18,6 +18,7 @@ interface Props {
 export function MenuSidebar({ className = '' }: Props) {
   const navigate = useNavigate()
   const authContext = useAuthStore((state) => state.authContext)
+  const isDark = useAppStore((state) => state.isDark)
   const { loading } = useSearchContext()
 
   const backNavigation = () => navigate(-1)
@@ -73,7 +74,7 @@ export function MenuSidebar({ className = '' }: Props) {
           {/* Loader */}
           {loading && (
             <div className="relative mt-4">
-              <CircleLoader size={20} visible={true} color="white" />
+              <CircleLoader size={20} visible={true} color={isDark ? 'white' : 'black'} />
             </div>
           )}
         </div>

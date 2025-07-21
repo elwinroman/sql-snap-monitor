@@ -24,7 +24,7 @@ export const useEditorOptionsStore = create<BearEditorOptionsState>()(
       updateTheme: (theme) => set({ theme }),
     }),
     {
-      name: 'editor-options',
+      name: 'app.global.monacoeditor.options',
       storage: createJSONStorage(() => localStorage),
     },
   ),

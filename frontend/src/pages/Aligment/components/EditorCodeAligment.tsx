@@ -1,4 +1,4 @@
-import { useSearchContext } from '@aligment/hooks/useSearchContext'
+import { useSearchContext } from '@aligment/hooks'
 import { useAligmentStore } from '@aligment/zustand/aligment.store'
 import Editor from '@monaco-editor/react'
 import { Monaco } from '@monaco-editor/react'
@@ -9,9 +9,10 @@ import { BaseMonacoEditorOptions, MonacoThemes } from '@/constants'
 import { EDITOR_BANNER } from '@/enviroment/enviroment'
 import { TypeViews } from '@/models/sysobject'
 import { ensureBuiltinTheme, formatPermissionRoles } from '@/utilities'
-import { useEditorOptionsStore } from '@/zustand'
+import { useAppStore, useEditorOptionsStore } from '@/zustand'
 
 export function EditorCodeAligment() {
+  const isDark = useAppStore((state) => state.isDark)
   const renderWhitespace = useEditorOptionsStore((state) => state.renderWhitespace)
   const fontSize = useEditorOptionsStore((state) => state.fontSize)
   const theme = useEditorOptionsStore((state) => state.theme)
@@ -64,7 +65,7 @@ export function EditorCodeAligment() {
         theme={theme}
         value={!loading ? code : 'Buscando información, esto puede tardar unos segundos...'}
         options={{ ...fullOptions }}
-        loading={<CircleLoader visible={true} color="white" />}
+        loading={<CircleLoader visible={true} color={isDark ? 'white' : 'black'} />}
       />
 
       {/* Copiar */}

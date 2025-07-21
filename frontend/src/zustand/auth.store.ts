@@ -28,7 +28,7 @@ export const useAuthStore = create<BearAuthState>()(
         updateErrorApiConnection: (state: boolean): void => set({ errorApiConnection: state }),
       }),
       {
-        name: 'is-authenticated',
+        name: 'app.auth.local',
         storage: createJSONStorage(() => localStorage),
         partialize: (state) => Object.fromEntries(Object.entries(state).filter(([key]) => !['errorApiConnection'].includes(key))),
       },
