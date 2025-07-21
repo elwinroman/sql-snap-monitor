@@ -1,6 +1,5 @@
 import { User } from 'lucide-react'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,16 +7,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/components/ui'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui'
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
 import { logoutService } from '@/services'
-// import { resetAllStores } from '@/utilities'
 import { useAuthStore } from '@/zustand'
 
 export function LoginUsername() {
   const clearSession = useAuthStore((state) => state.clearSession)
   const authContext = useAuthStore((state) => state.authContext)
-  const { loading, callEndpoint } = useFetchAndLoad()
+  const { callEndpoint } = useFetchAndLoad()
 
   if (!authContext) return
 
@@ -30,10 +29,7 @@ export function LoginUsername() {
     } catch (err) {
       console.error('Error al intentar cerrar sesion: ', err)
     }
-    // resetAllStores()
   }
-
-  if (loading) return <div>Cerrando sesion</div>
 
   return (
     <li className="list-none">

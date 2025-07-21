@@ -1,29 +1,32 @@
 import { useRef } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { ROUTES } from '@/constants'
+import { AppRoutes } from '@/constants'
 
-export function NavbarMenu({ className }) {
+interface Props {
+  className?: string
+}
+
+export function NavbarMenu({ className }: Props) {
   const currentLocation = useLocation()
 
-  const menuBackdrop = useRef()
-  const menuContainer = useRef()
+  const menuBackdrop = useRef<HTMLDivElement>(null)
 
   const menuList = [
     {
       id: 1,
       title: 'Definición SQL',
-      href: ROUTES.SQL_DEFINITION,
+      href: AppRoutes.SQL_DEFINITION,
     },
     {
       id: 2,
       title: 'Tabla de usuario',
-      href: ROUTES.USERTABLE,
+      href: AppRoutes.USERTABLE,
     },
     {
       id: 3,
       title: 'Aligment',
-      href: ROUTES.ALIGMENT,
+      href: AppRoutes.Aligment,
     },
   ]
 
@@ -31,8 +34,10 @@ export function NavbarMenu({ className }) {
    * Ajusta la posición y el tamaño del fondo dinámico en función de la posición del elemento sobre el que se hace hover.
    * @param {Object} e - El evento del mouse para obtener el elemento actual.
    */
-  const handleMouseEnter = (e) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement>) => {
     const { top, left, width, height } = e.currentTarget.getBoundingClientRect()
+
+    if (!menuBackdrop.current) return null
 
     menuBackdrop.current.style.setProperty('--left', `${left}px`)
     menuBackdrop.current.style.setProperty('--top', `${top}px`)
@@ -47,6 +52,8 @@ export function NavbarMenu({ className }) {
    * Oculta el fondo dinámico cuando el mouse deja el área del elemento del menú.
    */
   const handleMouseLeave = () => {
+    if (!menuBackdrop.current) return null
+
     menuBackdrop.current.style.opacity = '0'
     menuBackdrop.current.style.visibility = 'hidden'
   }
@@ -54,7 +61,6 @@ export function NavbarMenu({ className }) {
   return (
     <div className={`${className}`}>
       <ul
-        ref={menuContainer}
         className="flex flex-nowrap justify-between overflow-x-auto sm:justify-center"
         style={{ scrollbarColor: 'transparent', scrollBehavior: 'smooth' }}
       >

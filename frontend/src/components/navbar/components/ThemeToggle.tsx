@@ -7,9 +7,7 @@ export function ThemeToggle() {
   const updateDark = useConfigStore((state) => state.updateDark)
 
   // cambia el estado del theme toggle
-  const handleChange = (e) => {
-    updateDark(e.target.checked)
-  }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => updateDark(e.target.checked)
 
   return (
     <div className="">

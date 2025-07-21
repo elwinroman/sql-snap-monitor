@@ -1,7 +1,10 @@
 export const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
 export const MODE = import.meta.env.MODE ?? 'enviroment'
 
+// Aplicación
 export const APP_NAME = 'Snap Monitor'
+export const ENABLE_NAVBAR_REPO_LINK = true
+export const GITHUB_REPOSITORIO_LINK = 'https://github.com/elwinroman/quality-tools'
 
 // Basado en el tiempo promedio de reacción de un ser humano (en milisegundos)
 export const DEBOUNCE_DELAY = 300
