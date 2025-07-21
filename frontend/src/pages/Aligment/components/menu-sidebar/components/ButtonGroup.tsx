@@ -1,4 +1,4 @@
-import { useSearchContext } from '@aligment/hooks/useSearchContext'
+import { useSearchContext } from '@aligment/hooks'
 import { useAligmentStore } from '@aligment/zustand/aligment.store'
 import { MouseEvent } from 'react'
 

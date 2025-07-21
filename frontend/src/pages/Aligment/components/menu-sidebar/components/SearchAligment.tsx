@@ -1,4 +1,4 @@
-import { useSearchContext } from '@aligment/hooks/useSearchContext'
+import { useSearchContext } from '@aligment/hooks'
 import { X } from 'lucide-react'
 import { useRef, useState } from 'react'
 

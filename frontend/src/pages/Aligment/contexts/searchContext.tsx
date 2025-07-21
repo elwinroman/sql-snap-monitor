@@ -1,4 +1,4 @@
-import { useSearch } from '@aligment/hooks/useSearch'
+import { useSearch } from '@aligment/hooks'
 import { createContext, ReactNode } from 'react'
 
 interface ContextProps {

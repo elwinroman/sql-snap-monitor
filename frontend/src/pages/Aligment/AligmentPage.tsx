@@ -6,7 +6,7 @@ import { Error500 } from '@/pages'
 import { useAuthStore } from '@/zustand'
 
 import { EditorCodeAligment, HeaderEditor, MenuSidebar } from './components'
-import { useSearchContext } from './hooks/useSearchContext'
+import { useSearchContext } from './hooks'
 import { useAligmentStore } from './zustand/aligment.store'
 
 export function AligmentPage() {

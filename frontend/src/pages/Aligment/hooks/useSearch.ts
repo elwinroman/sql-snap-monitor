@@ -8,13 +8,6 @@ import useFetchAndLoad from '@/hooks/useFetchAndLoad'
 import { FullSysObject } from '@/models/sysobject'
 import { getProdSysObjectService } from '@/services'
 
-export interface ObjectMockModel {
-  id: number
-  name: string
-  rol: string
-  createdAt: Date | string
-}
-
 export const useSearch = () => {
   const [search, setSearch] = useState<string>('')
   const [errorValidation, setErrorValidation] = useState<string | null>(null)

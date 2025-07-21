@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '@aligment': path.resolve(__dirname, './src/pages/Aligment'),
       '~': path.resolve(__dirname, './'),
     },
   },
