@@ -20,9 +20,6 @@ export interface StoreInfo {
  * Representa la información relacionada con los permisos de un usuario en el sistema.
  */
 export interface PermissionStore {
-  /** Fecha que obtiene del repositorio (base de datos). */
-  date: Date
-
   /** Bandera para comprobar si el usuario tiene acceso de tipo VIEW DEFINITION (puede fallar si la BD es vacía o no tiene objetos de definición SQL). */
   viewdefinitionPermission: boolean
 }

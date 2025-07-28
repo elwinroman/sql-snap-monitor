@@ -43,8 +43,7 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
 
     try {
       const stmt = `
-        SELECT 
-          GETUTCDATE() AS date,
+        SELECT
           viewdefinition_permission = COALESCE((SELECT TOP 1 IIF(definition IS NULL, 0, 1) FROM sys.sql_modules), 0),
           definition_counts = (SELECT COUNT(*) FROM sys.sql_modules)
       `
@@ -54,7 +53,6 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
       const definitionCounts = res.recordset[0].definition_counts
 
       const data: PermissionStore = {
-        date: res.recordset[0].date,
         viewdefinitionPermission: definitionCounts > 0 ? Boolean(res.recordset[0].viewdefinition_permission) : true,
       }
       return data

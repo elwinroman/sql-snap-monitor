@@ -1,9 +1,8 @@
+import { NewTokens } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
 import { AuthenticatedUser } from '@auth/domain/schemas/auth-user'
 import { StoreUserSchema } from '@shared/domain/store'
 
-import { NewTokens } from '../domain/ports/drivens/for-token-management.port'
-import { StoreInfo } from '../domain/schemas/store'
 import { CheckSessionUseCase, LoginUseCase, LogoutUseCase, RefreshTokenUseCase } from './use-cases'
 
 export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
@@ -26,7 +25,9 @@ export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
     return this.refreshTokenUC.execute(refreshToken)
   }
 
-  async checkSession(credentials: StoreUserSchema): Promise<StoreInfo> {
+  async checkSession(
+    credentials: StoreUserSchema,
+  ): Promise<{ databaseConnection: string; viewdefinitionPermission: boolean; checkedAt: Date | string }> {
     return this.checkSessionUC.execute(credentials)
   }
 
