@@ -23,11 +23,16 @@ export class LoginController {
       // si no existe el accessToken, es un inicio de sesión nuevo, pero si existe no debería permitir loguearse
       if (accessToken && this.tokenManager.checkIfUserIsAlreadyAuthenticated(accessToken)) throw new UserAlreadyAuthenticatedException()
 
-      const result = await this.authenticatorService.login(dto)
+      // extrae 'refresh-token' de los resultados
+      const { token, ...resultWithoutTokens } = await this.authenticatorService.login(dto)
+      const result = {
+        ...resultWithoutTokens,
+        accessToken: token.accessToken,
+      }
 
       return res
         .status(200)
-        .cookie(TokenTypeEnum.Refresh, result.token.refreshToken, {
+        .cookie(TokenTypeEnum.Refresh, token.refreshToken, {
           httpOnly: true, // cookie solo accesible por el servidor
           // secure: process.env.NODE_ENV === 'production', // cookie disponible solo en https
           secure: false,
