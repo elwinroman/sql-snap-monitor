@@ -125,10 +125,9 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
         }) ?? []
 
       const meta = {
-        total: res.recordset[0].nTotal ?? 0,
+        total: res.recordset[0]?.nTotal ?? 0,
         limit,
       }
-
       return { data, meta }
     } catch (err) {
       throw wrapDatabaseError(err)

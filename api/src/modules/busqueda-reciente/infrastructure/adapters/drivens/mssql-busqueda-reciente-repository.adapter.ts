@@ -149,7 +149,7 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
         }) ?? []
 
       const meta = {
-        total: res.recordset[0].nTotal ?? 0,
+        total: res.recordset[0]?.nTotal ?? 0,
         limit,
       }
 

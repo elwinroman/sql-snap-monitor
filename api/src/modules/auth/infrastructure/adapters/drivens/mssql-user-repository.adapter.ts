@@ -46,7 +46,7 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
       request.input('user', sql.VarChar(64), user.user)
       request.input('host', sql.VarChar(64), user.host)
       request.input('aliasHost', sql.VarChar(64), user.aliasHost)
-      request.input('createdAt', sql.DateTime, user.createdAt)
+      request.input('createdAt', sql.DateTime2, user.createdAt)
       request.input('isActive', sql.Bit, user.isActive)
 
       const res = await request.query(stmt)
@@ -54,7 +54,7 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
       if (res.recordset && res.recordset.length === 1) {
         const userData = res.recordset[0]
 
-        const user = User.create({
+        const userRepository = User.create({
           id: userData.idUsuario,
           hashId: userData.cHashUsuarioUID,
           user: userData.cUsuario,
@@ -67,7 +67,7 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
         // insertar el log de acceso
         await this.insertAccessLog(
           {
-            idUser: user.id,
+            idUser: userRepository.id,
             database: userDatabase,
             createdAt: user.createdAt,
           },
@@ -76,7 +76,7 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
 
         await transaction.commit()
 
-        return user
+        return userRepository
       }
 
       await transaction.rollback()
@@ -126,7 +126,7 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
       `
     request.input('idUser', sql.Int, log.idUser)
     request.input('database', sql.VarChar(64), log.database)
-    request.input('createdAt', sql.DateTime, log.createdAt)
+    request.input('createdAt', sql.DateTime2, log.createdAt)
 
     await request.query(stmt)
   }
