@@ -37,6 +37,9 @@ const envSchema = z.object({
   PASS_PHRASE: z.string().min(1).default('your-pass-phrase-key'),
   SENTRY_DNS: z.string().url(),
   NODE_ENV: z.enum(['development', 'production', 'test']).optional().default('development'),
+
+  // Configuración zonas horarias
+  TIMEZONE_DATABASE: z.string().default('America/Lima'),
 })
 
 const { data, error, success } = envSchema.safeParse(process.env)
@@ -71,4 +74,6 @@ export const {
   PASS_PHRASE,
   SENTRY_DNS,
   NODE_ENV,
+
+  TIMEZONE_DATABASE,
 } = data

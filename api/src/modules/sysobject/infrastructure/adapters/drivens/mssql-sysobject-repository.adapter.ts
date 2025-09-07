@@ -1,11 +1,13 @@
-import { format } from '@formkit/tempo'
 import { MSSQLDatabaseConnection } from '@shared/infrastructure/store'
 import { buildStoreAuthContext, wrapDatabaseError } from '@shared/infrastructure/utils'
+import { convertLocalToUTC } from '@shared/infrastructure/utils'
 import { ForSysObjectRepositoryPort } from '@sysobject/domain/ports/drivens/for-sysobject-repository.port'
 import { SearchSysObject } from '@sysobject/domain/ports/drivers/for-sysobject-retrieval.port'
 import { PermissionRol } from '@sysobject/domain/schemas/permission-rol'
 import { SysObject } from '@sysobject/domain/schemas/sysobject'
 import sql from 'mssql'
+
+import { TIMEZONE_DATABASE } from '@/config/enviroment'
 
 export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
@@ -47,8 +49,8 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
         typeDesc: res.recordset[0].type_desc,
         schemaId: res.recordset[0].schema_id,
         schemaName: res.recordset[0].schema_name,
-        createDate: format(res.recordset[0].create_date, 'DD-MM-YYYY'),
-        modifyDate: format(res.recordset[0].modify_date, 'DD-MM-YYYY'),
+        createDate: convertLocalToUTC(res.recordset[0].create_date, TIMEZONE_DATABASE), // sql server devuelve zona horaria local
+        modifyDate: convertLocalToUTC(res.recordset[0].modify_date, TIMEZONE_DATABASE), // sql server devuelve zona horaria local
         definition: res.recordset[0].definition,
       }
 
