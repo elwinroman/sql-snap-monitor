@@ -37,6 +37,10 @@ ALLOWED_ORIGINS: Lista de orígenes permitidos (CORS), separados por comas.
 JWT_SECRET: Clave secreta para firmar/verificar tokens JWT.
 SESSION_SECRET: Clave secreta para firmar cookies de sesión.
 PASS_PHRASE: Clave utilizada para la encriptación de datos sensibles.
+
+# Reporte de errores con Sentry
+SENTRY_REPORTING_ENABLED: Habilita o deshabilita el envío de errores a Sentry (true o false).
+SENTRY_DSN: URL de conexión DSN proporcionada por Sentry para el proyecto.
 ```
 **Nota:** La variable **ALLOWED_ORIGIN** debe contener la dirección y/o puerto del servidor frontend. Si esta trabajando en modo `development`, se permite automáticamente **localhost**. En modo `producction` **ALLOWED_ORIGIN** debe especificarse manualmente qué dominios están permitidos.
 
@@ -74,7 +78,7 @@ Este documento detalla los cambios realizados en el proyecto, incluyendo configu
 
 ### Configuración del editor
 Para garantizar que todos los colaboradores trabajen en un entorno consistente, se recomienda utilizar las siguientes configuraciones en [Visual Studio Code](https://code.visualstudio.com/). Las configuraciones de editor ya están incluidas en el repositorio, en la carpeta `.vscode > settings.json`, no es necesario realizar cambios adicionales.
-```
+```json
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
@@ -93,3 +97,42 @@ El formateador de código utilizado en el proyecto es **Prettier**, que garantiz
 
 
 ## Ejecución de pruebas unitarias
+
+[Vitest](https://vitest.dev/guide/)
+
+Comando básico para ver en modo --watch los test
+```bash
+npm run test
+```
+
+Ejemplo de salida usando el reporter básico
+```bash
+✓ __tests__/file1.test.ts (2) 725ms
+✓ __tests__/file2.test.ts (2) 746ms
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  12:34:32
+   Duration  1.26s (transform 35ms, setup 1ms, collect 90ms, tests 1.47s, environment 0ms, prepare 267ms)
+```
+
+Para un reporte detallado que muestra cada prueba individual una vez finalizado el suite, ejecute:
+ ```bash
+npm run test --reporte=verbose
+```
+Ejemplo de salida usando el reporter detallado
+```bash
+✓ __tests__/file1.test.ts (2) 725ms
+   ✓ first test file (2) 725ms
+     ✓ 2 + 2 should equal 4
+     ✓ 4 - 2 should equal 2
+✓ __tests__/file2.test.ts (2) 746ms
+  ✓ second test file (2) 746ms
+    ✓ 1 + 1 should equal 2
+    ✓ 2 - 1 should equal 1
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  12:34:32
+   Duration  1.26s (transform 35ms, setup 1ms, collect 90ms, tests 1.47s, environment 0ms, prepare 267ms)
+```
