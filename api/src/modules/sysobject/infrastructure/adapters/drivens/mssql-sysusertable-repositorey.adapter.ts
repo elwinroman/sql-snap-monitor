@@ -15,10 +15,11 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
 
   async getById(id: number): Promise<UsertableSysObject | null> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT  
           A.object_id,  
@@ -59,10 +60,11 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
 
   async getColumnsById(id: number): Promise<Column[]> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       // columnas
       const stmt = `
         --======================================================================
@@ -132,10 +134,11 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
 
   async getForeignKeysById(id: number): Promise<ForeignKey[]> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT 
           A.column_id,
@@ -173,10 +176,11 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
 
   async getIndexesById(id: number): Promise<Index[]> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT 
           A.column_id,
@@ -211,10 +215,11 @@ export class MssqlSysUsertableRepositoryAdapter implements ForSysUsertableReposi
 
   async getUsertableExtendedPropertieById(id: number): Promise<ExtendedProperty[]> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT 
           CAST(value AS NVARCHAR(200)) COLLATE Latin1_General_CI_AS_KS_WS AS value, 

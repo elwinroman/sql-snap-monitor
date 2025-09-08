@@ -5,9 +5,9 @@ export class SafeInternalServerErrorException extends ApplicationError {
   readonly title: string
   readonly detail: string
 
-  constructor() {
+  constructor({ detail }: { detail: string } = { detail: 'No pudimos completar la operación. Por favor, contacta con el administrador.' }) {
     super({ message: '[INTERNAL_SAFE] Error interno encapsulado' })
     this.title = 'Error interno del sistema'
-    this.detail = 'Ha ocurrido un error inesperado.'
+    this.detail = detail
   }
 }

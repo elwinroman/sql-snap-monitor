@@ -1,10 +1,14 @@
 import * as Sentry from '@sentry/node'
 
+import { SENTRY_REPORTING_ENABLED } from '@/config/enviroment'
+
 import { DatabaseError } from '../exceptions'
 import { InfrastructureError } from '../infrastructure-error.exception'
 import { getLoggerRequestContext } from '../logger/logger-context'
 
-export function reportErrorToSentry(err: unknown) {
+export function sentryScopeError(err: unknown) {
+  if (!SENTRY_REPORTING_ENABLED) return
+
   Sentry.withScope(scope => {
     const context = getLoggerRequestContext()
 

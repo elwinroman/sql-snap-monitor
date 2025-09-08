@@ -15,10 +15,10 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
   private db = getStaticDatabaseCredentials(DatabaseName.APP)
 
   async createOrUpdate(busquedaRecienteInput: BusquedaRecienteInput): Promise<boolean> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         MERGE INTO dbo.BusquedaReciente AS target
         USING (
@@ -68,10 +68,10 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
   }
 
   async deleteById(id: number): Promise<boolean> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         UPDATE BusquedaReciente SET lVigente = 0 
         WHERE idBusquedaReciente = @id AND lVigente = 1
@@ -89,10 +89,10 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
   }
 
   async findMany(filter: BusquedaRecienteFilterRepo, limit: number): Promise<{ data: BusquedaRecienteRepoResponse[]; meta: Meta }> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         ;WITH BusquedasRecientesCTE AS (
           SELECT 
@@ -160,10 +160,10 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
   }
 
   async getById(id: number): Promise<BusquedaReciente | null> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT * FROM dbo.BusquedaReciente 
         WHERE idBusquedaReciente = @id

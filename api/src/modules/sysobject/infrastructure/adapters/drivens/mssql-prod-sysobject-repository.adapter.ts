@@ -11,10 +11,10 @@ export class MssqlProdSysObjectRepositoryAdapter implements ForProdSysObjectRepo
   private db = getStaticDatabaseCredentials(DatabaseName.PREPROD)
 
   async getByNameAndSchema(name: string, schema: string): Promise<SysObject | null> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       request.input('object_name', sql.VarChar(128), name).input('schema_name', sql.VarChar(64), schema)
       const res = await request.execute('SYS_ObtenerDefinicionSQL_SP')
 
@@ -40,10 +40,10 @@ export class MssqlProdSysObjectRepositoryAdapter implements ForProdSysObjectRepo
   }
 
   async getRolesById(id: number): Promise<PermissionRol[]> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       request.input('id', sql.Int, id)
       const res = await request.execute('SYS_ObtenerRoles_SP')
 

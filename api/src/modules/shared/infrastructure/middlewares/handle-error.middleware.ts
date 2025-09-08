@@ -8,22 +8,13 @@ import { mapMSSQLError } from '@shared/infrastructure/store/map-mssql-error'
 import { NextFunction, Request, Response } from 'express'
 import { ZodError } from 'zod'
 
-import { MyCustomError } from '@/models'
-
-import { DatabaseError } from '../exceptions'
-import { reportErrorToSentry } from '../sentry/sentryScopeError'
+import { DatabaseConnectionErrorException, DatabaseError } from '../exceptions'
+import { sentryScopeError } from '../sentry/sentryScopeError'
 import { formatZodErrors } from '../utils/format-zod-errors.util'
 
 export function handleErrorMiddleware(err: unknown, req: Request, res: Response, _next: NextFunction) {
   let mappedError: DomainError | InfrastructureError | ApplicationError
   let invalidParams = undefined
-
-  // soporte VERSION anterior (se eliminará completaco la migración)
-  if (err instanceof MyCustomError) {
-    logger.info(err.name, { err })
-    const { status, statusCode, message, originalError } = err
-    return res.status(statusCode).json({ status, statusCode, message, originalError })
-  }
 
   /** Manejo de errores por tipo */
   switch (true) {
@@ -38,41 +29,40 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     }
     // errores de node-mssql package
     case err instanceof DatabaseError:
-      reportErrorToSentry(err)
-
+      sentryScopeError(err)
       mappedError = mapMSSQLError(err.originalError)
       logger.error(mappedError.name, { err: mappedError })
 
       // reemplaza el error específico con un error genérico para el cliente
-      mappedError = new SafeInternalServerErrorException()
+      if (mappedError.type === DatabaseConnectionErrorException.name) {
+        mappedError = new SafeInternalServerErrorException({
+          detail:
+            'No se pudo conectar con el servidor de base de datos. Si el problema persiste, contacte con el administrador del sistema.',
+        })
+      } else mappedError = new SafeInternalServerErrorException()
       break
 
     // errores de dominio o aplicación
     case err instanceof DomainError || err instanceof ApplicationError:
+      logger.warn(err.name, { err })
       mappedError = err
-      logger.warn(mappedError.name, { err: mappedError })
       break
 
     // errores de infraestructura
     case err instanceof InfrastructureError:
-      mappedError = err
-      reportErrorToSentry(mappedError)
-      logger.error(mappedError.name, { err: mappedError })
+      sentryScopeError(err)
+      logger.error(err.name, { err })
 
       mappedError = new SafeInternalServerErrorException()
       break
     // otro tipo de errores
-    default:
-      if (err instanceof Error) {
-        reportErrorToSentry(err)
-        logger.error(err.name, { err })
-      } else {
-        reportErrorToSentry(err)
-        logger.error('UnknownError', { err })
-      }
-
+    default: {
+      sentryScopeError(err)
+      if (err instanceof Error) logger.error(err.name, { err })
+      else logger.error('UnknownError', { err })
       mappedError = new SafeInternalServerErrorException()
       break
+    }
   }
 
   /** Valida si la excepción está mapeada */
@@ -99,14 +89,5 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     },
   }
 
-  // soporte VERSION anterior (se eliminará completaco la migración)
-  const legacyErrorApiResponse = {
-    status: 'error',
-    statusCode: status,
-    message: errorApiResponse.error.title,
-    originalError: 'None',
-    ...errorApiResponse,
-  }
-
-  return res.status(status).json(legacyErrorApiResponse)
+  return res.status(status).json(errorApiResponse)
 }

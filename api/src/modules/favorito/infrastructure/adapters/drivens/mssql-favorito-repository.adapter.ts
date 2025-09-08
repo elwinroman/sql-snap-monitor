@@ -10,10 +10,10 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
   private db = getStaticDatabaseCredentials(DatabaseName.APP)
 
   async createOrUpdate(favoritoRepoInput: FavoritoRepoInput): Promise<{ data: FavoritoRepoResponse; action: 'INSERT' | 'UPDATE' } | null> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         MERGE INTO dbo.Favorito AS target
         USING (
@@ -75,10 +75,10 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
   }
 
   async findMany(filter: FavoritoFilterRepo, limit: number): Promise<{ data: FavoritoRepoResponse[]; meta: Meta }> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         ;WITH FavoritosCTE AS (
           SELECT 
@@ -135,10 +135,10 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
   }
 
   async deleteById(id: number): Promise<boolean> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         UPDATE Favorito SET lVigente = 0 
         WHERE idFavorito = @id AND lVigente = 1
@@ -156,10 +156,10 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
   }
 
   async getById(id: number): Promise<Favorito | null> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT * FROM dbo.Favorito 
         WHERE idFavorito = @id
@@ -190,10 +190,10 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
   }
 
   async existsByCriteria(criteria: Criteria): Promise<boolean> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT TOP 1 idFavorito 
         FROM dbo.Favorito 

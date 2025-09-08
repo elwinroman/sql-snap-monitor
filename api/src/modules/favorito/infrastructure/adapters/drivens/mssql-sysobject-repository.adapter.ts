@@ -7,8 +7,6 @@ export class MSSQLSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
 
   async findIDsByNameAndSchema(sysObjects: SysObject[]): Promise<number[]> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     let sqlValues = ''
     sysObjects.forEach((row, index) => {
@@ -18,6 +16,9 @@ export class MSSQLSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
     sqlValues = sqlValues.slice(0, -1) + ';'
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         IF OBJECT_ID('tempdb..#TemporalObjects') IS NOT NULL
         BEGIN

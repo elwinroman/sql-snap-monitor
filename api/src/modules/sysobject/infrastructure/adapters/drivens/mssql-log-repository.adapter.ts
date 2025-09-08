@@ -8,10 +8,10 @@ export class MssqlLogRepositoryAdapter implements ForLogRepositoryPort {
   private db = getStaticDatabaseCredentials(DatabaseName.APP)
 
   async createSearchLog(logSearch: SearchLog): Promise<boolean> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = `
         INSERT INTO dbo.LogBusqueda (idUsuario, idTipoAccion, cDatabase, cSchema, cBusqueda, cType, lProduccion, dFechaBusqueda)
         VALUES (@idUser, @actionType, @database, @schema, @search, @type, @isProduction, @createdAt)

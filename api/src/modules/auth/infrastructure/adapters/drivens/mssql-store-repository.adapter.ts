@@ -9,10 +9,10 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
 
   async getDetails(credential: StoreUserSchema): Promise<StoreInfo> {
-    const conn = await this.connection.connect(credential, UserTypeEnum.External)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(credential, UserTypeEnum.External)
+      const request = conn.request()
+
       const stmt = `
         SELECT
           name,
@@ -38,10 +38,10 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
   }
 
   async getPermission(credential: StoreUserSchema): Promise<PermissionStore> {
-    const conn = await this.connection.connect(credential, UserTypeEnum.External)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(credential, UserTypeEnum.External)
+      const request = conn.request()
+
       const stmt = `
         SELECT
           viewdefinition_permission = COALESCE((SELECT TOP 1 IIF(definition IS NULL, 0, 1) FROM sys.sql_modules), 0),

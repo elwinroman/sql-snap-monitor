@@ -5,15 +5,20 @@ import { getStaticDatabaseCredentials } from '@shared/infrastructure/store/get-s
 import { wrapDatabaseError } from '@shared/infrastructure/utils'
 import sql from 'mssql'
 
+import { logger } from '@/modules/shared/infrastructure/logger/pino-instance'
+
 export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
   private connection = new MSSQLDatabaseConnection()
   private db = getStaticDatabaseCredentials(DatabaseName.APP)
 
   async getOrCreate(user: PrimitiveUser, userDatabase: string): Promise<RepoUser | null> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const transaction = new sql.Transaction(conn)
+    let conn: sql.ConnectionPool | null = null
+    let transaction: sql.Transaction | null = null
 
     try {
+      conn = await this.connection.connect(this.db.credentials, this.db.type)
+      transaction = new sql.Transaction(conn)
+
       await transaction.begin()
       const request = new sql.Request(transaction)
 
@@ -82,17 +87,23 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
       await transaction.rollback()
       return null
     } catch (err: unknown) {
-      await transaction.rollback()
+      if (transaction) {
+        try {
+          await transaction.rollback()
+        } catch (rollbackError) {
+          logger.error('Error al hacer rollback:', { rollbackError })
+        }
+      }
 
       throw wrapDatabaseError(err)
     }
   }
 
   async getById(id: number): Promise<RepoUser | null> {
-    const conn = await this.connection.connect(this.db.credentials, this.db.type)
-    const request = conn.request()
-
     try {
+      const conn = await this.connection.connect(this.db.credentials, this.db.type)
+      const request = conn.request()
+
       const stmt = 'SELECT * FROM dbo.Usuario WHERE idUsuario = @id'
       request.input('id', sql.Int, id)
       const res = await request.query(stmt)

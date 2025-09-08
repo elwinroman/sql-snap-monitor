@@ -14,10 +14,11 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
 
   async getById(id: number): Promise<SysObject | null> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT
           A.object_id,
@@ -62,10 +63,11 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
 
   async getRolesById(id: number): Promise<PermissionRol[]> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT 
           A.state_desc,
@@ -96,10 +98,11 @@ export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPo
 
   async findByNameAndType(name: string, type: string): Promise<SearchSysObject[]> {
     const { store } = await buildStoreAuthContext()
-    const conn = await this.connection.connect(store.credentials, store.type)
-    const request = conn.request()
 
     try {
+      const conn = await this.connection.connect(store.credentials, store.type)
+      const request = conn.request()
+
       const stmt = `
         SELECT TOP 100
           object_id,
