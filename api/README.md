@@ -73,6 +73,85 @@ npm run start -- --host
 Ver [README.md](../README.md) de la raíz del repositorio
 
 
+## CLI de Criptografía
+
+Herramienta de línea de comandos para encriptar y desencriptar credenciales de forma segura usando el algoritmo AES-256-GCM. Útil para generar valores encriptados que se usan en las variables de entorno de producción.
+
+### Uso de la CLI
+
+Para iniciar la herramienta interactiva, ejecuta:
+```bash
+npm run cli:crypto
+```
+
+La CLI te presentará un menú interactivo con las siguientes opciones:
+- **🔒 Encriptar texto**: Convierte texto plano a texto encriptado
+- **🔓 Desencriptar texto**: Convierte texto encriptado a texto plano
+- **👋 Salir**: Cierra la aplicación
+
+### Ejemplo de uso
+
+```bash
+$ npm run cli:crypto
+
+🔐 CLI de Criptografía - CryptoCode
+Encripta y desencripta credenciales de forma segura
+
+? ¿Qué operación deseas realizar? 🔒 Encriptar texto
+? Ingresa el texto a encriptar: mi-password-super-secreto
+
+✓ Resultado:
+AsDf123*AsDf123*AsDf123*AsDf123
+
+? ¿Deseas realizar otra operación? Yes
+? ¿Qué operación deseas realizar? 🔓 Desencriptar texto
+? Ingresa el texto a desencriptar: AsDf123*AsDf123*AsDf123*AsDf123
+
+✓ Resultado:
+mi-password-super-secreto
+
+? ¿Deseas realizar otra operación? No
+
+👋 ¡Hasta luego!
+```
+
+### Casos de uso comunes
+
+1. **Encriptar credenciales de base de datos para producción**:
+   - Ejecuta `npm run cli:crypto`
+   - Selecciona "Encriptar texto"
+   - Ingresa la contraseña real
+   - Copia el resultado encriptado al archivo `.env` de producción
+
+2. **Verificar credenciales encriptadas**:
+   - Ejecuta `npm run cli:crypto`
+   - Selecciona "Desencriptar texto"
+   - Ingresa el valor encriptado del `.env`
+   - Verifica que coincida con la credencial esperada
+
+### Arquitectura de la CLI
+
+La CLI está implementada siguiendo **arquitectura hexagonal** (Ports & Adapters):
+
+```
+src/modules/cli-crypto/
+├── domain/              # Reglas de negocio
+│   ├── ports/          # Interfaces (contratos)
+│   └── schemas/        # Validaciones con Zod
+├── application/        # Casos de uso
+│   └── use-cases/
+├── infrastructure/     # Detalles técnicos
+    ├── adapters/       # Implementaciones concretas
+    └── cli.entrypoint.ts
+```
+
+### Notas importantes
+
+- La CLI usa la variable de entorno `PASS_PHRASE` definida en el archivo `.env`
+- Asegúrate de tener el archivo `.env` configurado antes de usar la CLI
+- El algoritmo de encriptación es AES-256-GCM (mismo que usa CryptoCode de Python)
+
+
 ## Configuración y cambios del repositorio
 Este documento detalla los cambios realizados en el proyecto, incluyendo configuraciones del editor, instalación de plugins en Visual Studio Code (VSCode), y otras configuraciones relevantes.
 
