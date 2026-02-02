@@ -91,7 +91,7 @@ export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
         try {
           await transaction.rollback()
         } catch (rollbackError) {
-          logger.error('Error al hacer rollback:', { rollbackError })
+          logger.error('[auth] Error al hacer rollback:', { rollbackError })
         }
       }
 

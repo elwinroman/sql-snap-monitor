@@ -19,7 +19,7 @@ export class RefreshTokenUseCase {
     // comprobar que el refresh token no esté en la blacklist
     const isRevoked = await this.blacklist.isBlacklisted(decoded.jti)
     if (isRevoked) {
-      this.logger.warn(`Se está intentando usar un token revocado. TYPE: ${decoded.type} JTI: ${decoded.jti}`)
+      this.logger.warn(`[auth] Se está intentando usar un token revocado. TYPE: ${decoded.type} JTI: ${decoded.jti}`)
       throw new ForbiddenException()
     }
 
@@ -39,8 +39,9 @@ export class RefreshTokenUseCase {
 
     const accessToken = this.tokenManager.createAccessToken(decoded.user_id, decoded.username)
 
-    this.logger.info('[auth] Token de acceso renovado exitosamente', {
-      action: {
+    this.logger.info('[auth] Token de acceso renovado', {
+      actionDetails: {
+        userId: decoded.user_id,
         jti: decoded.jti,
         type: decoded.type,
         expirationCountdown: decoded.expirationCountdown,

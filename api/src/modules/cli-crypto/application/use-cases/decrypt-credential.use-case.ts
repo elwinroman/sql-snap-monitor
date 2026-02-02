@@ -9,13 +9,13 @@ export class DecryptCredentialUseCase {
 
   execute(encryptedText: string): string {
     if (!encryptedText || encryptedText.trim().length === 0) {
-      throw new Error('El texto a desencriptar no puede estar vacío')
+      throw new Error('[cli-crypto] El texto a desencriptar no puede estar vacío')
     }
 
     const decrypted = this.cryptoService.decrypt(encryptedText)
 
     if (decrypted === undefined) {
-      throw new Error('No se pudo desencriptar el texto. Verifica que el texto esté correctamente encriptado.')
+      throw new Error('[cli-crypto] No se pudo desencriptar el texto. Verifica que el texto esté correctamente encriptado.')
     }
 
     return decrypted

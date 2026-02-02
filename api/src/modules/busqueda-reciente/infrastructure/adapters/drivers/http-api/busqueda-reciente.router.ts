@@ -1,9 +1,9 @@
 import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
-import { Router } from 'express'
+import { type Router as ExpressRouter, Router } from 'express'
 
 import { deleteBusquedaRecienteController, getAllBusquedaRecienteController } from './composition-root'
 
-export function busquedaRecienteRouter() {
+export function busquedaRecienteRouter(): ExpressRouter {
   const router = Router()
 
   router.get('/', verifyTokenMiddleware, getAllBusquedaRecienteController.run.bind(getAllBusquedaRecienteController))

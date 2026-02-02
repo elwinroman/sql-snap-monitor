@@ -24,14 +24,14 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
 
       const messages = formatZodErrors(err.errors)
       mappedError = new ValidationException(messages)
-      logger.warn(mappedError.name, { err: mappedError })
+      logger.warn(mappedError.message, { err: mappedError })
       break
     }
     // errores de node-mssql package
     case err instanceof DatabaseError:
       sentryScopeError(err)
       mappedError = mapMSSQLError(err.originalError)
-      logger.error(mappedError.name, { err: mappedError })
+      logger.error(mappedError.message, { err: mappedError })
 
       // reemplaza el error específico con un error genérico para el cliente
       if (mappedError.type === DatabaseConnectionErrorException.name) {
@@ -44,14 +44,14 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
 
     // errores de dominio o aplicación
     case err instanceof DomainError || err instanceof ApplicationError:
-      logger.warn(err.name, { err })
+      logger.warn(err.message, { err })
       mappedError = err
       break
 
     // errores de infraestructura
     case err instanceof InfrastructureError:
       sentryScopeError(err)
-      logger.error(err.name, { err })
+      logger.error(err.message, { err })
 
       mappedError = new SafeInternalServerErrorException()
       break
@@ -59,7 +59,7 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
     default: {
       sentryScopeError(err)
       if (err instanceof Error) logger.error(err.name, { err })
-      else logger.error('UnknownError', { err })
+      else logger.error('Error desconocido', { err })
       mappedError = new SafeInternalServerErrorException()
       break
     }
@@ -68,7 +68,7 @@ export function handleErrorMiddleware(err: unknown, req: Request, res: Response,
   /** Valida si la excepción está mapeada */
   const errorConfig = httpErrorMap[mappedError.type]
   if (!errorConfig) {
-    logger.warn(`Excepción no mapeada => ${mappedError.type}`)
+    logger.warn(`[http-map] Excepción no mapeada => ${mappedError.type}`)
     mappedError = new SafeInternalServerErrorException()
   }
 

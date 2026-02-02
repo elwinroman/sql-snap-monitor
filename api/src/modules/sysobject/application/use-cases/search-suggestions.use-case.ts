@@ -12,9 +12,11 @@ export class SearchSuggestionsUseCase {
     const suggestions = await this.sysObjectRepository.findByNameAndType(name, typeFormatCondition)
 
     logger.info('[sysobject] Resultados de búsqueda de objetos obtenidos', {
-      searchTerm: name,
-      type,
-      resultsCount: suggestions.length,
+      actionDetails: {
+        searchTerm: name,
+        type,
+        resultsCount: suggestions.length,
+      },
     })
 
     return suggestions

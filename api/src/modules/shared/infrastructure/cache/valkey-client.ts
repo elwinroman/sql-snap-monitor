@@ -15,11 +15,11 @@ export const valkeyClient = new Valkey({
     retryCount++
 
     const shouldLog = retryCount <= logRetryThreshold || retryCount % logEveryN === 0
-    if (shouldLog) logger.warn(`Reintentando conexión a ioValkey (intento #${retryCount})`)
+    if (shouldLog) logger.warn(`[cache] Reintentando conexión a ioValkey (intento #${retryCount})`)
 
     // detener después de X reintentos
     if (retryCount > maxRetries) {
-      logger.error(`Máximo de reintentos (${maxRetries}) alcanzado`)
+      logger.fatal(`[cache] Máximo de reintentos (${maxRetries}) alcanzado`)
       process.exit(1) // detiene reconexión
     }
 
@@ -29,7 +29,7 @@ export const valkeyClient = new Valkey({
 
 /** Eventos */
 valkeyClient.on('connect', () => {
-  logger.debug('Conectado a ioValkey')
+  logger.debug('[cache] Conectado a ioValkey')
 })
 
 valkeyClient.on('error', (err: Error) => {
@@ -42,5 +42,5 @@ valkeyClient.on('error', (err: Error) => {
 })
 
 valkeyClient.on('end', () => {
-  logger.error('La conexión a ioValkey fue cerrada permanentemente')
+  logger.fatal('[cache] La conexión a ioValkey fue cerrada permanentemente')
 })

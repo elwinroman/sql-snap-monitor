@@ -48,12 +48,14 @@ export class GetSysObjectUseCase {
     })
 
     this.logger.info('[sysobject] Objeto recuperado', {
-      objectId: sysObject.id,
-      objectName: sysObject.name,
-      type: sysObject.type,
-      schema: sysObject.schemaName,
-      database: log.databaseName,
-      rolesCount: roles.length,
+      actionDetails: {
+        objectId: sysObject.id,
+        objectName: sysObject.name,
+        type: sysObject.type,
+        schema: sysObject.schemaName,
+        database: log.databaseName,
+        rolesCount: roles.length,
+      },
     })
 
     return { ...sysObject, permission: roles }

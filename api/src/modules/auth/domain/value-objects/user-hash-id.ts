@@ -11,11 +11,11 @@ export class UserHashId {
     const expectedHash = this.generate(user, host)
 
     if (hash !== expectedHash) {
-      throw new Error('Hash inválido, se ha creado incorrectamente o sido manipulado en la bd')
+      throw new Error(`[auth] Hash inválido para el usuario '${user}', se ha creado incorrectamente o sido manipulado en la bd`)
     }
 
     if (hash.length !== 32) {
-      throw new Error('Hash inválido, debe tener 32 caracteres')
+      throw new Error('[auth] Hash inválido, debe tener 32 caracteres')
     }
 
     return new UserHashId(hash)

@@ -16,8 +16,8 @@ export function sentryScopeError(err: unknown) {
 
     // Datos del request manuales (sin sensibles)
     const requestData = {
-      method: context.method,
-      url: context.url,
+      method: context.source.method,
+      url: context.source.url,
       query: context.request?.query,
       headers: {
         'user-agent': context?.request?.headers['user-agent'] ?? 'N/A',
@@ -35,18 +35,18 @@ export function sentryScopeError(err: unknown) {
     const correlationId = context?.correlationId || 'N/A'
 
     scope.setTag('correlation_id', correlationId)
-    scope.setTransactionName(context.url)
+    scope.setTransactionName(context.source.url)
 
     // Contexto del usuario
     scope.setUser({
-      id: context.userId,
+      id: context.user?.userId,
     })
 
     // Contexto con más detalle
     scope.setContext('Detalle Usuario', {
-      id: context.userId,
-      rol: context.role,
-      jti: context.jti,
+      id: context.user?.userId,
+      rol: context.user?.role,
+      jti: context.session?.jti,
     })
 
     if (err instanceof DatabaseError) {

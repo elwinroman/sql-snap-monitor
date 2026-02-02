@@ -40,13 +40,15 @@ export class GetProdSysObjectUseCase {
     })
 
     this.logger.info('[sysobject] Objeto de producción recuperado', {
-      objectId: sysObject.id,
-      objectName: sysObject.name,
-      type: sysObject.type,
-      schema: sysObject.schemaName,
-      database: log.databaseName,
-      rolesCount: roles.length,
-      isAnonymous: log.idUser === null,
+      actionDetails: {
+        objectId: sysObject.id,
+        objectName: sysObject.name,
+        type: sysObject.type,
+        schema: sysObject.schemaName,
+        database: log.databaseName,
+        rolesCount: roles.length,
+        isAnonymous: log.idUser === null,
+      },
     })
 
     return { ...sysObject, permission: roles }

@@ -45,7 +45,7 @@ export class JwtTokenManagerAdapter implements ForTokenManagementPort {
       const decoded = jwt.verify(accessToken, JWT_SECRET) as JwtPayload
       const currentTime = Math.floor(Date.now() / 1000)
 
-      if (!decoded || !decoded.jti || !decoded.exp) throw new Error('Error en la decodificación del access token')
+      if (!decoded || !decoded.jti || !decoded.exp) throw new Error('[auth] Error en la decodificación del access token')
 
       // tiempo de expiración que le queda en segundos
       const expirationCountdown: number = decoded.exp - currentTime
@@ -71,7 +71,7 @@ export class JwtTokenManagerAdapter implements ForTokenManagementPort {
       const decoded = jwt.verify(refreshToken, JWT_SECRET) as JwtPayload
       const currentTime = Math.floor(Date.now() / 1000)
 
-      if (!decoded || !decoded.jti || !decoded.exp) throw new Error('Error en la decodificación del refresh token')
+      if (!decoded || !decoded.jti || !decoded.exp) throw new Error('[auth] Error en la decodificación del refresh token')
 
       // tiempo de expiración que le queda en segundos
       const expirationCountdown: number = decoded.exp - currentTime

@@ -9,7 +9,7 @@ export class EncryptCredentialUseCase {
 
   execute(plainText: string): string {
     if (!plainText || plainText.trim().length === 0) {
-      throw new Error('El texto a encriptar no puede estar vacío')
+      throw new Error('[cli-crypto] El texto a encriptar no puede estar vacío')
     }
 
     return this.cryptoService.encrypt(plainText)

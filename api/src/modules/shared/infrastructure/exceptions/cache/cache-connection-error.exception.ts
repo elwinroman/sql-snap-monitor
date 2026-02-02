@@ -6,7 +6,7 @@ export class CacheConnectionErrorException extends InfrastructureError {
   readonly detail: string
 
   constructor(msg?: string) {
-    super({ message: 'Conexión fallida con el sistema de caché ioValkey' })
+    super({ message: '[cache] Conexión fallida con el sistema de caché ioValkey' })
     this.title = this.message
 
     this.detail = `Ha ocurrido un error al intentar conectar con ioValkey '${msg}'`

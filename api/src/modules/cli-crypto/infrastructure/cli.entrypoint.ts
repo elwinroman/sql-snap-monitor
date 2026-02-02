@@ -42,7 +42,7 @@ export class CliCryptoEntrypoint {
 
         shouldContinue = await this.cliInterface.promptContinue()
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Error desconocido'
+        const errorMessage = error instanceof Error ? error.message : '[cli-crypto] Error desconocido'
         this.cliInterface.showError(errorMessage)
         shouldContinue = await this.cliInterface.promptContinue()
       }
@@ -58,7 +58,7 @@ export class CliCryptoEntrypoint {
       case CRYPTO_OPERATIONS.DECRYPT:
         return this.decryptUseCase.execute(text)
       default:
-        throw new Error(`Operación no soportada: ${operation}`)
+        throw new Error(`[cli-crypto] Operación no soportada: ${operation}`)
     }
   }
 

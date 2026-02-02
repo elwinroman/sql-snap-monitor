@@ -42,7 +42,7 @@ export const loggerRequestContext = new AsyncLocalStorage<LoggerRequestContext>(
 export function setLoggerRequestContext(newContext: Partial<LoggerRequestContext>): void {
   const currentContext = loggerRequestContext.getStore()
 
-  if (!currentContext) throw new Error('No hay contexto activo para logger. Usa el middleware inicial para crear uno.')
+  if (!currentContext) throw new Error('[logger] No hay contexto activo para logger. Usa el middleware inicial para crear uno.')
 
   const mergedContext = { ...currentContext, ...newContext }
   loggerRequestContext.enterWith(mergedContext)

@@ -62,7 +62,7 @@ export class LoginUseCase {
     )
 
     this.logger.info('[auth] Autenticación exitosa', {
-      action: {
+      actionDetails: {
         id: repoUser.id,
         user: repoUser.user,
       },

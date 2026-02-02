@@ -51,15 +51,17 @@ export class GetSysUsertableUseCase {
       isActive: true,
     })
 
-    this.logger.info('[sysobject] Usertable recuperado', {
-      objectId: sysUsertable.id,
-      objectName: sysUsertable.name,
-      type: sysUsertable.type,
-      schema: sysUsertable.schemaName,
-      database: log.databaseName,
-      columnsCount: columns.length,
-      foreignKeysCount: foreignKeys.length,
-      indexesCount: indexes.length,
+    this.logger.info('[sysobject] Tabla de usuario recuperado', {
+      actionDetails: {
+        objectId: sysUsertable.id,
+        objectName: sysUsertable.name,
+        type: sysUsertable.type,
+        schema: sysUsertable.schemaName,
+        database: log.databaseName,
+        columnsCount: columns.length,
+        foreignKeysCount: foreignKeys.length,
+        indexesCount: indexes.length,
+      },
     })
 
     return { ...sysUsertable, extendedProperties: tableExtendedProperties, columns, foreignKeys, indexes }

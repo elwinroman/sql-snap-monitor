@@ -19,7 +19,7 @@ export class VerifyAccessTokenUseCase {
     // comprobar que el access token no esté en la blacklist
     const isRevoked = await this.blacklist.isBlacklisted(decoded.jti)
     if (isRevoked) {
-      this.logger.warn(`Se está intentando usar un token revocado. TYPE: ${decoded.type} JTI: ${decoded.jti}`)
+      this.logger.warn(`[auth] Se está intentando usar un token revocado. TYPE: ${decoded.type} JTI: ${decoded.jti}`)
       throw new ForbiddenException()
     }
 
@@ -37,6 +37,15 @@ export class VerifyAccessTokenUseCase {
 
       throw new CacheCredentialNotFoundException(decoded.user_id)
     }
+
+    this.logger.info('[auth] Token de acceso verificado', {
+      actionDetails: {
+        userId: decoded.type,
+        jti: decoded.jti,
+        type: decoded.type,
+        expirationCountdown: decoded.expirationCountdown,
+      },
+    })
 
     return decoded
   }

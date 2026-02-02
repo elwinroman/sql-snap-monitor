@@ -14,7 +14,7 @@ export class RegisterSearchLogUseCase {
     if (!log) throw new RegisterSearchLogErrorException(searchLog.search, searchLog.schema)
 
     this.logger.info('[sysobject] Log de búsqueda registrada en BD', {
-      action: { search: searchLog },
+      actionDetails: { search: searchLog },
     })
   }
 }
