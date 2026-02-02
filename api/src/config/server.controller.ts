@@ -3,10 +3,9 @@ import '@shared/infrastructure/sentry/instruments'
 import { handleErrorMiddleware, loggerContextMiddleware, routeNotFoundMiddleware } from '@shared/infrastructure/middlewares'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import express, { json, Router } from 'express'
-import session from 'express-session'
+import express, { Express, json, Router } from 'express'
 
-import { NODE_ENV, SESSION_SECRET } from './enviroment'
+import { NODE_ENV } from './enviroment'
 import { NetworkController } from './network.controller'
 
 interface Options {
@@ -16,7 +15,7 @@ interface Options {
 }
 
 export class Server {
-  public app = express()
+  public app: Express = express()
   private port: number
   private routes: Router
   private allowedOrigins: string[]
@@ -57,14 +56,12 @@ export class Server {
     this.app.use(loggerContextMiddleware)
     this.app.use(json())
     this.app.use(cookieParser())
-    this.app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }))
 
     this.app.use(this.routes)
     this.app.use(routeNotFoundMiddleware)
     this.app.use(handleErrorMiddleware)
 
     const network = new NetworkController(this.port)
-
     this.app.listen(this.port, network.gethost, () => {
       if (process.env.NODE_ENV !== 'production') network.printNetworks()
     })
