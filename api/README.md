@@ -41,6 +41,13 @@ PASS_PHRASE: Clave utilizada para la encriptación de datos sensibles.
 # Reporte de errores con Sentry
 SENTRY_REPORTING_ENABLED: Habilita o deshabilita el envío de errores a Sentry (true o false).
 SENTRY_DSN: URL de conexión DSN proporcionada por Sentry para el proyecto.
+
+# Logging centralizado con Grafana Loki (opcional)
+LOKI_REPORTING_ENABLED: Habilita o deshabilita el envío de logs a Loki (true o false).
+LOKI_HOST: URL de la instancia de Loki (ej: http://localhost:3100).
+LOKI_USERNAME: Usuario para autenticación básica en Loki (opcional).
+LOKI_PASSWORD: Contraseña para autenticación básica en Loki (opcional).
+LOKI_LOG_LEVEL: Nivel mínimo de log que se envía a Loki (debug, info, warn, error, fatal). Por defecto: info.
 ```
 **Nota:** La variable **ALLOWED_ORIGIN** debe contener la dirección y/o puerto del servidor frontend. Si esta trabajando en modo `development`, se permite automáticamente **localhost**. En modo `producction` **ALLOWED_ORIGIN** debe especificarse manualmente qué dominios están permitidos.
 

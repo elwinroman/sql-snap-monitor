@@ -1,5 +1,6 @@
 import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
 import { Router } from 'express'
+import { Router as ExpressRouter } from 'express'
 
 import {
   getProdSysObjectController,
@@ -8,7 +9,7 @@ import {
   searchSuggestionsController,
 } from './composition-root'
 
-export function sysObjectRouter() {
+export function sysObjectRouter(): ExpressRouter {
   const router = Router()
 
   router.get('/search', verifyTokenMiddleware, searchSuggestionsController.run.bind(searchSuggestionsController))

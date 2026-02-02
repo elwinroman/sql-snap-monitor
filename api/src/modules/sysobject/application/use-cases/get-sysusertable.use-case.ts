@@ -1,3 +1,4 @@
+import { Logger } from '@shared/domain/logger'
 import { TIPO_ACCION } from '@sysobject/application/constants/action-type.constant'
 import { SysObjectNotFoundException } from '@sysobject/domain/exceptions/sysobject-not-found.exception'
 import { ForProxyBusquedaRecienteRegistrationPort } from '@sysobject/domain/ports/drivens/for-proxy-busqueda-reciente-registration.port'
@@ -12,6 +13,7 @@ export class GetSysUsertableUseCase {
     private readonly sysUsertableRepository: ForSysUsertableRepositoryPort,
     private readonly registerSearchLogUC: RegisterSearchLogUseCase,
     private readonly registerBusquedaRecienteProxy: ForProxyBusquedaRecienteRegistrationPort,
+    private readonly logger: Logger,
   ) {}
 
   async execute(id: number, log: LogObjectContext): Promise<Usertable> {
@@ -47,6 +49,17 @@ export class GetSysUsertableUseCase {
       type: sysUsertable.type,
       dateSearch: currentDate,
       isActive: true,
+    })
+
+    this.logger.info('[sysobject] Usertable recuperado', {
+      objectId: sysUsertable.id,
+      objectName: sysUsertable.name,
+      type: sysUsertable.type,
+      schema: sysUsertable.schemaName,
+      database: log.databaseName,
+      columnsCount: columns.length,
+      foreignKeysCount: foreignKeys.length,
+      indexesCount: indexes.length,
     })
 
     return { ...sysUsertable, extendedProperties: tableExtendedProperties, columns, foreignKeys, indexes }

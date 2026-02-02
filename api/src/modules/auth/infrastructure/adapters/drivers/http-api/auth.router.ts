@@ -3,7 +3,7 @@ import { Router } from 'express'
 
 import { checkSessionController, loginController, logoutController, refreshTokenController } from './composition-root'
 
-export function authRouter() {
+export function authRouter(): Router {
   const router = Router()
 
   router.post('/login', loginController.run.bind(loginController))

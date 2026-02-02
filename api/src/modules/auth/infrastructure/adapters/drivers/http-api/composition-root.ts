@@ -26,10 +26,10 @@ const compositionMock = () => {
   const blacklist = new TokenBlacklistCacheAdapter(cacheRepository)
 
   // USE CASES
-  const loginUseCase = new LoginUseCase(userRepository, storeRepositoty, cacheRepository, jwtTokenManager)
-  const logoutUseCase = new LogoutUseCase(cacheRepository, jwtTokenManager)
+  const loginUseCase = new LoginUseCase(userRepository, storeRepositoty, cacheRepository, jwtTokenManager, logger)
+  const logoutUseCase = new LogoutUseCase(cacheRepository, jwtTokenManager, logger)
   const refreshTokenUseCase = new RefreshTokenUseCase(jwtTokenManager, cacheRepository, blacklist, logger)
-  const checkSessionUseCase = new CheckSessionUseCase(storeRepositoty)
+  const checkSessionUseCase = new CheckSessionUseCase(storeRepositoty, logger)
 
   // SERVICE ORCHESTRATOR
   const controlAuthenticatorService = new HttpAuthenticatorService(loginUseCase, logoutUseCase, refreshTokenUseCase, checkSessionUseCase)

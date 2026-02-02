@@ -39,6 +39,14 @@ export class RefreshTokenUseCase {
 
     const accessToken = this.tokenManager.createAccessToken(decoded.user_id, decoded.username)
 
+    this.logger.info('[auth] Token de acceso renovado exitosamente', {
+      action: {
+        jti: decoded.jti,
+        type: decoded.type,
+        expirationCountdown: decoded.expirationCountdown,
+      },
+    })
+
     return { accessToken }
   }
 }

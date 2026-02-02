@@ -15,10 +15,12 @@ export function loggerContextMiddleware(req: Request, res: Response, next: NextF
 
   const context: LoggerRequestContext = {
     correlationId,
-    method: req.method,
-    url: req.originalUrl,
-    userAgent: req.headers['user-agent'] ?? 'N/A',
-    ip: req.ip ?? 'N/A',
+    source: {
+      method: req.method,
+      url: req.originalUrl,
+      userAgent: req.headers['user-agent'] ?? 'N/A',
+      ip: req.ip ?? 'N/A',
+    },
     request: req,
   }
 

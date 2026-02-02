@@ -3,6 +3,7 @@ import { ForStoreRepositoryPort, ForTokenManagementPort, ForUserRepositoryPort }
 import { AuthenticatedUser } from '@auth/domain/schemas/auth-user'
 import { User } from '@auth/domain/schemas/user'
 import { CacheRepository } from '@shared/domain/cache-repository'
+import { Logger } from '@shared/domain/logger'
 import { StoreUserSchema } from '@shared/domain/store'
 import cryptocodeUtil from '@shared/infrastructure/utils/cryptocode.util'
 
@@ -15,6 +16,7 @@ export class LoginUseCase {
     private readonly storeRepository: ForStoreRepositoryPort,
     private readonly cacheRepository: CacheRepository,
     private readonly tokenManager: ForTokenManagementPort,
+    private readonly logger: Logger,
   ) {}
 
   async execute(sqlUser: StoreUserSchema): Promise<AuthenticatedUser> {
@@ -58,6 +60,13 @@ export class LoginUseCase {
       }),
       2592000, // 30 días
     )
+
+    this.logger.info('[auth] Autenticación exitosa', {
+      action: {
+        id: repoUser.id,
+        user: repoUser.user,
+      },
+    })
 
     return {
       id: repoUser.id,

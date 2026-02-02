@@ -1,3 +1,4 @@
+import { Logger } from '@shared/domain/logger'
 import { ProdSysObjectNotFoundException } from '@sysobject/domain/exceptions/prod-sysobject-not-found.exception'
 import { ForProdSysObjectRepositoryPort } from '@sysobject/domain/ports/drivens/for-prod-sysobject-repository.port'
 import { LogProdObjectContext } from '@sysobject/domain/schemas/log-object-context'
@@ -10,6 +11,7 @@ export class GetProdSysObjectUseCase {
   constructor(
     private readonly sysProdObjectRepository: ForProdSysObjectRepositoryPort,
     private readonly registerSearchLogUC: RegisterSearchLogUseCase,
+    private readonly logger: Logger,
   ) {}
 
   async execute(
@@ -35,6 +37,16 @@ export class GetProdSysObjectUseCase {
       type: sysObject.type,
       isProduction: true,
       createdAt: new Date(),
+    })
+
+    this.logger.info('[sysobject] Objeto de producción recuperado', {
+      objectId: sysObject.id,
+      objectName: sysObject.name,
+      type: sysObject.type,
+      schema: sysObject.schemaName,
+      database: log.databaseName,
+      rolesCount: roles.length,
+      isAnonymous: log.idUser === null,
     })
 
     return { ...sysObject, permission: roles }

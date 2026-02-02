@@ -1,3 +1,4 @@
+import { Logger } from '@shared/domain/logger'
 import { TIPO_ACCION } from '@sysobject/application/constants/action-type.constant'
 import { SysObjectNotFoundException } from '@sysobject/domain/exceptions/sysobject-not-found.exception'
 import { ForProxyBusquedaRecienteRegistrationPort } from '@sysobject/domain/ports/drivens/for-proxy-busqueda-reciente-registration.port'
@@ -13,6 +14,7 @@ export class GetSysObjectUseCase {
     private readonly sysObjectRepository: ForSysObjectRepositoryPort,
     private readonly registerSearchLogUC: RegisterSearchLogUseCase,
     private readonly registerBusquedaRecienteProxy: ForProxyBusquedaRecienteRegistrationPort,
+    private readonly logger: Logger,
   ) {}
 
   async execute(id: number, log: LogObjectContext): Promise<SysObject & { permission: PermissionRol[] }> {
@@ -43,6 +45,15 @@ export class GetSysObjectUseCase {
       type: sysObject.type,
       dateSearch: currentDate,
       isActive: true,
+    })
+
+    this.logger.info('[sysobject] Objeto recuperado', {
+      objectId: sysObject.id,
+      objectName: sysObject.name,
+      type: sysObject.type,
+      schema: sysObject.schemaName,
+      database: log.databaseName,
+      rolesCount: roles.length,
     })
 
     return { ...sysObject, permission: roles }

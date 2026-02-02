@@ -39,6 +39,13 @@ const envSchema = z.object({
   SENTRY_DNS: z.string().url(),
   NODE_ENV: z.enum(['development', 'production', 'test']).optional().default('development'),
 
+  // Logging centralizado con Grafana Loki
+  LOKI_REPORTING_ENABLED: z.preprocess(val => val === 'true', z.boolean()).default(false),
+  LOKI_HOST: z.string().url().optional(),
+  LOKI_USERNAME: z.string().optional(),
+  LOKI_PASSWORD: z.string().optional(),
+  LOKI_LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error', 'fatal']).optional().default('info'),
+
   // Configuración zonas horarias
   TIMEZONE_DATABASE: z.string().default('America/Lima'),
 })
@@ -76,6 +83,12 @@ export const {
   SENTRY_REPORTING_ENABLED,
   SENTRY_DNS,
   NODE_ENV,
+
+  LOKI_REPORTING_ENABLED,
+  LOKI_HOST,
+  LOKI_USERNAME,
+  LOKI_PASSWORD,
+  LOKI_LOG_LEVEL,
 
   TIMEZONE_DATABASE,
 } = data

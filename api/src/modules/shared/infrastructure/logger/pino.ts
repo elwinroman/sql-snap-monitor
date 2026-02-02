@@ -1,5 +1,8 @@
 import { Context, Logger, LoggerLevel, Message } from '@shared/domain/logger'
-import pino from 'pino'
+import pino, { TransportTargetOptions } from 'pino'
+
+import { LOKI_HOST, LOKI_LOG_LEVEL, LOKI_PASSWORD, LOKI_REPORTING_ENABLED, LOKI_USERNAME, NODE_ENV } from '@/config/enviroment'
+import { MODE } from '@/constants/commons'
 
 import { getLoggerRequestContext, LoggerRequestContext } from './logger-context'
 
@@ -8,20 +11,48 @@ export interface PinoLoggerDependencies {
   level?: LoggerLevel
 }
 
+function buildTransports(): TransportTargetOptions[] {
+  const targets: TransportTargetOptions[] = []
+
+  if (NODE_ENV !== MODE.production) {
+    targets.push({
+      target: 'pino-pretty',
+      options: { messageKey: 'message', colorize: true },
+      level: 'debug',
+    })
+  } else {
+    targets.push({
+      target: 'pino/file',
+      options: { destination: 1 },
+      level: 'info',
+    })
+  }
+
+  if (LOKI_REPORTING_ENABLED && LOKI_HOST) {
+    targets.push({
+      target: 'pino-loki',
+      options: {
+        host: LOKI_HOST,
+        batching: true,
+        interval: 5,
+        labels: { app: 'quality-tools-api' },
+        basicAuth: LOKI_USERNAME && LOKI_PASSWORD ? { username: LOKI_USERNAME, password: LOKI_PASSWORD } : undefined,
+      },
+      level: LOKI_LOG_LEVEL ?? 'info',
+    })
+  }
+
+  return targets
+}
+
 export class PinoLogger implements Logger {
   private readonly logger
 
   constructor(dependencies: PinoLoggerDependencies) {
     this.logger = pino({
-      level: 'debug', // permite logs de nivel debug o superior para que se imprima en consola
+      level: 'debug',
       enabled: dependencies.isEnabled ?? true,
-      transport: {
-        target: 'pino-pretty',
-        options: {
-          messageKey: 'message',
-          colorize: true,
-        },
-      },
+      transport: { targets: buildTransports() },
       messageKey: 'message',
     })
   }

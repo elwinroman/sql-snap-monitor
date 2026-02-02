@@ -29,7 +29,6 @@ export class VerifyAccessTokenUseCase {
 
     if (!cacheCredentials) {
       // invalida el access token para proteger el sistema de envío de errores ya que no se encuentra la credencial asociada en la caché
-      console.log('no se encontró en la cache, invalidando token...')
       await this.cacheRepository.set(
         `blacklist:${decoded.jti}`,
         JSON.stringify({ type: decoded.type, jti: decoded.jti, user_id: decoded.user_id }),

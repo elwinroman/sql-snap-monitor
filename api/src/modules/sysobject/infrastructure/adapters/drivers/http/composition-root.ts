@@ -1,4 +1,5 @@
 import { authenticatorProxyAdapter } from '@auth/infrastructure/adapters/drivers/proxies/composition-root'
+import { logger } from '@shared/infrastructure/logger/pino-instance'
 import { SysObjectService } from '@sysobject/application/sysobject.service'
 import { GetProdSysObjectUseCase } from '@sysobject/application/use-cases/get-prod-sysobject.use-case'
 import { GetSysObjectUseCase } from '@sysobject/application/use-cases/get-sysobject.use-case'
@@ -15,7 +16,6 @@ import { GetProdSysObjectController } from './get-prod-sysobject/get-prod-sysobj
 import { GetSysObjectController } from './get-sysobject/get-sysobject.controller'
 import { GetSysUsertableController } from './get-sysusertable/get-sysusertable.controller'
 import { SearchSuggestionsController } from './search-suggestions/search-suggestions.controller'
-
 /*************************************
  * Inyección de dependencias API-REST
  *************************************/
@@ -29,13 +29,18 @@ const compositionMock = () => {
   const registerBusquedaRecienteProxy = new RegisterBusquedaRecienteProxyAdapter()
 
   // USE CASES
-  const registerSearchLogUseCase = new RegisterSearchLogUseCase(logRepository)
+  const registerSearchLogUseCase = new RegisterSearchLogUseCase(logRepository, logger)
 
-  const getSysObjectUseCase = new GetSysObjectUseCase(sysObjectRepository, registerSearchLogUseCase, registerBusquedaRecienteProxy) // se pasa el contexto para el registro de LOGs de búsqueda
+  const getSysObjectUseCase = new GetSysObjectUseCase(sysObjectRepository, registerSearchLogUseCase, registerBusquedaRecienteProxy, logger) // se pasa el contexto para el registro de LOGs de búsqueda
   const searchSuggestionsUseCase = new SearchSuggestionsUseCase(sysObjectRepository)
-  const getSysUsertableUseCase = new GetSysUsertableUseCase(sysUsertableRepository, registerSearchLogUseCase, registerBusquedaRecienteProxy)
+  const getSysUsertableUseCase = new GetSysUsertableUseCase(
+    sysUsertableRepository,
+    registerSearchLogUseCase,
+    registerBusquedaRecienteProxy,
+    logger,
+  )
 
-  const getProdSysObjectUseCase = new GetProdSysObjectUseCase(prodSysObjectRepository, registerSearchLogUseCase)
+  const getProdSysObjectUseCase = new GetProdSysObjectUseCase(prodSysObjectRepository, registerSearchLogUseCase, logger)
 
   // SERVICE ORCHESTRATOR
   const sysObjectService = new SysObjectService(

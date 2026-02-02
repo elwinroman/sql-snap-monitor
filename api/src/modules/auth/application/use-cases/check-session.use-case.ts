@@ -1,8 +1,12 @@
 import { ForStoreRepositoryPort } from '@auth/domain/ports/drivens'
+import { Logger } from '@shared/domain/logger'
 import { StoreUserSchema } from '@shared/domain/store'
 
 export class CheckSessionUseCase {
-  constructor(private readonly storeRepository: ForStoreRepositoryPort) {}
+  constructor(
+    private readonly storeRepository: ForStoreRepositoryPort,
+    private readonly logger: Logger,
+  ) {}
 
   async execute(
     credentials: StoreUserSchema,
@@ -15,6 +19,7 @@ export class CheckSessionUseCase {
       checkedAt: new Date(),
     }
 
+    this.logger.info('[auth] Sesión verificada')
     return status
   }
 }

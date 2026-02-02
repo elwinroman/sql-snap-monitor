@@ -1,10 +1,12 @@
 import { ForTokenManagementPort, NewTokens } from '@auth/domain/ports/drivens'
 import { CacheRepository } from '@shared/domain/cache-repository'
+import { Logger } from '@shared/domain/logger'
 
 export class LogoutUseCase {
   constructor(
     private readonly cacheRepository: CacheRepository,
     private readonly tokenManager: ForTokenManagementPort,
+    private readonly logger: Logger,
   ) {}
 
   async execute(tokens: NewTokens): Promise<{ message: string }> {
@@ -25,6 +27,8 @@ export class LogoutUseCase {
       decodedRefreshToken.expirationCountdown,
     )
 
-    return { message: 'Session cerrada correctamente.' }
+    this.logger.info('[auth] Sesión cerrada correctamente')
+
+    return { message: 'Sesión cerrada correctamente.' }
   }
 }

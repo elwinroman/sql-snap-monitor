@@ -16,7 +16,18 @@ export async function verifyTokenMiddleware(req: Request, _res: Response, next: 
     const decodedToken = await authenticatorProxyAdapter.verifyAccessToken(accessToken)
 
     // agregar userId en el contexto del logger y el request
-    setLoggerRequestContext({ userId: decodedToken.user_id, role: decodedToken.role, jti: decodedToken.jti })
+    const user = {
+      userId: decodedToken.user_id,
+      role: decodedToken.role,
+    }
+
+    const session = {
+      jti: decodedToken.jti,
+      type: decodedToken.type,
+      expirationCountdown: decodedToken.expirationCountdown,
+    }
+
+    setLoggerRequestContext({ user, session })
     req.userId = decodedToken.user_id
 
     // agregar también en el contexto de auth (para la recuperación de las credenciales del usuario desde la cache)

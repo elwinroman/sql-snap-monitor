@@ -11,13 +11,23 @@ import { Request } from 'express'
  */
 export interface LoggerRequestContext {
   correlationId: string
-  method: string
-  url: string
-  userAgent: string // Navegador o cliente que hace la petición
-  ip: string // Dirección IP del cliente
-  userId?: number
-  role?: string // Rol del usuario
-  jti?: string // ID del token
+  source: {
+    method: string
+    url: string
+    userAgent: string // Navegador o cliente que hace la petición
+    ip: string // Dirección IP del cliente
+  }
+  user?: {
+    // Contexto del usuario
+    userId: number
+    role: string
+  }
+  session?: {
+    // contexto de la sesión
+    jti: string
+    type: string
+    expirationCountdown: number
+  }
   request: Request // contexto del todo el request para su en servicios asincronos (sentry)
 }
 
