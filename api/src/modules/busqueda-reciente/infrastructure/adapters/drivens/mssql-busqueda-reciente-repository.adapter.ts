@@ -5,9 +5,9 @@ import {
   BusquedaRecienteInput,
   BusquedaRecienteRepoResponse,
 } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@core/store'
+import { wrapDatabaseError } from '@core/utils'
 import { Meta } from '@shared/domain/schemas/meta'
-import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
-import { wrapDatabaseError } from '@shared/infrastructure/utils'
 import sql from 'mssql'
 
 export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecienteRepositoryPort {

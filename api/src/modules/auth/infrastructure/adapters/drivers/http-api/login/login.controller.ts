@@ -2,7 +2,7 @@ import { UserAlreadyAuthenticatedException } from '@auth/application/exceptions'
 import { TokenTypeEnum } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
 import { JwtTokenManagerAdapter } from '@auth/infrastructure/adapters/drivens'
-import { extractBearerToken } from '@shared/infrastructure/utils'
+import { extractBearerToken } from '@core/utils'
 import { NextFunction, Request, Response } from 'express'
 
 import { LoginUserHttpDto, LoginUserSchema } from './login.http-dto'

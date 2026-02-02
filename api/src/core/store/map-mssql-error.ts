@@ -3,8 +3,8 @@ import {
   DatabasePreparedStatementErrorException,
   DatabaseRequestErrorException,
   DatabaseTransactionErrorException,
-} from '@shared/infrastructure/exceptions'
-import { InfrastructureError } from '@shared/infrastructure/infrastructure-error.exception'
+} from '@core/exceptions'
+import { InfrastructureError } from '@core/infrastructure-error.exception'
 import sql from 'mssql'
 
 /**

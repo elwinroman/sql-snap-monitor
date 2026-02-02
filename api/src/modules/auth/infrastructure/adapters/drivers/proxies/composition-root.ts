@@ -1,8 +1,8 @@
 import { ProxyAuthenticatorService } from '@auth/application/proxy-authenticator.service'
 import { VerifyAccessTokenUseCase } from '@auth/application/use-cases'
 import { JwtTokenManagerAdapter, TokenBlacklistCacheAdapter } from '@auth/infrastructure/adapters/drivens'
-import { ValkeyCacheRepository } from '@shared/infrastructure/cache/valkey-cache-repository'
-import { logger } from '@shared/infrastructure/logger/pino-instance'
+import { ValkeyCacheRepository } from '@core/cache/valkey-cache-repository'
+import { logger } from '@core/logger/pino-instance'
 
 import { AuthenticatorProxyAdapter } from './authenticator-proxy-adapter'
 

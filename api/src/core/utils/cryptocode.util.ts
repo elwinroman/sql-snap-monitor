@@ -7,7 +7,7 @@
 
 import crypto from 'node:crypto'
 
-import { DecryptionException } from '@shared/infrastructure/exceptions'
+import { DecryptionException } from '@core/exceptions'
 
 import { PASS_PHRASE } from '@/config/enviroment'
 

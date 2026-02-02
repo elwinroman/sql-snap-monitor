@@ -63,7 +63,7 @@ export class CliCryptoEntrypoint {
   }
 
   private showWelcome(): void {
-    console.log(picocolors.bold(picocolors.blue('\n🔐 CLI de Criptografía - CryptoCode')))
+    console.log(picocolors.bold(picocolors.blue('\n🔐 CLI de Criptografía CRACLASA - CryptoCode')))
     console.log(picocolors.dim('Encripta y desencripta credenciales de forma segura\n'))
   }
 

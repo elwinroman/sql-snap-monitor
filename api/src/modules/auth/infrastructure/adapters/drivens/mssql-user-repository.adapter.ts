@@ -1,11 +1,10 @@
 import { ForUserRepositoryPort, LogAccessInput } from '@auth/domain/ports/drivens'
 import { PrimitiveUser, RepoUser, User } from '@auth/domain/schemas/user'
-import { DatabaseName, MSSQLDatabaseConnection } from '@shared/infrastructure/store'
-import { getStaticDatabaseCredentials } from '@shared/infrastructure/store/get-store-credentials'
-import { wrapDatabaseError } from '@shared/infrastructure/utils'
+import { logger } from '@core/logger/pino-instance'
+import { DatabaseName, MSSQLDatabaseConnection } from '@core/store'
+import { getStaticDatabaseCredentials } from '@core/store/get-store-credentials'
+import { wrapDatabaseError } from '@core/utils'
 import sql from 'mssql'
-
-import { logger } from '@/modules/shared/infrastructure/logger/pino-instance'
 
 export class MssqlUserRepositoryAdapter implements ForUserRepositoryPort {
   private connection = new MSSQLDatabaseConnection()

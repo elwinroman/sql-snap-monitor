@@ -1,4 +1,4 @@
-import CryptoCode from '@/utils/cryptocode'
+import CryptoCode from '@core/utils'
 
 import type { ForCryptoPort } from '../../../domain/ports'
 

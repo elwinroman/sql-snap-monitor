@@ -1,4 +1,4 @@
-import { InfrastructureError } from '@shared/infrastructure/infrastructure-error.exception'
+import { InfrastructureError } from '@core/infrastructure-error.exception'
 
 export class CacheCredentialNotFoundException extends InfrastructureError {
   readonly type = this.constructor.name

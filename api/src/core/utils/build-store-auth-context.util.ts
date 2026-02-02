@@ -1,7 +1,7 @@
 import { getAuthContext } from '@auth/infrastructure/auth-context'
+import { CacheCredentialNotFoundException } from '@core/exceptions/cache/cache-credential-not-found.exception'
+import { getCacheDatabaseCredentials, UserType } from '@core/store'
 import { StoreUserSchema } from '@shared/domain/store'
-import { CacheCredentialNotFoundException } from '@shared/infrastructure/exceptions/cache/cache-credential-not-found.exception'
-import { getCacheDatabaseCredentials, UserType } from '@shared/infrastructure/store'
 
 /**
  * Representa el contexto completo del usuario autenticado

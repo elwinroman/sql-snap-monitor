@@ -1,6 +1,6 @@
 import { ForSysObjectRepositoryPort, SysObject } from '@busqueda-reciente/domain/ports/drivens/for-sysobject-repository.port'
-import { MSSQLDatabaseConnection } from '@shared/infrastructure/store'
-import { buildStoreAuthContext, wrapDatabaseError } from '@shared/infrastructure/utils'
+import { MSSQLDatabaseConnection } from '@core/store'
+import { buildStoreAuthContext, wrapDatabaseError } from '@core/utils'
 
 export class MssqlSysObjectRepositoryAdapter implements ForSysObjectRepositoryPort {
   private connection = new MSSQLDatabaseConnection()

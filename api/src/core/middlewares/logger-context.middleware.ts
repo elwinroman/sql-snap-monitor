@@ -1,4 +1,4 @@
-import { LoggerRequestContext, loggerRequestContext } from '@shared/infrastructure/logger/logger-context'
+import { LoggerRequestContext, loggerRequestContext } from '@core/logger/logger-context'
 import { randomUUID } from 'crypto'
 import { NextFunction, Request, Response } from 'express'
 

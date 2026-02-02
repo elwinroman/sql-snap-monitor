@@ -1,7 +1,6 @@
 import { ForHttpManagingBusquedaRecientePort } from '@busqueda-reciente/domain/ports/drivers/for-http-managing-busqueda-reciente.port'
+import { buildStoreAuthContext } from '@core/utils'
 import { NextFunction, Request, Response } from 'express'
-
-import { buildStoreAuthContext } from '@/modules/shared/infrastructure/utils'
 
 import { DeleteBusquedaRecienteHttpDto, DeleteBusquedaRecienteParamsSchema } from './delete-busqueda-reciente.http-dto'
 

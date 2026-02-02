@@ -1,4 +1,4 @@
-import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
+import { verifyTokenMiddleware } from '@core/middlewares'
 import { type Router as ExpressRouter, Router } from 'express'
 
 import { deleteFavoritoController, getAllFavoritosController, registerFavoritoController } from './composition-root'

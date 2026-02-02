@@ -1,6 +1,6 @@
-import '@shared/infrastructure/sentry/instruments'
+import '@core/sentry/instruments'
 
-import { handleErrorMiddleware, loggerContextMiddleware, routeNotFoundMiddleware } from '@shared/infrastructure/middlewares'
+import { handleErrorMiddleware, loggerContextMiddleware, routeNotFoundMiddleware } from '@core/middlewares'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { Express, json, Router } from 'express'

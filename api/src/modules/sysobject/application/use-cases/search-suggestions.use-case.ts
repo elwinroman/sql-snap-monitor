@@ -1,5 +1,5 @@
-import { logger } from '@shared/infrastructure/logger/pino-instance'
-import { parseSqlObjectTypeCondition } from '@shared/infrastructure/utils'
+import { logger } from '@core/logger/pino-instance'
+import { parseSqlObjectTypeCondition } from '@core/utils'
 import { ForSysObjectRepositoryPort } from '@sysobject/domain/ports/drivens/for-sysobject-repository.port'
 import { SearchSysObject } from '@sysobject/domain/ports/drivers/for-sysobject-retrieval.port'
 import { TypeSysObject } from '@sysobject/domain/schemas/sysobject'

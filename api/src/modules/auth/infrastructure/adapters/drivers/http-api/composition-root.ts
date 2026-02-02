@@ -6,8 +6,8 @@ import {
   MssqlUserRepositoryAdapter,
   TokenBlacklistCacheAdapter,
 } from '@auth/infrastructure/adapters/drivens'
-import { ValkeyCacheRepository } from '@shared/infrastructure/cache/valkey-cache-repository'
-import { logger } from '@shared/infrastructure/logger/pino-instance'
+import { ValkeyCacheRepository } from '@core/cache/valkey-cache-repository'
+import { logger } from '@core/logger/pino-instance'
 
 import { CheckSessionController } from './check-session/check-session.controller'
 import { LoginController } from './login/login.controller'

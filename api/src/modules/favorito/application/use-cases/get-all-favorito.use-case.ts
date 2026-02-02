@@ -1,8 +1,8 @@
+import { parseSqlObjectTypeCondition } from '@core/utils'
 import { ForFavoritoRepositoryPort } from '@favorito/domain/ports/drivens/for-favorito-repository.port'
 import { ForSysObjectRepositoryPort } from '@favorito/domain/ports/drivens/for-sysobject-repository.port'
 import { FavoritoFilter, FavoritoResponse } from '@favorito/domain/schemas/favorito'
 import { Meta } from '@shared/domain/schemas/meta'
-import { parseSqlObjectTypeCondition } from '@shared/infrastructure/utils'
 
 export class GetAllFavoritosUseCase {
   constructor(

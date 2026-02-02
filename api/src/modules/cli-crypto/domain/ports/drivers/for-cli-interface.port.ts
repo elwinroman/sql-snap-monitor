@@ -17,23 +17,15 @@ export interface CryptoOperationInput {
 }
 
 export interface ForCliInterfacePort {
-  /**
-   * Muestra un mensaje al usuario
-   */
+  /** Muestra un mensaje al usuario */
   showMessage(message: string): void
 
-  /**
-   * Muestra un error al usuario
-   */
+  /** Muestra un error al usuario */
   showError(error: string): void
 
-  /**
-   * Solicita al usuario que seleccione una operación y provea el texto
-   */
+  /** Solicita al usuario que seleccione una operación y provea el texto */
   promptOperation(): Promise<CryptoOperationInput>
 
-  /**
-   * Pregunta al usuario si desea continuar
-   */
+  /** Pregunta al usuario si desea continuar */
   promptContinue(): Promise<boolean>
 }

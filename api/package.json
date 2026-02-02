@@ -10,7 +10,7 @@
     "dev": "nodemon",
     "build:clean": "rimraf dist; exit 0",
     "validate-typescript": "tsc --noEmit",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --max-warnings 0",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "generate-dist": "swc ./src -d dist --strip-leading-paths",

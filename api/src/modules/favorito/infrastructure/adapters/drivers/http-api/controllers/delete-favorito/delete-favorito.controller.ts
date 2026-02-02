@@ -1,5 +1,5 @@
+import { buildStoreAuthContext } from '@core/utils'
 import { ForFavoritoManagingPort } from '@favorito/domain/ports/drivers/for-favorito-managing.port'
-import { buildStoreAuthContext } from '@shared/infrastructure/utils'
 import { NextFunction, Request, Response } from 'express'
 
 import { DeleteFavoritoParams, DeleteFavoritoParamsSchema } from './delete-favorito-param.http-dto'

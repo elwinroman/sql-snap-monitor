@@ -1,7 +1,7 @@
 import { NotProvidedTokenException } from '@auth/application/exceptions'
 import { TokenTypeEnum } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
-import { CacheCredentialNotFoundException } from '@shared/infrastructure/exceptions/cache/cache-credential-not-found.exception'
+import { CacheCredentialNotFoundException } from '@core/exceptions/cache/cache-credential-not-found.exception'
 import { NextFunction, Request, Response } from 'express'
 
 export class RefreshTokenController {

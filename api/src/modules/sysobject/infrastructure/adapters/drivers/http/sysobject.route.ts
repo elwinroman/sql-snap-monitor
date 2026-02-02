@@ -1,4 +1,4 @@
-import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
+import { verifyTokenMiddleware } from '@core/middlewares'
 import { Router } from 'express'
 import { Router as ExpressRouter } from 'express'
 

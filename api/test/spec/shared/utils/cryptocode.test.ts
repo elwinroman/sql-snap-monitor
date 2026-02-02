@@ -1,5 +1,5 @@
-import { DecryptionException } from '@shared/domain/exceptions'
-import CryptoCode from '@shared/infrastructure/utils/cryptocode.util'
+import { DecryptionException } from '@core/exceptions'
+import CryptoCode from '@core/utils/cryptocode.util'
 import { describe, expect, it } from 'vitest'
 
 describe('CryptoCode', () => {

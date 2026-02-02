@@ -1,4 +1,4 @@
-import { verifyTokenMiddleware } from '@shared/infrastructure/middlewares'
+import { verifyTokenMiddleware } from '@core/middlewares'
 import { type Router as ExpressRouter, Router } from 'express'
 
 import { deleteBusquedaRecienteController, getAllBusquedaRecienteController } from './composition-root'

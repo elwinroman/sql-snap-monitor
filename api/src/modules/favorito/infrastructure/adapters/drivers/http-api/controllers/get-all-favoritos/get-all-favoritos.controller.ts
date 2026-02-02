@@ -1,6 +1,6 @@
+import { buildStoreAuthContext } from '@core/utils'
 import { ForFavoritoManagingPort } from '@favorito/domain/ports/drivers/for-favorito-managing.port'
 import { FavoritoFilter } from '@favorito/domain/schemas/favorito'
-import { buildStoreAuthContext } from '@shared/infrastructure/utils'
 import { TypeSysObject } from '@sysobject/domain/schemas/sysobject'
 import { NextFunction, Request, Response } from 'express'
 
