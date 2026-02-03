@@ -79,6 +79,12 @@ Ejecuta
 npm run dev
 ```
 
+### Documentación de la API (Swagger)
+Una vez levantada la aplicación, accede a la documentación interactiva en:
+```
+http://localhost:3000/api/docs
+```
+
 ### Levantar la aplicación en pre-producción
 Ejecuta
 ```bash

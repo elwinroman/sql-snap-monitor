@@ -1,6 +1,7 @@
 import '@core/sentry/instruments'
 
 import { handleErrorMiddleware, loggerContextMiddleware, routeNotFoundMiddleware } from '@core/middlewares'
+import { swaggerRouter } from '@core/swagger/swagger.route'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express, { Express, json, Router } from 'express'
@@ -57,6 +58,7 @@ export class Server {
     this.app.use(json())
     this.app.use(cookieParser())
 
+    this.app.use('/api/docs', swaggerRouter())
     this.app.use(this.routes)
     this.app.use(routeNotFoundMiddleware)
     this.app.use(handleErrorMiddleware)
