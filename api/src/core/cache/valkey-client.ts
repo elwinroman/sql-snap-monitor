@@ -2,15 +2,17 @@ import { CacheConnectionErrorException } from '@core/exceptions'
 import { logger } from '@core/logger/pino-instance'
 import Valkey from 'iovalkey'
 
+import { CACHE_HOST, CACHE_PASSWORD, CACHE_PORT } from '@/config/enviroment'
+
 let retryCount = 0
 const maxRetries = 100 // maximos intentos de reconexión
 const logRetryThreshold = 3 // primeros 3 intentos se registra el log
 const logEveryN = 10 // registra cada 10 intentos
 
 export const valkeyClient = new Valkey({
-  port: 6379,
-  host: '192.168.1.68',
-  password: 'P@ssword123',
+  port: CACHE_PORT,
+  host: CACHE_HOST,
+  password: CACHE_PASSWORD,
   retryStrategy(_times: number) {
     retryCount++
 

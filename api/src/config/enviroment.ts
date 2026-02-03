@@ -46,6 +46,29 @@ const envSchema = z.object({
   LOKI_PASSWORD: z.string().optional(),
   LOKI_LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error', 'fatal']).optional().default('info'),
 
+  // Cache (Valkey, Redis, etc.)
+  CACHE_HOST: z.string().min(1),
+  CACHE_PORT: z
+    .string()
+    .default('6379')
+    .transform(val => Number(val))
+    .pipe(z.number()),
+  CACHE_PASSWORD: z.string().min(1),
+
+  // JWT Token TTL (en segundos)
+  // - JWT_ACCESS_TOKEN_TTL: tiempo de vida del access token (default: 900 = 15 minutos)
+  // - JWT_REFRESH_TOKEN_TTL: tiempo de vida del refresh token y credenciales en cache (default: 2592000 = 30 días)
+  JWT_ACCESS_TOKEN_TTL: z
+    .string()
+    .default('900')
+    .transform(val => Number(val))
+    .pipe(z.number().positive()),
+  JWT_REFRESH_TOKEN_TTL: z
+    .string()
+    .default('2592000')
+    .transform(val => Number(val))
+    .pipe(z.number().positive()),
+
   // Configuración zonas horarias
   TIMEZONE_DATABASE: z.string().default('America/Lima'),
 })
@@ -89,6 +112,13 @@ export const {
   LOKI_USERNAME,
   LOKI_PASSWORD,
   LOKI_LOG_LEVEL,
+
+  CACHE_HOST,
+  CACHE_PORT,
+  CACHE_PASSWORD,
+
+  JWT_ACCESS_TOKEN_TTL,
+  JWT_REFRESH_TOKEN_TTL,
 
   TIMEZONE_DATABASE,
 } = data

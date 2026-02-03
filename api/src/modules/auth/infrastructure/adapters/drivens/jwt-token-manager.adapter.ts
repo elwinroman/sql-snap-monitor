@@ -12,7 +12,7 @@ import {
 import { UnauthorizedException } from '@shared/application/exceptions'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
-import { JWT_SECRET } from '@/config/enviroment'
+import { JWT_ACCESS_TOKEN_TTL, JWT_REFRESH_TOKEN_TTL, JWT_SECRET } from '@/config/enviroment'
 
 export class JwtTokenManagerAdapter implements ForTokenManagementPort {
   createAccessToken(id: number, username: string): string {
@@ -24,7 +24,7 @@ export class JwtTokenManagerAdapter implements ForTokenManagementPort {
       jti: randomUUID(),
     }
 
-    const accessToken = jwt.sign({ ...accessTokenPaylod }, JWT_SECRET, { expiresIn: '15m' }) // 15 minutos
+    const accessToken = jwt.sign({ ...accessTokenPaylod }, JWT_SECRET, { expiresIn: JWT_ACCESS_TOKEN_TTL })
     return accessToken
   }
 
@@ -36,7 +36,7 @@ export class JwtTokenManagerAdapter implements ForTokenManagementPort {
       jti: randomUUID(),
     }
 
-    const refreshToken = jwt.sign({ ...refreshTokenPayload }, JWT_SECRET, { expiresIn: '30d' }) // 30 días
+    const refreshToken = jwt.sign({ ...refreshTokenPayload }, JWT_SECRET, { expiresIn: JWT_REFRESH_TOKEN_TTL })
     return refreshToken
   }
 

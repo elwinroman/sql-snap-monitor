@@ -48,7 +48,27 @@ LOKI_HOST: URL de la instancia de Loki (ej: http://localhost:3100).
 LOKI_USERNAME: Usuario para autenticación básica en Loki (opcional).
 LOKI_PASSWORD: Contraseña para autenticación básica en Loki (opcional).
 LOKI_LOG_LEVEL: Nivel mínimo de log que se envía a Loki (debug, info, warn, error, fatal). Por defecto: info.
+
+# Cache (Valkey, Redis, etc.)
+CACHE_HOST: Host del servidor de caché.
+CACHE_PORT: Puerto del servidor de caché. Por defecto: 6379.
+CACHE_PASSWORD: Contraseña de autenticación del servidor de caché.
+
+# JWT Token TTL (tiempo de vida en segundos)
+JWT_ACCESS_TOKEN_TTL: Tiempo de vida del access token. Por defecto: 900 (15 minutos).
+JWT_REFRESH_TOKEN_TTL: Tiempo de vida del refresh token y credenciales en caché. Por defecto: 2592000 (30 días).
 ```
+
+### Referencia de conversión de tiempos (segundos)
+| Tiempo | Segundos |
+|--------|----------|
+| 15 minutos | 900 |
+| 30 minutos | 1800 |
+| 1 hora | 3600 |
+| 1 día | 86400 |
+| 7 días | 604800 |
+| 14 días | 1209600 |
+| 30 días | 2592000 |
 **Nota:** La variable **ALLOWED_ORIGIN** debe contener la dirección y/o puerto del servidor frontend. Si esta trabajando en modo `development`, se permite automáticamente **localhost**. En modo `producction` **ALLOWED_ORIGIN** debe especificarse manualmente qué dominios están permitidos.
 
 ## Como Empezar

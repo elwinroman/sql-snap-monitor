@@ -7,7 +7,7 @@ import { CacheRepository } from '@shared/domain/cache-repository'
 import { Logger } from '@shared/domain/logger'
 import { StoreUserSchema } from '@shared/domain/store'
 
-import { NODE_ENV } from '@/config/enviroment'
+import { JWT_REFRESH_TOKEN_TTL, NODE_ENV } from '@/config/enviroment'
 import { MODE } from '@/constants'
 
 export class LoginUseCase {
@@ -58,7 +58,7 @@ export class LoginUseCase {
         user: credential.user,
         password: credential.password,
       }),
-      2592000, // 30 días
+      JWT_REFRESH_TOKEN_TTL,
     )
 
     this.logger.info('[auth] Autenticación exitosa', {
