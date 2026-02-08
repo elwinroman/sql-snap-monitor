@@ -1,13 +1,13 @@
-import { ApplicationError } from '@shared/application/application-error'
+import { ApplicationError } from '../application-error'
 
 export class ForbiddenException extends ApplicationError {
-  readonly type = this.constructor.name
-  readonly title: string
+  readonly type = 'ForbiddenException'
+  static readonly title = 'Acceso prohibido'
   readonly detail: string
+  static readonly metadata = { status: 403, errorCode: 1005 }
 
-  constructor() {
-    super({ message: '[AUTH] Acceso prohibido por falta de permisos' })
-    this.title = 'Acceso prohibido'
-    this.detail = 'Tu cuenta no tiene permisos suficientes para realizar esta acción o acceder a este recurso.'
+  constructor(detail = 'Tu cuenta no tiene permisos suficientes para realizar esta acción o acceder a este recurso.') {
+    super('[auth] Acceso prohibido por falta de permisos')
+    this.detail = detail
   }
 }

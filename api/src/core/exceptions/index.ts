@@ -1,4 +1,6 @@
+export * from './base-error'
 export * from './cache/cache-connection-error.exception'
+export * from './cache/cache-credential-not-found.exception'
 export * from './decryption.exception'
 export * from './store/database-connection-error.exception'
 export * from './store/database-error.exception'

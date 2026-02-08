@@ -1,13 +1,13 @@
 import { DomainError } from '@shared/domain/domain-error'
 
 export class SysObjectNotFoundException extends DomainError {
-  readonly type = this.constructor.name
-  readonly title: string
+  readonly type = 'SysObjectNotFoundException'
+  static readonly title = 'Objeto no encontrado'
   readonly detail: string
+  static readonly metadata = { status: 404, errorCode: 3000 }
 
   constructor(id: number) {
-    super({ message: '[SYSOBJECT] Objeto de sistema no encontrado' })
-    this.title = 'Objeto no encontrado'
+    super(`[sysobject] Objeto SQL no encontrado: ${id}`)
     this.detail = `No se ha encontrado el objeto sql con id: ${id}.`
   }
 }

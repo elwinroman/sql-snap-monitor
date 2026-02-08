@@ -1,30 +1,30 @@
+import { BaseError } from '@core/exceptions/base-error'
+
 /**
- * Clase base abstracta para representar errores que ocurren
- * en la capa de infraestructura de una arquitectura hexagonal o DDD.
+ * Clase base abstracta para errores de la capa de INFRAESTRUCTURA.
  *
- * @abstract
+ * Usar para errores relacionados con servicios externos y recursos técnicos:
+ * - Errores de conexión a base de datos
+ * - Errores de cache (Redis, Valkey)
+ * - Errores de servicios externos (APIs, SMTP)
+ * - Errores de filesystem
+ * - Errores de encriptación/desencriptación
+ *
+ * IMPORTANTE: Los errores de infraestructura se enmascaran automáticamente
+ * en el middleware para no exponer detalles técnicos al cliente.
+ *
+ * @example
+ * ```typescript
+ * export class DatabaseConnectionErrorException extends InfrastructureError {
+ *   readonly type = 'DatabaseConnectionErrorException'
+ *   readonly title = 'Error de conexión'
+ *   readonly detail = 'No se pudo conectar a la base de datos'
+ *   readonly metadata = { status: 500, errorCode: 5000 }
+ *
+ *   constructor(cause?: Error) {
+ *     super('[db] Error de conexión a la base de datos', cause)
+ *   }
+ * }
+ * ```
  */
-export abstract class InfrastructureError extends Error {
-  /**
-   * Identificador técnico del error (puede ser usado para logs, Sentry, API)
-   * TODO: Puede ser la dirección del error documentado (https://example.com/exceptions/application-error)
-   * Por ahora, es this.constructor.name
-   */
-  abstract type: string
-
-  /**
-   * Título del error, orientado a mostrar al usuario o en UI
-   * Ejemplo: "Parámetros inválidos", "Error de conexión a la BD"
-   */
-  abstract title: string
-
-  /**
-   * Descripción detallada del problema, orientado a mostrar al usuario o en UI
-   */
-  abstract detail: string
-
-  constructor({ message }: { message: string }) {
-    super(message)
-    this.name = this.constructor.name
-  }
-}
+export abstract class InfrastructureError extends BaseError {}

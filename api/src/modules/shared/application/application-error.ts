@@ -1,30 +1,27 @@
+import { BaseError } from '@core/exceptions/base-error'
+
 /**
- * Clase base abstracta para representar errores que ocurren
- * en la capa de aplicación de una arquitectura hexagonal o DDD.
+ * Clase base abstracta para errores de la capa de APLICACIÓN.
  *
- * @abstract
+ * Usar para errores relacionados con orquestación y validación de casos de uso:
+ * - Validación de inputs (DTOs, request params)
+ * - Errores de autenticación/autorización
+ * - Errores de flujo de aplicación
+ * - Precondiciones no cumplidas
+ *
+ * @example
+ * ```typescript
+ * export class ValidationException extends ApplicationError {
+ *   readonly type = 'ValidationException'
+ *   readonly title = 'Error de validación'
+ *   readonly detail: string
+ *   readonly metadata = { status: 422, errorCode: 1000 }
+ *
+ *   constructor(detail: string) {
+ *     super('[validation] Parámetros inválidos')
+ *     this.detail = detail
+ *   }
+ * }
+ * ```
  */
-export abstract class ApplicationError extends Error {
-  /**
-   * Identificador técnico del error (puede ser usado para logs, Sentry, API)
-   * TODO: Puede ser la dirección del error documentado (https://example.com/exceptions/application-error)
-   * Por ahora, es this.constructor.name
-   */
-  abstract type: string
-
-  /**
-   * Título del error, orientado a mostrar al usuario o en UI
-   * Ejemplo: "Parámetros inválidos", "Acceso no autorizado"
-   */
-  abstract title: string
-
-  /**
-   * Descripción detallada del problema, orientado a mostrar al usuario o en UI
-   */
-  abstract detail: string
-
-  constructor({ message }: { message: string }) {
-    super(message)
-    this.name = this.constructor.name
-  }
-}
+export abstract class ApplicationError extends BaseError {}

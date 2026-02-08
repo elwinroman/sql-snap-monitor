@@ -1,13 +1,13 @@
 import { DomainError } from '@shared/domain/domain-error'
 
 export class InvalidCredentialsException extends DomainError {
-  readonly type = this.constructor.name
-  readonly title: string
+  readonly type = 'InvalidCredentialsException'
+  static readonly title = 'Autenticación fallida'
   readonly detail: string
+  static readonly metadata = { status: 401, errorCode: 2000 }
 
-  constructor() {
-    super({ message: '[AUTH] Credenciales inválidas' })
-    this.title = 'Autenticación fallida'
-    this.detail = 'No se pudo conectar con el servidor. Verifique sus credenciales.'
+  constructor(msgReason: string) {
+    super('[auth] Credenciales inválidas')
+    this.detail = `No se pudo establecer conexión con el servidor. ${msgReason}`
   }
 }

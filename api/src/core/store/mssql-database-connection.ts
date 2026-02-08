@@ -67,8 +67,13 @@ export class MSSQLDatabaseConnection {
       return this.pools[key]
     } catch (err) {
       // Caso especial, si el usuario sql es el que usa el sistema significa que su login es invalido o que ha cambiado de contraseña
-      if (err instanceof sql.ConnectionError && userType === UserTypeEnum.External) throw new InvalidCredentialsException()
+      if (err instanceof sql.ConnectionError && userType === UserTypeEnum.External) {
+        let msgReason = ''
+        if (err.code === 'ESOCKET') msgReason = 'No se encontró el servidor.'
+        else if (err.code === 'ELOGIN') msgReason = 'Verifique sus credenciales.'
 
+        throw new InvalidCredentialsException(msgReason)
+      }
       throw err
     }
   }

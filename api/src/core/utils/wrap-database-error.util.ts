@@ -1,3 +1,4 @@
+import { InvalidCredentialsException } from '@auth/domain/exceptions'
 import sql from 'mssql'
 
 import { DatabaseError } from '../exceptions'
@@ -10,11 +11,22 @@ function isMSSQLError(err: unknown): err is sql.RequestError | sql.PreparedState
 }
 
 /**
- * Envuelve el error original en DatabaseError SOLO si es un error de MSSQL.
- * Si no lo es, lanza una excepción explicativa.
- * Sirve para el trace del error de database
+ * Envuelve el error original en `DatabaseError` **solo** cuando proviene de MSSQL.
+ *
+ * La librería `node-mssql` genera errores internos cuyo `stacktrace`
+ * apunta a código propio de la librería y no a la línea real donde se
+ * ejecuta la consulta.
+ *
+ * Este wrapper permite:
+ * - Preservar el contexto del error original.
+ * - Normalizar el tipo de excepción.
+ * - Facilitar el rastreo (trace) hasta el punto real de la consulta.
+ *
+ * Si el error no corresponde a MSSQL, se lanza una excepción descriptiva.
  */
 export function wrapDatabaseError(err: unknown): DatabaseError {
+  if (err instanceof InvalidCredentialsException) throw err
+
   if (isMSSQLError(err)) {
     return new DatabaseError(err)
   } else {

@@ -1,5 +1,25 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
-import { httpErrorMap } from '@core/http/http-error-map'
+// Auth Exceptions
+import { NotProvidedTokenException, TokenExpiredException, UserAlreadyAuthenticatedException } from '@auth/application/exceptions'
+import { InvalidCredentialsException, PermissionDenyException } from '@auth/domain/exceptions'
+// Busqueda Reciente Exceptions
+import { BusquedaRecienteNotFoundException } from '@busqueda-reciente/domain/exceptions/busqueda-reciente-not-found.exception'
+// Favorito Exceptions
+import { FavoritoAlreadyExistsException } from '@favorito/domain/exceptions/favorito-already-exists.exception'
+import { FavoritoNotFoundException } from '@favorito/domain/exceptions/favorito-not-found.exception'
+// Application Exceptions
+import {
+  ForbiddenException,
+  RouteNotFoundException,
+  SafeInternalServerErrorException,
+  UnauthorizedException,
+  ValidationException,
+} from '@shared/application/exceptions'
+// Domain Exceptions
+import { InternalServerErrorException } from '@shared/domain/exceptions/internal-server-error.exception'
+// Sysobject Exceptions
+import { ProdSysObjectNotFoundException } from '@sysobject/domain/exceptions/prod-sysobject-not-found.exception'
+import { SysObjectNotFoundException } from '@sysobject/domain/exceptions/sysobject-not-found.exception'
 import { z } from 'zod'
 
 extendZodWithOpenApi(z)
@@ -56,70 +76,130 @@ export const DeleteResponseSchema = z
 type ErrorResponseConfig = Record<number, { description: string; content: { 'application/json': { schema: typeof ErrorResponseSchema } } }>
 
 /**
- * Metadata de excepciones extraída de las clases de dominio/aplicación.
- * Refleja los valores estáticos de `title` y `detail` de cada excepción.
+ * Tipo base para excepciones con metadata estática.
+ * Todas las excepciones del sistema deben tener esta estructura.
  */
-const exceptionMeta: Record<string, { title: string; detail: string }> = {
-  // Global
-  ValidationException: { title: 'Parámetros inválidos', detail: 'Algunos campos no cumplen con el formato esperado.' },
-  RouteNotFoundException: { title: 'Ruta no encontrada', detail: 'La dirección solicitada no existe o no está disponible.' },
-  InternalServerErrorException: { title: 'Error interno del sistema', detail: 'Ha ocurrido un error inesperado.' },
-  SafeInternalServerErrorException: { title: 'Error interno del sistema', detail: 'No pudimos completar la operación.' },
-  UnauthorizedException: { title: 'Acceso denegado', detail: 'No tienes los permisos necesarios para acceder a este recurso.' },
-  ForbiddenException: { title: 'Acceso prohibido', detail: 'Tu cuenta no tiene permisos suficientes para esta acción.' },
+interface ExceptionClass {
+  readonly metadata: { status: number; errorCode: number }
+  readonly title: string
+}
 
-  // Auth
+/**
+ * Registro de excepciones del sistema.
+ * Las excepciones se importan directamente y su metadata se lee estáticamente.
+ * NO hay duplicación: los valores vienen de las clases originales.
+ */
+const exceptionRegistry = {
+  // Global (1xxx)
+  ValidationException: {
+    class: ValidationException,
+    detail: 'Algunos campos no cumplen con el formato esperado.',
+  },
+  RouteNotFoundException: {
+    class: RouteNotFoundException,
+    detail: 'La dirección solicitada no existe o no está disponible.',
+  },
+  InternalServerErrorException: {
+    class: InternalServerErrorException,
+    detail: 'Ha ocurrido un error inesperado.',
+  },
+  SafeInternalServerErrorException: {
+    class: SafeInternalServerErrorException,
+    detail: 'No pudimos completar la operación.',
+  },
+  UnauthorizedException: {
+    class: UnauthorizedException,
+    detail: 'No tienes los permisos necesarios para acceder a este recurso.',
+  },
+  ForbiddenException: {
+    class: ForbiddenException,
+    detail: 'Tu cuenta no tiene permisos suficientes para esta acción.',
+  },
+
+  // Auth (2xxx)
   InvalidCredentialsException: {
-    title: 'Autenticación fallida',
+    class: InvalidCredentialsException,
     detail: 'No se pudo conectar con el servidor. Verifique sus credenciales.',
   },
-  UserAlreadyAuthenticatedException: { title: 'Sesión ya iniciada', detail: 'Ya tienes una sesión activa.' },
-  TokenExpiredException: { title: 'Autenticación expirada', detail: 'El token ha expirado.' },
+  UserAlreadyAuthenticatedException: {
+    class: UserAlreadyAuthenticatedException,
+    detail: 'Ya tienes una sesión activa.',
+  },
+  TokenExpiredException: {
+    class: TokenExpiredException,
+    detail: 'El token ha expirado.',
+  },
   NotProvidedTokenException: {
-    title: 'Token de autenticación requerido',
+    class: NotProvidedTokenException,
     detail: 'Debes proporcionar el token para acceder a este recurso.',
   },
-  PermissionDenyException: { title: 'Permiso denegado', detail: 'No tienes permisos para realizar esta acción.' },
-
-  // Sysobject
-  SysObjectNotFoundException: { title: 'Objeto no encontrado', detail: 'No se ha encontrado el objeto SQL solicitado.' },
-  ProdSysObjectNotFoundException: { title: 'Objeto no encontrado', detail: 'No se ha encontrado el objeto en pre-producción.' },
-
-  // Busqueda Reciente
-  BusquedaRecienteNotFoundException: {
-    title: 'Búsqueda reciente no encontrada',
-    detail: 'La búsqueda reciente solicitada no fue encontrada.',
+  PermissionDenyException: {
+    class: PermissionDenyException,
+    detail: 'Tu cuenta está inactiva o no tienes permisos.',
   },
 
-  // Favorito
-  FavoritoNotFoundException: { title: 'Favorito no encontrado', detail: 'El favorito solicitado no fue encontrado.' },
-  FavoritoAlreadyExistsException: { title: 'Favorito ya existe', detail: 'El favorito ya existe para este usuario.' },
+  // Sysobject (3xxx)
+  SysObjectNotFoundException: {
+    class: SysObjectNotFoundException,
+    detail: 'No se ha encontrado el objeto SQL solicitado.',
+  },
+  ProdSysObjectNotFoundException: {
+    class: ProdSysObjectNotFoundException,
+    detail: 'No se ha encontrado el objeto en pre-producción.',
+  },
+
+  // Busqueda Reciente / Favorito (4xxx)
+  BusquedaRecienteNotFoundException: {
+    class: BusquedaRecienteNotFoundException,
+    detail: 'La búsqueda reciente solicitada no fue encontrada.',
+  },
+  FavoritoNotFoundException: {
+    class: FavoritoNotFoundException,
+    detail: 'El favorito solicitado no fue encontrado.',
+  },
+  FavoritoAlreadyExistsException: {
+    class: FavoritoAlreadyExistsException,
+    detail: 'El favorito ya existe para este usuario.',
+  },
+} as const
+
+type ExceptionName = keyof typeof exceptionRegistry
+
+/**
+ * Obtiene la metadata de una excepción desde su clase.
+ */
+function getExceptionInfo(name: ExceptionName): { status: number; errorCode: number; title: string; detail: string } {
+  const entry = exceptionRegistry[name]
+  const ExceptionClass = entry.class as unknown as ExceptionClass
+
+  return {
+    status: ExceptionClass.metadata.status,
+    errorCode: ExceptionClass.metadata.errorCode,
+    title: ExceptionClass.title,
+    detail: entry.detail,
+  }
 }
 
 /**
  * Genera respuestas de error para OpenAPI a partir de los nombres de excepciones.
- * Busca automáticamente el status code en httpErrorMap y el title/detail en exceptionMeta.
+ * Agrupa automáticamente por status code y genera descripciones legibles.
  *
  * @example
- * errorResponses('InvalidCredentialsException', 'UserAlreadyAuthenticatedException', 'ValidationException')
- * // → { 401: { description: 'Autenticación fallida | Sesión ya iniciada' }, 422: { description: '...' } }
+ * errorResponses('InvalidCredentialsException', 'ValidationException')
+ * // → { 401: { description: '**Autenticación fallida** — ...' }, 422: { description: '...' } }
  */
-export function errorResponses(...exceptionNames: (keyof typeof httpErrorMap)[]): ErrorResponseConfig {
+export function errorResponses(...exceptionNames: ExceptionName[]): ErrorResponseConfig {
   const statusGroups: Record<number, string[]> = {}
 
   for (const name of exceptionNames) {
-    const config = httpErrorMap[name]
-    if (!config) continue
+    const info = getExceptionInfo(name)
 
-    const meta = exceptionMeta[name]
-    const label = meta
-      ? `**${meta.title}** — ${meta.detail} \`errorCode: ${config.errorCode}\``
-      : `${name} (errorCode: ${config.errorCode})`
+    const label = `**${info.title}** — ${info.detail} \`errorCode: ${info.errorCode}\``
 
-    if (!statusGroups[config.status]) {
-      statusGroups[config.status] = []
+    if (!statusGroups[info.status]) {
+      statusGroups[info.status] = []
     }
-    statusGroups[config.status].push(label)
+    statusGroups[info.status].push(label)
   }
 
   const responses: ErrorResponseConfig = {}

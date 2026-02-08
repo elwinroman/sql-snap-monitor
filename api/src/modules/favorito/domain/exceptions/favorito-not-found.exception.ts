@@ -1,13 +1,13 @@
 import { DomainError } from '@shared/domain/domain-error'
 
 export class FavoritoNotFoundException extends DomainError {
-  readonly type = this.constructor.name
-  readonly title: string
+  readonly type = 'FavoritoNotFoundException'
+  static readonly title = 'Favorito no encontrado'
   readonly detail: string
+  static readonly metadata = { status: 404, errorCode: 4001 }
 
   constructor(id: number) {
-    super({ message: '[FAVORITO] Favorito no encontrado' })
-    this.title = 'Favorito no encontrado'
+    super(`[favorito] Favorito no encontrado: ${id}`)
     this.detail = `El favorito con id '${id}' no fue encontrado.`
   }
 }

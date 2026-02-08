@@ -1,4 +1,4 @@
-import { httpErrorMap } from '@core/http/http-error-map'
+import { BaseError } from '@core/exceptions/base-error'
 import { InfrastructureError } from '@core/infrastructure-error.exception'
 import { logger } from '@core/logger/pino-instance'
 import { mapMSSQLError } from '@core/store/map-mssql-error'
@@ -8,86 +8,104 @@ import { DomainError } from '@shared/domain/domain-error'
 import { NextFunction, Request, Response } from 'express'
 import { ZodError } from 'zod'
 
-import { DatabaseConnectionErrorException, DatabaseError } from '../exceptions'
+import { NODE_ENV } from '@/config/enviroment'
+
+import { DatabaseError } from '../exceptions'
 import { sentryScopeError } from '../sentry/sentryScopeError'
 import { formatZodErrors } from '../utils/format-zod-errors.util'
 
+/**
+ * Middleware global para manejo de errores.
+ *
+ * Los errores son AUTO-CONTENIDOS: cada excepción define su propio
+ * status HTTP y código de error en la propiedad `metadata`.
+ *
+ * Flujo:
+ * - ZodError → ValidationException (422)
+ * - DatabaseError → SafeInternalServerErrorException (500, enmascarado)
+ * - DomainError/ApplicationError → Se expone al cliente (status/code del error)
+ * - InfrastructureError → SafeInternalServerErrorException (500, enmascarado)
+ * - Otros → SafeInternalServerErrorException (500, fallback)
+ */
 export function handleErrorMiddleware(err: unknown, req: Request, res: Response, _next: NextFunction) {
-  let mappedError: DomainError | InfrastructureError | ApplicationError
-  let invalidParams = undefined
+  let error: BaseError
+  let invalidParams: unknown = undefined
 
-  /** Manejo de errores por tipo */
+  if (err instanceof DatabaseError) {
+    console.log('Instancia del error: ', err.name)
+  }
   switch (true) {
-    // errores de validación
+    // Errores de validación (Zod)
     case err instanceof ZodError: {
       invalidParams = err.errors
-
       const messages = formatZodErrors(err.errors)
-      mappedError = new ValidationException(messages)
-      logger.warn(mappedError.message, { err: mappedError })
+      error = new ValidationException(messages)
+      logger.warn(error.message, { err: error })
       break
     }
-    // errores de node-mssql package
-    case err instanceof DatabaseError:
+
+    // Errores de MSSQL (wrapper)
+    case err instanceof DatabaseError: {
       sentryScopeError(err)
-      mappedError = mapMSSQLError(err.originalError)
-      logger.error(mappedError.message, { err: mappedError })
+      const infraError = mapMSSQLError(err.originalError)
+      logger.error(infraError.message, { err: infraError })
 
-      // reemplaza el error específico con un error genérico para el cliente
-      if (mappedError.type === DatabaseConnectionErrorException.name) {
-        mappedError = new SafeInternalServerErrorException({
-          detail:
-            'No se pudo conectar con el servidor de base de datos. Si el problema persiste, contacte con el administrador del sistema.',
-        })
-      } else mappedError = new SafeInternalServerErrorException()
+      // Enmascara detalles técnicos para el cliente
+      error = new SafeInternalServerErrorException(
+        'No se pudo completar la operación con la base de datos. Si el problema persiste, contacte con el administrador.',
+      )
       break
+    }
 
-    // errores de dominio o aplicación
-    case err instanceof DomainError || err instanceof ApplicationError:
+    // Errores de dominio (reglas de negocio) - SE EXPONEN al cliente
+    case err instanceof DomainError:
       logger.warn(err.message, { err })
-      mappedError = err
+      error = err
       break
 
-    // errores de infraestructura
+    // Errores de aplicación (validaciones, auth) - SE EXPONEN al cliente
+    case err instanceof ApplicationError:
+      logger.warn(err.message, { err })
+      error = err
+      break
+
+    // Errores de infraestructura - SE ENMASCARAN
     case err instanceof InfrastructureError:
       sentryScopeError(err)
       logger.error(err.message, { err })
-
-      mappedError = new SafeInternalServerErrorException()
+      error = new SafeInternalServerErrorException()
       break
-    // otro tipo de errores
+
+    // Errores no controlados - SE ENMASCARAN
     default: {
       sentryScopeError(err)
-      if (err instanceof Error) logger.error(err.name, { err })
-      else logger.error('Error desconocido', { err })
-      mappedError = new SafeInternalServerErrorException()
+      if (err instanceof Error) {
+        logger.error(`[unhandled] ${err.name}: ${err.message}`, { err })
+      } else {
+        logger.error('[unhandled] Error desconocido', { err })
+      }
+      error = new SafeInternalServerErrorException()
       break
     }
   }
 
-  /** Valida si la excepción está mapeada */
-  const errorConfig = httpErrorMap[mappedError.type]
-  if (!errorConfig) {
-    logger.warn(`[http-map] Excepción no mapeada => ${mappedError.type}`)
-    mappedError = new SafeInternalServerErrorException()
-  }
-
-  const { status, errorCode } = httpErrorMap[mappedError.type] || {
-    status: 500, // fallback si SafeInternalServerErrorException no está mapeado
-    errorCode: 'UNKNOWN', // fallback si SafeInternalServerErrorException no está mapeado
-  }
-
+  // Construye respuesta usando metadata del error (AUTO-CONTENIDO)
   const errorApiResponse = {
     correlationId: req.correlationId,
     error: {
-      type: mappedError.type,
-      title: mappedError.title,
-      status,
-      detail: mappedError.detail,
-      errorCode,
+      type: error.type,
+      title: error.title,
+      status: error.status,
+      detail: error.detail,
+      errorCode: error.errorCode,
       invalidParams,
+      // Stack trace solo en desarrollo
+      ...(NODE_ENV === 'development' && {
+        stack: error.stack,
+        cause: error.cause?.message,
+      }),
     },
   }
 
-  return res.status(status).json(errorApiResponse)
+  return res.status(error.status).json(errorApiResponse)
 }

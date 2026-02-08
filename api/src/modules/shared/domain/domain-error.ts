@@ -1,30 +1,26 @@
+import { BaseError } from '@core/exceptions/base-error'
+
 /**
- * Clase base abstracta para representar errores que ocurren
- * en la capa de dominio o son del dominio de una arquitectura hexagonal o DDD.
+ * Clase base abstracta para errores de la capa de DOMINIO.
  *
- * @abstract
+ * Usar para errores relacionados con reglas de negocio:
+ * - Validaciones de entidades/value objects
+ * - Invariantes del dominio violadas
+ * - Recursos no encontrados
+ * - Conflictos de estado
+ *
+ * @example
+ * ```typescript
+ * export class InvalidCredentialsException extends DomainError {
+ *   readonly type = 'InvalidCredentialsException'
+ *   readonly title = 'Credenciales inválidas'
+ *   readonly detail = 'Usuario o contraseña incorrectos'
+ *   readonly metadata = { status: 401, errorCode: 2000 }
+ *
+ *   constructor() {
+ *     super('[auth] Credenciales inválidas')
+ *   }
+ * }
+ * ```
  */
-export abstract class DomainError extends Error {
-  /**
-   * Identificador técnico del error (puede ser usado para logs, Sentry, API)
-   * TODO: Puede ser la dirección del error documentado (https://example.com/exceptions/application-error)
-   * Por ahora, es this.constructor.name
-   */
-  abstract type: string
-
-  /**
-   * Título del error, orientado a mostrar al usuario o en UI
-   * Ejemplo: "Parámetros inválidos", "Acceso no autorizado"
-   */
-  abstract title: string
-
-  /**
-   * Descripción detallada del problema, orientado a mostrar al usuario o en UI
-   */
-  abstract detail: string
-
-  constructor({ message }: { message: string }) {
-    super(message)
-    this.name = this.constructor.name
-  }
-}
+export abstract class DomainError extends BaseError {}
