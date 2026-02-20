@@ -69,6 +69,13 @@ const envSchema = z.object({
     .transform(val => Number(val))
     .pipe(z.number().positive()),
 
+  // Cache TTL para búsquedas recientes (en segundos, default: 86400 = 24 horas)
+  BUSQUEDA_RECIENTE_CACHE_TTL: z
+    .string()
+    .default('86400')
+    .transform(val => Number(val))
+    .pipe(z.number().positive()),
+
   // Configuración zonas horarias
   TIMEZONE_DATABASE: z.string().default('America/Lima'),
 })
@@ -119,6 +126,8 @@ export const {
 
   JWT_ACCESS_TOKEN_TTL,
   JWT_REFRESH_TOKEN_TTL,
+
+  BUSQUEDA_RECIENTE_CACHE_TTL,
 
   TIMEZONE_DATABASE,
 } = data

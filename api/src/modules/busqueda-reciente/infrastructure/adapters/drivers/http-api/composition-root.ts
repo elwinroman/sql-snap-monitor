@@ -1,7 +1,7 @@
 import { BusquedaRecienteHttpManagerService } from '@busqueda-reciente/application/busqueda-reciente-http-manager.service'
 import { DeleteBusquedaRecienteUseCase, GetAllBusquedasRecientesUseCase } from '@busqueda-reciente/application/use-cases'
-import { MSSQLBusquedaRecienteRepositoryAdapter } from '@busqueda-reciente/infrastructure/adapters/drivens/mssql-busqueda-reciente-repository.adapter'
 import { MssqlSysObjectRepositoryAdapter } from '@busqueda-reciente/infrastructure/adapters/drivens/mssql-sysobject-repository.adapter'
+import { ValkeyCacheBusquedaRecienteRepositoryAdapter } from '@busqueda-reciente/infrastructure/adapters/drivens/valkey-busqueda-reciente-repository.adapter'
 
 import { DeleteBusquedaRecienteController } from './delete-busqueda-reciente/delete-busqueda-reciente.controller'
 import { GetAllBusquedaRecienteController } from './get-all-busqueda-reciente/get-all-busqueda-reciente.controller'
@@ -11,7 +11,7 @@ import { GetAllBusquedaRecienteController } from './get-all-busqueda-reciente/ge
  *************************************/
 const compositionRoot = () => {
   // DRIVENS
-  const brRepository = new MSSQLBusquedaRecienteRepositoryAdapter() // repositorio de busquedas recientes
+  const brRepository = new ValkeyCacheBusquedaRecienteRepositoryAdapter()
   const sysobjectRepository = new MssqlSysObjectRepositoryAdapter()
 
   // USE CASES

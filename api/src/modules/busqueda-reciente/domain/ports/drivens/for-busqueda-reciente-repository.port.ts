@@ -3,6 +3,7 @@ import {
   BusquedaRecienteFilterRepo,
   BusquedaRecienteInput,
   BusquedaRecienteRepoResponse,
+  Context,
 } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 import { Meta } from '@shared/domain/schemas/meta'
 
@@ -19,11 +20,11 @@ export interface ForBusquedaRecienteRepositoryPort {
   createOrUpdate(busquedaRecienteInput: BusquedaRecienteInput): Promise<boolean>
 
   /**
-   * Elimina una búsqueda reciente por su ID.
-   * @param id - ID de la búsqueda reciente a eliminar.
+   * Elimina una búsqueda reciente por su ID (hash MD5).
+   * @param id - Hash ID de la búsqueda reciente a eliminar.
    * @returns `true` si se eliminó correctamente, `false` si no existía.
    */
-  deleteById(id: number): Promise<boolean>
+  deleteById(id: string): Promise<boolean>
 
   /**
    * Recupera múltiples búsquedas recientes según un filtro y un límite.
@@ -35,10 +36,11 @@ export interface ForBusquedaRecienteRepositoryPort {
   findMany(filter: BusquedaRecienteFilterRepo, limit: number): Promise<{ data: BusquedaRecienteRepoResponse[]; meta: Meta }>
 
   /**
-   * Recupera una búsqueda reciente por su ID.
+   * Recupera una búsqueda reciente por su ID (hash MD5).
    *
-   * @param id - ID de la búsqueda reciente a recuperar.
+   * @param id - Hash ID de la búsqueda reciente a recuperar.
+   * @param context - Contexto con userId y database para resolver la cache key.
    * @returns Un objeto `BusquedaReciente` si se encuentra, o `null` si no existe.
    */
-  getById(id: number): Promise<BusquedaReciente | null>
+  getById(id: string, context: Context): Promise<BusquedaReciente | null>
 }

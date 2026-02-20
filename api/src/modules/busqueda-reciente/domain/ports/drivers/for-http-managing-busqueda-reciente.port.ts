@@ -23,5 +23,5 @@ export interface ForHttpManagingBusquedaRecientePort {
    * @param context - Contexto de ejecución que incluye el ID del usuario y la base de datos.
    * @returns Una promesa que resuelve a un string con un mensaje de confirmación o estado.
    */
-  deleteBusquedaReciente(id: number, context: Context): Promise<string>
+  deleteBusquedaReciente(id: string, context: Context): Promise<string>
 }

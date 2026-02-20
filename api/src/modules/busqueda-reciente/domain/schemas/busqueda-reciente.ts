@@ -4,8 +4,8 @@ import { TypeSysObject } from '@sysobject/domain/schemas/sysobject'
  * Datos de entrada para registrar una búsqueda reciente.
  */
 export interface BusquedaReciente {
-  /** ID de la búsqueda reciente */
-  id: number
+  /** ID de la búsqueda reciente (hash MD5 de userId:database:schema:objectName) */
+  id: string
 
   /** ID del usuario que realizó la búsqueda */
   idUser: number
@@ -45,17 +45,17 @@ export type BusquedaRecienteFilter = Pick<BusquedaReciente, 'idUser' | 'database
 /**
  * Filtro de búsqueda para el repositorio en la recuperación de Búsquedas Recientes.
  */
-export type BusquedaRecienteFilterRepo = Pick<BusquedaReciente, 'idUser' | 'database' | 'type'>
-
-/**
- * Datos de respuesta del repositorio para obtener todas las búsquedas recientes (incluye si es favorito).
- */
-export type BusquedaRecienteRepoResponse = Pick<BusquedaReciente, 'id' | 'schema' | 'objectName' | 'dateSearch'> & {
-  isFavorite: boolean
+export type BusquedaRecienteFilterRepo = Pick<BusquedaReciente, 'idUser' | 'database'> & {
+  type: TypeSysObject
 }
 
 /**
- * Datos de respuesta para obtener todas las búsquedas recientes (incluye si es favorito y el ID del objeto).
+ * Datos de respuesta del repositorio para obtener todas las búsquedas recientes.
+ */
+export type BusquedaRecienteRepoResponse = Pick<BusquedaReciente, 'id' | 'schema' | 'objectName' | 'dateSearch'>
+
+/**
+ * Datos de respuesta para obtener todas las búsquedas recientes (incluye el ID del objeto SQL).
  */
 export type BusquedaRecienteResponse = BusquedaRecienteRepoResponse & {
   objectId: number

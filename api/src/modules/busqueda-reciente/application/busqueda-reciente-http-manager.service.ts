@@ -15,7 +15,7 @@ export class BusquedaRecienteHttpManagerService implements ForHttpManagingBusque
     return this.getAllBusquedasRecientesUC.execute(filter, limit)
   }
 
-  async deleteBusquedaReciente(id: number, context: Context): Promise<string> {
+  async deleteBusquedaReciente(id: string, context: Context): Promise<string> {
     return this.deleteBusquedaRecienteUC.execute(id, context)
   }
 }

@@ -1,16 +1,10 @@
-import { ForBusquedaRecienteRepositoryPort } from '@busqueda-reciente/domain/ports/drivens/for-busqueda-reciente-repository.port'
-import {
-  BusquedaReciente,
-  BusquedaRecienteFilterRepo,
-  BusquedaRecienteInput,
-  BusquedaRecienteRepoResponse,
-} from '@busqueda-reciente/domain/schemas/busqueda-reciente'
+import type { BusquedaReciente, BusquedaRecienteInput } from '@busqueda-reciente/domain/schemas/busqueda-reciente'
 import { DatabaseName, getStaticDatabaseCredentials, MSSQLDatabaseConnection } from '@core/store'
 import { wrapDatabaseError } from '@core/utils'
-import { Meta } from '@shared/domain/schemas/meta'
 import sql from 'mssql'
 
-export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecienteRepositoryPort {
+/** @deprecated Reemplazado por ValkeyCacheBusquedaRecienteRepositoryAdapter */
+export class MSSQLBusquedaRecienteRepositoryAdapter {
   private connection = new MSSQLDatabaseConnection()
   private db = getStaticDatabaseCredentials(DatabaseName.APP)
 
@@ -88,7 +82,7 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
     }
   }
 
-  async findMany(filter: BusquedaRecienteFilterRepo, limit: number): Promise<{ data: BusquedaRecienteRepoResponse[]; meta: Meta }> {
+  async findMany(filter: { idUser: number; database: string; type: string }, limit: number) {
     try {
       const conn = await this.connection.connect(this.db.credentials, this.db.type)
       const request = conn.request()
@@ -138,7 +132,7 @@ export class MSSQLBusquedaRecienteRepositoryAdapter implements ForBusquedaRecien
 
       // adapter
       const data =
-        res.recordset.map((obj): BusquedaRecienteRepoResponse => {
+        res.recordset.map(obj => {
           return {
             id: obj.idBusquedaReciente,
             schema: obj.cSchema,

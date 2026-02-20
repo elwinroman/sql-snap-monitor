@@ -1,6 +1,6 @@
 import { ProxyBusquedaRecienteService } from '@busqueda-reciente/application/busqueda-reciente-proxy-manager.service'
 import { RegisterBusquedaRecienteUseCase } from '@busqueda-reciente/application/use-cases'
-import { MSSQLBusquedaRecienteRepositoryAdapter } from '@busqueda-reciente/infrastructure/adapters/drivens/mssql-busqueda-reciente-repository.adapter'
+import { ValkeyCacheBusquedaRecienteRepositoryAdapter } from '@busqueda-reciente/infrastructure/adapters/drivens/valkey-busqueda-reciente-repository.adapter'
 
 import { RegisterBusquedaRecienteProxy } from './register-busqueda-reciente-proxy.adapter'
 
@@ -9,7 +9,7 @@ import { RegisterBusquedaRecienteProxy } from './register-busqueda-reciente-prox
  *************************************/
 const compositionRoot = () => {
   // DRIVENS
-  const repository = new MSSQLBusquedaRecienteRepositoryAdapter() // repositorio
+  const repository = new ValkeyCacheBusquedaRecienteRepositoryAdapter()
 
   // USE CASES
   const registerBusquedaRecienteUseCase = new RegisterBusquedaRecienteUseCase(repository)

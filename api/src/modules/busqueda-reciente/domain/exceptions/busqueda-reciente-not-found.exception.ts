@@ -6,7 +6,7 @@ export class BusquedaRecienteNotFoundException extends DomainError {
   readonly detail: string
   static readonly metadata = { status: 404, errorCode: 4000 }
 
-  constructor(id: number) {
+  constructor(id: string) {
     super(`[busqueda-reciente] Búsqueda reciente no encontrada: ${id}`)
     this.detail = `La búsqueda reciente con id '${id}' no fue encontrada.`
   }
