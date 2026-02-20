@@ -21,7 +21,7 @@ export interface ForFavoritoRepositoryPort {
   /**
    * Recupera una lista paginada de favoritos según los criterios de búsqueda.
    *
-   * @param filter - Filtros a aplicar (usuario, base de datos, tipo de objeto, etc.).
+   * @param filter - Filtros a aplicar (usuario, tipo de objeto, etc.).
    * @param limit - Cantidad máxima de resultados a retornar.
    * @returns Un objeto que contiene:
    *          - `data`: lista de favoritos encontrados.
@@ -49,7 +49,7 @@ export interface ForFavoritoRepositoryPort {
    * Verifica si existe un favorito que coincida con los criterios proporcionados.
    *
    * @param criteria - Criterios de búsqueda que incluyen propiedades clave como:
-   *                   `idUser`, `database`, `schema` y `objectName`.
+   *                   `idUser`, `schema` y `objectName`.
    * @returns `true` si existe al menos un favorito que coincida con los criterios;
    *          `false` en caso contrario.
    */

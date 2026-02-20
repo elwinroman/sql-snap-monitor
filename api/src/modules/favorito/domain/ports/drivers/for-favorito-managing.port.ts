@@ -1,4 +1,4 @@
-import { Context, FavoritoFilterRepo, FavoritoInput, FavoritoRepoResponse, FavoritoResponse } from '@favorito/domain/schemas/favorito'
+import { FavoritoFilterRepo, FavoritoInput, FavoritoRepoResponse, FavoritoResponse } from '@favorito/domain/schemas/favorito'
 import { Meta } from '@shared/domain/schemas/meta'
 
 /**
@@ -37,8 +37,8 @@ export interface ForFavoritoManagingPort {
    * Elimina un favorito registrado por su identificador único.
    *
    * @param id - ID del favorito a eliminar.
-   * @param context - Contexto de ejecución que incluye el ID del usuario y la base de datos.
+   * @param idUser - ID del usuario del que se quiere eliminar.
    * @returns Mensaje de confirmación o estado de la operación.
    */
-  deleteFavorito(id: number, context: Context): Promise<string>
+  deleteFavorito(id: number, idUser: number): Promise<string>
 }

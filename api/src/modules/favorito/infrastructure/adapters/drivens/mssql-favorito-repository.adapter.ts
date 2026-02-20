@@ -18,13 +18,11 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
         MERGE INTO dbo.Favorito AS target
         USING (
           SELECT 
-            @idUser     AS idUsuario      , @database AS databaseName, 
-            @schema     AS schemaName     , @objectName AS objectName,
-            @type       AS type           , @date AS fecha,
-            @isActive   AS vigente
+            @idUser     AS idUsuario      , @schema     AS schemaName
+            @objectName AS objectName     , @type       AS type,
+            @date AS fecha                , @isActive   AS vigente
         ) AS source
         ON target.idUsuario         = source.idUsuario
-          AND target.cDatabase      = source.databaseName 
           AND target.cSchema        = source.schemaName 
           AND target.cNombreObjeto  = source.objectName
         WHEN MATCHED THEN
@@ -39,14 +37,13 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
           --============================================================
           -- Si no existe la búsqueda reciente, realiza la inserción
           --============================================================
-          INSERT (idUsuario, cDatabase, cSchema, cNombreObjeto, cType, dFecha, lVigente)
-          VALUES (source.idUsuario, source.databaseName, source.schemaName, source.objectName, source.type, source.fecha, source.vigente)
-        OUTPUT  INSERTED.idUsuario, INSERTED.cDatabase, INSERTED.cSchema,
-                INSERTED.cNombreObjeto, INSERTED.dFecha, INSERTED.lVigente,
+          INSERT (idUsuario, cSchema, cNombreObjeto, cType, dFecha, lVigente)
+          VALUES (source.idUsuario, source.schemaName, source.objectName, source.type, source.fecha, source.vigente)
+        OUTPUT  INSERTED.idUsuario, INSERTED.cSchema, INSERTED.cNombreObjeto, 
+                INSERTED.dFecha, INSERTED.lVigente,
                 $action AS accion;
       `
       request.input('idUser', sql.Int, favoritoRepoInput.idUser)
-      request.input('database', sql.VarChar(64), favoritoRepoInput.database)
       request.input('schema', sql.VarChar(64), favoritoRepoInput.schema)
       request.input('objectName', sql.VarChar(128), favoritoRepoInput.objectName)
       request.input('type', sql.Char(2), favoritoRepoInput.type)
@@ -90,11 +87,10 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
           FROM dbo.Favorito
           WHERE idUsuario = @idUser
             AND cType     IN (${filter.type})
-            AND cDatabase = @database
             AND lVigente  = 1
         ),
         TotalRegistrosCTE AS (
-            SELECT COUNT(*) AS nTotal FROM FavoritosCTE
+          SELECT COUNT(*) AS nTotal FROM FavoritosCTE
         )
         SELECT TOP (@limit)
           A.idFavorito,
@@ -108,7 +104,6 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
         ORDER BY A.dFecha DESC
       `
       request.input('idUser', sql.Int, filter.idUser)
-      request.input('database', sql.VarChar(64), filter.database)
       request.input('limit', sql.Int, limit)
 
       const res = await request.query(stmt)
@@ -175,7 +170,6 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
       const data: Favorito = {
         id: res.recordset[0].idFavorito,
         idUser: res.recordset[0].idUsuario,
-        database: res.recordset[0].cDatabase,
         schema: res.recordset[0].cSchema,
         objectName: res.recordset[0].cNombreObjeto,
         date: res.recordset[0].dFecha,
@@ -198,13 +192,11 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
         SELECT TOP 1 idFavorito 
         FROM dbo.Favorito 
         WHERE idUsuario     = @idUser
-          AND cDatabase     = @database
           AND cSchema       = @schema
           AND cNombreObjeto = @objectName
           AND lVigente      = 1
       `
       request.input('idUser', sql.Int, criteria.idUser)
-      request.input('database', sql.VarChar(64), criteria.database)
       request.input('schema', sql.VarChar(64), criteria.schema)
       request.input('objectName', sql.VarChar(128), criteria.objectName)
 

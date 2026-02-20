@@ -16,16 +16,10 @@ export class RegisterFavoritoController {
       const dto: RegisterFavoritoParams = RegisterFavoritoParamsSchema.parse({ schema, objectName, type })
 
       // credenciales de usuario e idUser
-      const {
-        store: {
-          credentials: { database },
-        },
-        authContext,
-      } = await buildStoreAuthContext()
+      const { authContext } = await buildStoreAuthContext()
 
       const input: FavoritoInput = {
         idUser: authContext.userId,
-        database,
         schema: dto.schema,
         objectName: dto.objectName,
         type: dto.type as ValidTypeSysObject,

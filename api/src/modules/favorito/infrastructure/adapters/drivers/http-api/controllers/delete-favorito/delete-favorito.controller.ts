@@ -13,20 +13,10 @@ export class DeleteFavoritoController {
     try {
       const dto: DeleteFavoritoParams = DeleteFavoritoParamsSchema.parse({ id })
 
-      // credenciales de usuario e idUser
-      const {
-        store: {
-          credentials: { database },
-        },
-        authContext,
-      } = await buildStoreAuthContext()
+      // idUser
+      const { authContext } = await buildStoreAuthContext()
 
-      const context = {
-        idUser: authContext.userId,
-        database,
-      }
-
-      const result = await this.service.deleteFavorito(dto.id, context)
+      const result = await this.service.deleteFavorito(dto.id, authContext.userId)
 
       return res.status(200).json({ correlationId: req.correlationId, data: { msg: result } })
     } catch (err) {

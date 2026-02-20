@@ -10,9 +10,6 @@ export interface Favorito {
   /** Identificador del usuario que marcó el objeto como favorito */
   idUser: number
 
-  /** Nombre de la base de datos donde se encuentra el objeto */
-  database: string
-
   /** Nombre del esquema dentro de la base de datos */
   schema: string
 
@@ -43,7 +40,7 @@ export type FavoritoRepoInput = Omit<Favorito, 'id'>
 /**
  * Criterios de filtrado para recuperar favoritos desde la capa de aplicación.
  */
-export type FavoritoFilter = Pick<Favorito, 'idUser' | 'database'> & {
+export type FavoritoFilter = Pick<Favorito, 'idUser'> & {
   /** Tipo de objeto a filtrar */
   type: TypeSysObject
 }
@@ -52,7 +49,7 @@ export type FavoritoFilter = Pick<Favorito, 'idUser' | 'database'> & {
  * Filtro de recuperación utilizado a nivel de repositorio,
  * incluyendo usuario, base de datos y tipo de objeto.
  */
-export type FavoritoFilterRepo = Pick<Favorito, 'idUser' | 'database' | 'type'>
+export type FavoritoFilterRepo = Pick<Favorito, 'idUser' | 'type'>
 
 /**
  * Representa una entrada de favorito devuelta por el repositorio
@@ -72,11 +69,11 @@ export type FavoritoResponse = FavoritoRepoResponse & {
  * Contexto de ejecución para operaciones relacionadas con búsquedas recientes.
  * Contiene información mínima necesaria para identificar al usuario y la base de datos donde se ejecuta la operación.
  */
-export type Context = Pick<Favorito, 'idUser' | 'database'>
+export type Context = Pick<Favorito, 'idUser'>
 
 /**
  * Criterios mínimos para verificar la existencia de un favorito.
  * Se basa en los atributos clave que definen la unicidad de un favorito:
  * usuario, base de datos, esquema y nombre del objeto.
  */
-export type Criteria = Pick<Favorito, 'idUser' | 'database' | 'schema' | 'objectName'>
+export type Criteria = Pick<Favorito, 'idUser' | 'schema' | 'objectName'>
