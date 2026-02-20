@@ -1,9 +1,16 @@
-import { NewTokens } from '@auth/domain/ports/drivens/for-token-management.port'
+import { AccessTokenDecoded, NewTokens } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
 import { AuthenticatedUser } from '@auth/domain/schemas/auth-user'
 import { StoreUserSchema } from '@shared/domain/store'
 
-import { CheckSessionUseCase, LoginUseCase, LogoutUseCase, RefreshTokenUseCase } from './use-cases'
+import {
+  CheckSessionUseCase,
+  ListDatabasesUseCase,
+  LoginUseCase,
+  LogoutUseCase,
+  RefreshTokenUseCase,
+  VerifyAccessTokenUseCase,
+} from './use-cases'
 
 export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
   constructor(
@@ -11,6 +18,8 @@ export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
     private readonly logoutUC: LogoutUseCase,
     private readonly refreshTokenUC: RefreshTokenUseCase,
     private readonly checkSessionUC: CheckSessionUseCase,
+    private readonly listDatabasesUC: ListDatabasesUseCase,
+    private readonly verifyAccessTokenUC: VerifyAccessTokenUseCase,
   ) {}
 
   async login(sqlUser: StoreUserSchema): Promise<AuthenticatedUser> {
@@ -33,5 +42,13 @@ export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
 
   health(): void {
     // code here
+  }
+
+  async listDatabases(credentials: Omit<StoreUserSchema, 'database'>): Promise<string[]> {
+    return this.listDatabasesUC.execute(credentials)
+  }
+
+  async verifyAccessToken(token: string): Promise<AccessTokenDecoded> {
+    return this.verifyAccessTokenUC.execute(token)
   }
 }

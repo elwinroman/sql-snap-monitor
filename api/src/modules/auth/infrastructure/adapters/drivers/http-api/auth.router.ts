@@ -1,7 +1,13 @@
 import { verifyTokenMiddleware } from '@core/middlewares'
 import { type Router as ExpressRouter, Router } from 'express'
 
-import { checkSessionController, loginController, logoutController, refreshTokenController } from './composition-root'
+import {
+  checkSessionController,
+  listDatabasesController,
+  loginController,
+  logoutController,
+  refreshTokenController,
+} from './composition-root'
 
 export function authRouter(): ExpressRouter {
   const router = Router()
@@ -10,6 +16,7 @@ export function authRouter(): ExpressRouter {
   router.post('/logout', logoutController.run.bind(logoutController))
   router.post('/refresh-token', refreshTokenController.run.bind(refreshTokenController))
   router.get('/check-session', verifyTokenMiddleware, checkSessionController.run.bind(checkSessionController))
+  router.get('/databases', listDatabasesController.run.bind(listDatabasesController))
 
   return router
 }

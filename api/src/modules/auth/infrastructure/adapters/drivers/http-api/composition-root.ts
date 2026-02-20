@@ -1,5 +1,12 @@
 import { HttpAuthenticatorService } from '@auth/application/http-authenticator.service'
-import { CheckSessionUseCase, LoginUseCase, LogoutUseCase, RefreshTokenUseCase } from '@auth/application/use-cases'
+import {
+  CheckSessionUseCase,
+  ListDatabasesUseCase,
+  LoginUseCase,
+  LogoutUseCase,
+  RefreshTokenUseCase,
+  VerifyAccessTokenUseCase,
+} from '@auth/application/use-cases'
 import {
   JwtTokenManagerAdapter,
   MssqlStoreRepositoryAdapter,
@@ -10,6 +17,7 @@ import { ValkeyCacheRepository } from '@core/cache/valkey-cache-repository'
 import { logger } from '@core/logger/pino-instance'
 
 import { CheckSessionController } from './check-session/check-session.controller'
+import { ListDatabasesController } from './list-databases/list-databases.controller'
 import { LoginController } from './login/login.controller'
 import { LogoutController } from './logout/logout.controller'
 import { RefreshTokenController } from './refresh-token/refresh-token.controller'
@@ -30,21 +38,33 @@ const compositionMock = () => {
   const logoutUseCase = new LogoutUseCase(cacheRepository, jwtTokenManager, logger)
   const refreshTokenUseCase = new RefreshTokenUseCase(jwtTokenManager, cacheRepository, blacklist, logger)
   const checkSessionUseCase = new CheckSessionUseCase(storeRepositoty, logger)
+  const verifyAccessTokenUseCase = new VerifyAccessTokenUseCase(jwtTokenManager, cacheRepository, blacklist, logger)
+  const listDatabaseUseCase = new ListDatabasesUseCase(storeRepositoty, logger)
 
   // SERVICE ORCHESTRATOR
-  const controlAuthenticatorService = new HttpAuthenticatorService(loginUseCase, logoutUseCase, refreshTokenUseCase, checkSessionUseCase)
+  const controlAuthenticatorService = new HttpAuthenticatorService(
+    loginUseCase,
+    logoutUseCase,
+    refreshTokenUseCase,
+    checkSessionUseCase,
+    listDatabaseUseCase,
+    verifyAccessTokenUseCase,
+  )
 
   // CONTROLLERS
   const loginController = new LoginController(controlAuthenticatorService, jwtTokenManager)
   const logoutController = new LogoutController(controlAuthenticatorService)
   const refreshTokenController = new RefreshTokenController(controlAuthenticatorService)
   const checkSessionController = new CheckSessionController(controlAuthenticatorService)
+  const listDatabasesController = new ListDatabasesController(controlAuthenticatorService)
 
   return {
     loginController,
     logoutController,
     refreshTokenController,
     checkSessionController,
+    listDatabasesController,
   }
 }
-export const { checkSessionController, loginController, logoutController, refreshTokenController } = compositionMock()
+export const { checkSessionController, loginController, logoutController, refreshTokenController, listDatabasesController } =
+  compositionMock()

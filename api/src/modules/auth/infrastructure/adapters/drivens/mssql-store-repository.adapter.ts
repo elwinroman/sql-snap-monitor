@@ -60,4 +60,22 @@ export class MssqlStoreRepositoryAdapter implements ForStoreRepositoryPort {
       throw wrapDatabaseError(err)
     }
   }
+
+  async getDatabases(credential: StoreUserSchema): Promise<string[] | null> {
+    try {
+      const conn = await this.connection.connect(credential, UserTypeEnum.External)
+      const request = conn.request()
+
+      const stmt = 'SELECT name FROM sys.databases'
+      const res = await request.query(stmt)
+
+      if (res && res.rowsAffected[0] === 0) return null
+
+      // adapter
+      const dbnameList: string[] = res.recordset.map(item => item.name)
+      return dbnameList
+    } catch (err) {
+      throw wrapDatabaseError(err)
+    }
+  }
 }

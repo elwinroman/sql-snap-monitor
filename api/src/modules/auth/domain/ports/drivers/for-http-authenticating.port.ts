@@ -1,6 +1,7 @@
 import { AuthenticatedUser } from '@auth/domain/schemas/auth-user'
 import { StoreUserSchema } from '@shared/domain/store'
 
+import { AccessTokenDecoded } from '../drivens/for-token-management.port'
 import { NewTokens } from '../drivens/for-token-management.port'
 
 export interface ForHttpAuthenticatingPort {
@@ -11,4 +12,6 @@ export interface ForHttpAuthenticatingPort {
     credentials: StoreUserSchema,
   ): Promise<{ databaseConnection: string; viewdefinitionPermission: boolean; checkedAt: Date | string }>
   health(): void
+  listDatabases(credentials: Omit<StoreUserSchema, 'database'>): Promise<string[]>
+  verifyAccessToken(token: string): Promise<AccessTokenDecoded>
 }
