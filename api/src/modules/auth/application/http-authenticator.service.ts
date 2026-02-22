@@ -1,6 +1,7 @@
 import { AccessTokenDecoded, NewTokens } from '@auth/domain/ports/drivens/for-token-management.port'
 import { ForHttpAuthenticatingPort } from '@auth/domain/ports/drivers/for-http-authenticating.port'
 import { AuthenticatedUser } from '@auth/domain/schemas/auth-user'
+import { PermissionStore, StoreInfo } from '@auth/domain/schemas/store'
 import { StoreUserSchema } from '@shared/domain/store'
 
 import {
@@ -9,6 +10,7 @@ import {
   LoginUseCase,
   LogoutUseCase,
   RefreshTokenUseCase,
+  SwitchDatabaseUseCase,
   VerifyAccessTokenUseCase,
 } from './use-cases'
 
@@ -19,6 +21,7 @@ export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
     private readonly refreshTokenUC: RefreshTokenUseCase,
     private readonly checkSessionUC: CheckSessionUseCase,
     private readonly listDatabasesUC: ListDatabasesUseCase,
+    private readonly switchDatabaseUC: SwitchDatabaseUseCase,
     private readonly verifyAccessTokenUC: VerifyAccessTokenUseCase,
   ) {}
 
@@ -46,6 +49,10 @@ export class HttpAuthenticatorService implements ForHttpAuthenticatingPort {
 
   async listDatabases(credentials: Omit<StoreUserSchema, 'database'>): Promise<string[]> {
     return this.listDatabasesUC.execute(credentials)
+  }
+
+  async switchDatabase(userId: number, newDatabase: string, currentCredentials: StoreUserSchema): Promise<StoreInfo & PermissionStore> {
+    return this.switchDatabaseUC.execute(userId, newDatabase, currentCredentials)
   }
 
   async verifyAccessToken(token: string): Promise<AccessTokenDecoded> {

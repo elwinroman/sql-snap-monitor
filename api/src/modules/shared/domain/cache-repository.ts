@@ -10,4 +10,7 @@ export interface CacheRepository {
 
   /** Elimina un valor de la caché utilizando una clave específica. */
   delete(key: string): Promise<void>
+
+  /** Retorna el tiempo de vida restante (en segundos) de una clave. -2 si no existe, -1 si no tiene TTL. */
+  ttl(key: string): Promise<number>
 }

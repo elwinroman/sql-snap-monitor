@@ -7,6 +7,7 @@ import {
   loginController,
   logoutController,
   refreshTokenController,
+  switchDatabaseController,
 } from './composition-root'
 
 export function authRouter(): ExpressRouter {
@@ -16,7 +17,8 @@ export function authRouter(): ExpressRouter {
   router.post('/logout', logoutController.run.bind(logoutController))
   router.post('/refresh-token', refreshTokenController.run.bind(refreshTokenController))
   router.get('/check-session', verifyTokenMiddleware, checkSessionController.run.bind(checkSessionController))
-  router.get('/databases', listDatabasesController.run.bind(listDatabasesController))
+  router.post('/databases', listDatabasesController.run.bind(listDatabasesController))
+  router.patch('/switch-database', verifyTokenMiddleware, switchDatabaseController.run.bind(switchDatabaseController))
 
   return router
 }

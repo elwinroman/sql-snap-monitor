@@ -5,6 +5,7 @@ import {
   LoginUseCase,
   LogoutUseCase,
   RefreshTokenUseCase,
+  SwitchDatabaseUseCase,
   VerifyAccessTokenUseCase,
 } from '@auth/application/use-cases'
 import {
@@ -21,6 +22,7 @@ import { ListDatabasesController } from './list-databases/list-databases.control
 import { LoginController } from './login/login.controller'
 import { LogoutController } from './logout/logout.controller'
 import { RefreshTokenController } from './refresh-token/refresh-token.controller'
+import { SwitchDatabaseController } from './switch-database/switch-database.controller'
 
 /*************************************
  * Inyección de dependencias API-REST
@@ -40,6 +42,7 @@ const compositionMock = () => {
   const checkSessionUseCase = new CheckSessionUseCase(storeRepositoty, logger)
   const verifyAccessTokenUseCase = new VerifyAccessTokenUseCase(jwtTokenManager, cacheRepository, blacklist, logger)
   const listDatabaseUseCase = new ListDatabasesUseCase(storeRepositoty, logger)
+  const switchDatabaseUseCase = new SwitchDatabaseUseCase(cacheRepository, storeRepositoty, logger)
 
   // SERVICE ORCHESTRATOR
   const controlAuthenticatorService = new HttpAuthenticatorService(
@@ -48,6 +51,7 @@ const compositionMock = () => {
     refreshTokenUseCase,
     checkSessionUseCase,
     listDatabaseUseCase,
+    switchDatabaseUseCase,
     verifyAccessTokenUseCase,
   )
 
@@ -57,6 +61,7 @@ const compositionMock = () => {
   const refreshTokenController = new RefreshTokenController(controlAuthenticatorService)
   const checkSessionController = new CheckSessionController(controlAuthenticatorService)
   const listDatabasesController = new ListDatabasesController(controlAuthenticatorService)
+  const switchDatabaseController = new SwitchDatabaseController(controlAuthenticatorService)
 
   return {
     loginController,
@@ -64,7 +69,14 @@ const compositionMock = () => {
     refreshTokenController,
     checkSessionController,
     listDatabasesController,
+    switchDatabaseController,
   }
 }
-export const { checkSessionController, loginController, logoutController, refreshTokenController, listDatabasesController } =
-  compositionMock()
+export const {
+  checkSessionController,
+  loginController,
+  logoutController,
+  refreshTokenController,
+  listDatabasesController,
+  switchDatabaseController,
+} = compositionMock()

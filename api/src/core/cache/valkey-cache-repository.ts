@@ -18,4 +18,8 @@ export class ValkeyCacheRepository implements CacheRepository {
   async delete(key: string): Promise<void> {
     await valkeyClient.del(key)
   }
+
+  async ttl(key: string): Promise<number> {
+    return await valkeyClient.ttl(key)
+  }
 }
