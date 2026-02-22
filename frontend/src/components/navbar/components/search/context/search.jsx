@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { ROUTES, TYPE_ACTION } from '@/constants'
+import { AppRoutes, TYPE_ACTION } from '@/constants'
 import {
   eliminarBusquedaReciente,
   eliminarFavorito,
@@ -34,11 +34,11 @@ export function SearchProvider({ children }) {
         id: -1,
         name: '',
       }
-      if (currentLocation.pathname === ROUTES.SQL_DEFINITION) {
+      if (currentLocation.pathname === AppRoutes.SQL_DEFINITION) {
         type.id = TYPE_ACTION.sqldefinition.id
         type.name = TYPE_ACTION.sqldefinition.name
       }
-      if (currentLocation.pathname === ROUTES.USERTABLE) {
+      if (currentLocation.pathname === AppRoutes.USERTABLE) {
         type.id = TYPE_ACTION.usertable.id
         type.name = TYPE_ACTION.usertable.name
       }
@@ -48,7 +48,7 @@ export function SearchProvider({ children }) {
 
     // obtener las búsquedas recientes
     const fetchRecentSearch = async () => {
-      const type = currentLocation.pathname === ROUTES.SQL_DEFINITION ? TYPE_ACTION.sqldefinition.id : TYPE_ACTION.usertable.id
+      const type = currentLocation.pathname === AppRoutes.SQL_DEFINITION ? TYPE_ACTION.sqldefinition.id : TYPE_ACTION.usertable.id
       const limit = 50 // solo se recuperará los 50 primeros resultados (rendimiento)
 
       try {
@@ -62,7 +62,7 @@ export function SearchProvider({ children }) {
 
     // obtener las búsquedas favoritas
     const fetchFavorites = async () => {
-      const type = currentLocation.pathname === ROUTES.SQL_DEFINITION ? TYPE_ACTION.sqldefinition.id : TYPE_ACTION.usertable.id
+      const type = currentLocation.pathname === AppRoutes.SQL_DEFINITION ? TYPE_ACTION.sqldefinition.id : TYPE_ACTION.usertable.id
 
       try {
         const res = await obtenerFavoritos({ idTipoAccion: type })

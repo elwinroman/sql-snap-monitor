@@ -1,7 +1,7 @@
 import { checkSessionAdapter, CheckSessionResponse, createAuthenticatedUserAdapter } from '@/adapters'
 import api from '@/interceptors/auth-token.interceptor'
 import { AxiosCall, Credential } from '@/models'
-import { AuthenticatedUserApiResponse, CheckSessionApiResponse } from '@/models/api'
+import { AuthenticatedUserApiResponse, CheckSessionApiResponse, ListDatabasesApiResponse } from '@/models/api'
 import { AuthenticatedUser } from '@/models/auth'
 import { loadAbort } from '@/utilities'
 
@@ -33,6 +33,30 @@ export const loginService = (credential: Credential): AxiosCall<AuthenticatedUse
   }
 }
 
+export const listDatabasesService = (credentials: Omit<Credential, 'dbname'>): AxiosCall<string[]> => {
+  const controller = loadAbort()
+
+  const adapterCredential = {
+    host: credentials.server,
+    user: credentials.username,
+    password: credentials.password,
+  }
+
+  const adapterCall = api
+    .post<ListDatabasesApiResponse>('/auth/databases', adapterCredential, {
+      signal: controller.signal,
+    })
+    .then((response) => ({
+      ...response,
+      data: response.data.data,
+    }))
+
+  return {
+    call: adapterCall,
+    controller,
+  }
+}
+
 export const logoutService = (): AxiosCall<void> => {
   const controller = loadAbort()
 
@@ -45,6 +69,26 @@ export const logoutService = (): AxiosCall<void> => {
         withCredentials: true, // true: para enviar la cookie en el payload
       },
     ),
+    controller,
+  }
+}
+
+export const listDatabasesAuthenticatedService = (): AxiosCall<string[]> => {
+  const controller = loadAbort()
+
+  const adapterCall = api.post<ListDatabasesApiResponse>('/auth/databases', {}, { signal: controller.signal }).then((response) => ({
+    ...response,
+    data: response.data.data,
+  }))
+
+  return { call: adapterCall, controller }
+}
+
+export const switchDatabaseService = (database: string): AxiosCall<void> => {
+  const controller = loadAbort()
+
+  return {
+    call: api.patch('/auth/switch-database', { database }, { signal: controller.signal }),
     controller,
   }
 }

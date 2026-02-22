@@ -26,6 +26,10 @@ export const useAuthStore = create<BearAuthState>()(
         clearSession: (): void => set({ ...initialState }),
         updateToken: (token: string): void => set({ token: token }),
         updateErrorApiConnection: (state: boolean): void => set({ errorApiConnection: state }),
+        updateDatabase: (database: string): void =>
+          set((state) => ({
+            authContext: state.authContext ? { ...state.authContext, database } : null,
+          })),
       }),
       {
         name: 'app.auth.local',

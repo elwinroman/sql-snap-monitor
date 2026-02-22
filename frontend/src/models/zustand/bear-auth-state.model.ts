@@ -39,4 +39,10 @@ export interface BearAuthState {
    * @param state - Estado booleano del error de conexión.
    */
   updateErrorApiConnection: (state: boolean) => void
+
+  /**
+   * Actualiza el nombre de la base de datos activa en el contexto de autenticación.
+   * @param database - Nuevo nombre de la base de datos.
+   */
+  updateDatabase: (database: string) => void
 }
