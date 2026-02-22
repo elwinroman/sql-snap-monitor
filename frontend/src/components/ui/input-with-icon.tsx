@@ -19,7 +19,7 @@ const InputWithIcon = forwardRef<HTMLInputElement, InputWithIconProps>(
     const EndIcon = endIcon
 
     return (
-      <div className="bg-palette-grey-500/8 hover:bg-palette-grey-500/16 focus:bg-palette-grey-500/16 relative flex h-10 w-full items-center gap-2 rounded-sm px-3 py-2 transition-colors">
+      <div className="bg-palette-grey-500/8 hover:bg-palette-grey-500/16 focus:bg-palette-grey-500/16 relative flex h-9 w-full items-center gap-2 rounded-sm px-3 py-2 transition-colors">
         {StartIcon && <>{cloneElement(StartIcon, { className: cn(' h-[18px] w-[18px]', StartIcon.props.className ?? '') })}</>}
         <input
           type={type}

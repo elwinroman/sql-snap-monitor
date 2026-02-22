@@ -5,7 +5,7 @@ import { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center rounded-sm text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50',
+  'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center rounded-sm text-sm font-medium whitespace-nowrap transition-colors focus-visible:ring-2  focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -16,6 +16,7 @@ const buttonVariants = cva(
         ghost: 'hover:bg-action-hover hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         // customizado
+        myGhost: 'bg-palette-grey-500/8 hover:bg-palette-grey-500/16 text-muted',
         disabled: 'bg-action-disabled text-disabled',
         danger: 'bg-amber-500 text-zinc-800 hover:bg-amber-500/90',
         success: 'bg-green-600 text-white hover:bg-green-600/90',
