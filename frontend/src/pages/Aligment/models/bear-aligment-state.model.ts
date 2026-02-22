@@ -20,6 +20,9 @@ export interface BearAligmentState {
   /** Objeto SQL cargado en el contexto de alineación. Si no hay ninguno cargado, es `null`. */
   sysobject: FullSysObject | null
 
+  /** Código disponible visualmente en el editor (monaco) */
+  currentEditorCode: string
+
   createSysObject: (sysobject: FullSysObject | null) => void
 
   /** Establece un nuevo modo de visualización para el objeto. */
@@ -27,6 +30,9 @@ export interface BearAligmentState {
 
   /** Cambia la visibilidad del menú lateral. */
   updateHideMenu: (state: boolean) => void
+
+  /** Establece el código del editor */
+  updateCurrentEditorCode: (code: string) => void
 
   /** Reinicia el estado al valor inicial por defecto. */
   reset: () => void

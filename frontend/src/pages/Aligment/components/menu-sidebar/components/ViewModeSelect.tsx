@@ -15,7 +15,7 @@ export function ViewModeSelect() {
       <label className="flex flex-col gap-1.5">
         <span className="text-sm font-semibold">Vista</span>
         <Select value={viewMode} onValueChange={(value) => handleChange(value as ViewMode)}>
-          <SelectTrigger className="h-10 w-full">
+          <SelectTrigger className="h-9 w-full">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

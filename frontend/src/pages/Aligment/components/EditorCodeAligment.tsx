@@ -3,46 +3,27 @@ import { useAligmentStore } from '@aligment/zustand/aligment.store'
 import Editor from '@monaco-editor/react'
 import { Monaco } from '@monaco-editor/react'
 
-import { CopyClipboard } from '@/components/CopyClipboard'
 import { CircleLoader } from '@/components/loader'
 import { BaseMonacoEditorOptions, MonacoThemes } from '@/constants'
 import { EDITOR_BANNER } from '@/enviroment/enviroment'
-import { TypeViews } from '@/models/sysobject'
-import { ensureBuiltinTheme, formatPermissionRoles } from '@/utilities'
+import { ensureBuiltinTheme, getFormattedCodeForViewMode } from '@/utilities'
 import { useAppStore, useEditorOptionsStore } from '@/zustand'
 
 export function EditorCodeAligment() {
+  const { renderWhitespace, fontSize, minimap, theme, stickyScroll, guides } = useEditorOptionsStore((state) => state)
   const isDark = useAppStore((state) => state.isDark)
-  const renderWhitespace = useEditorOptionsStore((state) => state.renderWhitespace)
-  const fontSize = useEditorOptionsStore((state) => state.fontSize)
-  const theme = useEditorOptionsStore((state) => state.theme)
   const viewMode = useAligmentStore((state) => state.viewMode)
   const sysobject = useAligmentStore((state) => state.sysobject)
+  const updateCurrentEditorCode = useAligmentStore((state) => state.updateCurrentEditorCode)
 
   const { error, loading } = useSearchContext()
-
   let code = EDITOR_BANNER
 
-  if (sysobject) {
-    // formatea roles
-    const roles = formatPermissionRoles({ permission: sysobject.permission, schemaName: sysobject.schemaName, objectName: sysobject.name })
-
-    switch (viewMode) {
-      case TypeViews.FullView:
-        code = sysobject.definition + roles
-        break
-      case TypeViews.ObjectOnly:
-        code = sysobject.definition
-        break
-      case TypeViews.RolesOnly:
-        code = roles === '' ? 'WARNING: El objeto existe pero no tiene roles asignados' : roles
-        break
-      default:
-        code = sysobject.definition + roles
-    }
-  }
-
+  if (sysobject) code = getFormattedCodeForViewMode(sysobject, viewMode)
   if (error) code = error.detail
+
+  // guarda siempre el código calculado del editor (para copiar)
+  updateCurrentEditorCode(code)
 
   // cargar temas (estilos) de monaco
   const handleBeforeMount = (monaco: Monaco) => {
@@ -54,11 +35,11 @@ export function EditorCodeAligment() {
     }
   }
 
-  const fullOptions = { ...BaseMonacoEditorOptions, renderWhitespace, fontSize }
+  const fullOptions = { ...BaseMonacoEditorOptions, renderWhitespace, fontSize, minimap, stickyScroll, guides }
 
   return (
-    // `overflow-auto h-full` soluciona el error de debordamiento
-    <div className="group relative h-full overflow-auto">
+    // `overflow-auto h-full` soluciona el error de desbordamiento
+    <div className="group relative h-full w-full overflow-auto">
       <Editor
         beforeMount={handleBeforeMount}
         language={sysobject ? 'sql' : 'shell'}
@@ -68,11 +49,6 @@ export function EditorCodeAligment() {
         options={{ ...fullOptions }}
         loading={<CircleLoader visible={true} color={isDark ? 'white' : 'black'} />}
       />
-
-      {/* Copiar */}
-      <div className="absolute top-3 right-36">
-        <CopyClipboard text={code} />
-      </div>
     </div>
   )
 }

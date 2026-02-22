@@ -28,3 +28,23 @@ export type IRenderWhitespace = NonNullable<monaco.editor.IEditorOptions['render
  * garantiza que no sea `undefined`.
  */
 export type IRenderSideBySide = NonNullable<monaco.editor.IDiffEditorBaseOptions['renderSideBySide']>
+
+/**
+ * Tipo para la propiedad `minimap` del editor Monaco,
+ * garantiza que no sea `undefined`.
+ */
+export type IMinimap = NonNullable<monaco.editor.IEditorOptions['minimap']>
+
+/**
+ * Tipo para la propiedad `stickyScroll` del editor Monaco,
+ * garantiza que no sea `undefined`.
+ */
+export type IEditorStickyScrollOptions = NonNullable<monaco.editor.IEditorOptions['stickyScroll']>
+
+/**
+ * Tipo para la propiedad `guides` del editor Monaco,
+ * garantiza que no sea `undefined`.
+ */
+export type IGuidesOptions = NonNullable<monaco.editor.IEditorOptions['guides']>
+
+export type ICodeEditor = monaco.editor.IStandaloneCodeEditor

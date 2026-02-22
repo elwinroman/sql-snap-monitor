@@ -27,7 +27,7 @@ export function FontSize() {
         </i>
       </button>
 
-      <div className="bg-background-neutral border border-gray-500/20">
+      <div className="bg-background-neutral grid place-content-center border border-gray-500/20">
         <span className="px-1.5 text-xs">{fontSize}</span>
       </div>
 

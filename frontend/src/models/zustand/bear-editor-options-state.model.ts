@@ -1,4 +1,12 @@
-import { IFontSize, IMonacoTheme, IRenderSideBySide, IRenderWhitespace } from '@/models'
+import {
+  IEditorStickyScrollOptions,
+  IFontSize,
+  IGuidesOptions,
+  IMinimap,
+  IMonacoTheme,
+  IRenderSideBySide,
+  IRenderWhitespace,
+} from '@/models'
 
 /**
  * Estado de configuración del editor de código, que controla
@@ -17,6 +25,15 @@ export interface BearEditorOptionsState {
    */
   renderSideBySide: IRenderSideBySide
 
+  /** Configura la visibilidad del minimapa (pequeña vista previa del código a la derecha). */
+  minimap: IMinimap
+
+  /** Habilita el "sticky scroll" (encabezado flotante que muestra el contexto del código). */
+  stickyScroll: IEditorStickyScrollOptions
+
+  /** Muestra guias verticales de indentación */
+  guides: IGuidesOptions
+
   /** Tema visual aplicado al editor, e.g., 'light', 'dark', etc. */
   theme: IMonacoTheme
 
@@ -29,6 +46,18 @@ export interface BearEditorOptionsState {
   /** Establece si el editor muestra vista lado a lado o no. */
   updateRenderSideBySide: (state: IRenderSideBySide) => void
 
+  /** Estable si se muestra el minimapa */
+  updateMinimap: (state: boolean) => void
+
+  /** Habilita o deshabilita el sticky scroll */
+  updateStickyScroll: (state: boolean) => void
+
+  /** Actualiza las guía de indentación verticales */
+  updateGuides: (state: boolean) => void
+
   /** Cambia el tema visual del editor. */
   updateTheme: (theme: IMonacoTheme) => void
+
+  /** Resetea los valores */
+  resetEditorOptions: () => void
 }

@@ -4,11 +4,27 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { MAX_FONT_SIZE, MIN_FONT_SIZE } from '@/enviroment/enviroment'
 import { BearEditorOptionsState } from '@/models/zustand'
 
-const initialState: Pick<BearEditorOptionsState, 'fontSize' | 'renderWhitespace' | 'renderSideBySide' | 'theme'> = {
+const initialState: Pick<
+  BearEditorOptionsState,
+  'fontSize' | 'renderWhitespace' | 'renderSideBySide' | 'theme' | 'minimap' | 'stickyScroll' | 'guides'
+> = {
   fontSize: 13,
   renderWhitespace: 'none',
   renderSideBySide: true,
   theme: 'oceanicnext',
+  minimap: {
+    enabled: true,
+    side: 'right',
+    renderCharacters: true,
+    showSlider: 'mouseover',
+  },
+  stickyScroll: {
+    enabled: false,
+  },
+  guides: {
+    highlightActiveIndentation: true,
+    indentation: false,
+  },
 }
 
 export const useEditorOptionsStore = create<BearEditorOptionsState>()(
@@ -22,6 +38,28 @@ export const useEditorOptionsStore = create<BearEditorOptionsState>()(
       updateRenderWhitespace: (value) => set({ renderWhitespace: value }),
       updateRenderSideBySide: (state) => set({ renderSideBySide: state }),
       updateTheme: (theme) => set({ theme }),
+      updateMinimap: (state) =>
+        set((prev) => ({
+          minimap: {
+            ...prev.minimap,
+            enabled: state,
+          },
+        })),
+      updateStickyScroll: (state) =>
+        set((prev) => ({
+          stickyScroll: {
+            ...prev.stickyScroll,
+            enabled: state,
+          },
+        })),
+      updateGuides: (state) =>
+        set((prev) => ({
+          guides: {
+            ...prev.guides,
+            indentation: state,
+          },
+        })),
+      resetEditorOptions: () => set({ ...initialState }),
     }),
     {
       name: 'app.global.monacoeditor.options',

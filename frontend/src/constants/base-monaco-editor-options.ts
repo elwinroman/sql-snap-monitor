@@ -4,9 +4,6 @@ export const BaseMonacoEditorOptions: monaco.editor.IStandaloneEditorConstructio
   /** Si `true`, el editor será de solo lectura. */
   readOnly: true,
 
-  /** Configura la visibilidad del minimapa (pequeña vista previa del código a la derecha). */
-  minimap: { enabled: true },
-
   /** Fuente utilizada en el editor. */
   fontFamily: 'Fira Code Variable',
 
@@ -22,7 +19,7 @@ export const BaseMonacoEditorOptions: monaco.editor.IStandaloneEditorConstructio
   /** Configura la visibilidad de las barras de desplazamiento horizontal y vertical. */
   scrollbar: {
     /** Oculta la barra de desplazamiento vertical. */
-    vertical: 'hidden',
+    vertical: 'auto',
     /** Muestra la barra horizontal solo si es necesario. */
     horizontal: 'auto',
   },
@@ -47,10 +44,4 @@ export const BaseMonacoEditorOptions: monaco.editor.IStandaloneEditorConstructio
    * Mejora el rendimiento en archivos grandes. -1 significa sin límite.
    */
   stopRenderingLineAfter: 1000,
-
-  /** Habilita el "sticky scroll" (encabezado flotante que muestra el contexto del código). */
-  stickyScroll: {
-    /** Activa o desactiva el sticky scroll. */
-    enabled: false,
-  },
 }

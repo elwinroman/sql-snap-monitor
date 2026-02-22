@@ -27,4 +27,9 @@ export const TypeSysObjects = {
     typeDesc: 'SQL_SCALAR_FUNCTION',
     description: 'Función escalar',
   },
+  Usertable: {
+    type: 'U',
+    typeDesc: 'USERTABLE',
+    description: 'Tabla de usuario',
+  },
 } as const

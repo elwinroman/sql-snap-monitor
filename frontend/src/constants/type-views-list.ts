@@ -13,8 +13,8 @@ export const TypeViewsList = [
     id: TypeViews.RolesOnly,
     name: 'Solo Roles',
   },
-  {
-    id: TypeViews.ParametersOnly,
-    name: 'Solo Parámetros',
-  },
+  // {
+  //   id: TypeViews.ParametersOnly,
+  //   name: 'Solo Parámetros',
+  // },
 ]

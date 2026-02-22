@@ -19,7 +19,7 @@ export function AligmentPage() {
     if (error) {
       toast.warning(error.title, {
         description: error.detail,
-        duration: 5000,
+        duration: 6000,
       })
     }
   }, [error])

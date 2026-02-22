@@ -1,3 +1,5 @@
+export * from './api-sysobject-type.model'
+export * from './base-sysobject-type.model'
 export * from './permission.model'
 export * from './sysobject.model'
 export * from './sysobject-suggestion.model'

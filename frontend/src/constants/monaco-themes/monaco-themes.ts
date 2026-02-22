@@ -66,3 +66,5 @@ export const MonacoThemes = {
     json: Themes.iPlastic,
   },
 } as const
+
+export const ThemeKeys = Object.fromEntries(Object.keys(MonacoThemes).map((key) => [key, key])) as { [K in keyof typeof MonacoThemes]: K }

@@ -14,7 +14,7 @@ export const TypeViews = {
   RolesOnly: 'vm-roles-only',
 
   /** Muestra únicamente los parámetros definidos del procedimiento u objeto. */
-  ParametersOnly: 'vm-parameters-only',
+  // ParametersOnly: 'vm-parameters-only', // disabled
 } as const
 
 /**
