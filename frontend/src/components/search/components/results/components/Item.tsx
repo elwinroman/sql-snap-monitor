@@ -1,5 +1,4 @@
 import { searchContext } from '@/components/search/context/searchContext'
-import { useSysObjectStore } from '@/zustand'
 
 interface Props {
   children: React.ReactNode
@@ -8,17 +7,15 @@ interface Props {
 }
 
 export function Item({ children, objectId, updateOpen }: Props) {
-  const fetchSysObject = useSysObjectStore((state) => state.fetchSysObject)
-
-  const { updateSuggestions, updateQuerySearch } = searchContext()
+  const { onSelect, updateSuggestions, updateQuerySearch } = searchContext()
 
   const handleClickGetObject = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     const id = Number(e.currentTarget.dataset.objectId)
 
-    // dispara el fetch en el store (sobrevive al desmontaje del componente)
-    fetchSysObject(id)
+    // dispara el fetch via callback (cada página decide qué store usar)
+    onSelect(id)
 
     // cierra el modal inmediatamente
     updateOpen(false)

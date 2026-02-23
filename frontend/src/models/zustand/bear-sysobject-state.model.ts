@@ -22,8 +22,14 @@ export interface BearSysObjectState {
   /** Indica si se está cargando un objeto desde el buscador */
   isLoadingObject: boolean
 
+  /** Error al obtener el objeto SQL */
+  errorObject: { title: string; detail: string } | null
+
   /** Obtiene un objeto por ID desde la API y actualiza el store */
   fetchSysObject: (id: number) => Promise<void>
+
+  /** Actualiza el error del objeto SQL */
+  updateErrorObject: (error: { title: string; detail: string } | null) => void
 
   /** Objeto SQL de pre-producción para comparación. Si no existe, es `null`. */
   prodSysobject: FullSysObject | null

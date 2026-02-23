@@ -27,15 +27,15 @@ export function Recents({ recents, updateOpen, onDelete }: Props) {
       {limitedRecents.map((data) => (
         <div key={data.objectId} className="group/recent relative">
           <Item objectId={data.objectId} updateOpen={updateOpen}>
-            <History size={14} className="text-primary mt-0.5" />
-            <div className="flex w-full items-center justify-between gap-1 transition-colors">
-              <span className="text-primary overflow-hidden">{data.objectName}</span>
+            <History size={14} className="text-primary/90 mt-0.5" />
+            <div className="text-primary/90 flex w-full items-center justify-between gap-1 transition-colors">
+              <span className="overflow-hidden">{data.objectName}</span>
             </div>
           </Item>
           <button
             type="button"
             title="Eliminar búsqueda reciente"
-            className="text-secondary hover:text-danger absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer opacity-0 transition-opacity group-hover/recent:opacity-100"
+            className="text-primary/90 hover:text-danger absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer opacity-0 transition-opacity group-hover/recent:opacity-100"
             onClick={(e) => handleDelete(e, data.id)}
           >
             <X size={14} />

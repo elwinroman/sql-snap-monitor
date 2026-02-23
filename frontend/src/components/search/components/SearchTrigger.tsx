@@ -1,8 +1,9 @@
-import { dialogSearchContext } from '@sqldefinition/contexts/dialogSearchContext'
 import { Search as SearchIcon } from 'lucide-react'
 import { useEffect } from 'react'
 
 import { Button } from '@/components/ui'
+
+import { dialogSearchContext } from '../context/dialogSearchContext'
 
 export function SearchTrigger() {
   const { open, updateOpen } = dialogSearchContext()

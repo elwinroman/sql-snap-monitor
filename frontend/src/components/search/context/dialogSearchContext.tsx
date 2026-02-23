@@ -23,7 +23,7 @@ export const DialogSearchProvider = ({ children }: ContextProps) => {
 
 export const dialogSearchContext = () => {
   const context = useContext(DialogSearchContext)
-  if (!context) throw new Error(`${dialogSearchContext.name} debe usarse dentro de <DialogSearchContext>`)
+  if (!context) throw new Error(`${dialogSearchContext.name} debe usarse dentro de <DialogSearchProvider>`)
 
   return context
 }

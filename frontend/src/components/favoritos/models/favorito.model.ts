@@ -6,7 +6,7 @@ export interface Favorito {
   objectName: string
   type: BaseSysObjectType
   date: string | Date
-  objectId: number
+  objectId: number | null
 }
 
 export interface FavoritoApiResponse {

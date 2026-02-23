@@ -1,8 +1,8 @@
-import { dialogSearchContext } from '@sqldefinition/contexts/dialogSearchContext'
 import { useEffect } from 'react'
 
 import { CircleLoader } from '@/components/loader'
 
+import { dialogSearchContext } from '../../context/dialogSearchContext'
 import { searchContext } from '../../context/searchContext'
 import { useRecents } from '../../hooks/useRecents'
 import { CardWrapper } from './components/CardWrapper'
@@ -10,9 +10,9 @@ import { Item } from './components/Item'
 import { Recents } from './components/Recents'
 
 export function Results() {
-  const { suggestions, querySearch, loading: loadingSuggestions } = searchContext()
+  const { suggestions, querySearch, loading: loadingSuggestions, type } = searchContext()
   const { open, updateOpen } = dialogSearchContext()
-  const { recents, getRecents, deleteRecent, loading: loadingRecents } = useRecents('ALL_EXCEPT_USERTABLE')
+  const { recents, getRecents, deleteRecent, loading: loadingRecents } = useRecents(type)
 
   useEffect(() => {
     if (!open) return

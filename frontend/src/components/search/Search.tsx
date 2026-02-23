@@ -1,9 +1,9 @@
-import { dialogSearchContext } from '@sqldefinition/contexts/dialogSearchContext'
 import { Search as SearchIcon } from 'lucide-react'
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui'
 
 import { Results } from './components/results/Results'
+import { dialogSearchContext } from './context/dialogSearchContext'
 import { searchContext } from './context/searchContext'
 
 export function Search() {

@@ -1,19 +1,29 @@
 import { ArrowLeftToLine, ArrowRightToLine } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { ImperativePanelHandle } from 'react-resizable-panels'
+import { toast } from 'sonner'
 
+import { FavoritoProvider } from '@/components/favoritos'
+import { DialogSearchProvider } from '@/components/search/context/dialogSearchContext'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui'
+import { useSysObjectStore } from '@/zustand/sysobject.store'
 
-import { DialogSearchProvider } from '../../contexts/dialogSearchContext'
-import { FavoritoProvider } from '../../contexts/favoritoContext'
 import { EditorCode, HeaderEditor, PanelEditor } from './components'
 
 export function ScriptContent() {
   const leftPanelRef = useRef<ImperativePanelHandle>(null)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
+  const error = useSysObjectStore((state) => state.errorObject)
+  const updateError = useSysObjectStore((state) => state.updateErrorObject)
+
+  useEffect(() => {
+    if (!error) return
+    toast.error(error.title, { description: error.detail })
+    updateError(null)
+  }, [error, updateError])
 
   // Ocultar/mostrar submenu
-  const handleHidePanel = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleHidePanel = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
     if (!leftPanelRef.current) return
@@ -23,10 +33,10 @@ export function ScriptContent() {
 
     if (isCollapsedCurrent) leftPanelRef.current.expand()
     else leftPanelRef.current.collapse()
-  }
+  }, [])
 
   return (
-    <FavoritoProvider>
+    <FavoritoProvider type="ALL_EXCEPT_USERTABLE">
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes) => {

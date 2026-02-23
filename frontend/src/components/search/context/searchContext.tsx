@@ -9,6 +9,9 @@ interface ContextProps {
 
   /** Tipo de búsqueda (para SQLDefinition y Usertable) */
   type: ApiSysObjectType
+
+  /** Callback al seleccionar un objeto (search result, recent, etc.) */
+  onSelect(objectId: number): void
 }
 
 export interface SearchContextType {
@@ -23,19 +26,25 @@ export interface SearchContextType {
     title: string
     detail: string
   } | null
+
+  /** Tipo de búsqueda */
+  type: ApiSysObjectType
+
+  /** Callback al seleccionar un objeto */
+  onSelect(objectId: number): void
 }
 
 // crea contexto
 export const SearchContext = createContext<SearchContextType | null>(null)
 
 // provider
-export const SearchProvider = ({ children, type }: ContextProps) => {
+export const SearchProvider = ({ children, type, onSelect }: ContextProps) => {
   const { querySearch, suggestions, updateQuerySearch, updateSuggestions, debounceGetSuggestions, loading, error } =
     useSearchSuggestions(type)
 
   return (
     <SearchContext.Provider
-      value={{ querySearch, suggestions, updateQuerySearch, updateSuggestions, debounceGetSuggestions, loading, error }}
+      value={{ querySearch, suggestions, updateQuerySearch, updateSuggestions, debounceGetSuggestions, loading, error, type, onSelect }}
     >
       {children}
     </SearchContext.Provider>

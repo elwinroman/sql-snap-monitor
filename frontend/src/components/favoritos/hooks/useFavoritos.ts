@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
+import type { ApiSysObjectType } from '@/models/sysobject'
 
 import type { Favorito } from '../models/favorito.model'
 import { deleteFavoritoService, getFavoritosService, upsertFavoritoService } from '../services/favorito.service'
 
-export const useFavoritos = () => {
+export const useFavoritos = (type: ApiSysObjectType) => {
   const [favoritos, setFavoritos] = useState<Favorito[]>([])
   const { callEndpoint, loading } = useFetchAndLoad<Favorito[]>()
   const { callEndpoint: callUpsertEndpoint } = useFetchAndLoad<{ message: string }>()
@@ -13,16 +14,16 @@ export const useFavoritos = () => {
 
   const getFavoritos = async () => {
     try {
-      const response = await callEndpoint(getFavoritosService({ type: 'ALL_EXCEPT_USERTABLE', limit: 80 }))
+      const response = await callEndpoint(getFavoritosService({ type, limit: 80 }))
       setFavoritos(response.data)
     } catch (err) {
       console.error('Error al obtener favoritos: ', err)
     }
   }
 
-  const upsertFavorito = async (schema: string, objectName: string, type: string) => {
+  const upsertFavorito = async (schema: string, objectName: string, objectType: string) => {
     try {
-      await callUpsertEndpoint(upsertFavoritoService({ schema, objectName, type }))
+      await callUpsertEndpoint(upsertFavoritoService({ schema, objectName, type: objectType }))
       await getFavoritos()
     } catch (err) {
       console.error('Error al registrar favorito: ', err)

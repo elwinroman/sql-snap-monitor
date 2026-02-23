@@ -1,5 +1,8 @@
 import { createContext, type ReactNode, useContext, useEffect } from 'react'
 
+import type { ApiSysObjectType } from '@/models/sysobject'
+import { useAuthStore } from '@/zustand'
+
 import { useFavoritos } from '../hooks/useFavoritos'
 import type { Favorito } from '../models/favorito.model'
 
@@ -16,14 +19,16 @@ const FavoritoContext = createContext<FavoritoContextType | null>(null)
 
 interface Props {
   children: ReactNode
+  type: ApiSysObjectType
 }
 
-export function FavoritoProvider({ children }: Props) {
-  const { favoritos, getFavoritos, upsertFavorito, deleteFavorito, isFavorito, loading } = useFavoritos()
+export function FavoritoProvider({ children, type }: Props) {
+  const { favoritos, getFavoritos, upsertFavorito, deleteFavorito, isFavorito, loading } = useFavoritos(type)
+  const database = useAuthStore((state) => state.authContext?.database)
 
   useEffect(() => {
     getFavoritos()
-  }, [])
+  }, [database])
 
   return (
     <FavoritoContext.Provider value={{ favoritos, getFavoritos, upsertFavorito, deleteFavorito, isFavorito, loading }}>
