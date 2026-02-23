@@ -12,7 +12,7 @@ import { Recents } from './components/Recents'
 export function Results() {
   const { suggestions, querySearch, loading: loadingSuggestions } = searchContext()
   const { open, updateOpen } = dialogSearchContext()
-  const { recents, getRecents, loading: loadingRecents } = useRecents('ALL_EXCEPT_USERTABLE')
+  const { recents, getRecents, deleteRecent, loading: loadingRecents } = useRecents('ALL_EXCEPT_USERTABLE')
 
   useEffect(() => {
     if (!open) return
@@ -28,7 +28,9 @@ export function Results() {
 
       {!loadingSuggestions && noResults && <p className="text-secondary mt-5 text-center">Sin resultados</p>}
 
-      {!loadingRecents && !isSearching && recents.length > 0 && <Recents recents={recents} updateOpen={updateOpen} />}
+      {!loadingRecents && !isSearching && recents.length > 0 && (
+        <Recents recents={recents} updateOpen={updateOpen} onDelete={deleteRecent} />
+      )}
 
       {!loadingSuggestions && isSearching && suggestions.length > 0 && (
         <CardWrapper title="Sugerencias">

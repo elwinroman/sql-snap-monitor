@@ -26,6 +26,7 @@ interface CacheEntry {
 }
 
 const CACHE_PREFIX = 'busqueda-reciente'
+const MAX_ENTRIES_PER_KEY = 80
 
 export class ValkeyCacheBusquedaRecienteRepositoryAdapter implements ForBusquedaRecienteRepositoryPort {
   async createOrUpdate(input: BusquedaRecienteInput): Promise<boolean> {
@@ -53,7 +54,7 @@ export class ValkeyCacheBusquedaRecienteRepositoryAdapter implements ForBusqueda
     }
 
     entries.sort((a, b) => new Date(b.dateSearch).getTime() - new Date(a.dateSearch).getTime())
-    await this.writeEntries(key, entries)
+    await this.writeEntries(key, entries.slice(0, MAX_ENTRIES_PER_KEY))
 
     return true
   }

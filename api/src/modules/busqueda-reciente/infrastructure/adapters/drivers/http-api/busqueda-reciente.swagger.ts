@@ -14,7 +14,8 @@ registry.registerPath({
   path: '/api/v1/busqueda-reciente',
   tags: ['Búsqueda Reciente'],
   summary: 'Obtener búsquedas recientes',
-  description: 'Lista las búsquedas recientes del usuario autenticado, filtradas por tipo de objeto y limitadas por cantidad.',
+  description:
+    'Lista las búsquedas recientes del usuario autenticado desde cache (Valkey). Filtradas por tipo de objeto SQL y limitadas por cantidad. Los datos tienen un TTL configurable y se eliminan automáticamente al expirar.',
   security: [{ BearerAuth: [] }],
   request: {
     query: GetAllBusquedaRecienteQuerySchema,
@@ -34,7 +35,8 @@ registry.registerPath({
   path: '/api/v1/busqueda-reciente/{id}',
   tags: ['Búsqueda Reciente'],
   summary: 'Eliminar búsqueda reciente',
-  description: 'Elimina una búsqueda reciente por su ID.',
+  description:
+    'Elimina una búsqueda reciente por su ID (hash MD5 de 32 caracteres, generado a partir de userId + database + schema + objectName).',
   security: [{ BearerAuth: [] }],
   request: {
     params: DeleteBusquedaRecienteParamsSchema,

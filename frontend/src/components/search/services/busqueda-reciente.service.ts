@@ -31,3 +31,13 @@ export const getBusquedasRecientesService = (queryParams: QueryParams): AxiosCal
     controller,
   }
 }
+
+export const deleteBusquedaRecienteService = (id: string): AxiosCall<{ msg: string }> => {
+  const controller = loadAbort()
+
+  const call = api.delete<{ msg: string }>(`/busqueda-reciente/${id}`, {
+    signal: controller.signal,
+  })
+
+  return { call, controller }
+}
