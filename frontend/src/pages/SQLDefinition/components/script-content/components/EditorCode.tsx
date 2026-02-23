@@ -6,7 +6,9 @@ import { CircleLoader } from '@/components/loader'
 import { BaseMonacoEditorOptions, MonacoThemes } from '@/constants'
 import { EDITOR_BANNER } from '@/enviroment/enviroment'
 import { ensureBuiltinTheme, getFormattedCodeForViewMode } from '@/utilities'
-import { useAppStore, useEditorOptionsStore, useSysObjectStore } from '@/zustand'
+import { useAppStore, useEditorOptionsStore } from '@/zustand'
+
+import { useSysObjectStore } from '../../../store/sysobject.store'
 
 export function EditorCode() {
   const { renderWhitespace, fontSize, minimap, theme, stickyScroll, guides } = useEditorOptionsStore((state) => state)

@@ -1,8 +1,8 @@
 import { ChevronRight } from 'lucide-react'
 
 import { ConfigOptionEditor } from '@/components/editor-option'
-import { useSysObjectStore } from '@/zustand'
 
+import { useSysObjectStore } from '../../../store/sysobject.store'
 import { SideBySideToggle } from './SideBySideToggle'
 
 export function HeaderDiffEditor() {

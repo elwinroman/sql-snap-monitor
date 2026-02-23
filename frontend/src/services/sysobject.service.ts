@@ -1,8 +1,8 @@
 import { createSysObjectAdapter, suggestionsAdapter } from '@/adapters'
 import api from '@/interceptors/auth-token.interceptor'
-import { AxiosCall } from '@/models'
-import { FullSysObjectApiResponse, SysObjectSuggestionsApiResponse } from '@/models/api'
-import { ApiSysObjectType, FullSysObject, SysObjectSuggestion } from '@/models/sysobject'
+import type { AxiosCall } from '@/models'
+import type { FullSysObjectApiResponse, SysObjectSuggestionsApiResponse } from '@/models/api'
+import type { ApiSysObjectType, FullSysObject, SysObjectSuggestion } from '@/models/sysobject'
 import { loadAbort } from '@/utilities'
 
 interface QuerySysObjectParams {
@@ -51,27 +51,6 @@ export const getSearchSuggestionsService = (queryParams: QuerySuggestionParams):
       return {
         ...response,
         data: suggestionsAdapter(response.data),
-      }
-    })
-
-  return {
-    call: adapterCall,
-    controller,
-  }
-}
-
-/** Obtiene un objeto de tipo SQL Definition por ID */
-export const getSysObjectByIdService = (id: number): AxiosCall<FullSysObject> => {
-  const controller = loadAbort()
-
-  const adapterCall = api
-    .get<FullSysObjectApiResponse>(`/sysobject/${id}`, {
-      signal: controller.signal,
-    })
-    .then(async (response) => {
-      return {
-        ...response,
-        data: createSysObjectAdapter(response.data),
       }
     })
 

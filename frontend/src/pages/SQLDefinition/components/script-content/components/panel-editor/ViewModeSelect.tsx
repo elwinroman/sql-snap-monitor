@@ -1,7 +1,8 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
 import { TypeViewsList } from '@/constants'
 import { ViewMode } from '@/models/sysobject'
-import { useSysObjectStore } from '@/zustand'
+
+import { useSysObjectStore } from '../../../../store/sysobject.store'
 
 export function ViewModeSelect() {
   const viewMode = useSysObjectStore((state) => state.viewMode)

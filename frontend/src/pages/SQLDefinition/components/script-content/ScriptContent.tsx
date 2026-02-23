@@ -6,8 +6,8 @@ import { toast } from 'sonner'
 import { FavoritoProvider } from '@/components/favoritos'
 import { DialogSearchProvider } from '@/components/search/context/dialogSearchContext'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui'
-import { useSysObjectStore } from '@/zustand/sysobject.store'
 
+import { useSysObjectStore } from '../../store/sysobject.store'
 import { EditorCode, HeaderEditor, PanelEditor } from './components'
 
 export function ScriptContent() {

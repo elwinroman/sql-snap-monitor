@@ -2,7 +2,8 @@ import { ChevronRight } from 'lucide-react'
 
 import { ConfigOptionEditor, CopyCode, DownloadScript } from '@/components/editor-option'
 import { ToggleFavoritoButton, useFavoritoContext } from '@/components/favoritos'
-import { useSysObjectStore } from '@/zustand'
+
+import { useSysObjectStore } from '../../../store/sysobject.store'
 
 export function HeaderEditor() {
   const sysobject = useSysObjectStore((state) => state.sysobject)

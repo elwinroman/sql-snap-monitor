@@ -8,8 +8,9 @@ import { CircleLoader } from '@/components/loader'
 import { BaseMonacoEditorOptions, MonacoThemes } from '@/constants'
 import { EDITOR_BANNER } from '@/enviroment/enviroment'
 import { ensureBuiltinTheme, getFormattedCodeForViewMode } from '@/utilities'
-import { useAppStore, useAuthStore, useEditorOptionsStore, useSysObjectStore } from '@/zustand'
+import { useAppStore, useAuthStore, useEditorOptionsStore } from '@/zustand'
 
+import { useSysObjectStore } from '../../../store/sysobject.store'
 import { useInjectionComponent } from './useInjectionComponent'
 
 const DIFF_EDITOR_OPTIONS = {

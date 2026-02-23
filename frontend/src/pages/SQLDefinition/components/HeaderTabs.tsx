@@ -3,9 +3,9 @@ import { GitCompareArrows } from 'lucide-react'
 
 import { TabsList, TabsTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { LOCAL_LANGUAJE } from '@/enviroment/enviroment'
-import { useSysObjectStore } from '@/zustand'
 
 import { TabOption } from '../constants/tabs-options'
+import { useSysObjectStore } from '../store/sysobject.store'
 
 export function HeaderTabs() {
   const sysobject = useSysObjectStore((state) => state.sysobject)

@@ -3,23 +3,81 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { FullSysObject, TypeViews, ViewMode } from '@/models/sysobject'
-import { BearSysObjectState } from '@/models/zustand'
-import { getProdSysObjectService, getSysObjectByIdService } from '@/services/sysobject.service'
+import { getProdSysObjectService } from '@/services'
 
-const initialState: Pick<BearSysObjectState, 'viewMode' | 'sysobject' | 'prodSysobject'> = {
+import { getSysObjectByIdService } from '../services/sysobject.service'
+
+interface SysObjectError {
+  title: string
+  detail: string
+}
+
+interface SysObjectState {
+  /** Modo de visualización actual para el objeto SQL. */
+  viewMode: ViewMode
+
+  /** Objeto SQL. Si no existe, es `null`. */
+  sysobject: FullSysObject | null
+
+  /** Código disponible visualmente en el editor (monaco) */
+  currentEditorCode: string
+
+  /** Indica si se está cargando un objeto desde el buscador */
+  isLoadingObject: boolean
+
+  /** Error al obtener el objeto SQL */
+  errorObject: SysObjectError | null
+
+  /** Obtiene un objeto por ID desde la API y actualiza el store */
+  fetchSysObject: (id: number) => Promise<void>
+
+  /** Actualiza el error del objeto SQL */
+  updateErrorObject: (error: SysObjectError | null) => void
+
+  /** Objeto SQL de pre-producción para comparación. Si no existe, es `null`. */
+  prodSysobject: FullSysObject | null
+
+  /** Indica si se está cargando el objeto de pre-producción */
+  isLoadingProdObject: boolean
+
+  /** Error al obtener el objeto de pre-producción */
+  errorProdObject: SysObjectError | null
+
+  /** Obtiene el objeto de pre-producción desde la API para comparación */
+  fetchProdSysObject: () => Promise<void>
+
+  /** Crea el objeto con la data recuperada en el buscador */
+  createSysObject: (sysobject: FullSysObject | null) => void
+
+  /** Establece un nuevo modo de visualización para el objeto. */
+  updateViewMode: (mode: ViewMode) => void
+
+  /** Establece el código del editor */
+  updateCurrentEditorCode: (code: string) => void
+
+  /** Reinicia el estado al valor inicial por defecto. */
+  reset: () => void
+}
+
+const initialState: Pick<SysObjectState, 'viewMode' | 'sysobject' | 'prodSysobject'> = {
   viewMode: TypeViews.FullView,
   sysobject: null,
   prodSysobject: null,
 }
 
-export const useSysObjectStore = create<BearSysObjectState>()(
+export const useSysObjectStore = create<SysObjectState>()(
   persist(
     (set, get) => ({
       ...initialState,
       currentEditorCode: '',
       isLoadingObject: false,
       isLoadingProdObject: false,
+      errorObject: null,
       errorProdObject: null,
+
+      updateErrorObject: (error) => {
+        set({ errorObject: error })
+      },
 
       fetchSysObject: async (id: number) => {
         set({ isLoadingObject: true })
@@ -27,9 +85,24 @@ export const useSysObjectStore = create<BearSysObjectState>()(
           const { call } = getSysObjectByIdService(id)
           const response = await call
           // resetea el objeto de pre-producción al cambiar de objeto
-          set({ sysobject: response.data, prodSysobject: null, errorProdObject: null })
+          set({ sysobject: response.data, prodSysobject: null, errorProdObject: null, errorObject: null })
         } catch (err) {
-          console.error('Error al obtener el objeto: ', err)
+          if (isAxiosError(err) && err.response) {
+            const { data } = err.response
+            set({
+              errorObject: {
+                title: data.error?.title ?? 'Error al obtener el objeto',
+                detail: data.error?.detail ?? 'Error desconocido',
+              },
+            })
+          } else {
+            set({
+              errorObject: {
+                title: 'Error de red',
+                detail: 'No se pudo conectar al servidor o el servidor no está disponible.',
+              },
+            })
+          }
         } finally {
           set({ isLoadingObject: false })
         }
@@ -82,6 +155,7 @@ export const useSysObjectStore = create<BearSysObjectState>()(
           currentEditorCode: '',
           isLoadingObject: false,
           isLoadingProdObject: false,
+          errorObject: null,
           errorProdObject: null,
         })
       },

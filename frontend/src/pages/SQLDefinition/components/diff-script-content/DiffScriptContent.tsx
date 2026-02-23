@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
-import { useSysObjectStore } from '@/zustand'
-
+import { useSysObjectStore } from '../../store/sysobject.store'
 import { DiffEditorCode } from './components/DiffEditorCode'
 import { HeaderDiffEditor } from './components/HeaderDiffEditor'
 
