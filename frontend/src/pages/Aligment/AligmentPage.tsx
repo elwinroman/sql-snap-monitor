@@ -1,7 +1,6 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 
-import { Toaster } from '@/components/ui'
 import { Error500 } from '@/pages'
 import { useAuthStore } from '@/zustand'
 
@@ -14,14 +13,16 @@ export function AligmentPage() {
   const hideMenu = useAligmentStore((state) => state.hideMenu)
   const { error } = useSearchContext()
 
-  // notificación de errores
+  // notificación de errores (evita repetir el toast si el error no cambió)
+  const lastErrorRef = useRef(error)
   useEffect(() => {
-    if (error) {
+    if (error && error !== lastErrorRef.current) {
       toast.warning(error.title, {
         description: error.detail,
         duration: 6000,
       })
     }
+    lastErrorRef.current = error
   }, [error])
 
   if (errorApiConnection) return <Error500 />
@@ -49,7 +50,6 @@ export function AligmentPage() {
         </footer>
       </main>
 
-      <Toaster richColors position="bottom-right" theme="light" />
     </section>
   )
 }

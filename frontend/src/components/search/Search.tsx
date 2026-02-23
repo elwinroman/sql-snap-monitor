@@ -1,19 +1,12 @@
 import { dialogSearchContext } from '@sqldefinition/contexts/dialogSearchContext'
 import { Search as SearchIcon } from 'lucide-react'
 
-import { AxiosCall } from '@/models'
-import { FullSysObject } from '@/models/sysobject'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui'
 
-// import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './components/dialog'
 import { Results } from './components/results/Results'
 import { searchContext } from './context/searchContext'
 
-interface Props {
-  getObject(id: number): AxiosCall<FullSysObject>
-}
-
-export function Search({ getObject }: Props) {
+export function Search() {
   const { updateQuerySearch, debounceGetSuggestions, updateSuggestions } = searchContext()
   const { open, updateOpen } = dialogSearchContext()
 
@@ -60,7 +53,7 @@ export function Search({ getObject }: Props) {
           <div className="bg-border -mx-1 h-px"></div>
 
           {/* Body card */}
-          <Results getObject={getObject} />
+          <Results />
 
           {/* <footer className="h-10">Footer</footer> */}
         </DialogContent>

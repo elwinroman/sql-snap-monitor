@@ -1,6 +1,6 @@
 import { useSearchContext } from '@aligment/hooks'
 import { Search, X } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { InputWithIcon } from '@/components/ui'
 
@@ -10,6 +10,22 @@ export function SearchAligment() {
 
   const { search, updateSearch, errorValidation, getObject, loading } = useSearchContext()
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== '/') return
+
+      const target = e.target as HTMLElement
+      const isEditable = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable
+      if (isEditable) return
+
+      e.preventDefault()
+      inputRef.current?.focus()
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   // Maneja los eventos de teclado
   const handleKeyup = async (e: React.KeyboardEvent<HTMLInputElement>) => {
