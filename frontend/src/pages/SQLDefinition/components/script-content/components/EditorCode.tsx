@@ -4,11 +4,11 @@ import { useEffect } from 'react'
 
 import { CircleLoader } from '@/components/loader'
 import { BaseMonacoEditorOptions, MonacoThemes } from '@/constants'
-import { EDITOR_BANNER } from '@/enviroment/enviroment'
 import { ensureBuiltinTheme, getFormattedCodeForViewMode } from '@/utilities'
 import { useAppStore, useEditorOptionsStore } from '@/zustand'
 
 import { useSysObjectStore } from '../../../store/sysobject.store'
+import { SQLDefinitionEmptyState } from './SQLDefinitionEmptyState'
 
 export function EditorCode() {
   const { renderWhitespace, fontSize, minimap, theme, stickyScroll, guides } = useEditorOptionsStore((state) => state)
@@ -18,9 +18,7 @@ export function EditorCode() {
   const sysobject = useSysObjectStore((state) => state.sysobject)
   const updateCurrentEditorCode = useSysObjectStore((state) => state.updateCurrentEditorCode)
 
-  let code = EDITOR_BANNER
-
-  if (sysobject) code = getFormattedCodeForViewMode(sysobject, viewMode)
+  const code = sysobject ? getFormattedCodeForViewMode(sysobject, viewMode) : ''
 
   // guarda siempre el código calculado del editor (para copiar)
   useEffect(() => {
@@ -47,13 +45,16 @@ export function EditorCode() {
     )
   }
 
+  if (!sysobject) {
+    return <SQLDefinitionEmptyState />
+  }
+
   return (
     // `overflow-auto h-full` soluciona el error de desbordamiento
     <div className="group relative h-full w-full overflow-auto">
       <Editor
         beforeMount={handleBeforeMount}
-        language={sysobject ? 'sql' : 'shell'}
-        defaultValue={EDITOR_BANNER}
+        language="sql"
         theme={theme}
         value={code}
         options={{ ...fullOptions }}

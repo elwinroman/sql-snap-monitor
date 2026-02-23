@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Toaster } from '@/components/ui'
 import { AppRoutes } from '@/constants'
 import { LayoutLanding, ProtectedLayout } from '@/layouts'
-import { AligmentPage, Error404, HomePage, LoginPage, SQLDefinitionPage } from '@/pages'
+import { AligmentPage, Error404, HomePage, LoginPage, SQLDefinitionPage, UsertablePage } from '@/pages'
 
 import { SearchProvider } from './pages/Aligment/contexts/searchContext'
 import { LoginProvider } from './pages/Login/contexts/login.context'
@@ -45,6 +45,16 @@ function App() {
               <LoginProvider>
                 <LoginPage />
               </LoginProvider>
+            }
+          />
+
+          {/* Página Usertable */}
+          <Route
+            path={AppRoutes.USERTABLE}
+            element={
+              <ProtectedLayout>
+                <UsertablePage />
+              </ProtectedLayout>
             }
           />
 
