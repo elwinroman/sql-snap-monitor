@@ -4,8 +4,6 @@ import { toast } from 'sonner'
 
 import { AlertMessages } from '@/components/alert-messages/AlertMessages'
 import { LoaderSlack } from '@/components/loader/loader-slack/LoaderSlack'
-import { Card } from '@/components/main/Card'
-import { GeneralInfo } from '@/components/main/object-info/GeneralInfo'
 import { Badge } from '@/components/ui/badge'
 import { Toaster } from '@/components/ui/sonner'
 import { useUserTableStore } from '@/stores'
@@ -34,10 +32,6 @@ export function UsertablePage() {
 
   return (
     <>
-      <Card>
-        <GeneralInfo title="Tablas de usuario" object={object} tableDescription={tableDescription} />
-      </Card>
-
       <div className="bg-card shadow-custom-card flex flex-col gap-2 rounded-md px-6 py-6">
         <div className="flex items-center gap-2 pb-2">
           {schemaName && (

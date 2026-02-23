@@ -1,7 +1,5 @@
 export * from './AplicationLogo'
-export * from './Configuration'
 export * from './GithubRepo'
 export * from './LoginUsername'
 export * from './NavbarMenu'
-export * from './search/Search'
 export * from './ThemeToggle'
