@@ -46,5 +46,3 @@ export type IEditorStickyScrollOptions = NonNullable<monaco.editor.IEditorOption
  * garantiza que no sea `undefined`.
  */
 export type IGuidesOptions = NonNullable<monaco.editor.IEditorOptions['guides']>
-
-export type ICodeEditor = monaco.editor.IStandaloneCodeEditor
