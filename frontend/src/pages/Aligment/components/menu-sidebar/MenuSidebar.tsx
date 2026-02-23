@@ -1,5 +1,5 @@
 import { useSearchContext } from '@aligment/hooks'
-import { SquareArrowLeft, User } from 'lucide-react'
+import { LayoutGrid, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { CircleLoader } from '@/components/loader'
@@ -21,16 +21,16 @@ export function MenuSidebar({ className = '' }: Props) {
   const isDark = useAppStore((state) => state.isDark)
   const { loading } = useSearchContext()
 
-  const backNavigation = () => navigate(-1)
+  const backHome = () => navigate(AppRoutes.Home)
   const redirectLogin = () => navigate(AppRoutes.Login)
 
   return (
     <nav className={`border-border border-r shadow-xl ${className}`}>
       <header className="flex items-center px-6 py-3">
         {authContext ? (
-          <Button variant={'ghost'} size="sm" className="flex items-center gap-2" onClick={backNavigation}>
-            <SquareArrowLeft size={16} />
-            <span className="underline">Atras</span>
+          <Button variant={'ghost'} size="sm" className="flex items-center gap-2" onClick={backHome}>
+            <LayoutGrid size={16} />
+            <span className="underline">Home</span>
           </Button>
         ) : (
           <div className="flex w-full items-center justify-between">

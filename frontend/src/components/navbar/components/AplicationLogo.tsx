@@ -1,7 +1,5 @@
-import { ChevronRight } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui'
 import { AppRoutes } from '@/constants'
 import { APP_NAME } from '@/enviroment/enviroment'
 import { useAuthStore } from '@/zustand'
@@ -23,20 +21,6 @@ export function AplicationLogo({ className = '' }: Props) {
         <NavLink to={AppRoutes.Home} className="text-primary font-bold">
           {APP_NAME}
         </NavLink>
-        <span className="text-secondary">/</span>
-
-        <TooltipProvider>
-          <Tooltip delayDuration={100}>
-            <TooltipTrigger asChild>
-              <span className="text-secondary text-sm">{authContext.database}</span>
-            </TooltipTrigger>
-            <TooltipContent side="bottom" className="flex items-center gap-0.5">
-              <span className="text-color-primary">{authContext.server}</span>
-              <ChevronRight className="text-cyan-500" size={12} />
-              <span className="text-color-primary">{authContext.database}</span>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
 
         <SwitchDatabase />
       </div>

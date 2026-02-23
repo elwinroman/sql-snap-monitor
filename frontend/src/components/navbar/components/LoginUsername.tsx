@@ -11,11 +11,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui'
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
 import { logoutService } from '@/services'
-import { useAuthStore } from '@/zustand'
+import { useAuthStore, useSysObjectStore } from '@/zustand'
 
 export function LoginUsername() {
   const clearSession = useAuthStore((state) => state.clearSession)
   const authContext = useAuthStore((state) => state.authContext)
+  const resetSysObject = useSysObjectStore((state) => state.reset)
   const { callEndpoint } = useFetchAndLoad()
 
   if (!authContext) return
@@ -25,7 +26,9 @@ export function LoginUsername() {
       await callEndpoint(logoutService())
 
       clearSession()
+      resetSysObject()
       useAuthStore.persist.clearStorage()
+      useSysObjectStore.persist.clearStorage()
     } catch (err) {
       console.error('Error al intentar cerrar sesion: ', err)
     }

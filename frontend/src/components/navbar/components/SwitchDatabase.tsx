@@ -1,22 +1,7 @@
-import { ArrowLeftRight } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
-import {
-  Button,
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
 import { listDatabasesAuthenticatedService, switchDatabaseService } from '@/services'
 import { useAuthStore, useSysObjectStore } from '@/zustand'
@@ -27,87 +12,60 @@ export function SwitchDatabase() {
   const clearSysObject = useSysObjectStore((state) => state.createSysObject)
 
   const { callEndpoint: callListDatabases, loading: loadingDatabases } = useFetchAndLoad<string[]>()
-  const { callEndpoint: callSwitchDatabase, loading: loadingSwitch } = useFetchAndLoad()
+  const { callEndpoint: callSwitchDatabase } = useFetchAndLoad()
 
-  const [open, setOpen] = useState(false)
   const [databases, setDatabases] = useState<string[]>([])
-  const [selectedDb, setSelectedDb] = useState('')
 
   if (!authContext) return null
 
-  const handleOpen = async (isOpen: boolean) => {
-    setOpen(isOpen)
-
+  const handleOpenChange = async (isOpen: boolean) => {
     if (!isOpen) {
-      setSelectedDb('')
       setDatabases([])
       return
     }
 
     try {
       const response = await callListDatabases(listDatabasesAuthenticatedService())
-      const filtered = response.data.filter((db) => db !== authContext.database)
-      setDatabases(filtered)
+      setDatabases(response.data.filter((db) => db !== authContext.database))
     } catch {
-      toast.error('No se pudieron cargar las bases de datos.')
-      setOpen(false)
+      toast.error('Error al cargar bases de datos', { description: 'No se pudieron obtener las bases de datos disponibles.' })
     }
   }
 
-  const handleSwitch = async () => {
-    if (!selectedDb) return
-
+  const handleValueChange = async (db: string) => {
     try {
-      await callSwitchDatabase(switchDatabaseService(selectedDb))
-      updateDatabase(selectedDb)
+      await callSwitchDatabase(switchDatabaseService(db))
+      updateDatabase(db)
       clearSysObject(null)
-      handleOpen(false)
-      toast.success(`Base de datos cambiada a '${selectedDb}'.`)
+      toast.success('Base de datos cambiada', { description: `Conectado a '${db}'.` })
     } catch {
-      toast.error(`No tienes permisos para acceder a '${selectedDb}'.`)
+      toast.error('Acceso denegado', { description: `No tienes permisos para acceder a '${db}'.` })
     }
   }
 
   return (
-    <Dialog open={open} onOpenChange={handleOpen}>
-      <button
-        onClick={() => handleOpen(true)}
-        className="text-secondary hover:text-primary cursor-pointer transition-colors"
-        title="Cambiar base de datos"
-      >
-        <ArrowLeftRight size={13} strokeWidth="2.5px" />
-      </button>
+    <Select value={authContext.database} onOpenChange={handleOpenChange} onValueChange={handleValueChange}>
+      <SelectTrigger className="text-secondary hover:bg-action-hover hover:text-primary h-auto w-auto gap-1.5 rounded-sm border-none bg-transparent px-3 py-1.5 text-sm shadow-none transition-colors focus:ring-0">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        {/* BD actual (siempre presente para que SelectValue la muestre) */}
+        <SelectItem value={authContext.database} disabled>
+          {authContext.database}
+        </SelectItem>
 
-      <DialogContent className="max-w-sm">
-        <DialogHeader>
-          <DialogTitle className="text-base">Cambiar base de datos</DialogTitle>
-          <DialogDescription>
-            Base de datos actual: <strong>{authContext.database}</strong>
-          </DialogDescription>
-        </DialogHeader>
-
-        <Select value={selectedDb} onValueChange={setSelectedDb} disabled={loadingDatabases}>
-          <SelectTrigger>
-            <SelectValue placeholder={loadingDatabases ? 'Cargando...' : 'Selecciona una base de datos'} />
-          </SelectTrigger>
-          <SelectContent>
-            {databases.map((db) => (
-              <SelectItem key={db} value={db}>
-                {db}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancelar</Button>
-          </DialogClose>
-          <Button onClick={handleSwitch} variant={loadingSwitch || !selectedDb ? 'disabled' : 'default'}>
-            {loadingSwitch ? 'Cambiando...' : 'Confirmar'}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        {loadingDatabases ? (
+          <SelectItem value="_loading" disabled>
+            Cargando...
+          </SelectItem>
+        ) : (
+          databases.map((db) => (
+            <SelectItem key={db} value={db}>
+              {db}
+            </SelectItem>
+          ))
+        )}
+      </SelectContent>
+    </Select>
   )
 }
