@@ -5,6 +5,7 @@ import { ImperativePanelHandle } from 'react-resizable-panels'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui'
 
 import { DialogSearchProvider } from '../../contexts/dialogSearchContext'
+import { FavoritoProvider } from '../../contexts/favoritoContext'
 import { EditorCode, HeaderEditor, PanelEditor } from './components'
 
 export function ScriptContent() {
@@ -25,7 +26,7 @@ export function ScriptContent() {
   }
 
   return (
-    <>
+    <FavoritoProvider>
       <ResizablePanelGroup
         direction="horizontal"
         onLayout={(sizes) => {
@@ -79,6 +80,6 @@ export function ScriptContent() {
           <ArrowRightToLine size={18} className="text-primary" />
         </button>
       )}
-    </>
+    </FavoritoProvider>
   )
 }

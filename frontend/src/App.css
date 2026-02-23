@@ -35,3 +35,30 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }
+
+/* Scroll vertical delgado (oculto por defecto, visible en hover) */
+.SX {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.SX::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.SX:hover::-webkit-scrollbar {
+  width: 4px;
+}
+
+.SX:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.SX:hover {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}

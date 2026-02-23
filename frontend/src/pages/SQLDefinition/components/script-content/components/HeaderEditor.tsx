@@ -3,9 +3,25 @@ import { ChevronRight } from 'lucide-react'
 import { ConfigOptionEditor, CopyCode, DownloadScript } from '@/components/editor-option'
 import { useSysObjectStore } from '@/zustand'
 
+import { useFavoritoContext } from '../../../contexts/favoritoContext'
+import { ToggleFavoritoButton } from './header-editor/ToggleFavoritoButton'
+
 export function HeaderEditor() {
   const sysobject = useSysObjectStore((state) => state.sysobject)
   const currentEditorCode = useSysObjectStore((state) => state.currentEditorCode)
+  const { isFavorito, upsertFavorito, deleteFavorito } = useFavoritoContext()
+
+  const currentFavorito = sysobject ? isFavorito(sysobject.name, sysobject.schemaName) : undefined
+
+  const handleToggleFavorito = () => {
+    if (!sysobject) return
+
+    if (currentFavorito) {
+      deleteFavorito(currentFavorito.id)
+    } else {
+      upsertFavorito(sysobject.schemaName, sysobject.name, sysobject.type)
+    }
+  }
 
   return (
     <header className="bg-background flex h-10 items-center justify-between px-4">
@@ -24,6 +40,7 @@ export function HeaderEditor() {
 
       {/* Acciones */}
       <div className="flex items-center gap-1">
+        {sysobject && <ToggleFavoritoButton isFavorite={!!currentFavorito} onClick={handleToggleFavorito} />}
         <ConfigOptionEditor /> {/* Configuración del editor */}
         <DownloadScript text={sysobject?.definition ?? ''} disabled={!sysobject} filename={sysobject?.name ?? ''} />
         <CopyCode text={currentEditorCode} disabled={!sysobject} />

@@ -18,7 +18,7 @@ export class MSSQLFavoritoRepositoryAdapter implements ForFavoritoRepositoryPort
         MERGE INTO dbo.Favorito AS target
         USING (
           SELECT 
-            @idUser     AS idUsuario      , @schema     AS schemaName
+            @idUser     AS idUsuario      , @schema     AS schemaName,
             @objectName AS objectName     , @type       AS type,
             @date AS fecha                , @isActive   AS vigente
         ) AS source
