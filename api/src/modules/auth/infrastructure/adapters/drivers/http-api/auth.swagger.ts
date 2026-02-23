@@ -1,9 +1,11 @@
 import { extendZodWithOpenApi } from '@asteasolutions/zod-to-openapi'
 import { registry } from '@core/swagger/openapi-registry'
-import { errorResponses, SuccessResponseSchema } from '@core/swagger/schemas'
+import { errorResponses, SuccessListResponseSchema, SuccessResponseSchema } from '@core/swagger/schemas'
 import { z } from 'zod'
 
+import { ListDatabasesSchema } from './list-databases/list-databases.dto'
 import { LoginUserSchema } from './login/login.http-dto'
+import { SwitchDatabaseSchema } from './switch-database/switch-database.dto'
 
 extendZodWithOpenApi(z)
 
@@ -76,5 +78,51 @@ registry.registerPath({
       content: { 'application/json': { schema: SuccessResponseSchema } },
     },
     ...errorResponses('TokenExpiredException', 'NotProvidedTokenException'),
+  },
+})
+
+// POST /api/v1/auth/databases
+registry.registerPath({
+  method: 'post',
+  path: '/api/v1/auth/databases',
+  tags: ['Auth'],
+  summary: 'Listar bases de datos disponibles',
+  description:
+    'Retorna las bases de datos accesibles en la instancia SQL Server. Acepta dos modos: **post-login** (con Bearer token, las credenciales se obtienen de la sesión) o **pre-login** (sin token, las credenciales se envían en el body y son validadas por Zod).',
+  security: [{ BearerAuth: [] }],
+  request: {
+    body: {
+      description: 'Credenciales directas (solo requerido en modo pre-login, sin Bearer token)',
+      required: false,
+      content: { 'application/json': { schema: ListDatabasesSchema } },
+    },
+  },
+  responses: {
+    200: {
+      description: 'Lista de bases de datos disponibles',
+      content: { 'application/json': { schema: SuccessListResponseSchema } },
+    },
+    ...errorResponses('InvalidCredentialsException', 'TokenExpiredException', 'ValidationException'),
+  },
+})
+
+// PATCH /api/v1/auth/switch-database
+registry.registerPath({
+  method: 'patch',
+  path: '/api/v1/auth/switch-database',
+  tags: ['Auth'],
+  summary: 'Cambiar base de datos activa',
+  description:
+    'Cambia la base de datos de la sesión actual sin cerrar sesión. Actualiza las credenciales en cache y valida la conexión a la nueva BD.',
+  security: [{ BearerAuth: [] }],
+  request: {
+    body: { content: { 'application/json': { schema: SwitchDatabaseSchema } } },
+  },
+  responses: {
+    200: {
+      description: 'Base de datos cambiada exitosamente. Retorna los detalles de la nueva BD.',
+      content: { 'application/json': { schema: SuccessResponseSchema } },
+    },
+    ...errorResponses('TokenExpiredException', 'NotProvidedTokenException', 'ValidationException'),
   },
 })
