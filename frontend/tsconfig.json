@@ -18,7 +18,8 @@
     "jsx": "react-jsx",
     "paths": {
       "@/*": ["./src/*"],
-      "@aligment/*": ["./src/pages/Aligment/*"]
+      "@aligment/*": ["./src/pages/Aligment/*"],
+      "@sqldefinition/*": ["./src/pages/SQLDefinition/*"]
     }
   }
 }

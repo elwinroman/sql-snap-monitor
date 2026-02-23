@@ -9,6 +9,7 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
       '@aligment': path.resolve(__dirname, './src/pages/Aligment'),
+      '@sqldefinition': path.resolve(__dirname, './src/pages/SQLDefinition'),
       '~': path.resolve(__dirname, './'),
     },
   },

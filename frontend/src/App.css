@@ -1,3 +1,37 @@
-body {
+.App {
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
+}
+
+.SY {
+  overflow-x: auto;
+  overflow-y: hidden; /* solo scroll horizontal */
+  white-space: nowrap;
+  scrollbar-width: none;            /* Oculta en Firefox */
+  -ms-overflow-style: none;         /* Oculta en IE y Edge antiguos */
+  -webkit-overflow-scrolling: touch; /* suave en iOS */
+}
+
+/* Ocultar scrollbar por defecto (WebKit) */
+.SY::-webkit-scrollbar {
+  height: 0px;
+  background: transparent;
+}
+
+/* Mostrar al hacer hover */
+.SY:hover::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* Estilo del thumb (barra deslizante) */
+.SY:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* color sutil */
+  border-radius: 4px;
+}
+
+/* Firefox: versión delgada */
+.SY {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
 }

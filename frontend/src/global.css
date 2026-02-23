@@ -65,6 +65,29 @@
   --color-palette-primary-main: var(--palette-primary-main);
   --color-palette-primary-dark: var(--palette-primary-dark);
   --color-palette-primary-darker: var(--palette-primary-darker);
+  --color-palette-primary-contrastText: var(--palette-primary-contrastText);
+
+  --color-palette-secondary-lighter: var(--palette-secondary-lighter);
+  --color-palette-secondary-light: var(--palette-secondary-light);
+  --color-palette-secondary-main: var(--palette-secondary-main);
+  --color-palette-secondary-dark: var(--palette-secondary-dark);
+  --color-palette-secondary-darker: var(--palette-secondary-darker);
+  --color-palette-secondary-contrastText: var(--palette-secondary-contrastText);
+
+  --color-palette-success-lighter: var(--palette-success-lighter);
+  --color-palette-success-light: var(--palette-success-light);
+  --color-palette-success-main: var(--palette-success-main);
+  --color-palette-success-dark: var(--palette-success-dark);
+  --color-palette-success-darker: var(--palette-success-darker);
+  --color-palette-success-contrastText: var(--palette-success-contrastText);
+
+  --color-palette-info-lighter: var(--palette-info-lighter);
+  --color-palette-info-light: var(--palette-info-light);
+  --color-palette-info-main: var(--palette-info-main);
+  --color-palette-info-dark: var(--palette-info-dark);
+  --color-palette-info-darker: var(--palette-info-darker);
+  --color-palette-info-contrastText: var(--palette-info-contrastText);
+  --color-palette-info-mainChannel: rgba(var(--palette-info-mainChannel));
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -133,7 +156,7 @@
 
 @layer base {
   :root {
-    --background: #f4f6f8;
+    --background: #ffffff;
     --background-paper: #FFFFFF;
     --background-paper-channel: rgba(255,255,255,0.9);
     --background-alternate: #e3e3e3;
@@ -180,26 +203,37 @@
     --action-disabled: rgba(145 158 171 / 0.24); 
 
     /* Tamaños */
-    --navbar-height: 80px;
+    --navbar-height: 150px;
 
     /* Paleta de colores */
-    --palette-primary-lighter: #C8FAD6;
-    --palette-primary-light: #5BE49B;
-    --palette-primary-main: #00A76F;
-    --palette-primary-dark: #007867;
-    --palette-primary-darker: #004B50;
+    --palette-primary-lighter: #FEF4D4;
+    --palette-primary-light: #FED680;
+    --palette-primary-main: #fda92d;
+    --palette-primary-dark: #B66816;
+    --palette-primary-darker: #793908;
+    --palette-primary-contrastText: #1C252E;
 
     --palette-secondary-lighter: #EFD6FF;
     --palette-secondary-light: #C684FF;
     --palette-secondary-main: #8E33FF;
     --palette-secondary-dark: #5119B7;
     --palette-secondary-darker: #27097A;
+    --palette-secondary-contrastText: #FFFFFF;
+
+    --palette-success-lighter: #D3FCD2;
+    --palette-success-light: #77ED8B;
+    --palette-success-main: #22C55E;
+    --palette-success-dark: #118D57;
+    --palette-success-darker: #065E49;
+    --palette-success-contrastText: #ffffff;
 
     --palette-info-lighter: #CAFDF5;
     --palette-info-light: #61F3F3;
     --palette-info-main: #00B8D9;
     --palette-info-dark: #006C9C;
     --palette-info-darker: #003768;
+    --palette-info-contrastText: #FFFFFF;
+    --palette-info-mainChannel: 0 184 217;
     
     --palette-grey-50: #FCFDFD;
     --palette-grey-100: #F9FAFB;
