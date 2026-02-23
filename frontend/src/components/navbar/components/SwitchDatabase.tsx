@@ -3,13 +3,16 @@ import { toast } from 'sonner'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui'
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
+import { useSysObjectStore } from '@/pages/SQLDefinition/store/sysobject.store'
+import { useUserTableStore } from '@/pages/Usertable/store/usertable.store'
 import { listDatabasesAuthenticatedService, switchDatabaseService } from '@/services'
-import { useAuthStore, useSysObjectStore } from '@/zustand'
+import { useAuthStore } from '@/zustand'
 
 export function SwitchDatabase() {
   const authContext = useAuthStore((state) => state.authContext)
   const updateDatabase = useAuthStore((state) => state.updateDatabase)
   const clearSysObject = useSysObjectStore((state) => state.createSysObject)
+  const resetUserTable = useUserTableStore((state) => state.reset)
 
   const { callEndpoint: callListDatabases, loading: loadingDatabases } = useFetchAndLoad<string[]>()
   const { callEndpoint: callSwitchDatabase } = useFetchAndLoad()
@@ -37,6 +40,7 @@ export function SwitchDatabase() {
       await callSwitchDatabase(switchDatabaseService(db))
       updateDatabase(db)
       clearSysObject(null)
+      resetUserTable()
       toast.success('Base de datos cambiada', { description: `Conectado a '${db}'.` })
     } catch {
       toast.error('Acceso denegado', { description: `No tienes permisos para acceder a '${db}'.` })

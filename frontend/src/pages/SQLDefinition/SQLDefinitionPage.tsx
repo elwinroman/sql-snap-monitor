@@ -1,11 +1,14 @@
 import { Navbar } from '@/components/navbar/Navbar'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
+import { useAuthStore } from '@/zustand'
 
 import { HeaderTabs, ScriptContent } from './components'
 import { DiffScriptContent } from './components/diff-script-content/DiffScriptContent'
 import { TabOption } from './constants/tabs-options'
 
 export function SQLDefinitionPage() {
+  const database = useAuthStore((state) => state.authContext?.database)
+
   return (
     <section className="bg-background flex h-full w-full flex-col">
       <Navbar />
@@ -15,7 +18,7 @@ export function SQLDefinitionPage() {
           {/* Cabecera */}
 
           {/* relative for Button hide panel absolute element */}
-          <Tabs defaultValue={TabOption.Script} className="relative flex h-full w-full flex-col">
+          <Tabs key={database} defaultValue={TabOption.Script} className="relative flex h-full w-full flex-col">
             {/* Cabecera de TABs */}
             <HeaderTabs />
 

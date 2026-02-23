@@ -10,13 +10,16 @@ import {
 } from '@/components/ui'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui'
 import useFetchAndLoad from '@/hooks/useFetchAndLoad'
+import { useSysObjectStore } from '@/pages/SQLDefinition/store/sysobject.store'
+import { useUserTableStore } from '@/pages/Usertable/store/usertable.store'
 import { logoutService } from '@/services'
-import { useAuthStore, useSysObjectStore } from '@/zustand'
+import { useAuthStore } from '@/zustand'
 
 export function LoginUsername() {
   const clearSession = useAuthStore((state) => state.clearSession)
   const authContext = useAuthStore((state) => state.authContext)
   const resetSysObject = useSysObjectStore((state) => state.reset)
+  const resetUserTable = useUserTableStore((state) => state.reset)
   const { callEndpoint } = useFetchAndLoad()
 
   if (!authContext) return
@@ -27,8 +30,10 @@ export function LoginUsername() {
 
       clearSession()
       resetSysObject()
+      resetUserTable()
       useAuthStore.persist.clearStorage()
       useSysObjectStore.persist.clearStorage()
+      useUserTableStore.persist.clearStorage()
     } catch (err) {
       console.error('Error al intentar cerrar sesion: ', err)
     }

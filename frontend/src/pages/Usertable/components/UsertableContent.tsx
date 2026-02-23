@@ -8,6 +8,7 @@ import { DialogSearchProvider } from '@/components/search/context/dialogSearchCo
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
+import { useAuthStore } from '@/zustand'
 
 import { TabOption } from '../constants/tab-options'
 import { useUserTableStore } from '../store/usertable.store'
@@ -23,6 +24,7 @@ import { UsertablePanelEditor } from './UsertablePanelEditor'
 export function UsertableContent() {
   const leftPanelRef = useRef<ImperativePanelHandle>(null)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
+  const database = useAuthStore((state) => state.authContext?.database)
   const loading = useUserTableStore((state) => state.loading)
   const object = useUserTableStore((state) => state.userTableObject)
   const error = useUserTableStore((state) => state.userTableError)
@@ -48,7 +50,7 @@ export function UsertableContent() {
 
   return (
     <FavoritoProvider type="U">
-      <Tabs defaultValue={TabOption.Structure} className="relative flex h-full w-full flex-col">
+      <Tabs key={database} defaultValue={TabOption.Structure} className="relative flex h-full w-full flex-col">
         <HeaderTabsUsertable />
 
         <ResizablePanelGroup
